@@ -31,6 +31,13 @@ object Dependencies {
 
     const val navigationAndroid = "androidx.navigation:navigation-fragment-ktx:$navigationComponent"
     const val navigationUI = "androidx.navigation:navigation-ui-ktx:$navigationComponent"
+
+    const val composeAdapter = "com.github.ingjuanocampo:CompositeDelegateAdapter:1.0.3"
+
+    const val firebaseBom = "com.google.firebase:firebase-bom:28.0.1"
+    const val firebaseAuth = "com.google.firebase:firebase-auth:20.0.4"
+    const val firebaseStore = "com.google.firebase:firebase-firestore-ktx:23.0.0"
+
 }
 
 object Android {
@@ -51,7 +58,12 @@ fun DependencyHandler.kotlinClassPath() {
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 }
 
+fun DependencyHandler.fireStore() {
+    implementation(Dependencies.firebaseBom)
+    implementation(Dependencies.firebaseAuth)
+    implementation(Dependencies.firebaseStore)
 
+}
 fun DependencyHandler.dagger() {
     implementation(Dependencies.dagger)
     kotlinImplementation(Dependencies.daggerCompiler)
@@ -106,6 +118,7 @@ fun DependencyHandler.uiCommons() {
     implementation(Dependencies.constraitLayout)
     implementation(Dependencies.recyclerView)
     implementation(Dependencies.androidCore)
+    implementation(Dependencies.composeAdapter)
 
 }
 

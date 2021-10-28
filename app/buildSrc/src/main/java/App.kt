@@ -11,4 +11,5 @@ object Android {
 fun DependencyHandler.appDependencies() {
     uiCommons()
     material()
+    navigationComponent()
 }

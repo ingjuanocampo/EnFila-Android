@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+
+<!--    <color name="white">#f5f5f5</color>-->
+<!--    <color name="colorPrimary">#F7D06E</color>-->
+<!--    <color name="colorPrimaryDark">#FF6736</color>-->
+<!--    <color name="colorAccent">#F8CC5D</color>-->
+<!--    -->
+<!--    -->
+
+
+    <color name="colorText1">#FFFFFF</color>
+    <color name="colorText2">#FDBE82</color>
+    <color name="colorText3">#DEEADE</color>
+    <color name="colorText4">#f43b53</color>
+
+    <color name="selectedButton">#ff3d00</color>
+    <color name="unSelectedButton">#FFFFFF</color>
+
+    <color name="primaryColor">#222E76</color>
+    <color name="primaryLightColor">#222E76</color>
+    <color name="primaryDarkColor">#2D3A88</color>
+    <color name="secondaryColor">#f43b53</color>
+    <color name="secondaryLightColor">#FDBE82</color>
+    <color name="secondaryDarkColor">#c43e00</color>
+    <color name="primaryTextColor">#FFFFFF</color>
+    <color name="secondaryTextColor">#546e7a</color>
+    <color name="transparent_black">#80000000</color>
+
+
 </resources>

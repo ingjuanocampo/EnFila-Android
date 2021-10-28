@@ -11,7 +11,7 @@ internal const val coreVersion ="1.6.0"
 internal const val recyclerViewXVersion = "1.2.1"
 internal const val androidLegacyXVersion = "1.0.0"
 internal const val materialVersion = "1.4.0"
-internal const val navigationComponent = "2.1.0"
+internal const val navigationComponent = "2.3.5"
 
 
 internal const val constraintLayoutVersion = "2.1.0"
