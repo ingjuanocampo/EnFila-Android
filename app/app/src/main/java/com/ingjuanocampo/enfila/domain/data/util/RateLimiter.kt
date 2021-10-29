@@ -1,6 +1,7 @@
 package com.ingjuanocampo.enfila.domain.data.util
 
-import kotlinx.datetime.Clock
+import java.util.*
+import kotlin.collections.HashMap
 import kotlin.jvm.Synchronized
 
 class RateLimiter<in KEY>(timeOutSeconds: Int) {
@@ -22,7 +23,7 @@ class RateLimiter<in KEY>(timeOutSeconds: Int) {
         return false
     }
 
-    private fun now() = Clock.System.now().epochSeconds
+    private fun now() = Date().time
 
     @Synchronized
     fun reset(key: KEY) {

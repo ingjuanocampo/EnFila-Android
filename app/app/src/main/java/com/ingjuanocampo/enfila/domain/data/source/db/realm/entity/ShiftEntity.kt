@@ -3,9 +3,8 @@ package com.ingjuanocampo.enfila.domain.data.source.db.realm.entity
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.getShiftState
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import io.realm.RealmObject
 
-class ShiftEntity: RealmObject {
+class ShiftEntity {
 
     var date: Long = 0
     var id: String = EMPTY_STRING

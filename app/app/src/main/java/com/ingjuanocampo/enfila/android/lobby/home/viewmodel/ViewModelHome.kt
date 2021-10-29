@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
+import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.di.domain.DomainModule
 import com.ingjuanocampo.enfila.domain.usecases.model.Home
 import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.collect
 
 class ViewModelHome : ViewModel() {
 
-    private val homeUC = DomainModule.provideHomeUC()
+    private val homeUC = AppComponent.domainModule.provideHomeUC()
     val state = MutableLiveData<HomeState>()
 
     fun loadCurrentTurn() {

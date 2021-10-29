@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.lobby.list.ShiftItem
-import com.ingjuanocampo.enfila.domain.di.domain.DomainModule.provideListUC
+import com.ingjuanocampo.enfila.di.AppComponent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ class ViewModelListItems : ViewModel() {
 
     val state = MutableLiveData<List<ShiftItem>>()
 
-    private val listUC = provideListUC()
+    private val listUC = AppComponent.domainModule.provideListUC()
 
     fun load(isActive: Boolean  = true) {
         viewModelScope.launch {

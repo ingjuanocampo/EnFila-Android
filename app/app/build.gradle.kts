@@ -1,7 +1,6 @@
 import Android.compileAndroidSdkVersion
 import Android.minAndroidSdkVersion
-import dependencies.fireStore
-import dependencies.kotlinVersion
+import dependencies.*
 
 plugins {
     id("com.android.application")
@@ -42,4 +41,9 @@ dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     appDependencies()
     fireStore()
+    dataStore()
+
+    coroutinesWithAndroid()
+    architectureComponents()
+
 }

@@ -2,19 +2,17 @@ package com.ingjuanocampo.enfila.android.splash
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
-import com.ingjuanocampo.enfila.domain.di.domain.DomainModule.provideLoadInitialInfo
+import com.ingjuanocampo.enfila.di.AppComponent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class ViewModelSplash : ViewModel() {
 
-    val state =  MutableLiveData<SplashState>()
+    val state = MutableLiveData<SplashState>()
 
-    val loadInitInfoUC = provideLoadInitialInfo()
+    val loadInitInfoUC = AppComponent.domainModule.provideLoadInitialInfo()
 
     fun launchSplash() {
         launchGeneral {

@@ -1,10 +1,11 @@
 package com.ingjuanocampo.enfila.domain.data.source.db.realm.entity
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.ingjuanocampo.enfila.domain.entity.User
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import io.realm.RealmObject
 
-class UserEntity: RealmObject {
+class UserEntity {
 
     var id: String = EMPTY_STRING
     var phone: String = EMPTY_STRING
@@ -22,11 +23,23 @@ fun User.toEntity(): UserEntity {
     }
 }
 
+fun User.toJson(): String? {
+    return Gson().toJson(this)
+}
+
+fun String.toUser(): User? {
+    return try {
+        Gson().fromJson(this, User::class.java)
+    } catch (e: Exception) {
+        UserEntity().toModel()
+    }
+}
+
 fun UserEntity.toModel() : User{
     val here = this
     return User(
-        id = here.id!!,
-        phone = here.phone!!,
+        id = here.id,
+        phone = here.phone,
         name = here.name,
         companyIds = here.companyIds.toList())
 }

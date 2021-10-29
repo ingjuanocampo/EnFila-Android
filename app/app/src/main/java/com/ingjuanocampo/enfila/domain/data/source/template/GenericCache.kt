@@ -1,6 +1,6 @@
 package com.ingjuanocampo.enfila.domain.data.source.template
 
-import com.ingjuanocampo.enfila.domain.data.source.user.emitInContext
+import com.ingjuanocampo.enfila.domain.util.emitInContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

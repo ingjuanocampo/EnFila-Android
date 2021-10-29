@@ -8,13 +8,14 @@ import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import java.util.*
 
 open class RepositoryImp<Data>(
     private val remoteSource: RemoteSource<Data>,
     private val localSource: LocalSource<Data>
 ) : Repository<Data> {
 
-    private val keyId = Clock.System.now().epochSeconds.toString()
+    private val keyId = Date().time.toString()
     private val rateLimiter = RateLimiter<String>(15)
 
     override suspend fun createOrUpdate(data: Data) = withContext(Dispatchers.Default) {

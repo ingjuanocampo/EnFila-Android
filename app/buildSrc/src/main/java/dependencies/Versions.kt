@@ -1,12 +1,12 @@
 package dependencies
 
 const val kotlinAndroidGradleVersion = "4.0.1"
-const val kotlinVersion = "1.3.72"
+const val kotlinVersion = "1.5.0"
 
 // Compile dependencies
 internal const val androidXVersion = "1.3.1"
 internal const val daggerVersion = "2.24"
-internal const val coroutinesVersion = "1.3.8"
+internal const val coroutinesVersion = "1.4.3"
 internal const val coreVersion ="1.6.0"
 internal const val recyclerViewXVersion = "1.2.1"
 internal const val androidLegacyXVersion = "1.0.0"

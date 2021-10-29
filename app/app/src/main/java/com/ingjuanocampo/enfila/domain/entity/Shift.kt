@@ -1,7 +1,7 @@
 package com.ingjuanocampo.enfila.domain.entity
 
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import kotlinx.datetime.Clock
+import java.util.*
 
 class Shift internal constructor(
     val date: Long,
@@ -53,5 +53,5 @@ object ShiftFactory {
 }
 
 fun getNow(): Long {
-    return Clock.System.now().epochSeconds
+    return Date().time
 }

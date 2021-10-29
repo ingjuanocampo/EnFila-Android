@@ -38,6 +38,9 @@ object Dependencies {
     const val firebaseAuth = "com.google.firebase:firebase-auth:20.0.4"
     const val firebaseStore = "com.google.firebase:firebase-firestore-ktx:23.0.0"
 
+    const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
+    const val gson = "com.google.code.gson:gson:2.8.8"
+
 }
 
 object Android {
@@ -56,6 +59,11 @@ object TestDependecies {
 fun DependencyHandler.kotlinClassPath() {
     classpath("com.android.tools.build:gradle:$kotlinAndroidGradleVersion")
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+}
+
+fun DependencyHandler.dataStore() {
+    implementation(Dependencies.dataStore)
+    implementation(Dependencies.gson)
 }
 
 fun DependencyHandler.fireStore() {

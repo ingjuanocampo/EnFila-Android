@@ -16,9 +16,3 @@ class UserRemoteImpl(private val userRemoteSource: UserRemoteSource): RemoteSour
 
      override suspend fun createOrUpdate(data: User) = userRemoteSource.updateData(data).collect()
 }
-
-expect class UserRemoteSource() {
-     fun fetchData(id: String): Flow<User?>
-     fun updateData(data: User): Flow<User?>
-
-}

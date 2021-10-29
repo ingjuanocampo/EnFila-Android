@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.domain.data.source.companysite
 
+import com.ingjuanocampo.enfila.data.source.companysite.CompanyInfoRemoteSource
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import kotlinx.coroutines.flow.Flow
@@ -18,11 +19,5 @@ class CompanySiteRemoteSource(private val companySiteLocalSource: CompanyInfoRem
     override suspend fun fetchData(id: String): CompanySite? {
         return fetchInfoFlow(id).firstOrNull()
     }
-
-}
-
-expect class CompanyInfoRemoteSource() {
-    fun fetchData(id: String): Flow<CompanySite?>
-    fun updateData(data: CompanySite): Flow<CompanySite?>
 
 }

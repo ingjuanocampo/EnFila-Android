@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.*
 
 class LoadInitialInfoUC(private val userRepository: UserRepository,
                         private val shiftRepository: ShiftRepository,
-                        private val companyRepo: CompanyRepository,) {
+                        private val companyRepo: CompanyRepository) {
 
     suspend operator fun invoke()  = flow {
        emit(userRepository.getCurrent())

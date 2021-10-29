@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
+import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.di.domain.DomainModule
 import kotlinx.coroutines.flow.collect
 
@@ -13,7 +14,7 @@ class ViewModelAssignation : ViewModel() {
 
     var closestTurn = 0
 
-    private val shiftInteractions = DomainModule.providesShiftInteractions()
+    private val shiftInteractions = AppComponent.domainModule.providesShiftInteractions()
     val assignationState: MutableLiveData<AssignationState> = MutableLiveData(AssignationState.IDLE)
 
     var phoneNumber: String = ""
