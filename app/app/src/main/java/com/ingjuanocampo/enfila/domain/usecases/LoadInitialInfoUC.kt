@@ -10,15 +10,14 @@ class LoadInitialInfoUC(private val userRepository: UserRepository,
                         private val shiftRepository: ShiftRepository,
                         private val companyRepo: CompanyRepository) {
 
-    suspend operator fun invoke()  = flow {
-       emit(userRepository.getCurrent())
-    }.flatMapLatest { user ->
-        if (user?.id != null) {
-            companyRepo.id = user?.companyIds?.first()?: EMPTY_STRING
-            shiftRepository.id = companyRepo.id
-            companyRepo.refresh().flatMapLatest {
-                shiftRepository.refresh().map { true }
-            }
-        } else flowOf(false)
+    suspend operator fun invoke() = userRepository.getCurrent().let { user ->
+            if (user?.id != null && user.id.isNotEmpty()) {
+                companyRepo.id = user?.companyIds?.first()?: EMPTY_STRING
+                shiftRepository.id = companyRepo.id
+                companyRepo.refresh()
+                true
+            } else false
+
+
     }
 }

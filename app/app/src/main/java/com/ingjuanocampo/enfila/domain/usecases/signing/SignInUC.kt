@@ -8,7 +8,10 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 class SignInUC(
     private val userRepository: UserRepository,
@@ -24,13 +27,14 @@ class SignInUC(
             shiftRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
             user
         }.flatMapLatest {
-            if (it != null){
+            if (it != null) {
                 companySiteRepository.getAllObserveData()
             } else flowOf(null)
-        }.flatMapLatest { companyData ->
+        }.map { companyData ->
             if (companyData != null) {
-                shiftRepository.refresh().map { companyData }.catch { companyData }
-            } else flowOf(null)
+                shiftRepository.refresh()
+                companyData
+            } else null
         }.map { data ->
             data != null
         }.map {
@@ -43,21 +47,14 @@ class SignInUC(
         }
     }
 
-    suspend fun createUserAndSignIn(user: User, companyName: String): Flow<AuthState> {
-        return companySiteRepository.createOrUpdateFlow(
-            CompanySite(
-                id = getNow().toString() + "CompanyId",
-                name = companyName
-            )
-        ).flatMapLatest { company ->
-            user.companyIds = listOf(company?.id.orEmpty())
-            userRepository.createOrUpdateFlow(user).map {
-                appStateProvider.toLoggedState()
-                AuthState.Authenticated as AuthState
-            }.catch {
-                    emit(AuthState.AuthError(it))
-                }
-        }
-
+    suspend fun createUserAndSignIn(user: User, companyName: String): AuthState {
+        val company = CompanySite(
+            id = getNow().toString() + "CompanyId",
+            name = companyName)
+        companySiteRepository.createOrUpdate(company)
+        user.companyIds = listOf(company?.id)
+        userRepository.createOrUpdate(user)
+        appStateProvider.toLoggedState()
+        return AuthState.Authenticated
     }
 }

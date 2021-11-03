@@ -24,7 +24,7 @@ class ShiftInteractions(
         return closestShift?.let {
             ShiftWithClient(
                 it,
-                clientRepository.getById(it.contactId)?.firstOrNull()!!
+                clientRepository.loadById(it.contactId)?.firstOrNull()!!
             )
         }
     }
@@ -44,13 +44,13 @@ class ShiftInteractions(
     }
 
     suspend fun loadShiftWithClient(shift: Shift): ShiftWithClient {
-        val client = clientRepository.getById(shift.contactId)?.firstOrNull()
+        val client = clientRepository.loadById(shift.contactId)?.firstOrNull()
         return ShiftWithClient(shift, client!!)
     }
 
-    suspend fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?): Flow<List<Shift>?> {
+    suspend fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?){
         val client = Client(id = phoneNumber, name = name)
         clientRepository.createOrUpdate(listOf(client))
-        return shiftRepository.createOrUpdateFlow(listOf(ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
+        shiftRepository.createOrUpdate(listOf(ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
     }
 }

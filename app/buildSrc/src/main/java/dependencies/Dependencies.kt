@@ -34,9 +34,9 @@ object Dependencies {
 
     const val composeAdapter = "com.github.ingjuanocampo:CompositeDelegateAdapter:1.0.3"
 
-    const val firebaseBom = "com.google.firebase:firebase-bom:28.0.1"
-    const val firebaseAuth = "com.google.firebase:firebase-auth:20.0.4"
-    const val firebaseStore = "com.google.firebase:firebase-firestore-ktx:23.0.0"
+    const val firebaseBom = "com.google.firebase:firebase-bom:28.4.2"
+    const val firebaseAuth = "com.google.firebase:firebase-auth:21.0.1"
+    const val firebaseStore = "com.google.firebase:firebase-firestore-ktx:23.0.4"
 
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
     const val gson = "com.google.code.gson:gson:2.8.8"

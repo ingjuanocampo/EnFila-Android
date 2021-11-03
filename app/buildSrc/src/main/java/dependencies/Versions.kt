@@ -1,7 +1,7 @@
 package dependencies
 
 const val kotlinAndroidGradleVersion = "4.0.1"
-const val kotlinVersion = "1.5.0"
+const val kotlinVersion = "1.5.10"
 
 // Compile dependencies
 internal const val androidXVersion = "1.3.1"

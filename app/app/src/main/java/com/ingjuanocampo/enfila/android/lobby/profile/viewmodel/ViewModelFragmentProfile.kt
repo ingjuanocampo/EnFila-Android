@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.entity.User
-import kotlinx.coroutines.flow.collect
 
 class ViewModelFragmentProfile : ViewModel() {
 
@@ -20,7 +19,7 @@ class ViewModelFragmentProfile : ViewModel() {
             phone = arguments?.getString("phone")
             id = arguments?.getString("id")
 
-            if (phone != null ) {
+            if (phone != null) {
                 state.postValue(ProfileState.CreationFlow(phone!!))
             } else {
                 // Load info internally
@@ -30,9 +29,12 @@ class ViewModelFragmentProfile : ViewModel() {
 
     fun createUserAndLogin(name: String, companyName: String) {
         launchGeneral {
-            signUC.createUserAndSignIn(User(id = id!!, phone = phone!!, name = name),companyName).collect {
-                state.postValue(ProfileState.AuthProcess(it))
-            }
+            val it = signUC.createUserAndSignIn(
+                User(id = id!!, phone = phone!!, name = name),
+                companyName
+            )
+            state.postValue(ProfileState.AuthProcess(it))
+
         }
     }
 

@@ -11,7 +11,7 @@ plugins {
 android {
     compileSdkVersion(compileAndroidSdkVersion)
     defaultConfig {
-        applicationId = "com.ingjuanocampo.enfila"
+        applicationId = "com.ingjuanocampo.enfila.android"
         minSdkVersion(minAndroidSdkVersion)
         targetSdkVersion(compileAndroidSdkVersion)
         versionCode = 1
@@ -47,3 +47,5 @@ dependencies {
     architectureComponents()
 
 }
+
+apply(plugin = "com.google.gms.google-services")

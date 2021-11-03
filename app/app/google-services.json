@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "589084343729",
+    "project_id": "enfila-c9734",
+    "storage_bucket": "enfila-c9734.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589084343729:android:6e4cbcdf7417815264d190",
+        "android_client_info": {
+          "package_name": "com.ingjuanocampo.enfila.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589084343729-fn2o69n3rnt64id4oc9a0nji4fcr5i4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ingjuanocampo.enfila.android",
+            "certificate_hash": "b8f79274ed57c29e251fc763b1b536f8a68bb08e"
+          }
+        },
+        {
+          "client_id": "589084343729-90nkhhcmi0854f5v63u5vdi1iap4o68j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj4yIMhJp4s5OuLJA9BkQlsD3G1M9C6yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589084343729-90nkhhcmi0854f5v63u5vdi1iap4o68j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

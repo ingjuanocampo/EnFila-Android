@@ -103,7 +103,7 @@ class ViewModelLogin : ViewModel() {
 
     fun verify() {
         viewModelScope.launchGeneral {
-            val credential = PhoneAuthProvider.getCredential(verificationId!!, verificationCode)
+            val credential = PhoneAuthProvider.getCredential(verificationId!!, verificationCode!!)
             signInWithPhoneAuthCredential(credential)
 
 

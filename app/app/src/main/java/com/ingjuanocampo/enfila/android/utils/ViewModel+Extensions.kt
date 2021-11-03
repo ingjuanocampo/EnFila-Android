@@ -11,16 +11,12 @@ val handler = CoroutineExceptionHandler { _, exception ->
 
 fun CoroutineScope.launchGeneral(function: suspend () -> Unit) {
     launch(handler + Dispatchers.Default) {
-        withContext(Dispatchers.Default) {
             function()
-        }
     }
 }
 
 fun ViewModel.launchGeneral(function: suspend () -> Unit) {
     viewModelScope.launch(handler + Dispatchers.Default) {
-        withContext(Dispatchers.Default) {
-            function()
-        }
+        function()
     }
 }
