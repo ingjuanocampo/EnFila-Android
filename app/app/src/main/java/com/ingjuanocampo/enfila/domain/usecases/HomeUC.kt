@@ -44,9 +44,9 @@ class HomeUC(private val companyRepo: CompanyRepository,
         }.flowOn(Dispatchers.Default)
     }
 
-    suspend fun next(): ShiftWithClient? {
-           return shiftInteractions.next(homeCache?.currentTurn?.shift)
-    }
+    fun next() =
+        shiftInteractions.next(homeCache?.currentTurn?.shift)
+
 
     fun delete() {
     }

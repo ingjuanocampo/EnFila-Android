@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.firstOrNull
 
 class CompanySiteRemoteSource(private val companySiteLocalSource: CompanyInfoRemoteSource): RemoteSource<CompanySite> {
 
-    override suspend fun createOrUpdate(data: CompanySite) {
-        companySiteLocalSource.updateData(data = data).firstOrNull()
+    override fun uploadData(data: CompanySite): Flow<CompanySite?> {
+        return companySiteLocalSource.updateData(data = data)
     }
 
     override suspend fun fetchData(id: String): CompanySite? {

@@ -72,6 +72,12 @@ open class RepositoryImp<Data>(
         return@withContext localSource.delete(id)
     }
 
+    override fun updateData(data: Data): Flow<Data?> {
+        return remoteSource.uploadData(data).map {
+            localSource.createOrUpdate(data)
+            it
+        }
+    }
 
 
 }

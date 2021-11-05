@@ -12,8 +12,8 @@ internal class ShiftsRemoteSourceImpl(private val shiftsRemoteSourceFirebase: Sh
         return shiftsRemoteSourceFirebase.fetchData(id).firstOrNull()
     }
 
-    override suspend fun createOrUpdate(data: List<Shift>) {
-        shiftsRemoteSourceFirebase.updateData(data).collect {  }
+    override fun uploadData(data: List<Shift>): Flow<List<Shift>?> {
+        return shiftsRemoteSourceFirebase.updateData(data)
     }
 
     override suspend fun updateSingleData(shift: Shift): Flow<Shift?> {

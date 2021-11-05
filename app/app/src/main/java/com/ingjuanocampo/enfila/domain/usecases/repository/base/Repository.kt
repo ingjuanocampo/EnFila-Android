@@ -6,6 +6,8 @@ interface Repository<Data> {
 
     var id: String
 
+    fun updateData(data: Data): Flow<Data?>
+
     suspend fun createOrUpdate(data: Data)
 
     suspend fun refresh()

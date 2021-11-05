@@ -51,9 +51,9 @@ class SignInUC(
         val company = CompanySite(
             id = getNow().toString() + "CompanyId",
             name = companyName)
-        companySiteRepository.createOrUpdate(company)
+        companySiteRepository.updateData(company)
         user.companyIds = listOf(company?.id)
-        userRepository.createOrUpdate(user)
+        userRepository.updateData(user)
         appStateProvider.toLoggedState()
         return AuthState.Authenticated
     }

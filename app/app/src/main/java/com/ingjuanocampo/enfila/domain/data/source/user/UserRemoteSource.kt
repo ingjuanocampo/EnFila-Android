@@ -10,5 +10,5 @@ class UserRemoteImpl(private val userRemoteSource: UserRemoteSource): RemoteSour
 
      override suspend fun fetchData(id: String): User? =  userRemoteSource.fetchData(id).firstOrNull()
 
-     override suspend fun createOrUpdate(data: User) = userRemoteSource.updateData(data).collect()
+     override fun uploadData(data: User) = userRemoteSource.updateData(data)
 }

@@ -35,8 +35,9 @@ class ViewModelHome : ViewModel() {
 
     fun next() {
         viewModelScope.launchGeneral {
-            val next = homeUC.next()
-            updateCurrentTurn(next)
+            homeUC.next().collect {
+                updateCurrentTurn(it)
+            }
         }
     }
 
