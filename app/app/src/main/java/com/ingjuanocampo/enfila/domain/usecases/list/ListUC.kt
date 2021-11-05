@@ -17,7 +17,7 @@ class ListUC(
                 it.isActive()
             }.map {
                 shiftInteractions.loadShiftWithClient(it)
-            }
+            }.sortedBy { it.shift.number }
         }
 
 

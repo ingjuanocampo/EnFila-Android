@@ -15,7 +15,7 @@ class ShiftInteractions(
         current?.let { updateShift(it.apply {
             endDate = getNow()
         }, ShiftState.FINISHED) }
-        val closestShift = shiftRepository.getClosestShift()
+        val closestShift = shiftRepository.loadAllData()?.sortedBy { it.number }?.firstOrNull { it.state == ShiftState.WAITING }
         closestShift?.state = ShiftState.CALLING
 
         closestShift?.let {
