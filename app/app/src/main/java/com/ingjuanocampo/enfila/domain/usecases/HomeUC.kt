@@ -31,7 +31,7 @@ class HomeUC(private val companyRepo: CompanyRepository,
             val home = Home(
                 selectedCompany = currentCompany ?: CompanySite(),
                 totalTurns = shiftRepository.loadAllData()!!.filter { it.isActive() }.count(),
-                avrTime = 306
+                avrTime = 388
             )
             homeCache = home
 

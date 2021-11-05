@@ -14,6 +14,7 @@ class LoadInitialInfoUC(private val userRepository: UserRepository,
             if (user?.id != null && user.id.isNotEmpty()) {
                 companyRepo.id = user?.companyIds?.first()?: EMPTY_STRING
                 shiftRepository.id = companyRepo.id
+                userRepository.refresh()
                 companyRepo.refresh()
                 true
             } else false

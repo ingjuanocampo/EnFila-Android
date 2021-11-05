@@ -20,7 +20,7 @@ class ViewModelListItems : ViewModel() {
             (if (isActive) listUC.loadActiveShift() else listUC.loadInactiveShift()).map { shifts ->
                 shifts.map {
                     ShiftItem(
-                        id = it.shift.id?.toInt() ?: 0,
+                        id = it.shift.id,
                         name = it.client.name ?: "",
                         phone = it.client.id ?: "",
                         currentTurn = it.shift.number.toString(),

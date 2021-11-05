@@ -17,7 +17,7 @@ class GenericCache<T>: Storage<T> {
     }
 
     override fun save(data: List<T>) {
-        //cacheList.clear()
+        cacheList.clear()
         cacheList.addAll(data)
         shareCacheFlow.emitInContext(getData())
     }
@@ -30,16 +30,15 @@ class GenericCache<T>: Storage<T> {
 
             observerChannel.offer(Unit) // Initial signal to perform first query.
 
-            withContext(Dispatchers.Default) {
                 try {
                     // Iterate until cancelled, transforming observer signals to query results to
                     // be emitted to the flow.
                     for (signal in observerChannel) {
-                        withContext(Dispatchers.Default) { emit(getData()) }
+                        emit(getData())
                     }
                 } finally {
                 }
-            }
+
         }
     }
 

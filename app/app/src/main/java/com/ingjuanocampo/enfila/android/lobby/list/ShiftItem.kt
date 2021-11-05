@@ -8,7 +8,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-data class ShiftItem(val id: Int,
+data class ShiftItem(val id: String,
                      val phone: String,
                      val name: String,
                      val currentTurn: String,
@@ -49,7 +49,7 @@ data class ShiftItem(val id: Int,
         return "$hours:$minutes:$seconds"
     }
 
-    override fun getDelegateId(): Int = id
+    override fun getDelegateId(): Int = id.hashCode()
 
     override fun getViewType(): Int = ViewTypes.SHIFT.ordinal
 }
