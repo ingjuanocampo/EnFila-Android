@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ingjuanocampo.enfila.android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="false"
+        android:supportsRtl="true"
+        android:name=".AppEnFila"
+        android:theme="@style/AppTheme.NoTitle">
+        <activity
+            android:name=".assignation.ActivityAssignation"
+            android:label="@string/title_activity_lobby"/>
+        <activity
+            android:name=".lobby.ActivityLobby"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:label="@string/title_activity_lobby"/>
+        <activity
+            android:name=".login.ActivityLogin"
+            android:label="Activity login"/>
+        <activity android:name=".splash.SplashActivity"
+            android:theme="@style/AppTheme.NoTitle"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

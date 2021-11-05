@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bottom_bar_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:background="@color/secondaryColor"
+    tools:context=".assignation.fragment.FragmentNameNote">
+
+    <TextView
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:gravity="center"
+        android:id="@+id/title"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Text.Extra.Bold.Color2"
+        android:text="Ingrese el Nombre \n y una nota"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginTop="20dp"
+        android:id="@+id/nameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <EditText
+            style="@style/Text.Extra.Bold"
+            android:id="@+id/nameEd"
+            android:hint="@string/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="Pepito"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:id="@+id/noteEd"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        android:background="@drawable/drawer_round"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/nameContainer"
+        android:hint="Nota (Opcional)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"
+        android:gravity="top"/>
+
+    <ImageView
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_arrow_forward"
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Next"/>
+
+    <ImageView
+        android:layout_margin="10dp"
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_arrow_back"
+        android:text="Regresar"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

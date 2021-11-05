@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page_1"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="Current"/>
+    <item
+        android:id="@+id/page_2"
+        android:enabled="true"
+        android:icon="@drawable/ic_format_list"
+        android:title="Fila"/>
+
+    <item
+        android:id="@+id/page_3"
+        android:enabled="true"
+        android:icon="@drawable/ic_history"
+        android:title="History"/>
+</menu>

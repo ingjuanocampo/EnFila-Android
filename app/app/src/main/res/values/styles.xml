@@ -1,0 +1,57 @@
+<resources>
+
+    <style name="AppTheme.NoTitle" parent="Theme.AppCompat.NoActionBar">
+
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:colorSecondary">@color/secondaryColor</item>
+        <item name="colorAccent">@color/secondaryLightColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:statusBarColor">@color/primaryDarkColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+    </style>
+
+    <style name="Text">
+        <item name="android:textSize">@dimen/text_medium</item>
+
+    </style>
+
+    <style name="Text.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Large">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="Text.Extra">
+        <item name="android:textSize">@dimen/text_extra</item>
+    </style>
+
+    <style name="Text.Extra.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Extra.Bold.Color2">
+        <item name="android:textColor">@color/colorText2</item>
+    </style>
+
+    <style name="Text.Large.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="Dialog_Transparent_Adjust_Resize" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent_black</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+
+    <dimen name="text_extra">25sp</dimen>
+
+    <dimen name="text_extra_large">40sp</dimen>
+
+</resources>

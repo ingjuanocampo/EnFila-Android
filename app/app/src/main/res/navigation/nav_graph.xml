@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentNumber">
+
+    <fragment
+        android:id="@+id/fragmentNumber"
+        android:name="com.ingjuanocampo.enfila.android.assignation.fragment.FragmentPhoneNumber"
+        android:label="fragment_number"
+        tools:layout="@layout/fragment_phone_number" >
+        <action
+            android:id="@+id/action_fragmentNumber_to_fragmentNameAndNote"
+            app:destination="@id/fragmentNameAndNote" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_turn"
+        android:id="@+id/fragmentTurn"
+        android:name="com.ingjuanocampo.enfila.android.assignation.fragment.FragmentTurn"
+        android:label="FragmentTurn" />
+
+
+    <fragment
+        tools:layout="@layout/fragment_name_note"
+        android:id="@+id/fragmentNameAndNote"
+        android:name="com.ingjuanocampo.enfila.android.assignation.fragment.FragmentNameNote"
+        android:label="FragmentNameAndNote" >
+        <action
+            android:id="@+id/action_fragmentNameAndNote_to_fragmentTurn"
+            app:destination="@id/fragmentTurn" />
+    </fragment>
+</navigation>
