@@ -40,7 +40,7 @@ class ShiftInteractions(
     }
     
     suspend fun getClosestNewShiftTurn(): Int {
-       val lastTurn =  shiftRepository.getLastShift()?.number
+       val lastTurn =  shiftRepository.loadAllData()?.lastOrNull()?.number
         return if (lastTurn == null) {
             1
         } else {
@@ -58,9 +58,10 @@ class ShiftInteractions(
         return ShiftWithClient(shift, client!!)
     }
 
-    suspend fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?){
+    fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?): Flow<List<Shift>?> {
         val client = Client(id = phoneNumber, name = name)
-        clientRepository.updateData(listOf(client))
-        shiftRepository.updateData(listOf(ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
+        return clientRepository.updateData(listOf(client)).flatMapLatest {
+            shiftRepository.updateData(listOf(ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
+        }
     }
 }

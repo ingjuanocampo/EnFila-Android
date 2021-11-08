@@ -15,18 +15,19 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
         shareCacheFlow.emitInContext(getData())
     }
 
-    override fun save(data: List<T>) {
+    override suspend fun save(data: List<T>) {
 
         data.forEach {
             cacheList[it.id] = it
         }
-        shareCacheFlow.emitInContext(getData())
+        shareCacheFlow.emit(getData())
+        //shareCacheFlow.emitInContext(getData())
     }
 
     override fun getData(): List<T> = cacheList.values.toList()
 
     override fun observeData(): Flow<List<T>> {
-        return flow {
+        return merge(flow {
             val observerChannel = Channel<Unit>(Channel.CONFLATED)
 
             observerChannel.offer(Unit) // Initial signal to perform first query.
@@ -40,7 +41,7 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
             } finally {
             }
 
-        }
+        }, shareCacheFlow)
     }
 
     override fun deleteAll() {

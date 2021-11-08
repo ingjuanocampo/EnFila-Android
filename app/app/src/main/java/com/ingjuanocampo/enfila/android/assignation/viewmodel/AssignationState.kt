@@ -6,4 +6,5 @@ sealed class AssignationState {
     object NameAndNoteSet: AssignationState()
     object ErrorTurnAssigned: AssignationState()
     object AssignationSet: AssignationState()
+    object Loading: AssignationState()
 }

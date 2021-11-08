@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/summaryContainer">
 
-        <EditText
+        <TextView
             android:gravity="center"
             style="@style/Text.Extra.Bold"
             android:id="@+id/turnEd"
@@ -75,7 +75,7 @@
             android:digits="0123456789"
             android:inputType="number"
             android:textSize="@dimen/text_extra_large"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:text="08"
             />
@@ -93,6 +93,12 @@
         android:src="@drawable/ic_arrow_back"
         android:text="Regresar"/>
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
         android:id="@+id/next"

@@ -3,6 +3,7 @@ package com.ingjuanocampo.enfila.domain.data.source.contact
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.Client
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class ContactRemoteSource: RemoteSource<List<Client>> {
 
@@ -12,6 +13,6 @@ class ContactRemoteSource: RemoteSource<List<Client>> {
     }
 
     override fun uploadData(data: List<Client>): Flow<List<Client>?> {
-        TODO("")
+        return flowOf(emptyList())
     }
 }
