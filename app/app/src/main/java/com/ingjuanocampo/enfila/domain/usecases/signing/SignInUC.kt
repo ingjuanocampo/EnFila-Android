@@ -8,10 +8,7 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 class SignInUC(
     private val userRepository: UserRepository,
@@ -22,7 +19,10 @@ class SignInUC(
 
     operator fun invoke(id: String): Flow<AuthState> {
         userRepository.id = id
-        return userRepository.getAllObserveData().map { user ->
+
+        return flowOf(id).map {
+            userRepository.refresh()
+            val user = userRepository.loadById(id)
             companySiteRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
             shiftRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
             user

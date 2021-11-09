@@ -34,7 +34,6 @@ class ShiftsRemoteSourceFirebase {
 
     fun updateData(data: Shift): Flow<Shift?> {
         return remote.uploadProcess({
-
         }, data, getPath(data.parentCompanySite), data.id)
     }
 

@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ShiftRepositoryImpl(
-    private val remoteSource: RemoteSource<List<Shift>>,
+    private val remoteSource: RemoteSource<Shift>,
     private val localSource: ShiftLocalSource
-): ShiftRepository, RepositoryImp<List<Shift>>(remoteSource, localSource) {
+): ShiftRepository, RepositoryImp<Shift>(remoteSource, localSource) {
 
     override fun getAllObserveData(): Flow<List<Shift>?> {
         return super.getAllObserveData().map { it?.sortedBy { shift->  shift.number } }

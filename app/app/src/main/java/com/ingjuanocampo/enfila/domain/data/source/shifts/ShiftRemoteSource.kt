@@ -4,7 +4,6 @@ import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import kotlinx.coroutines.flow.Flow
 
-interface ShiftRemoteSource: RemoteSource<List<Shift>> {
-    suspend fun updateSingleData(shift: Shift): Flow<Shift?>
+interface ShiftRemoteSource: RemoteSource<Shift> {
 
 }

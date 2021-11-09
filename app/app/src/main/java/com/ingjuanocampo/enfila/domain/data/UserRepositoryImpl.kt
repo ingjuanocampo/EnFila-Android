@@ -13,7 +13,7 @@ class UserRepositoryImpl(
 
     override fun isUserLogged() = id.isNullOrBlank().not()
     override suspend fun getCurrent(): User? {
-        val currentUser = localSource.getAllData()
+        val currentUser = localSource.getAllData()?.firstOrNull()
         this.id = currentUser?.id?: EMPTY_STRING
         return currentUser
     }

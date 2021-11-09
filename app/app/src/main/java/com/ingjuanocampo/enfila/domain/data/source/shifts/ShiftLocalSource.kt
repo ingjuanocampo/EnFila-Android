@@ -4,7 +4,7 @@ import com.ingjuanocampo.enfila.domain.data.source.LocalSource
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import kotlinx.coroutines.flow.Flow
 
-interface ShiftLocalSource: LocalSource<List<Shift>> {
+interface ShiftLocalSource: LocalSource<Shift> {
     suspend fun getClosestShift(): Shift?
 
     suspend fun getLastShift(): Shift?

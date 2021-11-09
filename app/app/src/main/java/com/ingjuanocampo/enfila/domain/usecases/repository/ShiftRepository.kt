@@ -4,7 +4,7 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.base.Repository
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import kotlinx.coroutines.flow.Flow
 
-interface ShiftRepository: Repository<List<Shift>> {
+interface ShiftRepository: Repository<Shift> {
 
     suspend fun getClosestShift(): Shift?
 

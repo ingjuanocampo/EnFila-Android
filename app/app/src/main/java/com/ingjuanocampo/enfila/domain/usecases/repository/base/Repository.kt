@@ -10,11 +10,13 @@ interface Repository<Data> {
 
     suspend fun createOrUpdate(data: Data)
 
+    suspend fun createOrUpdate(data: List<Data>)
+
     suspend fun refresh()
 
-    fun getAllObserveData(): Flow<Data?>
+    fun getAllObserveData(): Flow<List<Data>?>
 
-    suspend fun loadAllData(): Data?
+    suspend fun loadAllData(): List<Data>?
 
     suspend fun loadById(id: String): Data?
 

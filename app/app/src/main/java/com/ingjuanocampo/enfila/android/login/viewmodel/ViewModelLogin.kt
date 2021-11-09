@@ -10,6 +10,7 @@ import com.google.firebase.auth.*
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
+import com.ingjuanocampo.enfila.domain.usecases.signing.SignInUC
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,7 +24,7 @@ class ViewModelLogin : ViewModel() {
     val state = MutableLiveData<LoginState>()
     var activity: Activity? = null
 
-    val signUC = AppComponent.provideSignUC()
+    val signUC: SignInUC = AppComponent.provideSignUC()
 
     var phoneNumber: String = ""
         set(value) {

@@ -10,6 +10,7 @@ private val listOfMockCompanies = arrayListOf(CompanySite(
     name = "Sanduches Cuba"
 ))
 
+/*
 class CompanySiteMockSource: LocalSource<List<CompanySite>> {
 
     override suspend fun createOrUpdate(data: List<CompanySite>) {
@@ -35,4 +36,4 @@ class CompanySiteMockSource: LocalSource<List<CompanySite>> {
     override suspend fun delete(id: String) {
         TODO("Not yet implemented")
     }
-}
+}*/

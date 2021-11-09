@@ -21,25 +21,25 @@ open class RepositoryImp<Data>(
     private val keyId = Date().time.toString()
     private val rateLimiter = RateLimiter<String>(15)
 
-    private val operation = object: RepositoryFlowOperation<Data, Data> {
-        override fun subscribeDbUpdates(): Flow<Data?> {
+    private val operation = object: RepositoryFlowOperation<List<Data>, List<Data>> {
+        override fun subscribeDbUpdates(): Flow<List<Data>?> {
             return localSource.getAllObserveData()
         }
 
-        override fun shouldFetch(result: Data?): Boolean {
+        override fun shouldFetch(result: List<Data>?): Boolean {
             return result != null || rateLimiter.shouldFetch(
                 RepositoryImp::class.simpleName + id)
         }
 
-        override suspend fun createCall(): Data {
-            return remoteSource.fetchData(id)!!
+        override suspend fun createCall(): List<Data> {
+            return remoteSource.fetchDataAll(id)!!
         }
 
-        override fun mapCallResult(result: Data): Data {
+        override fun mapCallResult(result: List<Data>): List<Data> {
             return result
         }
 
-        override suspend fun saveResult(result: Data) {
+        override suspend fun saveResult(result: List<Data>) {
             localSource.createOrUpdate(result)
         }
     }
@@ -56,11 +56,11 @@ open class RepositoryImp<Data>(
         localSource.delete(listOf)
     }
 
-    override fun getAllObserveData(): Flow<Data?> {
+    override fun getAllObserveData(): Flow<List<Data>?> {
         return operation.asFlow()
     }
 
-    override suspend fun loadAllData(): Data? = withContext(Dispatchers.Default) {
+    override suspend fun loadAllData(): List<Data>? = withContext(Dispatchers.Default) {
         return@withContext localSource.getAllData()
     }
 
@@ -77,6 +77,10 @@ open class RepositoryImp<Data>(
             localSource.createOrUpdate(data)
             it
         }
+    }
+
+    override suspend fun createOrUpdate(data: List<Data>) {
+        localSource.createOrUpdate(data)
     }
 
 
