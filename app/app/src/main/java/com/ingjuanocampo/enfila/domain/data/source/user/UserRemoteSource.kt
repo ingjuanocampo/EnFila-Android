@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.domain.data.source.user
 
+import com.ingjuanocampo.enfila.data.source.user.UserRemoteSource
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.User
 import kotlinx.coroutines.flow.Flow

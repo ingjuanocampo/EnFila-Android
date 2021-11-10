@@ -3,17 +3,18 @@ package com.ingjuanocampo.enfila.domain.data.source.shifts
 import com.ingjuanocampo.enfila.data.source.shifts.ShiftsRemoteSourceFirebase
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 
 internal class ShiftsRemoteSourceImpl(private val shiftsRemoteSourceFirebase: ShiftsRemoteSourceFirebase): ShiftRemoteSource {
 
+
     override suspend fun fetchDataAll(id: String): List<Shift>? {
-        return shiftsRemoteSourceFirebase.fetchData(id).firstOrNull()
+        return shiftsRemoteSourceFirebase.fetchShiftsByCompanyId(id).firstOrNull()
     }
 
     override suspend fun fetchData(id: String): Shift? {
-        TODO("Not yet implemented")
+        val ids = id.split(",")
+        return shiftsRemoteSourceFirebase.fetchByShiftId(ids.firstOrNull()!!, ids.lastOrNull()!!).firstOrNull()
     }
 
     override fun uploadData(data: List<Shift>): Flow<List<Shift>?> {
@@ -21,11 +22,7 @@ internal class ShiftsRemoteSourceImpl(private val shiftsRemoteSourceFirebase: Sh
     }
 
     override fun uploadData(data: Shift): Flow<Shift?> {
-        TODO("Not yet implemented")
-    }
-
-    suspend fun updateSingleData(shift: Shift): Flow<Shift?> {
-        return shiftsRemoteSourceFirebase.updateData(shift)
+        return shiftsRemoteSourceFirebase.updateData(data)
     }
 
 }

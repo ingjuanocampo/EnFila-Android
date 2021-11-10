@@ -83,5 +83,9 @@ open class RepositoryImp<Data>(
         localSource.createOrUpdate(data)
     }
 
-
+    override suspend fun fetchAndSave(id: String): Data? {
+        return remoteSource.fetchData(id)?.apply {
+            localSource.createOrUpdate(this)
+        }
+    }
 }

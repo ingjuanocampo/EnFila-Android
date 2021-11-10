@@ -19,26 +19,15 @@ class SignInUC(
 
     operator fun invoke(id: String): Flow<AuthState> {
         userRepository.id = id
-
         return flowOf(id).map {
             userRepository.refresh()
             val user = userRepository.loadById(id)
             companySiteRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
             shiftRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
-            user
-        }.flatMapLatest {
-            if (it != null) {
-                companySiteRepository.getAllObserveData()
-            } else flowOf(null)
-        }.map { companyData ->
+            companySiteRepository.refresh()
+            val companyData = companySiteRepository.loadAllData()
             if (companyData != null) {
                 shiftRepository.refresh()
-                companyData
-            } else null
-        }.map { data ->
-            data != null
-        }.map {
-            if (it) {
                 appStateProvider.toLoggedState()
                 AuthState.Authenticated
             } else {

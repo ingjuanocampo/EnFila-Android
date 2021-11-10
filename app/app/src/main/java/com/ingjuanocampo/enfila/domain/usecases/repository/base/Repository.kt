@@ -20,6 +20,8 @@ interface Repository<Data> {
 
     suspend fun loadById(id: String): Data?
 
+    suspend fun fetchAndSave(id: String): Data?
+
     suspend fun delete(listOf: Data)
 
     suspend fun deleteById(id: String)

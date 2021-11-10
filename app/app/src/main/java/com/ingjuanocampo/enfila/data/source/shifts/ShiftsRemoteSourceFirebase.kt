@@ -3,6 +3,7 @@ package com.ingjuanocampo.enfila.data.source.shifts
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.ingjuanocampo.enfila.data.source.companysite.companyInfoPath
+import com.ingjuanocampo.enfila.data.util.fetchProcess
 import com.ingjuanocampo.enfila.data.util.fetchProcessMultiples
 import com.ingjuanocampo.enfila.data.util.uploadProcess
 import com.ingjuanocampo.enfila.data.util.uploadProcessMultiples
@@ -15,25 +16,34 @@ class ShiftsRemoteSourceFirebase {
     private val remote by lazy { Firebase.firestore }
     private val shiftPath = "shifts"
 
-    fun fetchData(id: String): Flow<List<Shift>?> {
+    fun fetchShiftsByCompanyId(companyId: String): Flow<List<Shift>?> {
         return remote.fetchProcessMultiples({
-            Shift(
-                date = it["date"] as Long? ?: 0L,
-                id = it["id"] as String,
-                parentCompanySite = it["parentCompanySite"] as String? ?: EMPTY_STRING,
-                number = (it["number"] as Long? ?: 0).toInt(),
-                contactId = it["contactId"] as String? ?: EMPTY_STRING,
-                notes = it["notes"] as String? ?: EMPTY_STRING,
-                state = getShiftState((it["state"] as Long? ?: 0).toInt())
-            )
-        }, getPath(id))
+            mapToModel(it)
+        }, getPath(companyId))
     }
+
+    private fun mapToModel(it: Map<String, Any>) = Shift(
+        date = it["date"] as Long? ?: 0L,
+        id = it["id"] as String,
+        parentCompanySite = it["parentCompanySite"] as String? ?: EMPTY_STRING,
+        number = (it["number"] as Long? ?: 0).toInt(),
+        contactId = it["contactId"] as String? ?: EMPTY_STRING,
+        notes = it["notes"] as String? ?: EMPTY_STRING,
+        state = getShiftState((it["state"] as Long? ?: 0).toInt())
+    )
+
+    fun fetchByShiftId(shiftId: String, companyId: String): Flow<Shift?> {
+        return remote.fetchProcess({
+            mapToModel(it)
+        }, getPath(companyId), shiftId)
+    }
+
 
     private fun getPath(parentCompanySite: String) = "$companyInfoPath/$parentCompanySite/$shiftPath"
 
-
     fun updateData(data: Shift): Flow<Shift?> {
         return remote.uploadProcess({
+            return@uploadProcess mapShift(it)
         }, data, getPath(data.parentCompanySite), data.id)
     }
 

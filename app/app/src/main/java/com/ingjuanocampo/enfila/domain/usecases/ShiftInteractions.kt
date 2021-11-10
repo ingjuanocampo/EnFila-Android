@@ -54,8 +54,8 @@ class ShiftInteractions(
     }
 
     suspend fun loadShiftWithClient(shift: Shift): ShiftWithClient {
-        val client = clientRepository.loadById(shift.contactId)
-        return ShiftWithClient(shift, client!!)
+        val client = clientRepository.fetchAndSave(shift.contactId)
+        return ShiftWithClient(shift, client ?: defaultClient)
     }
 
     fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?): Flow<Shift?> {
