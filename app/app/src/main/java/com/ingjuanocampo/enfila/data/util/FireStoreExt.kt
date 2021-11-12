@@ -89,8 +89,9 @@ fun<T> FirebaseFirestore.fetchProcess(dataMapper: (Map<String, Any>)-> T, path: 
             .addOnSuccessListener { result ->
                 GlobalScope.launch {
                     try {
+                        val data = result.data?.let { dataMapper(it) }
                         sharedFlow.emit(
-                            dataMapper(result.data!!)
+                            data
                         )
                     } catch (e: Exception) {
                         sharedFlow.emit(null)

@@ -18,17 +18,17 @@ open class RepositoryImp<Data>(
 
     override var id: String = EMPTY_STRING
 
-    private val keyId = Date().time.toString()
-    private val rateLimiter = RateLimiter<String>(15)
+    private val rateLimiter = RateLimiter<String>(60)
 
-    private val operation = object: RepositoryFlowOperation<List<Data>, List<Data>> {
+    private val operation = object : RepositoryFlowOperation<List<Data>, List<Data>> {
         override fun subscribeDbUpdates(): Flow<List<Data>?> {
             return localSource.getAllObserveData()
         }
 
         override fun shouldFetch(result: List<Data>?): Boolean {
-            return result != null || rateLimiter.shouldFetch(
-                RepositoryImp::class.simpleName + id)
+            return result.isNullOrEmpty() || rateLimiter.shouldFetch(
+                RepositoryImp::class.simpleName + id
+            )
         }
 
         override suspend fun createCall(): List<Data> {
@@ -83,9 +83,15 @@ open class RepositoryImp<Data>(
         localSource.createOrUpdate(data)
     }
 
-    override suspend fun fetchAndSave(id: String): Data? {
-        return remoteSource.fetchData(id)?.apply {
-            localSource.createOrUpdate(this)
-        }
+    override suspend fun getById(id: String): Data? {
+        val localValue = localSource.getById(id)
+
+        return if (localValue == null) {
+            val remoteVal = remoteSource.fetchData(id)
+            remoteVal?.let {
+                localSource.createOrUpdate(it)
+            }
+            remoteVal
+        } else localValue
     }
 }

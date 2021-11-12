@@ -54,7 +54,7 @@ class ShiftInteractions(
     }
 
     suspend fun loadShiftWithClient(shift: Shift): ShiftWithClient {
-        val client = clientRepository.fetchAndSave(shift.contactId)
+        val client = clientRepository.getById(shift.contactId)
         return ShiftWithClient(shift, client ?: defaultClient)
     }
 

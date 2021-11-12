@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
+import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
@@ -8,7 +9,8 @@ import kotlinx.coroutines.flow.*
 
 class LoadInitialInfoUC(private val userRepository: UserRepository,
                         private val shiftRepository: ShiftRepository,
-                        private val companyRepo: CompanyRepository) {
+                        private val companyRepo: CompanyRepository,
+private val clientRepository: ClientRepository) {
 
     suspend operator fun invoke() = userRepository.getCurrent().let { user ->
             if (user?.id != null && user.id.isNotEmpty()) {
@@ -16,6 +18,7 @@ class LoadInitialInfoUC(private val userRepository: UserRepository,
                 shiftRepository.id = companyRepo.id
                 userRepository.refresh()
                 companyRepo.refresh()
+                clientRepository.refresh()
                 true
             } else false
 
