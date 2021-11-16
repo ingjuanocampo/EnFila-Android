@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
 val handler = CoroutineExceptionHandler { _, exception ->
-    Log.d("CoroutineExceptionHandler", "got $exception")
+    Log.e("CoroutineExceptionHandler", "got ${exception.stackTrace}")
 }
 
 fun CoroutineScope.launchGeneral(function: suspend () -> Unit) {

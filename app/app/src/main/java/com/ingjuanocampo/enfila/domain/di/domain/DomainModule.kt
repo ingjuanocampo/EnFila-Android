@@ -24,7 +24,7 @@ class DomainModule(private val context: Context) {
     )
 
     fun provideLoadInitialInfo() =
-        LoadInitialInfoUC(dataModule.userRepository, dataModule.shiftsRepository, dataModule.companySiteRepository)
+        LoadInitialInfoUC(dataModule.userRepository, dataModule.shiftsRepository, dataModule.companySiteRepository, dataModule.clientRepository)
 
     fun provideListUC() = ListUC(dataModule.shiftsRepository, providesShiftInteractions())
 
@@ -32,7 +32,8 @@ class DomainModule(private val context: Context) {
         dataModule.userRepository,
         dataModule.companySiteRepository,
         appStateProvider,
-        dataModule.shiftsRepository
+        dataModule.shiftsRepository,
+        dataModule.clientRepository
     )
 
     fun provideIsUserLoggedMethod(): () -> Boolean {

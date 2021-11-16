@@ -26,7 +26,7 @@ class HomeUC(private val companyRepo: CompanyRepository,
             val user = userRepository.getCurrent()
             companyRepo.id = user?.companyIds?.first() ?: EMPTY_STRING
             shiftRepository.id = companyRepo.id
-            val currentCompany = companyRepo.loadAllData()
+            val currentCompany = companyRepo.loadAllData()?.firstOrNull()
 
             val home = Home(
                 selectedCompany = currentCompany ?: CompanySite(),

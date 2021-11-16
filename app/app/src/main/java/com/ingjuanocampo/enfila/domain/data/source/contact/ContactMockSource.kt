@@ -26,22 +26,9 @@ val list = arrayListOf(
         id = "3137550995",
         name = "Sofitronica"
     )
-
-
 )
 
-class ContactMockSource : LocalSource<List<Client>> {
-    override suspend fun createOrUpdate(data: List<Client>) {
-        data.forEach { newClient ->
-            if (list.firstOrNull { it.id == newClient.id } == null) {
-                list.add(newClient)
-            }
-        }
-    }
-
-
-    override suspend fun delete(dataToDelete: List<Client>) {
-    }
+class ContactMockSource : LocalSource<Client> {
 
     override fun getAllObserveData(): Flow<List<Client>> {
         return flow { emit(list) }
@@ -51,11 +38,27 @@ class ContactMockSource : LocalSource<List<Client>> {
         return list
     }
 
-    override suspend fun getById(id: String): List<Client> {
-        return list
-    }
 
     override suspend fun delete(id: String) {
-        TODO("Not yet implemented")
+    }
+
+
+    override suspend fun createOrUpdate(data: Client) {
+
+    }
+
+    override suspend fun delete(dataToDelete: Client) {
+    }
+
+    override suspend fun createOrUpdate(data: List<Client>) {
+        data.forEach { newClient ->
+            if (list.firstOrNull { it.id == newClient.id } == null) {
+                list.add(newClient)
+            }
+        }
+    }
+
+    override suspend fun getById(id: String): Client? {
+        return list.firstOrNull()
     }
 }

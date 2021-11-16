@@ -54,19 +54,25 @@ class UserLocalSource(private val context: Context): LocalSource<User> {
         }
     }
 
-    override fun getAllObserveData(): Flow<User?> {
+    override fun getAllObserveData(): Flow<List<User>?> {
         return context.userPreferencesDataStore.data.map {
             User(id = it[USER_ID].orEmpty(), name = it[USER_NAME],
             phone = it[USER_PHONE].orEmpty(), companyIds = it[USER_COMPANY_IDS]?.toList())
-        }
+        }.map { listOf(it) }
     }
 
-    override suspend fun getAllData(): User? {
+    override suspend fun getAllData(): List<User>? {
         return getAllObserveData().firstOrNull()
     }
 
     override suspend fun getById(id: String): User? {
-        return getAllObserveData().firstOrNull()
+        return getAllObserveData().firstOrNull()?.firstOrNull()
+    }
+
+    override suspend fun createOrUpdate(data: List<User>) {
+        data.forEach {
+            createOrUpdate(it)
+        }
     }
 
 

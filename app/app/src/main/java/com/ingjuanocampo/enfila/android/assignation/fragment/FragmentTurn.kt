@@ -5,14 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.assignation.viewmodel.AssignationState
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
 
 class FragmentTurn : Fragment() {
@@ -45,12 +44,8 @@ class FragmentTurn : Fragment() {
             .apply {
                 text = viewModel.note
             }
-        val turnEd = view.findViewById<TextView>(R.id.turnEd).apply {
+        view.findViewById<TextView>(R.id.turnEd).apply {
             setText("${viewModel.closestTurn}")
-        }
-
-        turnEd.addTextChangedListener { editable ->
-            viewModel.setTurn(editable.toString().toInt())
         }
 
         back.setOnClickListener {
@@ -58,8 +53,20 @@ class FragmentTurn : Fragment() {
         }
 
         val next = view.findViewById<Button>(R.id.next)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progress)
+
         next.setOnClickListener {
             viewModel.createAssignation()
+        }
+
+        viewModel.assignationState.observe(viewLifecycleOwner) {
+            when(it) {
+                AssignationState.Loading -> {
+                    progressBar.isVisible = true
+                    next.isVisible = false
+                }
+            }
+
         }
     }
 

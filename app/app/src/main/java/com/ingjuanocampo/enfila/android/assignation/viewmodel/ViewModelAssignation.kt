@@ -60,8 +60,10 @@ class ViewModelAssignation : ViewModel() {
 
     fun createAssignation() {
         launchGeneral {
-            shiftInteractions.addNewTurn(tunr, phoneNumber, name, note)
-            assignationState.postValue(AssignationState.AssignationSet)
+            assignationState.postValue(AssignationState.Loading)
+            shiftInteractions.addNewTurn(tunr, phoneNumber, name, note).collect {
+                assignationState.postValue(AssignationState.AssignationSet)
+            }
         }
     }
 

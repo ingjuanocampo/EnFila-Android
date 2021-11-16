@@ -4,41 +4,33 @@ import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.entity.User
 import com.ingjuanocampo.enfila.domain.entity.getNow
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
+import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 class SignInUC(
     private val userRepository: UserRepository,
     private val companySiteRepository: CompanyRepository,
     private val appStateProvider: AppStateProvider,
-    private val shiftRepository: ShiftRepository
+    private val shiftRepository: ShiftRepository,
+    private val clientRepository: ClientRepository
 ) {
 
     operator fun invoke(id: String): Flow<AuthState> {
         userRepository.id = id
-        return userRepository.getAllObserveData().map { user ->
+        return flowOf(id).map {
+            userRepository.refresh()
+            val user = userRepository.loadById(id)
             companySiteRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
             shiftRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
-            user
-        }.flatMapLatest {
-            if (it != null) {
-                companySiteRepository.getAllObserveData()
-            } else flowOf(null)
-        }.map { companyData ->
+            companySiteRepository.refresh()
+            clientRepository.refresh()
+            val companyData = companySiteRepository.loadAllData()
             if (companyData != null) {
                 shiftRepository.refresh()
-                companyData
-            } else null
-        }.map { data ->
-            data != null
-        }.map {
-            if (it) {
                 appStateProvider.toLoggedState()
                 AuthState.Authenticated
             } else {

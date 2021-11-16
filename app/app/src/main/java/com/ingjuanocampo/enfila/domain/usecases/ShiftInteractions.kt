@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 
 class ShiftInteractions(
     private val shiftRepository: ShiftRepository
-    , private val clientRepository: Repository<List<Client>>) {
+    , private val clientRepository: Repository<Client>) {
 
     fun next(current: Shift?): Flow<ShiftWithClient?> {
         return flowOf(current).flatMapLatest { current ->
@@ -27,20 +27,20 @@ class ShiftInteractions(
             closestShift
         }.flatMapLatest { closestShift ->
             closestShift?.let {
-                shiftRepository.updateData(listOf(it)).map { closestShift }
+                shiftRepository.updateData(it).map { closestShift }
             } ?: flowOf(null)
         }.map { closestShift ->
             closestShift?.let {
                 ShiftWithClient(
                     it,
-                    clientRepository.loadById(it.contactId)?.firstOrNull()!!
+                    clientRepository.loadById(it.contactId)!!
                 )
             }
         }
     }
     
     suspend fun getClosestNewShiftTurn(): Int {
-       val lastTurn =  shiftRepository.getLastShift()?.number
+       val lastTurn =  shiftRepository.loadAllData()?.lastOrNull()?.number
         return if (lastTurn == null) {
             1
         } else {
@@ -48,19 +48,20 @@ class ShiftInteractions(
         }
     }
 
-     private fun updateShift(shift: Shift, state: ShiftState): Flow<List<Shift>?> {
+     private fun updateShift(shift: Shift, state: ShiftState): Flow<Shift?> {
         shift.state = state
-        return shiftRepository.updateData(listOf(shift))
+        return shiftRepository.updateData(shift)
     }
 
     suspend fun loadShiftWithClient(shift: Shift): ShiftWithClient {
-        val client = clientRepository.loadById(shift.contactId)?.firstOrNull()
-        return ShiftWithClient(shift, client!!)
+        val client = clientRepository.getById(shift.contactId)
+        return ShiftWithClient(shift, client ?: defaultClient)
     }
 
-    suspend fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?){
+    fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?): Flow<Shift?> {
         val client = Client(id = phoneNumber, name = name)
-        clientRepository.updateData(listOf(client))
-        shiftRepository.updateData(listOf(ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
+        return clientRepository.updateData(client).flatMapLatest {
+            shiftRepository.updateData((ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.ingjuanocampo.enfila.domain.data.source.user
+package com.ingjuanocampo.enfila.data.source.user
 
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

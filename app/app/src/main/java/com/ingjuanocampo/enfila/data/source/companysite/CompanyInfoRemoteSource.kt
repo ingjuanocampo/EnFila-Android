@@ -4,7 +4,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.ingjuanocampo.enfila.data.util.fetchProcess
 import com.ingjuanocampo.enfila.data.util.uploadProcess
-import com.ingjuanocampo.enfila.domain.data.source.user.basePath
+import com.ingjuanocampo.enfila.data.source.user.basePath
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import kotlinx.coroutines.flow.Flow
 

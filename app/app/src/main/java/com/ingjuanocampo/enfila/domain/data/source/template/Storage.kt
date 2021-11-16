@@ -6,7 +6,7 @@ interface Storage<T> {
 
     fun save(data: T)
 
-    fun save(data: List<T>)
+    suspend fun save(data: List<T>)
 
     fun deleteAll()
 
