@@ -8,12 +8,19 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.BottomSheetAssignation
-import com.ingjuanocampo.enfila.android.lobby.home.viewmodel.HomeState
+import com.ingjuanocampo.enfila.android.databinding.FragmentHomeBinding
+import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateActiveShift
+import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateNextShift
+import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateResume
+import com.ingjuanocampo.enfila.domain.state.home.HomeState
 import com.ingjuanocampo.enfila.android.lobby.home.viewmodel.ViewModelHome
+import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
 import java.util.concurrent.TimeUnit
 
@@ -24,37 +31,51 @@ class FragmentHome : Fragment() {
     }
 
     private var toolbar: Toolbar? = null
-    private var currentNumber: TextView? = null
-    private var clientName: TextView? = null
-    private var clientPhone: TextView? = null
-    private var waitTime: Chronometer? = null
-    private var totalInline: TextView? = null
-    private var totalAverageTime: TextView? = null
 
-    private lateinit var viewModel: ViewModelHome
+    private val viewModel: ViewModelHome by viewModels()
+
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(layoutInflater,  container, false)
+        return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<View>(R.id.callAction).setOnClickListener {
+        /*view.findViewById<View>(R.id.callAction).setOnClickListener {
             viewModel.next()
-        }
+        }*/
+
+        val adapter = CompositeDelegateAdapter(10)
+
+        adapter.appendDelegate(ViewTypes.HOME_RESUME.ordinal) { DelegateResume(it) }
+        adapter.appendDelegate(ViewTypes.ACTIVE_SHIFT.ordinal) { DelegateActiveShift(it) }
+        adapter.appendDelegate(ViewTypes.NEXT_SHIFT.ordinal) { DelegateNextShift(it) }
+
+        binding.rvHome.adapter = adapter
 
         toolbar = view.findViewById(R.id.toolbarWidget)
         setHasOptionsMenu(true)
-        currentNumber = view.findViewById(R.id.currentNumber)
-        clientName = view.findViewById(R.id.clientName)
-        clientPhone = view.findViewById(R.id.clientPhone)
-        waitTime = view.findViewById(R.id.waitTime)
-        totalInline = view.findViewById(R.id.totalInline)
-        totalAverageTime = view.findViewById(R.id.totalAverageTime)
+        viewModel.loadCurrentTurn()
+        viewModel.state.observe(viewLifecycleOwner, {
+            when (it) {
+                HomeState.Loading -> {
+
+                }
+                HomeState.Empty -> {
+
+                }
+                is HomeState.HomeLoaded -> {
+                    adapter.addNewItems(it.items)
+                }
+            }
+        })
+
 
     }
 
@@ -64,44 +85,12 @@ class FragmentHome : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         BottomSheetAssignation().apply {
-            //dialog?.setCanceledOnTouchOutside(false)
-            //this.isCancelable = false
         }.show(requireActivity().supportFragmentManager, "")
-
-        //startActivity(Intent(requireActivity(), ActivityAssignation::class.java))
         return true
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ViewModelHome::class.java)
-        viewModel.loadCurrentTurn()
-
-
-        viewModel.state.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                HomeState.Loading -> {
-                }
-                HomeState.Empty -> {
-                    setEmpty()
-                }
-                is HomeState.CurrentTurn -> {
-                    updateShift(it.shift)
-                }
-                is HomeState.HomeLoaded -> {
-                    (requireActivity() as AppCompatActivity).supportActionBar?.title =
-                        it.home.selectedCompany.name
-                    totalInline?.text = it.home.totalTurns.toString()
-                    totalAverageTime?.text = it.home.avrTime.toString()
-                    updateShift(it.home.currentTurn)
-
-                }
-            }
-        })
-    }
-
+    /*
     private fun setEmpty() {
         currentNumber?.text = "---"
         clientName?.text = "---"
@@ -120,6 +109,8 @@ class FragmentHome : Fragment() {
             currentNumber?.text = "${shift.shift.number}"
         } ?: setEmpty()
     }
+
+     */
 
 
 }

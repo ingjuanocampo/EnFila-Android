@@ -3,6 +3,7 @@ package com.ingjuanocampo.enfila.android.lobby.list
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.domain.entity.getNow
+import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -14,7 +15,8 @@ data class ShiftItem(val id: String,
                      val currentTurn: String,
                      val issueDate: Long,
                      val endDate: Long,
-                     val state: String
+                     val state: String,
+                     val viewType: ViewTypes = ViewTypes.SHIFT
 ): RecyclerViewType {
 
     fun geElapsedTime(): Long {
@@ -51,5 +53,19 @@ data class ShiftItem(val id: String,
 
     override fun getDelegateId(): Int = id.hashCode()
 
-    override fun getViewType(): Int = ViewTypes.SHIFT.ordinal
+    override fun getViewType(): Int = viewType.ordinal
+}
+
+
+fun ShiftWithClient.mapToUI(viewType: ViewTypes = ViewTypes.SHIFT): ShiftItem {
+    return ShiftItem(
+        id = this.shift.id,
+        name = this.client.name ?: "",
+        phone = this.client.id ?: "",
+        currentTurn = this.shift.number.toString(),
+        issueDate = this.shift.date ?: 0L,
+        state = this.shift.state.name,
+        endDate = this.shift.endDate ?: 0L,
+        viewType = viewType
+    )
 }

@@ -13,29 +13,13 @@ class ShiftInteractions(
     private val shiftRepository: ShiftRepository
     , private val clientRepository: Repository<Client>) {
 
-    fun next(current: Shift?): Flow<ShiftWithClient?> {
+    fun next(current: Shift?): Flow<Boolean> {
         return flowOf(current).flatMapLatest { current ->
             current?.let {
                 updateShift(it.apply {
                     endDate = getNow()
-                }, ShiftState.FINISHED)
-            } ?: flowOf(null)
-        }.map {
-            val closestShift = shiftRepository.loadAllData()?.sortedBy { it.number }?.firstOrNull { it.state == ShiftState.WAITING }
-            closestShift?.state = ShiftState.CALLING
-
-            closestShift
-        }.flatMapLatest { closestShift ->
-            closestShift?.let {
-                shiftRepository.updateData(it).map { closestShift }
-            } ?: flowOf(null)
-        }.map { closestShift ->
-            closestShift?.let {
-                ShiftWithClient(
-                    it,
-                    clientRepository.loadById(it.contactId)!!
-                )
-            }
+                }, ShiftState.FINISHED).map { true }
+            } ?: flowOf(false)
         }
     }
     

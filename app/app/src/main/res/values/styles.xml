@@ -14,8 +14,8 @@
 
     <style name="Text">
         <item name="android:textSize">@dimen/text_medium</item>
-
     </style>
+
 
     <style name="Text.Bold">
         <item name="android:textStyle">bold</item>
@@ -24,6 +24,37 @@
     <style name="Text.Large">
         <item name="android:textSize">@dimen/text_large</item>
     </style>
+
+
+    <style name="Text.Large.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Large.Bold.SecondaryColor">
+        <item name="android:textColor">@color/secondaryLightColor</item>
+    </style>
+
+    <style name="Text.Green">
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+    </style>
+
+    <style name="Text.Small">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="Text.Small.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Small.Large">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+
+    <style name="Text.Small.Bold.SecondaryColor">
+        <item name="android:textColor">@color/secondaryLightColor</item>
+    </style>
+
 
     <style name="Text.Extra">
         <item name="android:textSize">@dimen/text_extra</item>
@@ -37,9 +68,7 @@
         <item name="android:textColor">@color/colorText2</item>
     </style>
 
-    <style name="Text.Large.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
+
 
 
     <style name="Dialog_Transparent_Adjust_Resize" parent="Theme.Design.BottomSheetDialog">
@@ -49,9 +78,5 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
-
-    <dimen name="text_extra">25sp</dimen>
-
-    <dimen name="text_extra_large">40sp</dimen>
 
 </resources>

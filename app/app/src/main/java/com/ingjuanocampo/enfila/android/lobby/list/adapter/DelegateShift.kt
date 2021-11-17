@@ -1,7 +1,5 @@
 package com.ingjuanocampo.enfila.android.lobby.list.adapter
 
-import android.os.SystemClock
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Chronometer
 import android.widget.TextView
@@ -10,8 +8,7 @@ import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.lobby.list.ShiftItem
 import com.ingjuanocampo.enfila.android.utils.inflate
-import com.ingjuanocampo.enfila.domain.entity.ShiftState
-import java.util.concurrent.TimeUnit
+import com.ingjuanocampo.enfila.android.utils.set
 
 class DelegateShift(parent: ViewGroup):
     DelegateViewHolder(parent.inflate(R.layout.delegate_shift)) {
@@ -20,7 +17,6 @@ class DelegateShift(parent: ViewGroup):
     private val name: TextView = itemView.findViewById(R.id.name)
     private val state: TextView = itemView.findViewById(R.id.state)
     private val timeElapsed: Chronometer = itemView.findViewById(R.id.timeElapse)
-    private val endDate: TextView = itemView.findViewById(R.id.endDate)
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         val shiftItem = recyclerViewType as ShiftItem
@@ -28,16 +24,6 @@ class DelegateShift(parent: ViewGroup):
         number.text = shiftItem.phone
         name.text = shiftItem.name
         state.text = shiftItem.state
-        if (shiftItem.state == ShiftState.CALLING.name || shiftItem.state == ShiftState.WAITING.name) {
-            timeElapsed.base = SystemClock.elapsedRealtime() - TimeUnit.SECONDS.toMillis(shiftItem.geElapsedTime())
-            timeElapsed.start()
-            endDate.visibility = View.GONE
-        } else {
-            timeElapsed.base = SystemClock.elapsedRealtime() - TimeUnit.SECONDS.toMillis(shiftItem.geEndElapsedTime())
-
-            timeElapsed.stop()
-            endDate.text = shiftItem.getStringEndDate()
-            endDate.visibility = View.VISIBLE
-        }
+       timeElapsed.set(recyclerViewType)
     }
 }
