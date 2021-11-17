@@ -71,7 +71,7 @@ class FragmentHome : Fragment() {
 
                 }
                 is HomeState.HomeLoaded -> {
-                    adapter.addNewItems(it.items)
+                    adapter.updateItems(it.items)
                 }
             }
         })
