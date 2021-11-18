@@ -12,7 +12,7 @@
 
     <color name="gray_no_used">#DEEADE</color>
 
-    <color name="selectedButton">#FDBE82</color>
+    <color name="selectedButton">#ffffa428</color>
     <color name="unSelectedButton">#FFFFFF</color>
 
 
@@ -27,7 +27,7 @@
 
 
     <color name="secondaryColor">#f43b53</color>
-    <color name="secondaryLightColor">#FDBE82</color>
+    <color name="secondaryLightColor">#ffffa428</color>
     <color name="secondaryDarkColor">#c43e00</color>
     <color name="primaryTextColor">#546e7a</color>
     <color name="secondaryTextColor">#FFFFFF</color>
