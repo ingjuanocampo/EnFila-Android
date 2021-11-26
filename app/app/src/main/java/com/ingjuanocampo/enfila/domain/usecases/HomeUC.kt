@@ -1,7 +1,8 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
 import com.ingjuanocampo.cdapter.RecyclerViewType
-import com.ingjuanocampo.enfila.android.lobby.list.mapToUI
+import com.ingjuanocampo.enfila.android.lobby.list.model.HeaderItem
+import com.ingjuanocampo.enfila.android.lobby.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.entity.Shift
@@ -48,13 +49,17 @@ class HomeUC(
                 items.add(home)
 
 
+
                 getNextTurn(shifts)?.let { next ->
+                    items.add(HeaderItem("Turnos en espera"))
                     items.add(
                         shiftInteractions.loadShiftWithClient(next).mapToUI(ViewTypes.NEXT_SHIFT)
                     )
                 }
 
                 getActiveShifts(shifts)?.let { activeShifts ->
+
+                    items.add(HeaderItem("Turnos activos"))
                     activeShifts.forEach { active ->
                         items.add(
                             shiftInteractions.loadShiftWithClient(active)

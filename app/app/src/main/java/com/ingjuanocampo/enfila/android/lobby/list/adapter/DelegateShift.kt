@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.ingjuanocampo.cdapter.DelegateViewHolder
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.R
-import com.ingjuanocampo.enfila.android.lobby.list.ShiftItem
+import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
 import com.ingjuanocampo.enfila.android.utils.inflate
 import com.ingjuanocampo.enfila.android.utils.set
 

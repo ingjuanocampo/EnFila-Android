@@ -33,6 +33,22 @@
         <item name="android:textColor">@color/secondaryLightColor</item>
     </style>
 
+
+    <style name="Text.Medium">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="Text.Medium.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Medium.Bold.SecondaryColor">
+        <item name="android:textColor">@color/secondaryLightColor</item>
+    </style>
+
+
+
+
     <style name="Text.Green">
         <item name="android:textColor">@android:color/holo_green_dark</item>
     </style>

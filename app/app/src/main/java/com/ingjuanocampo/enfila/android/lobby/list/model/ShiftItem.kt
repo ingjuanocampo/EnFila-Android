@@ -1,4 +1,4 @@
-package com.ingjuanocampo.enfila.android.lobby.list
+package com.ingjuanocampo.enfila.android.lobby.list.model
 
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.utils.ViewTypes

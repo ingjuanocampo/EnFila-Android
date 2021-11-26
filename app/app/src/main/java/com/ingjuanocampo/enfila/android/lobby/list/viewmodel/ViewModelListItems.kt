@@ -2,8 +2,8 @@ package com.ingjuanocampo.enfila.android.lobby.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ingjuanocampo.enfila.android.lobby.list.ShiftItem
-import com.ingjuanocampo.enfila.android.lobby.list.mapToUI
+import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
+import com.ingjuanocampo.enfila.android.lobby.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
 import kotlinx.coroutines.flow.collect

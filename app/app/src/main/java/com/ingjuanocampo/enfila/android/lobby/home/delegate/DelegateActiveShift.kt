@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.ingjuanocampo.cdapter.DelegateViewHolder
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.databinding.DelegateActiveTurnBinding
-import com.ingjuanocampo.enfila.android.lobby.list.ShiftItem
+import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
 
 class DelegateActiveShift(val parent: ViewGroup,
                           private val biding : DelegateActiveTurnBinding = DelegateActiveTurnBinding.inflate(

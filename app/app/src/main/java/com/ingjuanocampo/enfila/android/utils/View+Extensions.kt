@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Chronometer
-import com.ingjuanocampo.enfila.android.lobby.list.ShiftItem
+import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
 import java.util.concurrent.TimeUnit
 

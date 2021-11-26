@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.ingjuanocampo.cdapter.DelegateViewHolder
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.databinding.DelegateNextTurnBinding
-import com.ingjuanocampo.enfila.android.lobby.list.ShiftItem
+import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
 import com.ingjuanocampo.enfila.android.utils.set
 
 class DelegateNextShift(val parent: ViewGroup,

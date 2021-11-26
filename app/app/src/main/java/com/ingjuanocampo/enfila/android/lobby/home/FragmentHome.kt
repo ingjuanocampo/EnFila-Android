@@ -16,13 +16,13 @@ import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.BottomSheetAssignation
 import com.ingjuanocampo.enfila.android.databinding.FragmentHomeBinding
 import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateActiveShift
+import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateHeaderLink
 import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateNextShift
 import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateResume
 import com.ingjuanocampo.enfila.domain.state.home.HomeState
 import com.ingjuanocampo.enfila.android.lobby.home.viewmodel.ViewModelHome
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
-import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
-import java.util.concurrent.TimeUnit
+
 
 class FragmentHome : Fragment() {
 
@@ -56,6 +56,7 @@ class FragmentHome : Fragment() {
         adapter.appendDelegate(ViewTypes.HOME_RESUME.ordinal) { DelegateResume(it) }
         adapter.appendDelegate(ViewTypes.ACTIVE_SHIFT.ordinal) { DelegateActiveShift(it) }
         adapter.appendDelegate(ViewTypes.NEXT_SHIFT.ordinal) { DelegateNextShift(it) }
+        adapter.appendDelegate(ViewTypes.HEADER_LINK.ordinal) { DelegateHeaderLink(it) }
 
         binding.rvHome.adapter = adapter
 
