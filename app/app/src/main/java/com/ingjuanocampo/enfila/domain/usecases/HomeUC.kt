@@ -51,7 +51,7 @@ class HomeUC(
 
 
                 getNextTurn(shifts)?.let { next ->
-                    items.add(HeaderItem("Turnos en espera"))
+                    items.add(HeaderItem("Siguiente turno"))
                     items.add(
                         shiftInteractions.loadShiftWithClient(next).mapToUI(ViewTypes.NEXT_SHIFT)
                     )

@@ -33,8 +33,13 @@
         <item name="android:textColor">@color/secondaryLightColor</item>
     </style>
 
+    <style name="Text.Large.Bold.PrimaryColor">
+        <item name="android:textColor">@color/primaryDarkColor</item>
+    </style>
+
 
     <style name="Text.Medium">
+        <item name="fontFamily">sans-serif-medium</item>
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
 
@@ -77,6 +82,11 @@
 
     <style name="Text.Extra.Bold">
         <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="Text.Extra.Bold.PrimaryColor">
+        <item name="android:textColor">@color/primaryDarkColor</item>
     </style>
 
     <style name="Text.Extra.Bold.Color2">
