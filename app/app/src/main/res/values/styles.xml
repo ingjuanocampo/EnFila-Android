@@ -37,6 +37,11 @@
         <item name="android:textColor">@color/primaryDarkColor</item>
     </style>
 
+    <style name="Text.PrimaryColor">
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="hintTextColor">@color/primaryColor</item>
+    </style>
+
 
     <style name="Text.Medium">
         <item name="fontFamily">sans-serif-medium</item>
@@ -85,8 +90,14 @@
     </style>
 
 
-    <style name="Text.Extra.Bold.PrimaryColor">
+    <style name="Text.Extra.Bold.PrimaryDarkColor">
         <item name="android:textColor">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="Text.Extra.Bold.PrimaryColor">
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="hintTextColor">@color/primaryColor</item>
+        <item name="android:textColorHint">@color/primaryColor</item>
     </style>
 
     <style name="Text.Extra.Bold.Color2">
@@ -106,6 +117,7 @@
         <item name="android:background">@drawable/white_stroke_bubble</item>
         <item name="android:textColor">@color/primaryColor</item>
     </style>
+
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:textSize">13sp</item>

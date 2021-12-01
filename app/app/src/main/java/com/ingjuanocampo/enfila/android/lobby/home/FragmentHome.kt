@@ -77,6 +77,11 @@ class FragmentHome : Fragment() {
             }
         })
 
+        binding.toolbar.addButton.setOnClickListener {
+            BottomSheetAssignation().apply {
+            }.show(requireActivity().supportFragmentManager, "")
+        }
+
 
     }
 

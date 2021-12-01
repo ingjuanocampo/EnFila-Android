@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/currentNumber"
-                style="@style/Text.Extra.Bold.PrimaryColor"
+                style="@style/Text.Extra.Bold.PrimaryDarkColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
