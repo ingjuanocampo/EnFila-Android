@@ -56,4 +56,8 @@ class ShiftInteractions(
     fun cancel(shiftToCancel: Shift?): Flow<Boolean> {
         return updateShiftTo(shiftToCancel, ShiftState.CANCELLED)
     }
+
+    fun finish(shiftToFinish: Shift?): Flow<Boolean> {
+        return updateShiftTo(shiftToFinish, ShiftState.FINISHED)
+    }
 }

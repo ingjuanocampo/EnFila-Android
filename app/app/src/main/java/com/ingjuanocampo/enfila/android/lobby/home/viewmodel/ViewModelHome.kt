@@ -23,6 +23,11 @@ class ViewModelHome : ViewModel() {
         }
     }
 
+    fun finish(id: String) {
+        viewModelScope.launchGeneral {
+            homeUC.finish(id).collect {  }
+        }
+    }
 
 
     fun cancel(id: String) {

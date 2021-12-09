@@ -43,11 +43,15 @@ class FragmentHome : Fragment() {
         val adapter = CompositeDelegateAdapter(10)
 
         adapter.appendDelegate(ViewTypes.HOME_RESUME.ordinal) { DelegateResume(it) }
-        adapter.appendDelegate(ViewTypes.ACTIVE_SHIFT.ordinal) { DelegateActiveShift(it) }
+        adapter.appendDelegate(ViewTypes.ACTIVE_SHIFT.ordinal) {
+            DelegateActiveShift(it) { id ->
+                viewModel.finish(id)
+            }
+        }
 
         adapter.appendDelegate(ViewTypes.NEXT_SHIFT.ordinal) {
             DelegateNextShift(it) { actions ->
-                when(actions) {
+                when (actions) {
                     is NextShiftActions.Active -> viewModel.next(actions.id)
                     is NextShiftActions.Cancel -> viewModel.cancel(actions.id)
                 }

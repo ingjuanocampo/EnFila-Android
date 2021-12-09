@@ -15,9 +15,7 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 class HomeUC(
     private val companyRepo: CompanyRepository,
@@ -100,6 +98,10 @@ class HomeUC(
 
 
     fun delete() {
+    }
+
+    fun finish(id: String): Flow<Boolean> {
+       return flow { emit(shiftRepository.loadById(id))}.flatMapLatest { shiftInteractions.finish(it) }
     }
 
 
