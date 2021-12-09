@@ -23,9 +23,17 @@ class ViewModelHome : ViewModel() {
         }
     }
 
-    fun next() {
+
+
+    fun cancel(id: String) {
         viewModelScope.launchGeneral {
-            homeUC.next()
+            homeUC.cancel(id).collect {  }
+        }
+    }
+
+    fun next(id: String) {
+        viewModelScope.launchGeneral {
+            homeUC.next(id).collect {  }
         }
     }
 

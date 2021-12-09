@@ -13,12 +13,16 @@ class ShiftInteractions(
     private val shiftRepository: ShiftRepository
     , private val clientRepository: Repository<Client>) {
 
-    fun next(current: Shift?): Flow<Boolean> {
-        return flowOf(current).flatMapLatest { current ->
+    fun active(current: Shift?): Flow<Boolean> {
+        return updateShiftTo(current, ShiftState.CALLING)
+    }
+
+    private fun updateShiftTo(shift: Shift?, state: ShiftState): Flow<Boolean> {
+        return flowOf(shift?.copy()).flatMapLatest { current ->
             current?.let {
                 updateShift(it.apply {
                     endDate = getNow()
-                }, ShiftState.FINISHED).map { true }
+                }, state).map { true }
             } ?: flowOf(false)
         }
     }
@@ -47,5 +51,9 @@ class ShiftInteractions(
         return clientRepository.updateData(client).flatMapLatest {
             shiftRepository.updateData((ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
         }
+    }
+
+    fun cancel(shiftToCancel: Shift?): Flow<Boolean> {
+        return updateShiftTo(shiftToCancel, ShiftState.CANCELLED)
     }
 }

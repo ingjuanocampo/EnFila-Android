@@ -1,27 +1,18 @@
 package com.ingjuanocampo.enfila.android.lobby.home
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.*
-import android.widget.Chronometer
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.BottomSheetAssignation
 import com.ingjuanocampo.enfila.android.databinding.FragmentHomeBinding
-import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateActiveShift
-import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateHeaderLink
-import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateNextShift
-import com.ingjuanocampo.enfila.android.lobby.home.delegate.DelegateResume
-import com.ingjuanocampo.enfila.domain.state.home.HomeState
+import com.ingjuanocampo.enfila.android.lobby.home.delegate.*
 import com.ingjuanocampo.enfila.android.lobby.home.viewmodel.ViewModelHome
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
+import com.ingjuanocampo.enfila.domain.state.home.HomeState
 
 
 class FragmentHome : Fragment() {
@@ -40,22 +31,29 @@ class FragmentHome : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater,  container, false)
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*view.findViewById<View>(R.id.callAction).setOnClickListener {
-            viewModel.next()
-        }*/
+
 
         val adapter = CompositeDelegateAdapter(10)
 
         adapter.appendDelegate(ViewTypes.HOME_RESUME.ordinal) { DelegateResume(it) }
         adapter.appendDelegate(ViewTypes.ACTIVE_SHIFT.ordinal) { DelegateActiveShift(it) }
-        adapter.appendDelegate(ViewTypes.NEXT_SHIFT.ordinal) { DelegateNextShift(it) }
+
+        adapter.appendDelegate(ViewTypes.NEXT_SHIFT.ordinal) {
+            DelegateNextShift(it) { actions ->
+                when(actions) {
+                    is NextShiftActions.Active -> viewModel.next(actions.id)
+                    is NextShiftActions.Cancel -> viewModel.cancel(actions.id)
+                }
+            }
+        }
+
         adapter.appendDelegate(ViewTypes.HEADER_LINK.ordinal) { DelegateHeaderLink(it) }
 
         binding.rvHome.adapter = adapter

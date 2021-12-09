@@ -39,14 +39,14 @@ class HomeUC(
                 shiftRepository.id = companyRepo.id
                 val currentCompany = companyRepo.loadAllData()?.firstOrNull()
 
-                val home = HomeResume(
+                val resume = HomeResume(
                     selectedCompany = currentCompany ?: CompanySite(),
                     totalTurns = shiftRepository.loadAllData()!!.filter { it.isActive() }.count(),
                     avrTime = 388
                 )
-                home.totalTurns = shifts!!.size
+                resume.totalTurns = shifts!!.size
 
-                items.add(home)
+                items.add(resume)
 
 
 
@@ -79,7 +79,7 @@ class HomeUC(
 
 
     private fun getNextTurn(shifts: List<Shift>): Shift? {
-        return shifts.lastOrNull { sh -> sh.state == ShiftState.WAITING }
+        return shifts.filter { it.state == ShiftState.WAITING }.firstOrNull { sh -> sh.state == ShiftState.WAITING }
     }
 
 
@@ -87,11 +87,15 @@ class HomeUC(
         return shifts.filter { sh -> sh.state == ShiftState.CALLING }.take(5)
     }
 
+    suspend fun cancel(id: String): Flow<Boolean> {
+        val shiftToCancel = shiftRepository.loadById(id)
+        return shiftInteractions.cancel(shiftToCancel)
+    }
 
-    suspend fun next() {
-        val allShifts = shiftRepository.loadAllData()
-        val next = allShifts?.let { getNextTurn(shifts = it) }
-        shiftInteractions.next(next)
+
+    suspend fun next(id: String): Flow<Boolean> {
+        val next = shiftRepository.loadById(id)
+        return shiftInteractions.active(next)
     }
 
 

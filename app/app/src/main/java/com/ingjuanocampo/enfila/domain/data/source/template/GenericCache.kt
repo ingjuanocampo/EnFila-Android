@@ -22,7 +22,8 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
         shareCacheFlow.emit(getData())
     }
 
-    override fun getData(): List<T> = cacheList.values.toList()
+    override fun getData(): List<T> =
+        cacheList.values.toList()
 
     override fun observeData(): Flow<List<T>> {
         return merge(flow {
