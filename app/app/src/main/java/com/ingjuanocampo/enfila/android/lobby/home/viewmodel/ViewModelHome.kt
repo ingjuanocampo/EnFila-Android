@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.collect
 class ViewModelHome : ViewModel() {
 
     private val homeUC = AppComponent.domainModule.provideHomeUC()
+    private val finishShiftUC = AppComponent.domainModule.provideFinishUC()
     val state = MutableLiveData<HomeState>()
 
     fun loadCurrentTurn() {
@@ -25,7 +26,7 @@ class ViewModelHome : ViewModel() {
 
     fun finish(id: String) {
         viewModelScope.launchGeneral {
-            homeUC.finish(id).collect {  }
+            finishShiftUC.invoke(id).collect {  }
         }
     }
 

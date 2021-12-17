@@ -44,12 +44,12 @@ class FragmentListItems : Fragment() {
         recycler.addItemDecoration(DividerItemDecoration(requireContext(), OrientationHelper.VERTICAL))
         recycler.adapter = adapter
         viewModel.state.observe(viewLifecycleOwner, Observer {
-            adapter.addNewItems(it)
+            adapter.updateItems(it)
         })
         viewModel.load()
     }
 
     fun stopListener(id: String) {
-
+        viewModel.finish(id)
     }
 }

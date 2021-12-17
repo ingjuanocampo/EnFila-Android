@@ -100,9 +100,6 @@ class HomeUC(
     fun delete() {
     }
 
-    fun finish(id: String): Flow<Boolean> {
-       return flow { emit(shiftRepository.loadById(id))}.flatMapLatest { shiftInteractions.finish(it) }
-    }
 
 
 }
