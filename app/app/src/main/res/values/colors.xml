@@ -34,6 +34,7 @@
     <color name="transparent_black">#80000000</color>
     <color name="transparent_gray">#31000000</color>
     <color name="primaryHintColor">#c9FFFFFF</color>
+    <color name="green_light">#65E46A</color>
 
 
     <color name="orange_translucent">#c43e00</color>

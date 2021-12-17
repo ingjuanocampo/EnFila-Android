@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/finish"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_weight="1"
+    android:gravity="end|center">
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/stopButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_stop_circle" />
+
+</LinearLayout>
+

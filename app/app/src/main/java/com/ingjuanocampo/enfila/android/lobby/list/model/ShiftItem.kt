@@ -29,7 +29,7 @@ data class ShiftItem(val id: String,
     }
 
     fun getStringEndDate(): String {
-        return SimpleDateFormat("hh:mm aa").format(Date(TimeUnit.SECONDS.toMillis(endDate)))
+        return SimpleDateFormat("hh:mm aa").format(Date(endDate))
     }
 
     fun getTotalElapsedTime(): String {

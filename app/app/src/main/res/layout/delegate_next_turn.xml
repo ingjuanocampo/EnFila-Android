@@ -71,9 +71,16 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Text.Bold"
+                        android:text="Tiempo de espera"/>
+
                     <Chronometer
                         android:id="@+id/waitTime"
-                        style="@style/Text.Bold"
+                        style="@style/Text.Bold.Green"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

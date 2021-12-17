@@ -1,89 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:padding="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="10dp">
 
     <TextView
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/currentTurn"
+        style="@style/Text.Large.Bold.SecondaryColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:padding="5dp"
-        style="@style/Text.Large.Bold.SecondaryColor"
         android:text="1"
-        android:id="@+id/currentTurn"/>
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
 
         android:id="@+id/numberContainer"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toEndOf="@+id/currentTurn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/timeElapse"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_weight="45"
         android:orientation="vertical"
-    >
+        app:layout_constraintEnd_toStartOf="@id/timeElapse"
+        app:layout_constraintStart_toEndOf="@+id/currentTurn"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            app:layout_constraintStart_toEndOf="@+id/currentTurn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/timeElapse"
+            android:id="@+id/number"
+            style="@style/Text.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Text.Bold"
             android:text="3137550993"
-            android:id="@+id/number"/>
+            app:layout_constraintEnd_toStartOf="@id/timeElapse"
+            app:layout_constraintStart_toEndOf="@+id/currentTurn"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/name"
+            style="@style/Text.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="45"
+            android:text="Pepito"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/number"
-            app:layout_constraintTop_toBottomOf="@id/number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="45"
-            style="@style/Text.Small"
-            android:text="Pepito"
-            android:id="@+id/name"/>
+            app:layout_constraintTop_toBottomOf="@id/number" />
 
 
         <TextView
+            android:id="@+id/state"
+            style="@style/Text.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="45"
-            style="@style/Text.Small"
             android:layout_marginTop="5dp"
-            android:text="State"
-            android:id="@+id/state"/>
+            android:layout_weight="45"
+            android:text="State" />
     </LinearLayout>
 
 
     <Chronometer
         android:id="@+id/timeElapse"
-        android:gravity="end"
+        style="@style/Text.Green"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/numberContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/Text.Green"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="end"
         android:text="10:02"
-    />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numberContainer"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/finish"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:gravity="end|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numberContainer"
+        app:layout_constraintTop_toBottomOf="@+id/timeElapse">
 
+      <include
+          android:id="@+id/progressContainer"
+          layout="@layout/view_active_progress"/>
 
+    </LinearLayout>
 
-
-    
 
 </androidx.constraintlayout.widget.ConstraintLayout>

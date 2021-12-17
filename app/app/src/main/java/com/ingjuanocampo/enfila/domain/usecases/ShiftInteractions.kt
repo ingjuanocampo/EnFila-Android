@@ -2,6 +2,7 @@ package com.ingjuanocampo.enfila.domain.usecases
 
 import com.ingjuanocampo.enfila.domain.entity.*
 import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
+import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.base.Repository
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.map
 
 class ShiftInteractions(
     private val shiftRepository: ShiftRepository
-    , private val clientRepository: Repository<Client>) {
+    , private val clientRepository: ClientRepository) {
 
     fun active(current: Shift?): Flow<Boolean> {
         return updateShiftTo(current, ShiftState.CALLING)
@@ -58,6 +59,7 @@ class ShiftInteractions(
     }
 
     fun finish(shiftToFinish: Shift?): Flow<Boolean> {
+        shiftToFinish?.endDate = getNow()
         return updateShiftTo(shiftToFinish, ShiftState.FINISHED)
     }
 }

@@ -22,7 +22,6 @@ class FragmentListItems : Fragment() {
         fun newInstance() = FragmentListItems()
     }
 
-
     private lateinit var adapter: CompositeDelegateAdapter
     val viewModel: ViewModelListItems by viewModels()
 
@@ -33,7 +32,6 @@ class FragmentListItems : Fragment() {
         return inflater.inflate(R.layout.fragment_list_items, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recycler: RecyclerView = view.findViewById(R.id.recycler)
@@ -41,15 +39,17 @@ class FragmentListItems : Fragment() {
         adapter = CompositeDelegateAdapter(1).apply {
             appendDelegate(
                 ViewTypes.SHIFT.ordinal
-            ) { DelegateShift(it) }
+            ) { DelegateShift(it, ::stopListener) }
         }
         recycler.addItemDecoration(DividerItemDecoration(requireContext(), OrientationHelper.VERTICAL))
         recycler.adapter = adapter
         viewModel.state.observe(viewLifecycleOwner, Observer {
             adapter.addNewItems(it)
         })
-
         viewModel.load()
+    }
+
+    fun stopListener(id: String) {
 
     }
 }

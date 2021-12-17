@@ -7,6 +7,7 @@ import com.ingjuanocampo.cdapter.DelegateViewHolder
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.databinding.DelegateActiveTurnBinding
 import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
+import com.ingjuanocampo.enfila.android.utils.set
 
 class DelegateActiveShift(val parent: ViewGroup,
                           private val biding : DelegateActiveTurnBinding = DelegateActiveTurnBinding.inflate(
@@ -18,15 +19,10 @@ class DelegateActiveShift(val parent: ViewGroup,
         biding.currentNumber.text = recyclerViewType.currentTurn
         biding.clientPhone.text = recyclerViewType.phone
         biding.clientName.text = recyclerViewType.name
-        setProgressVisible(false)
-        biding.finish.setOnClickListener {
-            setProgressVisible(true)
-            listener.invoke(recyclerViewType.id)
-        }
+
+        biding.progressContainer.set(listener, recyclerViewType.id)
+
     }
 
-    private fun setProgressVisible(isProgressVisible: Boolean) {
-        biding.progress.isVisible = isProgressVisible
-        biding.stopButton.isVisible = !isProgressVisible
-    }
+
 }

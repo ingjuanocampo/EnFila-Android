@@ -18,6 +18,8 @@ class DomainModule(private val context: Context) {
     fun providesShiftInteractions(): ShiftInteractions =
         ShiftInteractions(dataModule.shiftsRepository, dataModule.clientRepository)
 
+    fun provideClientRepository() = dataModule.clientRepository
+
     fun provideHomeUC() = HomeUC(
         dataModule.companySiteRepository, dataModule.userRepository, dataModule.shiftsRepository,
         providesShiftInteractions()

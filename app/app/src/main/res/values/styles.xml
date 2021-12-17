@@ -20,6 +20,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Bold.Green">
+        <item name="android:textColor">@color/green_light</item>
+    </style>
+
     <style name="Text.Large">
         <item name="android:textSize">@dimen/text_large</item>
     </style>
@@ -60,7 +64,7 @@
 
 
     <style name="Text.Green">
-        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:textColor">@color/green_light</item>
     </style>
 
     <style name="Text.Small">
