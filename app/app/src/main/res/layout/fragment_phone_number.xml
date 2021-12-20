@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@color/primaryDarkColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingVertical="20dp"
     tools:context=".assignation.fragment.FragmentNameNote">
 
     <TextView
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,8 +23,9 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_margin="20dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
+        android:textColorHint="@color/primaryHintColor"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title">
 
         <EditText
-            style="@style/Text.Extra.Bold"
+            style="@style/Text.Extra.Bold.PrimaryColor"
             android:id="@+id/phoneNumber"
             android:hint="@string/Telefono"
             android:layout_width="match_parent"

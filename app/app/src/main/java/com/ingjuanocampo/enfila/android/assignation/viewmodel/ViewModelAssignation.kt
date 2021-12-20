@@ -6,7 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.di.domain.DomainModule
+import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.withContext
 
 class ViewModelAssignation : ViewModel() {
 
@@ -15,13 +18,22 @@ class ViewModelAssignation : ViewModel() {
     var closestTurn = 0
 
     private val shiftInteractions = AppComponent.domainModule.providesShiftInteractions()
+    private val clientRepository: ClientRepository = AppComponent.domainModule.provideClientRepository()
     val assignationState: MutableLiveData<AssignationState> = MutableLiveData(AssignationState.IDLE)
 
     var phoneNumber: String = ""
         set(value) {
             if (value.isNotEmpty() && value.count() == 10) {
                 field = value
-                assignationState.value = AssignationState.NumberSet
+                launchGeneral {
+                    val client = clientRepository.getById(value)
+                    if (client != null) {
+                        withContext(Dispatchers.Main) {
+                            name = client.name!!
+                        }
+                    }
+                    assignationState.postValue(AssignationState.NumberSet)
+                }
             }
         }
     var name: String = ""

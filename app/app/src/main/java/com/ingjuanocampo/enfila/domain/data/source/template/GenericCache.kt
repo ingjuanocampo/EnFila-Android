@@ -16,15 +16,14 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
     }
 
     override suspend fun save(data: List<T>) {
-
         data.forEach {
             cacheList[it.id] = it
         }
         shareCacheFlow.emit(getData())
-        //shareCacheFlow.emitInContext(getData())
     }
 
-    override fun getData(): List<T> = cacheList.values.toList()
+    override fun getData(): List<T> =
+        cacheList.values.toList()
 
     override fun observeData(): Flow<List<T>> {
         return merge(flow {

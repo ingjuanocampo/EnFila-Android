@@ -2,6 +2,7 @@ package com.ingjuanocampo.enfila.domain.usecases
 
 import com.ingjuanocampo.enfila.domain.entity.*
 import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
+import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.base.Repository
 import kotlinx.coroutines.flow.Flow
@@ -11,31 +12,19 @@ import kotlinx.coroutines.flow.map
 
 class ShiftInteractions(
     private val shiftRepository: ShiftRepository
-    , private val clientRepository: Repository<Client>) {
+    , private val clientRepository: ClientRepository) {
 
-    fun next(current: Shift?): Flow<ShiftWithClient?> {
-        return flowOf(current).flatMapLatest { current ->
+    fun active(current: Shift?): Flow<Boolean> {
+        return updateShiftTo(current, ShiftState.CALLING)
+    }
+
+    private fun updateShiftTo(shift: Shift?, state: ShiftState): Flow<Boolean> {
+        return flowOf(shift?.copy()).flatMapLatest { current ->
             current?.let {
                 updateShift(it.apply {
                     endDate = getNow()
-                }, ShiftState.FINISHED)
-            } ?: flowOf(null)
-        }.map {
-            val closestShift = shiftRepository.loadAllData()?.sortedBy { it.number }?.firstOrNull { it.state == ShiftState.WAITING }
-            closestShift?.state = ShiftState.CALLING
-
-            closestShift
-        }.flatMapLatest { closestShift ->
-            closestShift?.let {
-                shiftRepository.updateData(it).map { closestShift }
-            } ?: flowOf(null)
-        }.map { closestShift ->
-            closestShift?.let {
-                ShiftWithClient(
-                    it,
-                    clientRepository.loadById(it.contactId)!!
-                )
-            }
+                }, state).map { true }
+            } ?: flowOf(false)
         }
     }
     
@@ -63,5 +52,14 @@ class ShiftInteractions(
         return clientRepository.updateData(client).flatMapLatest {
             shiftRepository.updateData((ShiftFactory.createWaiting(tunr, client.id, note?: "", shiftRepository.id)))
         }
+    }
+
+    fun cancel(shiftToCancel: Shift?): Flow<Boolean> {
+        return updateShiftTo(shiftToCancel, ShiftState.CANCELLED)
+    }
+
+    fun finish(shiftToFinish: Shift?): Flow<Boolean> {
+        shiftToFinish?.endDate = getNow()
+        return updateShiftTo(shiftToFinish, ShiftState.FINISHED)
     }
 }

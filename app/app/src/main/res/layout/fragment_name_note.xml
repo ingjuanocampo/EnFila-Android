@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/bottom_bar_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:background="@color/secondaryColor"
+    tools:background="@color/primaryDarkColor"
+    android:paddingVertical="20dp"
     tools:context=".assignation.fragment.FragmentNameNote">
 
     <TextView
@@ -28,6 +29,7 @@
         android:layout_marginEnd="@dimen/margin_medium"
         android:layout_marginTop="20dp"
         android:id="@+id/nameContainer"
+        android:textColorHint="@color/primaryHintColor"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title">
 
         <EditText
-            style="@style/Text.Extra.Bold"
+            style="@style/Text.Extra.Bold.PrimaryColor"
             android:id="@+id/nameEd"
             android:hint="@string/name"
             android:layout_width="match_parent"
@@ -46,6 +48,8 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
+        android:textColorHint="@color/primaryHintColor"
+        style="@style/Text.PrimaryColor"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
         android:id="@+id/noteEd"

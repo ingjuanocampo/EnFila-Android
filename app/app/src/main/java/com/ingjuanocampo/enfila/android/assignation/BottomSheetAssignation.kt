@@ -20,7 +20,6 @@ import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignati
 
 class BottomSheetAssignation: BottomSheetDialogFragment() {
 
-
     private val navController by lazy { findNavController(this) }
     private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { this })
 

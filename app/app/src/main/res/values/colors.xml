@@ -10,23 +10,35 @@
 <!--    -->
 
 
-    <color name="colorText1">#FFFFFF</color>
-    <color name="colorText2">#FDBE82</color>
-    <color name="colorText3">#DEEADE</color>
-    <color name="colorText4">#f43b53</color>
+    <color name="gray_no_used">#DEEADE</color>
 
-    <color name="selectedButton">#ff3d00</color>
+    <color name="selectedButton">#ffffa428</color>
     <color name="unSelectedButton">#FFFFFF</color>
 
-    <color name="primaryColor">#222E76</color>
+
+    <color name="primaryColor">#FFFFFF</color>
+    <color name="primaryLightColor">#F5F5F5</color>
+    <color name="primaryDarkColor">#222E76</color>
+    <color name="white">#FFFFFF</color>
+
+  <!--  <color name="primaryColor">#222E76</color>
     <color name="primaryLightColor">#222E76</color>
-    <color name="primaryDarkColor">#2D3A88</color>
+    <color name="primaryDarkColor">#2D3A88</color>-->
+
+
     <color name="secondaryColor">#f43b53</color>
-    <color name="secondaryLightColor">#FDBE82</color>
+    <color name="secondaryLightColor">#ffffa428</color>
     <color name="secondaryDarkColor">#c43e00</color>
-    <color name="primaryTextColor">#FFFFFF</color>
-    <color name="secondaryTextColor">#546e7a</color>
+    <color name="primaryTextColor">#546e7a</color>
+    <color name="secondaryTextColor">#FFFFFF</color>
     <color name="transparent_black">#80000000</color>
+    <color name="transparent_gray">#31000000</color>
+    <color name="primaryHintColor">#c9FFFFFF</color>
+    <color name="green_light">#65E46A</color>
+
+
+    <color name="orange_translucent">#c43e00</color>
+    <color name="orange">#f43b53</color>
 
 
 </resources>

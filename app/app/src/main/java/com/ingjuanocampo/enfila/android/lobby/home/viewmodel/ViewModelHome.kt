@@ -3,49 +3,44 @@ package com.ingjuanocampo.enfila.android.lobby.home.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ingjuanocampo.enfila.domain.state.home.HomeState
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
-import com.ingjuanocampo.enfila.domain.di.domain.DomainModule
-import com.ingjuanocampo.enfila.domain.usecases.model.Home
-import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
 import kotlinx.coroutines.flow.collect
 
 class ViewModelHome : ViewModel() {
 
     private val homeUC = AppComponent.domainModule.provideHomeUC()
+    private val finishShiftUC = AppComponent.domainModule.provideFinishUC()
     val state = MutableLiveData<HomeState>()
 
     fun loadCurrentTurn() {
         viewModelScope.launchGeneral {
             state.postValue(HomeState.Loading)
             homeUC.load().collect {
-                state.postValue(HomeState.HomeLoaded(it))
+                state.postValue(it)
             }
 
         }
     }
 
-    private fun updateCurrentTurn(currentTurn: ShiftWithClient?) {
-        if (currentTurn!= null) {
-            state.postValue(HomeState.CurrentTurn(currentTurn))
-        } else {
-            state.postValue(HomeState.Empty)
-        }
-    }
-
-    fun next() {
+    fun finish(id: String) {
         viewModelScope.launchGeneral {
-            homeUC.next().collect {
-                updateCurrentTurn(it)
-            }
+            finishShiftUC.invoke(id).collect {  }
         }
     }
 
-}
 
-sealed class HomeState {
-    object Loading: HomeState()
-    object Empty: HomeState()
-    data class HomeLoaded(val home: Home) : HomeState()
-    data class CurrentTurn(val shift: ShiftWithClient) : HomeState()
+    fun cancel(id: String) {
+        viewModelScope.launchGeneral {
+            homeUC.cancel(id).collect {  }
+        }
+    }
+
+    fun next(id: String) {
+        viewModelScope.launchGeneral {
+            homeUC.next(id).collect {  }
+        }
+    }
+
 }

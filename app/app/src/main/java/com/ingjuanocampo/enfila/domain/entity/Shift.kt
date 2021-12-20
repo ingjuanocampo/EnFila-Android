@@ -3,7 +3,7 @@ package com.ingjuanocampo.enfila.domain.entity
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import java.util.*
 
-class Shift internal constructor(
+data class Shift internal constructor(
     val date: Long,
     override val id: String = EMPTY_STRING,
     val parentCompanySite: String,

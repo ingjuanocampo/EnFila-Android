@@ -1,112 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:background="@color/primaryDarkColor"
     tools:context=".assignation.fragment.FragmentNameNote">
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:gravity="center"
         android:id="@+id/title"
+        style="@style/Text.Extra.Bold.Color2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Asignar numero\n de turno"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/Text.Extra.Bold.Color2"
-        android:text="Asignar numero\n de turno"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
         android:id="@+id/summaryContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Text"
         android:layout_margin="@dimen/margin_medium"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="Pepito">
 
         <TextView
+            android:id="@+id/nameTv"
+            style="@style/Text.PrimaryColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Pepito"
-            style="@style/Text.Large"
-            android:id="@+id/nameTv"/>
+            tools:text="Pepito" />
 
         <TextView
-            android:layout_marginTop="5dp"
+            android:id="@+id/phoneTv"
+            style="@style/Text.PrimaryColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="3436550994"
-            style="@style/Text.Large"
-            android:id="@+id/phoneTv"/>
+            android:layout_marginTop="5dp"
+            tools:text="3436550994" />
 
         <TextView
-            android:layout_marginTop="5dp"
+            android:id="@+id/notesTv"
+            style="@style/Text.PrimaryColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Pepito"
-            style="@style/Text.Large"
+            android:layout_marginTop="5dp"
             android:lines="1"
-            android:id="@+id/notesTv"/>
+            tools:text="Pepito" />
 
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="@dimen/margin_medium"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/summaryContainer">
 
         <TextView
-            android:gravity="center"
-            style="@style/Text.Extra.Bold"
             android:id="@+id/turnEd"
-            android:hint="Turno"
-            android:digits="0123456789"
-            android:inputType="number"
-            android:textSize="@dimen/text_extra_large"
+            style="@style/Text.Extra.Bold.Color2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:text="08"
-            />
+            android:digits="0123456789"
+            android:gravity="center"
+            android:hint="Turno"
+            android:inputType="number"
+            android:textSize="@dimen/text_extra_large"
+            tools:text="08" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <ImageView
-        android:layout_margin="10dp"
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
         android:src="@drawable/ic_arrow_back"
-        android:text="Regresar"/>
+        android:text="Regresar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Asignar"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Asignar"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
