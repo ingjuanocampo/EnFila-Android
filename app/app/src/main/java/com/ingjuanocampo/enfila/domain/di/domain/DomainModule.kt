@@ -17,7 +17,7 @@ class DomainModule(private val context: Context) {
     private val dataModule by lazy { DataModule(context) }
 
     fun providesShiftInteractions(): ShiftInteractions =
-        ShiftInteractions(dataModule.shiftsRepository, dataModule.clientRepository)
+        ShiftInteractions(dataModule.shiftsRepository, dataModule.clientRepository, dataModule.messageModule.repository)
 
     fun provideClientRepository() = dataModule.clientRepository
 

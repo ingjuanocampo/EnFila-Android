@@ -18,6 +18,8 @@ internal const val constraintLayoutVersion = "2.1.0"
 internal const val picassoVersion = "2.71828"
 internal const val architectureComponentVersion = "2.2.0"
 
+internal const val retrofitVersion = "2.9.0"
+
 // Unit tests
 internal const val mockitoVersion = "2.13.0"
 internal const val junitVersion = "4.12"

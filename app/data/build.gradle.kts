@@ -3,7 +3,7 @@ import Android.minAndroidSdkVersion
 import dependencies.*
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     kotlin("kapt")
 }
@@ -11,29 +11,15 @@ plugins {
 android {
     compileSdkVersion(compileAndroidSdkVersion)
     defaultConfig {
-        applicationId = "com.ingjuanocampo.enfila.android"
         minSdkVersion(minAndroidSdkVersion)
         targetSdkVersion(compileAndroidSdkVersion)
-        versionCode = 1
-        versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-    }
-
-    buildFeatures {
-        viewBinding = true
     }
 
     // For Kotlin projects
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -42,14 +28,8 @@ android {
 }
 
 dependencies {
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
-    appDependencies()
-    fireStore()
-    dataStore()
-    coroutinesWithAndroid()
-    architectureComponents()
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    retrofit()
 
 }
-
-apply(plugin = "com.google.gms.google-services")

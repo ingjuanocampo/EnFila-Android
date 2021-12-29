@@ -2,6 +2,7 @@ package base
 
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 fun DependencyHandler.classpath(dependency: String): Dependency? =
     add("classpath", dependency)

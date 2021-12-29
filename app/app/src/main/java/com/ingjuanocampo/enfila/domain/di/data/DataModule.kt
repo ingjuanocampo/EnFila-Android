@@ -1,6 +1,7 @@
 package com.ingjuanocampo.enfila.domain.di.data
 
 import android.content.Context
+import com.enfila.data.messaging.di.MessagingModule
 import com.ingjuanocampo.enfila.data.source.client.ClientRemoteSourceFB
 import com.ingjuanocampo.enfila.data.source.companysite.CompanyInfoRemoteSource
 import com.ingjuanocampo.enfila.data.source.shifts.ShiftsRemoteSourceFirebase
@@ -47,5 +48,7 @@ class DataModule(private val context: Context) {
             localSource = ShiftLocalSourceGenericCache()
         )
     }
+
+    val messageModule = MessagingModule()
 
 }
