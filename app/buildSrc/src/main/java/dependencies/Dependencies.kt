@@ -15,6 +15,11 @@ object Dependencies {
 
     const val picasso = "com.squareup.picasso:picasso:$picassoVersion"
 
+    const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    const val gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    const val gson = "com.google.code.gson:gson:2.8.8"
+
+
     const val extensions =  "androidx.lifecycle:lifecycle-extensions:$architectureComponentVersion"
     const val viewModel =  "androidx.lifecycle:lifecycle-viewmodel-ktx:$architectureComponentVersion"
     const val liveDataLifeCycle = "androidx.lifecycle:lifecycle-runtime-ktx:$architectureComponentVersion"
@@ -38,8 +43,8 @@ object Dependencies {
     const val firebaseAuth = "com.google.firebase:firebase-auth:21.0.1"
     const val firebaseStore = "com.google.firebase:firebase-firestore-ktx:23.0.4"
 
+
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
-    const val gson = "com.google.code.gson:gson:2.8.8"
 
 }
 
@@ -61,9 +66,15 @@ fun DependencyHandler.kotlinClassPath() {
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 }
 
+fun DependencyHandler.retrofit() {
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.gsonConverter)
+    //implementation(Dependencies.gson)
+}
+
 fun DependencyHandler.dataStore() {
     implementation(Dependencies.dataStore)
-    implementation(Dependencies.gson)
+   // implementation(Dependencies.gson)
 }
 
 fun DependencyHandler.fireStore() {
@@ -72,6 +83,7 @@ fun DependencyHandler.fireStore() {
     implementation(Dependencies.firebaseStore)
 
 }
+
 fun DependencyHandler.dagger() {
     implementation(Dependencies.dagger)
     kotlinImplementation(Dependencies.daggerCompiler)
@@ -127,6 +139,7 @@ fun DependencyHandler.uiCommons() {
     implementation(Dependencies.recyclerView)
     implementation(Dependencies.androidCore)
     implementation(Dependencies.composeAdapter)
+    projectImplementation(":data")
 
 }
 

@@ -5,14 +5,13 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.AppEnFila
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 val handler = CoroutineExceptionHandler { _, exception ->
     Log.e("GeneralError", "got ${exception.stackTrace}")
-    Toast.makeText(AppEnFila.context, "General Error ${exception.localizedMessage}", Toast.LENGTH_LONG).show()
+    GlobalScope.launch (Dispatchers.Main) { // Bad practice just for testing
+        Toast.makeText(AppEnFila.context, "General Error ${exception.localizedMessage}", Toast.LENGTH_LONG).show()
+    }
 }
 
 fun CoroutineScope.launchGeneral(function: suspend () -> Unit) {
