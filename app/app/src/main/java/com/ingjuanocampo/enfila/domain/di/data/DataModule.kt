@@ -2,6 +2,9 @@ package com.ingjuanocampo.enfila.domain.di.data
 
 import android.content.Context
 import com.enfila.data.messaging.di.MessagingModule
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.ingjuanocampo.enfila.data.source.client.ClientRemoteSourceFB
 import com.ingjuanocampo.enfila.data.source.companysite.CompanyInfoRemoteSource
 import com.ingjuanocampo.enfila.data.source.shifts.ShiftsRemoteSourceFirebase
@@ -21,8 +24,19 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.base.Repository
 
-class DataModule(private val context: Context) {
+class DataModule(private val context: Context,) {
 
+
+    private val remoteConfig = Firebase.remoteConfig
+
+    init {
+        remoteConfig.run {
+            setConfigSettingsAsync(remoteConfigSettings {
+                minimumFetchIntervalInSeconds = 20
+            })
+            fetchAndActivate()
+        }
+    }
 
     val userRepository: UserRepository by lazy {
         UserRepositoryImpl(UserRemoteImpl(UserRemoteSource()), UserLocalSource(context))
@@ -49,6 +63,8 @@ class DataModule(private val context: Context) {
         )
     }
 
-    val messageModule = MessagingModule()
+    val messageModule = MessagingModule() {
+        Pair(remoteConfig.getString("twilio_token"), remoteConfig.getString("twilio_sid"))
+    }
 
 }

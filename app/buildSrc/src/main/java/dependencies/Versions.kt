@@ -27,4 +27,4 @@ internal const val androidRunnerVersion = "1.1.1"
 internal const val androidEspresso = "3.1.1"
 
 internal const val ANDROID_RED_VELVELT = 30
-internal const val ANDROID_LOLLIPOP = 21
+internal const val ANDROID_OREO = 26

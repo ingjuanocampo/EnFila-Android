@@ -1,7 +1,6 @@
 package com.ingjuanocampo.enfila.domain.di.domain
 
 import android.content.Context
-import com.ingjuanocampo.enfila.domain.Platform
 import com.ingjuanocampo.enfila.domain.di.data.DataModule
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.FinishShiftUC

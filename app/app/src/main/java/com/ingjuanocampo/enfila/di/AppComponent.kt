@@ -9,8 +9,8 @@ import com.ingjuanocampo.enfila.domain.di.domain.DomainModule
 import com.ingjuanocampo.enfila.domain.state.AppState
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 
-object AppComponent {
 
+object AppComponent {
 
     @SuppressLint("StaticFieldLeak")
     lateinit var domainModule: DomainModule
