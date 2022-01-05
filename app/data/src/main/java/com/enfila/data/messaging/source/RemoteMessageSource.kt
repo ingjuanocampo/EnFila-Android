@@ -4,18 +4,13 @@ import com.enfila.data.messaging.source.network.TwilioApi
 import com.enfila.data.messaging.source.network.rest.TwilioMessageResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 
-private val ACCOUNT_SID = "AC18b5f78b3657180e449ee434e37b96b8"
-private val AUTH_TOKEN = "c81baf6543ef1a9c8f5304ca396c22fa"
-private val ENCODED_TOKEN = "QUMxOGI1Zjc4YjM2NTcxODBlNDQ5ZWU0MzRlMzdiOTZiODpjODFiYWY2NTQzZWYxYTljOGY1MzA0Y2EzOTZjMjJmYQ==" // (Account id + auth token) Encoded in base64
-private val TOKEN = "Basic $ENCODED_TOKEN"
-
-class RemoteMessageSource {
+class RemoteMessageSource(private val fetchCredentials: () -> Pair<String, String>) {
 
     private var api: TwilioApi
     init {
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.twilio.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -25,7 +20,18 @@ class RemoteMessageSource {
     }
 
     suspend fun sendMessage(to: String, from: String, body: String): TwilioMessageResponse {
-        return api.postMessage(TOKEN, ACCOUNT_SID, to, from, body)
+        val credentials = fetchCredentials()
+
+        val token = "${credentials.second}:${credentials.first}"
+        val tokenEncode =  Base64.getEncoder().encodeToString(token.toByteArray())
+        // (Account id:auth token) Encoded in base64
+
+
+        return api.postMessage(auth = "Basic $tokenEncode",
+            accountId = credentials.second,
+            to = to,
+            from = from,
+            body = body)
     }
 
 
