@@ -30,7 +30,7 @@ class DomainModule(private val context: Context) {
     fun provideLoadInitialInfo() =
         LoadInitialInfoUC(dataModule.userRepository, dataModule.shiftsRepository, dataModule.companySiteRepository, dataModule.clientRepository)
 
-    fun provideListUC() = ListUC(dataModule.shiftsRepository, providesShiftInteractions())
+    fun provideListUC() = ListUC(dataModule.shiftsRepository, providesShiftInteractions(), dataModule.clientRepository)
 
     fun provideSignUC(appStateProvider: AppStateProvider) = SignInUC(
         dataModule.userRepository,

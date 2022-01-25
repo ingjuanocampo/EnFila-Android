@@ -3,16 +3,21 @@ package com.ingjuanocampo.enfila.domain.usecases.list
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
 import com.ingjuanocampo.enfila.domain.usecases.ShiftInteractions
+import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import kotlinx.coroutines.flow.map
 
 class ListUC(
     private val shiftRepository: ShiftRepository,
-    private val shiftInteractions: ShiftInteractions
+    private val shiftInteractions: ShiftInteractions,
+    private val clientRepository: ClientRepository
 ) {
 
     fun loadActiveShift() = shiftRepository
-        .getAllObserveData().map { shifts ->
+        .getAllObserveData().map {
+            clientRepository.refresh()
+            it
+        }.map { shifts ->
             shifts!!.filter {
                 it.isActive()
             }.map {
@@ -22,7 +27,10 @@ class ListUC(
 
 
     fun loadInactiveShift() = shiftRepository
-        .getAllObserveData().map { shifts ->
+        .getAllObserveData().map {
+            clientRepository.refresh()
+            it
+        }.map { shifts ->
             shifts!!.filter {
                 it.state != ShiftState.WAITING && it.state != ShiftState.CALLING
             }.map {
