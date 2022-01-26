@@ -9,20 +9,18 @@ import androidx.core.view.isVisible
 import com.ingjuanocampo.enfila.android.databinding.ViewActiveProgressBinding
 import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
-import java.util.concurrent.TimeUnit
 
 fun ViewGroup.inflate(layout: Int): View {
     return LayoutInflater.from(context).inflate(layout, this, false)
 }
 
 fun Chronometer.set(shiftItem: ShiftItem) {
-    if (shiftItem.state == ShiftState.CALLING.name || shiftItem.state == ShiftState.WAITING.name) {
+    if (shiftItem.state == ShiftState.WAITING.name) {
         this.base = SystemClock.elapsedRealtime() - shiftItem.geElapsedTime()
         this.start()
     } else {
-        this.base = SystemClock.elapsedRealtime() - shiftItem.geEndElapsedTime()
         this.stop()
-        this.text = shiftItem.getStringEndDate()
+        this.text = "0"
     }
 }
 
