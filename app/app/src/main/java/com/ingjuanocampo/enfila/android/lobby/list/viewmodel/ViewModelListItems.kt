@@ -24,6 +24,10 @@ class ViewModelListItems : ViewModel() {
                     it.mapToUI()
                 }
 
+            }.map {
+                if (isActive) {
+                    it
+                } else it.sortedByDescending { item->  item.endDate }
             }.collect {
                 state.postValue(it)
             }
