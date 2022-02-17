@@ -25,31 +25,38 @@ fun Chronometer.set(shiftItem: ShiftItem) {
             OnChronometerTickListener { chronometer ->
                 var t = SystemClock.elapsedRealtime() - chronometer.base
 
-                val days = TimeUnit.MILLISECONDS.toDays(t)
-                t -= TimeUnit.DAYS.toMillis(days)
-
-                val hours = TimeUnit.MILLISECONDS.toHours(t)
-                t -= TimeUnit.HOURS.toMillis(hours)
-
-                val minutes = TimeUnit.MILLISECONDS.toMinutes(t)
-                t -= TimeUnit.MINUTES.toMillis(minutes)
-
-                val seconds = TimeUnit.MILLISECONDS.toSeconds(t)
-
-                val text =if (days >= 1) {
-                     "${days.completeZero()} Dias ${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
-
-                } else {
-                    "${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
-                }
-
-                chronometer.text = text
+                chronometer.text = t.toDurationText()
             }
 
     } else {
         this.stop()
         this.text = "0"
     }
+}
+
+fun Long.toDurationText(): String {
+
+    var t = this
+    val days = TimeUnit.MILLISECONDS.toDays(t)
+    t -= TimeUnit.DAYS.toMillis(days)
+
+    val hours = TimeUnit.MILLISECONDS.toHours(t)
+    t -= TimeUnit.HOURS.toMillis(hours)
+
+    val minutes = TimeUnit.MILLISECONDS.toMinutes(t)
+    t -= TimeUnit.MINUTES.toMillis(minutes)
+
+    val seconds = TimeUnit.MILLISECONDS.toSeconds(t)
+
+    val text =if (days >= 1) {
+        "${days.completeZero()} Dias ${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
+
+    } else {
+        "${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
+    }
+
+    return text
+
 }
 
 fun Long.completeZero(): String {
