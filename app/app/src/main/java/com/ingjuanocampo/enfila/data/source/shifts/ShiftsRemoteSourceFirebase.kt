@@ -29,7 +29,8 @@ class ShiftsRemoteSourceFirebase {
         number = (it["number"] as Long? ?: 0).toInt(),
         contactId = it["contactId"] as String? ?: EMPTY_STRING,
         notes = it["notes"] as String? ?: EMPTY_STRING,
-        state = getShiftState((it["state"] as Long? ?: 0).toInt())
+        state = getShiftState((it["state"] as Long? ?: 0).toInt()),
+        endDate = it["endDate"] as Long? ?: 0
     )
 
     fun fetchByShiftId(shiftId: String, companyId: String): Flow<Shift?> {
@@ -39,7 +40,8 @@ class ShiftsRemoteSourceFirebase {
     }
 
 
-    private fun getPath(parentCompanySite: String) = "$companyInfoPath/$parentCompanySite/$shiftPath"
+    private fun getPath(parentCompanySite: String) =
+        "$companyInfoPath/$parentCompanySite/$shiftPath"
 
     fun updateData(data: Shift): Flow<Shift?> {
         return remote.uploadProcess({
@@ -60,7 +62,9 @@ class ShiftsRemoteSourceFirebase {
         "number" to it.number,
         "contactId" to it.contactId,
         "notes" to it.notes,
-        "state" to it.state.ordinal)
+        "state" to it.state.ordinal,
+        "endDate" to it.endDate
+    )
 }
 
 

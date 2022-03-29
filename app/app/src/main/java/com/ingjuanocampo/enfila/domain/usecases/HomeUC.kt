@@ -4,6 +4,7 @@ import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.lobby.list.model.HeaderItem
 import com.ingjuanocampo.enfila.android.lobby.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
+import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
@@ -30,6 +31,20 @@ class HomeUC(
 
             if (shifts.isNullOrEmpty().not()) {
 
+
+                // Averange calculation
+
+                val shiftTimes = shifts!!.filter { it.state == ShiftState.FINISHED }.filter { it.endDate != null && it.endDate!! >= 0 && it.endDate!! > it.date }.map {
+                    return@map it.endDate!!.minus(it.date)
+                }
+                var totalTimes = 0L
+                shiftTimes.forEach {
+                    totalTimes += it
+                }
+                val average = (totalTimes/shiftTimes.size).toLong().toDurationText()
+
+                // End of average calculation
+
                 val items = ArrayList<RecyclerViewType>()
 
                 val user = userRepository.getCurrent()
@@ -40,7 +55,7 @@ class HomeUC(
                 val resume = HomeResume(
                     selectedCompany = currentCompany ?: CompanySite(),
                     totalTurns = shiftRepository.loadAllData()!!.filter { it.isActive() }.count(),
-                    avrTime = 388
+                    avrTime = average
                 )
                 resume.totalTurns = shifts!!.size
 

@@ -42,6 +42,7 @@ object Dependencies {
     const val firebaseBom = "com.google.firebase:firebase-bom:28.4.2"
     const val firebaseAuth = "com.google.firebase:firebase-auth:21.0.1"
     const val firebaseStore = "com.google.firebase:firebase-firestore-ktx:23.0.4"
+    const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx:19.2.0"
 
 
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
@@ -50,7 +51,7 @@ object Dependencies {
 
 object Android {
     const val compileAndroidSdkVersion = ANDROID_RED_VELVELT
-    const val minAndroidSdkVersion = ANDROID_LOLLIPOP
+    const val minAndroidSdkVersion = ANDROID_OREO
 }
 
 
@@ -81,7 +82,7 @@ fun DependencyHandler.fireStore() {
     implementation(Dependencies.firebaseBom)
     implementation(Dependencies.firebaseAuth)
     implementation(Dependencies.firebaseStore)
-
+    implementation(Dependencies.firebaseRemoteConfig)
 }
 
 fun DependencyHandler.dagger() {

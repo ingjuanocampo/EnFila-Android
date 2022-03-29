@@ -12,6 +12,7 @@ android {
     compileSdkVersion(compileAndroidSdkVersion)
     defaultConfig {
         applicationId = "com.ingjuanocampo.enfila.android"
+
         minSdkVersion(minAndroidSdkVersion)
         targetSdkVersion(compileAndroidSdkVersion)
         versionCode = 1
@@ -43,7 +44,6 @@ android {
 
 dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-
     appDependencies()
     fireStore()
     dataStore()

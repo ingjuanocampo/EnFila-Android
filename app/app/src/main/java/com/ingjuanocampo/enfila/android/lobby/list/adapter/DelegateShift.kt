@@ -8,6 +8,7 @@ import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.databinding.DelegateShiftBinding
 import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
 import com.ingjuanocampo.enfila.android.utils.set
+import com.ingjuanocampo.enfila.domain.entity.ShiftState
 
 class DelegateShift(
     parent: ViewGroup,
@@ -26,6 +27,8 @@ class DelegateShift(
             name.text = shiftItem.name
             state.text = shiftItem.state
             timeElapse.set(recyclerViewType)
+            timeElapseContainer.isVisible = recyclerViewType.state == ShiftState.WAITING.name
+            issueDate.text = shiftItem.getStringIssueDate()
 
             progressContainer.finish.isVisible = recyclerViewType.isCancellable
             progressContainer.set(listener, recyclerViewType.id)

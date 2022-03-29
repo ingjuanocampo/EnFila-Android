@@ -1,7 +1,6 @@
 package com.ingjuanocampo.enfila.domain.di.domain
 
 import android.content.Context
-import com.ingjuanocampo.enfila.domain.Platform
 import com.ingjuanocampo.enfila.domain.di.data.DataModule
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.FinishShiftUC
@@ -31,7 +30,7 @@ class DomainModule(private val context: Context) {
     fun provideLoadInitialInfo() =
         LoadInitialInfoUC(dataModule.userRepository, dataModule.shiftsRepository, dataModule.companySiteRepository, dataModule.clientRepository)
 
-    fun provideListUC() = ListUC(dataModule.shiftsRepository, providesShiftInteractions())
+    fun provideListUC() = ListUC(dataModule.shiftsRepository, providesShiftInteractions(), dataModule.clientRepository)
 
     fun provideSignUC(appStateProvider: AppStateProvider) = SignInUC(
         dataModule.userRepository,

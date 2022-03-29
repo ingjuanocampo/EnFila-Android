@@ -14,7 +14,7 @@ class DelegateResume(val parent: ViewGroup,
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as HomeResume
-        biding.totalAverageTime.text = "${recyclerViewType.avrTime}"
+        biding.totalAverageTime.text = recyclerViewType.avrTime
         biding.totalInline.text = "" + recyclerViewType.totalTurns
     }
 }

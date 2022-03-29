@@ -30,8 +30,8 @@ data class ShiftItem(val id: String,
         return endDate - issueDate
     }
 
-    fun getStringEndDate(): String {
-        return SimpleDateFormat("hh:mm aa").format(Date(endDate))
+    fun getStringIssueDate(): String {
+        return SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(issueDate))
     }
 
     fun getTotalElapsedTime(): String {
