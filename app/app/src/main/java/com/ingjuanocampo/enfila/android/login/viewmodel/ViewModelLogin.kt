@@ -90,6 +90,7 @@ class ViewModelLogin : ViewModel() {
 
     fun doLogin(activity: Activity) {
         this.activity = activity
+
         viewModelScope.launch {
             val options = PhoneAuthOptions.newBuilder(auth)
                 .setPhoneNumber("+57$phoneNumber") ///.setPhoneNumber("+16505553434")//      // Phone number to verify
