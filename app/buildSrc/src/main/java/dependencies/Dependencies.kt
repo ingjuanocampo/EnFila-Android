@@ -47,11 +47,26 @@ object Dependencies {
 
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
+
+    const val composeUi = "androidx.compose.ui:ui:1.1.1"
+    // Tooling support (Previews, etc.)
+    const val tooling = "androidx.compose.ui:ui-tooling:1.1.1"
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    const val foundationCompose = "androidx.compose.foundation:foundation:1.1.1"
+    // Material Design
+    const val materialCompose = "androidx.compose.material:material:1.1.1"
+    // Material design icons
+    const val iconsMaterialCompose = "androidx.compose.material:material-icons-core:1.1.1"
+    const val iconsMaterialComposeExtended = "androidx.compose.material:material-icons-extended:1.1.1"
+    // Integration with observables
+    const val liveDataCompose = "androidx.compose.runtime:runtime-livedata:1.1.1"
+
+
 }
 
 object Android {
-    const val compileAndroidSdkVersion = ANDROID_RED_VELVELT
-    const val minAndroidSdkVersion = ANDROID_OREO
+    const val compileAndroidSdkVersion = ANDROID_31
+    const val minAndroidSdkVersion = ANDROID_31
 }
 
 
@@ -140,8 +155,18 @@ fun DependencyHandler.uiCommons() {
     implementation(Dependencies.recyclerView)
     implementation(Dependencies.androidCore)
     implementation(Dependencies.composeAdapter)
+    compose()
     projectImplementation(":data")
+}
 
+fun DependencyHandler.compose() {
+    implementation(Dependencies.composeUi)
+    implementation(Dependencies.tooling)
+    implementation(Dependencies.foundationCompose)
+    implementation(Dependencies.materialCompose)
+    implementation(Dependencies.iconsMaterialCompose)
+    implementation(Dependencies.iconsMaterialComposeExtended)
+    implementation(Dependencies.liveDataCompose)
 }
 
 
