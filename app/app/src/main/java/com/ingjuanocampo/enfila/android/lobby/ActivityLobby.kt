@@ -9,7 +9,7 @@ import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.lobby.history.FragmentHistory
 import com.ingjuanocampo.enfila.android.lobby.home.FragmentHome
 import com.ingjuanocampo.enfila.android.lobby.list.FragmentListItems
-import com.ingjuanocampo.enfila.android.lobby.profile.FragmentProfile
+import com.ingjuanocampo.enfila.android.login.new_account.FragmentNewCompany
 import com.ingjuanocampo.enfila.android.lobby.tips.FragmentTips
 import com.ingjuanocampo.enfila.android.menu.BottomMenuBuilder
 
@@ -21,7 +21,7 @@ class ActivityLobby: AppCompatActivity() {
             .appendItem(fragmentFactory = { FragmentListItems.newInstance() }, icon = getDrawable(R.drawable.ic_format_list), title = "Turnos")
             .appendItem(fragmentFactory = { FragmentHome.newInstance() }, icon = getDrawable(R.drawable.ic_home), title = "Panel", default = true)
             .appendItem(fragmentFactory = { FragmentHistory.newInstance() }, icon = getDrawable(R.drawable.ic_history), title = "Historial")
-            .appendItem(fragmentFactory = { FragmentProfile.newInstance() }, icon = getDrawable(R.drawable.ic_account), title = "Profile")
+            .appendItem(fragmentFactory = { FragmentNewCompany.newInstance() }, icon = getDrawable(R.drawable.ic_account), title = "Profile")
 
     }
 

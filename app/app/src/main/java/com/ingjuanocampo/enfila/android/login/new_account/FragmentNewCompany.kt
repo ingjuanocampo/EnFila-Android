@@ -1,4 +1,4 @@
-package com.ingjuanocampo.enfila.android.lobby.profile
+package com.ingjuanocampo.enfila.android.login.new_account
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,17 +10,17 @@ import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.ingjuanocampo.enfila.android.R
-import com.ingjuanocampo.enfila.android.lobby.profile.viewmodel.ProfileState
-import com.ingjuanocampo.enfila.android.lobby.profile.viewmodel.ViewModelFragmentProfile
+import com.ingjuanocampo.enfila.android.login.new_account.viewmodel.ProfileState
+import com.ingjuanocampo.enfila.android.login.new_account.viewmodel.ViewModelFragmentProfile
 import com.ingjuanocampo.enfila.android.login.fragment.showToast
 import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
 
-class FragmentProfile : Fragment() {
+class FragmentNewCompany : Fragment() {
 
     companion object {
-        fun newInstance() = FragmentProfile()
-        fun newInstance(phone: String, id : String) = FragmentProfile().apply {
+        fun newInstance() = FragmentNewCompany()
+        fun newInstance(phone: String, id : String) = FragmentNewCompany().apply {
             val arguments = Bundle()
             arguments.putString("phone", phone)
             arguments.putString("id", id)
