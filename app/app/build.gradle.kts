@@ -1,5 +1,6 @@
 import Android.compileAndroidSdkVersion
 import Android.minAndroidSdkVersion
+import base.implementation
 import dependencies.*
 
 plugins {
@@ -45,6 +46,7 @@ android {
 dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     appDependencies()
+    implementation(platform(Dependencies.firebaseBom))
     fireStore()
     dataStore()
     coroutinesWithAndroid()

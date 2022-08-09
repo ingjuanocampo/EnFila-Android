@@ -29,7 +29,7 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
         return merge(flow {
             val observerChannel = Channel<Unit>(Channel.CONFLATED)
 
-            observerChannel.offer(Unit) // Initial signal to perform first query.
+            observerChannel.trySend(Unit) // Initial signal to perform first query.
 
             try {
                 // Iterate until cancelled, transforming observer signals to query results to
