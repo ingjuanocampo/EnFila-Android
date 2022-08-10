@@ -29,6 +29,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     // For Kotlin projects
@@ -40,6 +41,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
 }
 

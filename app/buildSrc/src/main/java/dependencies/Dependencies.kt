@@ -148,7 +148,7 @@ fun DependencyHandler.architectureComponents() {
 }
 
 fun DependencyHandler.uiCommons() {
-    implementation(Dependencies.picasso)
+    //implementation(Dependencies.picasso) non compatible with latest gradle
     implementation(Dependencies.appCompat)
     implementation(Dependencies.kotlinStdlib)
     implementation(Dependencies.constraitLayout)
