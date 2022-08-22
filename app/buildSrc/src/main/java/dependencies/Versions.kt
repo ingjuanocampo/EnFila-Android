@@ -10,7 +10,7 @@ internal const val coroutinesVersion = "1.6.4"
 internal const val coreVersion ="1.6.0"
 internal const val recyclerViewXVersion = "1.2.1"
 internal const val androidLegacyXVersion = "1.0.0"
-internal const val materialVersion = "1.4.0"
+internal const val materialVersion = "1.6.1"
 internal const val navigationComponent = "2.3.5"
 
 
@@ -26,4 +26,4 @@ internal const val junitVersion = "4.12"
 internal const val androidRunnerVersion = "1.1.1"
 internal const val androidEspresso = "3.1.1"
 
-internal const val ANDROID_31 = 31
+internal const val ANDROID_32 = 32

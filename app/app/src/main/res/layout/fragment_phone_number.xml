@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/primaryDarkColor"
+    tools:background="?colorPrimaryContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingVertical="20dp"
     tools:context=".assignation.fragment.FragmentNameNote">
@@ -25,7 +25,6 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
-        android:textColorHint="@color/primaryHintColor"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

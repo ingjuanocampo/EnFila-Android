@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/primaryDarkColor"
+    tools:background="?colorPrimaryContainer"
     tools:context=".assignation.fragment.FragmentNameNote">
 
     <TextView
@@ -33,14 +33,14 @@
 
         <TextView
             android:id="@+id/nameTv"
-            style="@style/Text.PrimaryColor"
+            style="@style/Text.Medium.Bold.SecondaryColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Pepito" />
 
         <TextView
             android:id="@+id/phoneTv"
-            style="@style/Text.PrimaryColor"
+            style="@style/Text.Medium.Bold.SecondaryColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/notesTv"
-            style="@style/Text.PrimaryColor"
+            style="@style/Text.Medium.Bold.SecondaryColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

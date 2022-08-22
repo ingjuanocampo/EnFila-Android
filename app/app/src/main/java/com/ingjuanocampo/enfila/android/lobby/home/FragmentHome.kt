@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.android.lobby.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
 import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.assignation.ActivityAssignation
 import com.ingjuanocampo.enfila.android.assignation.BottomSheetAssignation
 import com.ingjuanocampo.enfila.android.databinding.FragmentHomeBinding
 import com.ingjuanocampo.enfila.android.lobby.home.delegate.*
@@ -65,7 +67,7 @@ class FragmentHome : Fragment() {
         toolbar = view.findViewById(R.id.toolbarWidget)
         setHasOptionsMenu(true)
         viewModel.loadCurrentTurn()
-        viewModel.state.observe(viewLifecycleOwner, {
+        viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 HomeState.Loading -> {
 
@@ -77,14 +79,20 @@ class FragmentHome : Fragment() {
                     adapter.updateItems(it.items)
                 }
             }
-        })
+        }
 
         binding.toolbar.addButton.setOnClickListener {
-            BottomSheetAssignation().apply {
-            }.show(requireActivity().supportFragmentManager, "")
+          startAdditionProcess()
         }
 
 
+    }
+
+    private fun startAdditionProcess() {
+        BottomSheetAssignation().apply {
+        }.show(requireActivity().supportFragmentManager, "")
+
+       // startActivity(Intent(requireContext(), ActivityAssignation::class.java))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -93,8 +101,7 @@ class FragmentHome : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        BottomSheetAssignation().apply {
-        }.show(requireActivity().supportFragmentManager, "")
+       startAdditionProcess()
         return true
     }
 

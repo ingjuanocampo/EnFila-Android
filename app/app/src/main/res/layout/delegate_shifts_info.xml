@@ -17,7 +17,6 @@
         android:id="@+id/bottomContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
         android:columnCount="2"
         android:gravity="center"
         android:orientation="horizontal">
@@ -35,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="# Total de turnos:"
-                android:textColor="@color/secondaryLightColor" />
+                android:textColor="?colorSecondary" />
 
             <TextView
                 android:id="@+id/totalInline"
@@ -61,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Tiempo promedio:"
-                android:textColor="@color/secondaryLightColor" />
+                android:textColor="?colorSecondary"/>
 
             <TextView
                 android:id="@+id/totalAverageTime"

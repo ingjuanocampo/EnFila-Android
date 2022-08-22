@@ -65,8 +65,8 @@ object Dependencies {
 }
 
 object Android {
-    const val compileAndroidSdkVersion = ANDROID_31
-    const val minAndroidSdkVersion = ANDROID_31
+    const val compileAndroidSdkVersion = ANDROID_32
+    const val minAndroidSdkVersion = ANDROID_32
 }
 
 

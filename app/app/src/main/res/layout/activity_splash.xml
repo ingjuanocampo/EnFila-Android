@@ -6,7 +6,7 @@
     android:id="@+id/main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
+    android:background="?colorPrimaryContainer"
     tools:context=".splash.SplashActivity">
 
   <TextView
@@ -19,6 +19,7 @@
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+      style="@style/Text.Medium.Bold.SecondaryColor"
       android:text="@string/app_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
