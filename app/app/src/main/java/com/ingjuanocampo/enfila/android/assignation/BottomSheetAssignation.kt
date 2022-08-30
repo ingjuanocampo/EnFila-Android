@@ -40,7 +40,6 @@ class BottomSheetAssignation: BottomSheetDialogFragment() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_Transparent_Adjust_Resize)
 
     }
     override fun onCreateView(

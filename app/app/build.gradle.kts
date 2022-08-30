@@ -1,5 +1,6 @@
 import Android.compileAndroidSdkVersion
 import Android.minAndroidSdkVersion
+import base.implementation
 import dependencies.*
 
 plugins {
@@ -28,6 +29,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     // For Kotlin projects
@@ -40,11 +42,16 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
+    }
 }
 
 dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     appDependencies()
+    implementation(platform(Dependencies.firebaseBom))
     fireStore()
     dataStore()
     coroutinesWithAndroid()

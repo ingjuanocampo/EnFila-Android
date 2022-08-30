@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentProfile"
-        android:name="com.ingjuanocampo.enfila.android.lobby.profile.FragmentProfile"
+        android:name="com.ingjuanocampo.enfila.android.login.new_account.FragmentNewCompany"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
     </fragment>

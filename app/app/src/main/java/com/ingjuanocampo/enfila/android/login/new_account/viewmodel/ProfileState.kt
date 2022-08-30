@@ -1,4 +1,4 @@
-package com.ingjuanocampo.enfila.android.lobby.profile.viewmodel
+package com.ingjuanocampo.enfila.android.login.new_account.viewmodel
 
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
 

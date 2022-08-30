@@ -17,7 +17,7 @@ object Dependencies {
 
     const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     const val gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    const val gson = "com.google.code.gson:gson:2.8.8"
+    const val gson = "com.google.code.gson:gson:2.9.1"
 
 
     const val extensions =  "androidx.lifecycle:lifecycle-extensions:$architectureComponentVersion"
@@ -27,7 +27,7 @@ object Dependencies {
 
     const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     const val appCompat = "androidx.appcompat:appcompat:$androidXVersion"
-    const val androidCore = "androidx.core:core-ktx:$androidXVersion"
+    const val androidCore = "androidx.core:core-ktx:1.8.0"
     const val constraitLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     const val recyclerView = "androidx.recyclerview:recyclerview:$recyclerViewXVersion"
 
@@ -39,19 +39,34 @@ object Dependencies {
 
     const val composeAdapter = "com.github.ingjuanocampo:CompositeDelegateAdapter:1.0.3"
 
-    const val firebaseBom = "com.google.firebase:firebase-bom:28.4.2"
-    const val firebaseAuth = "com.google.firebase:firebase-auth:21.0.1"
-    const val firebaseStore = "com.google.firebase:firebase-firestore-ktx:23.0.4"
-    const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx:19.2.0"
+    const val firebaseBom = "com.google.firebase:firebase-bom:30.3.1"
+    const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
+    const val firebaseStore = "com.google.firebase:firebase-firestore-ktx"
+    const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"
 
 
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
+
+    const val composeUi = "androidx.compose.ui:ui:1.1.1"
+    // Tooling support (Previews, etc.)
+    const val tooling = "androidx.compose.ui:ui-tooling:1.1.1"
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    const val foundationCompose = "androidx.compose.foundation:foundation:1.1.1"
+    // Material Design
+    const val materialCompose = "androidx.compose.material:material:1.1.1"
+    // Material design icons
+    const val iconsMaterialCompose = "androidx.compose.material:material-icons-core:1.1.1"
+    const val iconsMaterialComposeExtended = "androidx.compose.material:material-icons-extended:1.1.1"
+    // Integration with observables
+    const val liveDataCompose = "androidx.compose.runtime:runtime-livedata:1.1.1"
+
+
 }
 
 object Android {
-    const val compileAndroidSdkVersion = ANDROID_RED_VELVELT
-    const val minAndroidSdkVersion = ANDROID_OREO
+    const val compileAndroidSdkVersion = ANDROID_32
+    const val minAndroidSdkVersion = ANDROID_32
 }
 
 
@@ -75,12 +90,12 @@ fun DependencyHandler.retrofit() {
 
 fun DependencyHandler.dataStore() {
     implementation(Dependencies.dataStore)
-   // implementation(Dependencies.gson)
+    implementation(Dependencies.gson)
 }
 
 fun DependencyHandler.fireStore() {
-    implementation(Dependencies.firebaseBom)
     implementation(Dependencies.firebaseAuth)
+    implementation ("com.google.android.gms:play-services-safetynet:18.0.1")
     implementation(Dependencies.firebaseStore)
     implementation(Dependencies.firebaseRemoteConfig)
 }
@@ -133,15 +148,25 @@ fun DependencyHandler.architectureComponents() {
 }
 
 fun DependencyHandler.uiCommons() {
-    implementation(Dependencies.picasso)
+    //implementation(Dependencies.picasso) non compatible with latest gradle
     implementation(Dependencies.appCompat)
     implementation(Dependencies.kotlinStdlib)
     implementation(Dependencies.constraitLayout)
     implementation(Dependencies.recyclerView)
     implementation(Dependencies.androidCore)
     implementation(Dependencies.composeAdapter)
+    compose()
     projectImplementation(":data")
+}
 
+fun DependencyHandler.compose() {
+    implementation(Dependencies.composeUi)
+    implementation(Dependencies.tooling)
+    implementation(Dependencies.foundationCompose)
+    implementation(Dependencies.materialCompose)
+    implementation(Dependencies.iconsMaterialCompose)
+    implementation(Dependencies.iconsMaterialComposeExtended)
+    implementation(Dependencies.liveDataCompose)
 }
 
 

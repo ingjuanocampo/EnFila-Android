@@ -1,11 +1,10 @@
-import dependencies.ANDROID_OREO
-import dependencies.ANDROID_RED_VELVELT
+import dependencies.ANDROID_32
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import dependencies.*
 
 object Android {
-    const val compileAndroidSdkVersion = ANDROID_RED_VELVELT
-    const val minAndroidSdkVersion = ANDROID_OREO
+    const val compileAndroidSdkVersion = ANDROID_32
+    const val minAndroidSdkVersion = 26
 }
 
 fun DependencyHandler.appDependencies() {
