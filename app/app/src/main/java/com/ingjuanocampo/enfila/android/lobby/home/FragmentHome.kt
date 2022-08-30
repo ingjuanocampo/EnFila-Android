@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
@@ -90,6 +91,7 @@ class FragmentHome : Fragment() {
 
     private fun startAdditionProcess() {
         BottomSheetAssignation().apply {
+            //setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_Dialog_Transparent_Adjust_Resize)
         }.show(requireActivity().supportFragmentManager, "")
 
        // startActivity(Intent(requireContext(), ActivityAssignation::class.java))
