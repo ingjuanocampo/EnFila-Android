@@ -1,8 +1,8 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
 import com.ingjuanocampo.cdapter.RecyclerViewType
-import com.ingjuanocampo.enfila.android.lobby.list.model.HeaderItem
-import com.ingjuanocampo.enfila.android.lobby.list.model.mapToUI
+import com.ingjuanocampo.enfila.android.home.list.model.HeaderItem
+import com.ingjuanocampo.enfila.android.home.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.domain.entity.CompanySite

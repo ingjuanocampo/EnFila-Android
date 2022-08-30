@@ -14,7 +14,7 @@
             android:name=".assignation.ActivityAssignation"
             android:label="@string/title_activity_lobby"/>
         <activity
-            android:name=".lobby.ActivityLobby"
+            android:name=".home.ActivityLobby"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:label="@string/title_activity_lobby"/>
         <activity

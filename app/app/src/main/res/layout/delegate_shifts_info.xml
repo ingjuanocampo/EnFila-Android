@@ -9,7 +9,7 @@
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/card_radius"
     app:cardUseCompatPadding="true"
-    tools:context=".lobby.home.FragmentHome">
+    tools:context=".home.home.FragmentHome">
 
 
     <LinearLayout

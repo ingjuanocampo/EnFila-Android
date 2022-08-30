@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".lobby.home.FragmentHome">
+    tools:context=".home.home.FragmentHome">
 
     <include
         android:id="@+id/toolbar"
