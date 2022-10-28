@@ -31,8 +31,11 @@ object Dependencies {
     const val constraitLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     const val recyclerView = "androidx.recyclerview:recyclerview:$recyclerViewXVersion"
 
+
     const val androidXLegacy = "androidx.legacy:legacy-support-v4:$androidLegacyXVersion"
     const val androidMaterial = "com.google.android.material:material:$materialVersion"
+    const val material3 = "androidx.compose.material3:material3:1.0.0-beta01"
+    const val material3Windows = "androidx.compose.material3:material3-window-size-class:1.0.0-beta01"
 
     const val navigationAndroid = "androidx.navigation:navigation-fragment-ktx:$navigationComponent"
     const val navigationUI = "androidx.navigation:navigation-ui-ktx:$navigationComponent"
@@ -48,6 +51,7 @@ object Dependencies {
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
 
+    const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:$constraintCompose"
     const val composeUi = "androidx.compose.ui:ui:1.1.1"
     // Tooling support (Previews, etc.)
     const val tooling = "androidx.compose.ui:ui-tooling:1.1.1"
@@ -65,8 +69,8 @@ object Dependencies {
 }
 
 object Android {
-    const val compileAndroidSdkVersion = ANDROID_32
-    const val minAndroidSdkVersion = ANDROID_32
+    const val compileAndroidSdkVersion = ANDROID_33
+    const val minAndroidSdkVersion = ANDROID_33
 }
 
 
@@ -116,6 +120,8 @@ fun DependencyHandler.navigationComponent() {
 
 fun DependencyHandler.material() {
     implementation(Dependencies.androidMaterial)
+    implementation(Dependencies.material3)
+    implementation(Dependencies.material3Windows)
     implementation(Dependencies.androidXLegacy)
 }
 
@@ -167,6 +173,7 @@ fun DependencyHandler.compose() {
     implementation(Dependencies.iconsMaterialCompose)
     implementation(Dependencies.iconsMaterialComposeExtended)
     implementation(Dependencies.liveDataCompose)
+    implementation(Dependencies.constraintLayoutCompose)
 }
 
 

@@ -10,14 +10,13 @@ import com.ingjuanocampo.enfila.android.home.profile.domain.ProfileCard
 
 class FragmentProfile: Fragment() {
 
-
     companion object {
         fun newInstance() = FragmentProfile()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
             setContent {
                 ProfileView(
