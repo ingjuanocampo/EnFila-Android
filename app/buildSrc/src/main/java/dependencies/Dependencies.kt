@@ -53,6 +53,7 @@ object Dependencies {
 
     const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:$constraintCompose"
     const val composeUi = "androidx.compose.ui:ui:1.1.1"
+    const val composeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
     // Tooling support (Previews, etc.)
     const val tooling = "androidx.compose.ui:ui-tooling:1.1.1"
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
@@ -167,6 +168,7 @@ fun DependencyHandler.uiCommons() {
 
 fun DependencyHandler.compose() {
     implementation(Dependencies.composeUi)
+    implementation(Dependencies.composeViewModel)
     implementation(Dependencies.tooling)
     implementation(Dependencies.foundationCompose)
     implementation(Dependencies.materialCompose)

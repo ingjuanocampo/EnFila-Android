@@ -118,6 +118,14 @@ internal object TextAppStyles {
     )
 
     @Composable
+    fun BodyTextMediumStyleTernary() = TextStyle(
+        color = MaterialTheme.colorScheme.tertiary,
+        fontSize = 16.sp,
+        fontFamily = SansSerif,
+        fontWeight = FontWeight.Bold
+    )
+
+    @Composable
     fun BodyTextStyle() = TextStyle(
         color = MaterialTheme.colorScheme.secondary,
         fontSize = 14.sp,

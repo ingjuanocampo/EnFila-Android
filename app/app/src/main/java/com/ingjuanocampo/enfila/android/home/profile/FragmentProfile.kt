@@ -19,15 +19,7 @@ class FragmentProfile: Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ProfileView(
-                    ProfileCard(
-                    "User",
-                    "31311231312",
-                    "Company",
-                    "112",
-                    "100"
-                )
-                )
+                ProfileView()
             }
         }
     }

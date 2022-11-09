@@ -6,4 +6,8 @@ data class ProfileCard(
     val email: String,
     val numberClients: String,
     val totalShifts: String,
+    val options: List<OptionCard> = emptyList()
 )
+
+
+data class OptionCard(val icon: Int, val title: String, val callback: ()-> Unit)

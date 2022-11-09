@@ -1,7 +1,6 @@
 package com.ingjuanocampo.enfila.android.home.profile
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,11 +12,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,20 +31,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.home.profile.domain.OptionCard
 import com.ingjuanocampo.enfila.android.home.profile.domain.ProfileCard
+import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileViewModel
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 import com.ingjuanocampo.enfila.android.ui.theme.TextAppStyles.BodyTextMediumStyle
-import com.ingjuanocampo.enfila.android.ui.theme.TextAppStyles.BodyTextMediumStyleError
+import com.ingjuanocampo.enfila.android.ui.theme.TextAppStyles.BodyTextMediumStyleTernary
 import com.ingjuanocampo.enfila.android.ui.theme.TextAppStyles.HeadLineTextStyle
 import com.ingjuanocampo.enfila.android.ui.theme.TextAppStyles.SmallTextStyle
 
 
 @Composable
-fun ProfileView(profile: ProfileCard) {
+fun ProfileView(profileViewModel: ProfileViewModel = viewModel()) {
     AppTheme {
 
-        // Improve theming and load basic info
+        val profile : ProfileCard by profileViewModel.state.collectAsState()
+
         ConstraintLayout(Modifier.fillMaxSize()) {
 
             val (headerRef, bodyRef, logoutRef) = createRefs()
@@ -83,17 +90,18 @@ fun Logout(modifier: Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = 8.dp)
+                .padding(all = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_stop),
+                painter = painterResource(R.drawable.logout),
                 contentDescription = null,
             )
             Text(
-                text = "Total shifts",
+                text = "Log out",
                 textAlign = TextAlign.Start,
                 modifier = Modifier.fillMaxWidth(),
-                style = BodyTextMediumStyleError()
+                style = BodyTextMediumStyleTernary()
             )
         }
     }
@@ -103,73 +111,25 @@ fun Logout(modifier: Modifier) {
 @Composable
 fun ProfileOptions(profile: ProfileCard, modifier: Modifier) {
     Column(
-        modifier = modifier,
-        Arrangement.Top
-    ) {
-        Row(
-            modifier = Modifier.padding(all = 8.dp)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_stop),
-                contentDescription = null,
-            )
-            Text(
-                text = "Total shifts",
-                textAlign = TextAlign.Start,
-                modifier = Modifier.fillMaxWidth(),
-                style = BodyTextMediumStyle()
-            )
-        }
+        modifier = modifier.verticalScroll(rememberScrollState()),
+        Arrangement.Top,
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 8.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.ic_stop),
-                contentDescription = null,
-            )
-            Text(
-                text = "Total shifts",
-                textAlign = TextAlign.Start,
-                modifier = Modifier.fillMaxWidth(),
-                style = BodyTextMediumStyle()
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 8.dp)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_stop),
-                contentDescription = null,
-            )
-            Text(
-                text = "Total shifts",
-                textAlign = TextAlign.Start,
-                modifier = Modifier.fillMaxWidth(),
-                style = BodyTextMediumStyle()
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 8.dp)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_stop),
-                contentDescription = null,
-            )
-            Text(
-                text = "Total shifts",
-                textAlign = TextAlign.Start,
-                modifier = Modifier.fillMaxWidth(),
-                style = BodyTextMediumStyle()
-            )
+        profile.options.forEach {
+            Row(
+                modifier = Modifier.padding(all = 8.dp)
+            ) {
+                Image(
+                    painter = painterResource(it.icon),
+                    contentDescription = null,
+                )
+                Text(
+                    text = it.title,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = BodyTextMediumStyle()
+                )
+            }
         }
     }
 }
@@ -286,12 +246,6 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
 @Preview(device = Devices.PIXEL_4_XL)
 fun ProfilePreview() {
     ProfileView(
-        profile = ProfileCard(
-            "Company Name",
-            "31311231312",
-            "company@gmail.com",
-            "112",
-            "100"
-        )
+
     )
 }
