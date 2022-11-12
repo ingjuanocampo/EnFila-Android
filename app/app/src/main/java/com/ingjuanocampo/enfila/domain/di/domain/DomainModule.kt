@@ -6,6 +6,7 @@ import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.FinishShiftUC
 import com.ingjuanocampo.enfila.domain.usecases.HomeUC
 import com.ingjuanocampo.enfila.domain.usecases.LoadInitialInfoUC
+import com.ingjuanocampo.enfila.domain.usecases.LoadUserProfile
 import com.ingjuanocampo.enfila.domain.usecases.ShiftInteractions
 import com.ingjuanocampo.enfila.domain.usecases.signing.SignInUC
 import com.ingjuanocampo.enfila.domain.usecases.list.ListUC
@@ -45,6 +46,13 @@ class DomainModule(private val context: Context) {
             dataModule.userRepository.isUserLogged()
         }
     }
+
+    fun providesLoadUserProfile() = LoadUserProfile(
+        dataModule.companySiteRepository,
+        dataModule.userRepository,
+        dataModule.shiftsRepository,
+        dataModule.clientRepository
+    )
 
 
 }

@@ -189,7 +189,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                     .padding(all = 4.dp),
             ) {
                 Text(
-                    text = "123",
+                    text = profile.totalShifts,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                     style = BodyTextMediumStyle(),
@@ -216,7 +216,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                     .padding(all = 4.dp),
             ) {
                 Text(
-                    text = "323",
+                    text = profile.numberClients,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                     style = BodyTextMediumStyle(),

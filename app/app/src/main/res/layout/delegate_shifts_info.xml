@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="# Total de turnos:"
+                android:text="# Total de turnos \n activos:"
                 android:textColor="?colorSecondary" />
 
             <TextView
@@ -41,8 +41,6 @@
                 style="@style/Text.Large.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_format_list"
-                android:drawablePadding="15dp"
                 android:text="200" />
         </LinearLayout>
 
@@ -56,18 +54,18 @@
 
             <TextView
                 style="@style/Text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Tiempo promedio:"
+                android:text="Tiempo de espera \npromedio:"
                 android:textColor="?colorSecondary"/>
 
             <TextView
                 android:id="@+id/totalAverageTime"
                 style="@style/Text.Large.Bold"
+                android:lines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_time"
                 android:drawablePadding="15dp"
                 android:gravity="center"
                 android:text="15:56" />

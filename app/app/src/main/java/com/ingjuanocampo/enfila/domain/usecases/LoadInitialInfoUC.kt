@@ -5,7 +5,6 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import kotlinx.coroutines.flow.*
 
 class LoadInitialInfoUC(private val userRepository: UserRepository,
                         private val shiftRepository: ShiftRepository,

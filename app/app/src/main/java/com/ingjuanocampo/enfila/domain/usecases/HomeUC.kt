@@ -26,15 +26,17 @@ class HomeUC(
 ) {
 
 
+    // TODO this should filter only the current day information
     fun load(): Flow<HomeState> {
         return shiftRepository.getAllObserveData().map { shifts ->
 
             if (shifts.isNullOrEmpty().not()) {
 
 
-                // Averange calculation
+                // average calculation
 
-                val shiftTimes = shifts!!.filter { it.state == ShiftState.FINISHED }.filter { it.endDate != null && it.endDate!! >= 0 && it.endDate!! > it.date }.map {
+                val shiftTimes = shifts!!.filter { it.state == ShiftState.FINISHED }
+                    .filter { it.endDate != null && it.endDate!! >= 0 && it.endDate!! > it.date }.map {
                     return@map it.endDate!!.minus(it.date)
                 }
                 var totalTimes = 0L
@@ -54,10 +56,9 @@ class HomeUC(
 
                 val resume = HomeResume(
                     selectedCompany = currentCompany ?: CompanySite(),
-                    totalTurns = shiftRepository.loadAllData()!!.filter { it.isActive() }.count(),
+                    totalTurns = shifts!!.filter { it.isActive() }.count(),
                     avrTime = average
                 )
-                resume.totalTurns = shifts!!.size
 
                 items.add(resume)
 
