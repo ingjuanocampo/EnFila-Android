@@ -42,7 +42,7 @@ object Dependencies {
 
     const val composeAdapter = "com.github.ingjuanocampo:CompositeDelegateAdapter:1.0.3"
 
-    const val firebaseBom = "com.google.firebase:firebase-bom:30.3.1"
+    const val firebaseBom = "com.google.firebase:firebase-bom:31.1.0"
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
     const val firebaseStore = "com.google.firebase:firebase-firestore-ktx"
     const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"

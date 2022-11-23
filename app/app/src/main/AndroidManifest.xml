@@ -10,10 +10,12 @@
         android:name=".AppEnFila"
         android:theme="@style/AppTheme">
         <activity
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:name=".assignation.ActivityAssignation"
             android:label="@string/title_activity_lobby"/>
         <activity
+            android:theme="@style/AppTheme"
             android:name=".home.ActivityLobby"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:label="@string/title_activity_lobby"/>

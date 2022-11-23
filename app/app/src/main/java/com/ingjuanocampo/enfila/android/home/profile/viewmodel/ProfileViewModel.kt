@@ -37,13 +37,13 @@ class ProfileViewModel: ViewModel() {
                 totalShifts = "#${user.totalShiftHistory}"
             )
             state.value = profileCard
-            startUpdates()
+           // startUpdates()
 
         }
 
     }
 
-    private suspend fun startUpdates() {
+   /* private suspend fun startUpdates() {
         while (true) {
             delay(TimeUnit.SECONDS.toMillis(1))
             clientCounter += 1
@@ -53,7 +53,7 @@ class ProfileViewModel: ViewModel() {
         }
 
 
-    }
+    }*/
 
 
 }
