@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -25,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -148,11 +150,13 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
            )
            Spacer(modifier = Modifier.width(8.dp))
    */
+
+        val textColor = MaterialTheme.colorScheme.onPrimaryContainer
         Column {
             Text(
                 text = profile.companyName,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                color = textColor
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -160,9 +164,8 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
             Text(
                 text = profile.phone,
                 modifier = Modifier.padding(all = 4.dp),
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    MaterialTheme.colorScheme.onSurface
-                )
+                style = MaterialTheme.typography.titleMedium,
+                color = textColor
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -170,21 +173,19 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
             Text(
                 text = profile.email,
                 modifier = Modifier.padding(all = 4.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+                color = textColor,
             )
         }
     }
 
     Column(modifier = Modifier.padding(all = 8.dp), Arrangement.Center) {
-        Divider(
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-        )
 
-        Surface(color = MaterialTheme.colorScheme.primaryContainer) {
+
+        Surface(color = MaterialTheme.colorScheme.tertiaryContainer,
+            shape = RoundedCornerShape(2.dp),
+            elevation = 2.dp
+        ) {
             Row(
                 modifier = Modifier.height(50.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -194,63 +195,87 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                 Column(
                     modifier = Modifier
                         .weight(1f, true)
-                        .padding(all = 4.dp),
+                        .padding(horizontal = 20.dp),
                 ) {
+
                     Text(
-                        text = profile.totalShifts,
-                        textAlign = TextAlign.Center,
+                        text = "December Results",
+                        textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
                     )
+
+                }
+
+
+            }
+        }
+
+
+        Surface(color = MaterialTheme.colorScheme.primaryContainer,
+        shape = RoundedCornerShape(2.dp),
+            elevation = 2.dp
+            ) {
+            Row(
+                modifier = Modifier.height(50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f, true)
+                        .padding(horizontal = 20.dp),
+                ) {
 
                     Text(
                         text = "# Turns",
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
+
+                    Text(
+                        text = profile.totalShifts,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.fillMaxWidth(),
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+
+
                 }
 
-                Divider(
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(1.dp)
-                )
 
                 Column(
                     modifier = Modifier
                         .weight(1f, true)
                         .padding(all = 4.dp),
                 ) {
-                    Text(
-                        text = profile.numberClients,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
 
                     Text(
                         text = "# Clients",
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
+
+                    Text(
+                        text = profile.numberClients,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.fillMaxWidth(),
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+
+
                 }
             }
         }
 
-
-        Divider(
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-        )
     }
 
 }

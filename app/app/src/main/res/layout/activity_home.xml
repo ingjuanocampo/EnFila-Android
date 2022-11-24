@@ -25,7 +25,7 @@
         android:layout_gravity="bottom"
         app:itemIconTint="@color/color_home_selector"
         app:itemTextColor="@color/color_home_selector"
-        android:background="?colorPrimary"
+        android:background="?colorSurface"
         android:elevation="0dp"
         android:id="@+id/bottomNav"/>
 
