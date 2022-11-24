@@ -123,14 +123,13 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <Button
+                    <TextView
                         android:id="@+id/activeTurn"
                         style="@style/ButtonStyle"
                         android:layout_marginHorizontal="20dp"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:text="Active"
-                        android:padding="10dp"/>
+                        android:layout_height="wrap_content"
+                        android:text="Active"/>
 
                 </LinearLayout>
 
@@ -142,14 +141,13 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <Button
+                    <TextView
                         android:id="@+id/cancelTurn"
                         style="@style/ButtonStyle.Stroke"
                         android:layout_marginHorizontal="20dp"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:text="Cancel"
-                        android:padding="10dp"/>
+                        android:layout_height="wrap_content"
+                        android:text="Cancel"/>
 
 
                 </LinearLayout>

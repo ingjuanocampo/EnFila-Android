@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/currentNumber"
-            style="@style/Text.Large.Bold.PrimaryColor"
+            style="@style/Text.Large.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

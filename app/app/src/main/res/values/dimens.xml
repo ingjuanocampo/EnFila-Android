@@ -27,5 +27,5 @@
     <dimen name="bottom_bar_height">500dp</dimen>
     <dimen name="card_radius">5dp</dimen>
     <dimen name="card_elevation">10dp</dimen>
-    <dimen name="button_height">20dp</dimen>
+    <dimen name="button_height">12dp</dimen>
 </resources>

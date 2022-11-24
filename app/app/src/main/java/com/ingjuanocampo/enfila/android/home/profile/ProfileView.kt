@@ -51,7 +51,7 @@ fun ProfileScreen(profileViewModel: ProfileViewModel = viewModel()) {
 @Composable
 fun ProfileView(profile: ProfileCard) {
     ConstraintLayout(Modifier.fillMaxSize()
-        .background(MaterialTheme.colorScheme.primary)) {
+        .background(MaterialTheme.colorScheme.surface)) {
         val (headerRef, bodyRef, logoutRef) = createRefs()
 
         ProfileHeader(
@@ -152,7 +152,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
             Text(
                 text = profile.companyName,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -161,7 +161,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                 text = profile.phone,
                 modifier = Modifier.padding(all = 4.dp),
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    MaterialTheme.colorScheme.onPrimary
+                    MaterialTheme.colorScheme.onSurface
                 )
             )
 
@@ -171,7 +171,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                 text = profile.email,
                 modifier = Modifier.padding(all = 4.dp),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.primary,
             )
         }
     }
