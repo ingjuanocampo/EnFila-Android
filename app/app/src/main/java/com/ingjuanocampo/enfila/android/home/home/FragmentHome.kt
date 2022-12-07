@@ -79,7 +79,7 @@ class FragmentHome : Fragment() {
             }
         }
 
-        binding.toolbar.addButton.setOnClickListener {
+        binding.addButton.setOnClickListener {
           startAdditionProcess()
         }
 

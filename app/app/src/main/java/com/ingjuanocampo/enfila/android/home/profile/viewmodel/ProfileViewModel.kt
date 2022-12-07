@@ -19,7 +19,10 @@ class ProfileViewModel: ViewModel() {
             "31311231312",
             "Company",
             "112",
-            "100"
+            "100",
+            "20",
+            "12",
+            "12 mins"
         ))
 
     var clientCounter = 0
@@ -34,7 +37,11 @@ class ProfileViewModel: ViewModel() {
                 phone = user.phone,
                 email = user.companyName,
                 numberClients = "#${clientCounter}",
-                totalShifts = "#${user.totalShiftHistory}"
+                totalShifts = "#${user.totalShiftHistory}",
+                "20",
+                "12",
+                "12 mins"
+
             )
             state.value = profileCard
            // startUpdates()

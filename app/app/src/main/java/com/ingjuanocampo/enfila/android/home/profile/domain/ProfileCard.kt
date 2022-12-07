@@ -5,7 +5,10 @@ data class ProfileCard(
     val phone: String,
     val email: String,
     val numberClients: String,
-    val totalShifts: String,
+    val totalShifts: String,// level 1
+    val shiftByDay: String,
+    val clientsByDay: String, // level 3
+    val avrTimeAttention: String, // Level 3
     val options: List<OptionCard> = emptyList()
 )
 
