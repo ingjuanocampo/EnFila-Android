@@ -39,8 +39,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.home.profile.domain.ProfileCard
 import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileViewModel
+import com.ingjuanocampo.enfila.android.ui.common.AnimatedButtonState
 import com.ingjuanocampo.enfila.android.ui.common.AnimatedComposeButton
-import com.ingjuanocampo.enfila.android.ui.common.ProgressableButtonState
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 
 
@@ -96,17 +96,20 @@ fun Logout(modifier: Modifier) {
                 .height(1.dp)
         )
 
-        var state by remember { mutableStateOf(ProgressableButtonState.IDLE) }
-        AnimatedComposeButton(  Modifier
-            .size(30.dp).padding(2.dp),
+        var state by remember { mutableStateOf(AnimatedButtonState.IDLE) }
+        AnimatedComposeButton(
+            Modifier
+                .fillMaxWidth()
+                .padding(all = 8.dp),
             state,
           ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth().clickable(enabled = true, onClick = {
-                        state = ProgressableButtonState.PROGRESS
+                    .fillMaxWidth()
+                    .clickable(enabled = true, onClick = {
+                        state = AnimatedButtonState.PROGRESS
                     })
-                    .padding(all = 8.dp),
+                    ,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
@@ -332,6 +335,11 @@ fun StatiticsSection(listOf: List<StadisticSectionUI>) {
 
 }
 
+
+fun Boolean.toButtonState() = when (this) {
+    true -> AnimatedButtonState.PROGRESS
+    false -> AnimatedButtonState.IDLE
+}
 
 @Composable
 @Preview(device = Devices.PIXEL_4_XL,

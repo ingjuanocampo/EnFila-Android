@@ -13,22 +13,15 @@ class ProfileViewModel: ViewModel() {
 
     val loadProfileUC = AppComponent.domainModule.providesLoadUserProfile()
 
-    val state = MutableStateFlow(
-        ProfileCard(
-            "User",
-            "31311231312",
-            "Company",
-            "112",
-            "100",
-            "20",
-            "12",
-            "12 mins"
-        ))
+    val state = MutableStateFlow<ProfileState>(ProfileState.LoadingProfileInfo)
 
     var clientCounter = 0
 
     init {
         viewModelScope.launchGeneral {
+
+            state.value = ProfileState.LoadingProfileInfo
+
             val user = loadProfileUC.invoke()
             clientCounter = user.totalNumberClients
 
@@ -43,7 +36,7 @@ class ProfileViewModel: ViewModel() {
                 "12 mins"
 
             )
-            state.value = profileCard
+            state.value = ProfileState.ProfileLoaded(profileCard)
            // startUpdates()
 
         }
