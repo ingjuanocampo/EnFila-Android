@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -38,6 +39,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.home.profile.domain.ProfileCard
+import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileState
 import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileViewModel
 import com.ingjuanocampo.enfila.android.ui.common.AnimatedButtonState
 import com.ingjuanocampo.enfila.android.ui.common.AnimatedComposeButton
@@ -47,8 +49,17 @@ import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 @Composable
 fun ProfileScreen(profileViewModel: ProfileViewModel = viewModel()) {
     AppTheme {
-        val profile: ProfileCard by profileViewModel.state.collectAsState()
-        ProfileView(profile = profile)
+        val state by profileViewModel.getState().collectAsState()
+
+        when (state) {
+            ProfileState.LoadingProfileInfo -> {}
+            ProfileState.LoggedOut -> {}
+            ProfileState.LoggingOut -> {}
+            is ProfileState.ProfileLoaded -> {
+                ProfileView(profile = (state as ProfileState.ProfileLoaded).profileCard)
+            }
+        }
+
     }
 
 }
@@ -99,13 +110,12 @@ fun Logout(modifier: Modifier) {
         var state by remember { mutableStateOf(AnimatedButtonState.IDLE) }
         AnimatedComposeButton(
             Modifier
-                .fillMaxWidth()
+                .width(100.dp)
                 .padding(all = 8.dp),
             state,
           ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .clickable(enabled = true, onClick = {
                         state = AnimatedButtonState.PROGRESS
                     })
@@ -120,7 +130,7 @@ fun Logout(modifier: Modifier) {
                 Text(
                     text = "Log out",
                     textAlign = TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         MaterialTheme.colorScheme.onErrorContainer,
                         fontWeight = FontWeight.Medium
@@ -185,10 +195,11 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
 
     ) {
         val textColor = MaterialTheme.colorScheme.onPrimaryContainer
-        Column(modifier = Modifier.padding(5.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
             Text(
                 text = profile.companyName,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleLarge
+                    .copy(fontWeight = FontWeight.Bold),
                 color = textColor
             )
 
@@ -240,7 +251,7 @@ fun StatictisView(profile: ProfileCard) {
             ) {
 
                 Text(
-                    text = "December Results",
+                    text = "Statistics",
                     textAlign = TextAlign.Left,
                     modifier = Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
@@ -253,7 +264,7 @@ fun StatictisView(profile: ProfileCard) {
         }
     }
 
-    StatiticsSection(listOf(StadisticSectionUI(
+    StatisticsSection(listOf(StadisticSectionUI(
         "# Turns", profile.totalShifts,
         "# Clients", profile.numberClients,
     ), StadisticSectionUI(
@@ -268,7 +279,7 @@ data class StadisticSectionUI(val title: String, val value: String,
                               val title2: String, val value2: String, )
 
 @Composable
-fun StatiticsSection(listOf: List<StadisticSectionUI>) {
+private fun StatisticsSection(listOf: List<StadisticSectionUI>) {
 
     listOf.forEach { row ->
         Surface(color = MaterialTheme.colorScheme.primaryContainer,

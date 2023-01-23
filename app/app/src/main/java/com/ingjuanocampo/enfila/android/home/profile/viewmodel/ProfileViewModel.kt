@@ -7,13 +7,16 @@ import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.util.concurrent.TimeUnit
 
 class ProfileViewModel: ViewModel() {
 
     val loadProfileUC = AppComponent.domainModule.providesLoadUserProfile()
 
-    val state = MutableStateFlow<ProfileState>(ProfileState.LoadingProfileInfo)
+    private val state = MutableStateFlow<ProfileState>(ProfileState.LoadingProfileInfo)
+
+    fun getState(): StateFlow<ProfileState> = state
 
     var clientCounter = 0
 

@@ -10,6 +10,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -95,8 +96,8 @@ enum class AnimatedButtonState {
 )
 private fun ProgressableButtonPreview() {
 
-    Column {
-        AnimatedComposeButton {
+    Column(Modifier.fillMaxWidth()) {
+        AnimatedComposeButton(state = AnimatedButtonState.PROGRESS) {
             Button(onClick = { /*TODO*/ }) {
                 Text(text = "Test")
             }
