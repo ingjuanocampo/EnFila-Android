@@ -8,7 +8,7 @@ import com.ingjuanocampo.enfila.android.AppEnFila
 import kotlinx.coroutines.*
 
 val handler = CoroutineExceptionHandler { _, exception ->
-    Log.e("GeneralError", "got ${exception.stackTrace}")
+    Log.e("GeneralError", "got ${exception.toString()}")
     GlobalScope.launch (Dispatchers.Main) { // Bad practice just for testing
         Toast.makeText(AppEnFila.context, "General Error ${exception.localizedMessage}", Toast.LENGTH_LONG).show()
     }

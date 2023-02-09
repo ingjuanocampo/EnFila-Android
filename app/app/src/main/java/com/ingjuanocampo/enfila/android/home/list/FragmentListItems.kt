@@ -15,7 +15,9 @@ import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.home.list.adapter.DelegateShift
 import com.ingjuanocampo.enfila.android.home.list.viewmodel.ViewModelListItems
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentListItems : Fragment() {
 
     companion object {

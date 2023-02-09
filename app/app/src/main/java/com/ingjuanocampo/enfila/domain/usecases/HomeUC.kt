@@ -17,8 +17,9 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
 
-class HomeUC(
+class HomeUC @Inject constructor(
     private val companyRepo: CompanyRepository,
     private val userRepository: UserRepository,
     private val shiftRepository: ShiftRepository,

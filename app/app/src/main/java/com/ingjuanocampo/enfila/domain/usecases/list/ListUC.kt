@@ -6,8 +6,9 @@ import com.ingjuanocampo.enfila.domain.usecases.ShiftInteractions
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class ListUC(
+class ListUC @Inject constructor(
     private val shiftRepository: ShiftRepository,
     private val shiftInteractions: ShiftInteractions,
     private val clientRepository: ClientRepository

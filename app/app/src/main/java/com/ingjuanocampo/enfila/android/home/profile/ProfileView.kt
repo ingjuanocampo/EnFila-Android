@@ -38,7 +38,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ingjuanocampo.enfila.android.R
-import com.ingjuanocampo.enfila.android.home.profile.domain.ProfileCard
+import com.ingjuanocampo.enfila.android.home.profile.model.ProfileCard
+import com.ingjuanocampo.enfila.android.home.profile.model.StatisticsSectionUI
 import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileState
 import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileViewModel
 import com.ingjuanocampo.enfila.android.ui.common.AnimatedButtonState
@@ -97,7 +98,7 @@ fun ProfileView(profile: ProfileCard) {
 }
 
 @Composable
-fun Logout(modifier: Modifier) {
+fun Logout(modifier: Modifier, viewModel: ProfileViewModel = viewModel()) {
 
     Column(modifier = modifier, Arrangement.Top) {
         Divider(
@@ -264,10 +265,11 @@ fun StatictisView(profile: ProfileCard) {
         }
     }
 
-    StatisticsSection(listOf(StadisticSectionUI(
+    StatisticsSection(listOf(
+        StatisticsSectionUI(
         "# Turns", profile.totalShifts,
         "# Clients", profile.numberClients,
-    ), StadisticSectionUI(
+    ), StatisticsSectionUI(
         "Shifts by day", profile.shiftByDay,
         "Clients by day", profile.clientsByDay
     )
@@ -275,11 +277,8 @@ fun StatictisView(profile: ProfileCard) {
 
 }
 
-data class StadisticSectionUI(val title: String, val value: String,
-                              val title2: String, val value2: String, )
-
 @Composable
-private fun StatisticsSection(listOf: List<StadisticSectionUI>) {
+private fun StatisticsSection(listOf: List<StatisticsSectionUI>) {
 
     listOf.forEach { row ->
         Surface(color = MaterialTheme.colorScheme.primaryContainer,

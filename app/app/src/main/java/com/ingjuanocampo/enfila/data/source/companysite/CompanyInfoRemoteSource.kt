@@ -7,12 +7,13 @@ import com.ingjuanocampo.enfila.data.util.uploadProcess
 import com.ingjuanocampo.enfila.data.source.user.basePath
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 const val companyInfoPath = basePath + "_company"
 
-class CompanyInfoRemoteSource constructor() {
+class CompanyInfoRemoteSource @Inject constructor() {
 
-    val db by lazy { Firebase.firestore }
+    private val db by lazy { Firebase.firestore }
     fun fetchData(id: String): Flow<CompanySite?> {
         return db.fetchProcess({ data ->
             return@fetchProcess CompanySite(

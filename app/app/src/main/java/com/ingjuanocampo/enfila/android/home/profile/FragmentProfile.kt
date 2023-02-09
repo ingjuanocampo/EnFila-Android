@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentProfile: Fragment() {
 
     companion object {

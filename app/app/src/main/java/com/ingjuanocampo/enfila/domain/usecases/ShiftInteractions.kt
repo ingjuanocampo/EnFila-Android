@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class ShiftInteractions(
+class ShiftInteractions @Inject constructor(
     private val shiftRepository: ShiftRepository, private val clientRepository: ClientRepository,
     private val messagingRepository: MessageRepository
 ) {

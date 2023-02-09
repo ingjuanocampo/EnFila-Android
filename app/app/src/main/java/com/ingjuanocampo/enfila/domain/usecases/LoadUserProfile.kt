@@ -6,8 +6,9 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
+import javax.inject.Inject
 
-class LoadUserProfile(
+class LoadUserProfile @Inject constructor(
     private val companyRepo: CompanyRepository,
     private val userRepository: UserRepository,
     private val shiftRepository: ShiftRepository,

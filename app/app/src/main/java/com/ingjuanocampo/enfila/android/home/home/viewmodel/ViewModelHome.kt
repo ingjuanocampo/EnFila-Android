@@ -3,14 +3,19 @@ package com.ingjuanocampo.enfila.android.home.home.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ingjuanocampo.enfila.domain.state.home.HomeState
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
-import com.ingjuanocampo.enfila.di.AppComponent
+import com.ingjuanocampo.enfila.domain.state.home.HomeState
+import com.ingjuanocampo.enfila.domain.usecases.FinishShiftUC
+import com.ingjuanocampo.enfila.domain.usecases.HomeUC
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ViewModelHome : ViewModel() {
+@HiltViewModel
+class ViewModelHome @Inject constructor(
+    private val homeUC: HomeUC,
+    private val finishShiftUC: FinishShiftUC,
+) : ViewModel() {
 
-    private val homeUC = AppComponent.domainModule.provideHomeUC()
-    private val finishShiftUC = AppComponent.domainModule.provideFinishUC()
     val state = MutableLiveData<HomeState>()
 
     fun loadCurrentTurn() {
@@ -25,20 +30,20 @@ class ViewModelHome : ViewModel() {
 
     fun finish(id: String) {
         viewModelScope.launchGeneral {
-            finishShiftUC.invoke(id).collect {  }
+            finishShiftUC.invoke(id).collect { }
         }
     }
 
 
     fun cancel(id: String) {
         viewModelScope.launchGeneral {
-            homeUC.cancel(id).collect {  }
+            homeUC.cancel(id).collect { }
         }
     }
 
     fun next(id: String) {
         viewModelScope.launchGeneral {
-            homeUC.next(id).collect {  }
+            homeUC.next(id).collect { }
         }
     }
 

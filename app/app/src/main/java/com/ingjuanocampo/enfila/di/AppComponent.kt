@@ -1,31 +1,29 @@
 package com.ingjuanocampo.enfila.di
 
-import android.annotation.SuppressLint
-import android.content.Context
-import com.ingjuanocampo.enfila.android.AppEnFila
+import com.enfila.data.messaging.TwillioCredentials
 import com.ingjuanocampo.enfila.android.state.LoggedStateImpl
 import com.ingjuanocampo.enfila.android.state.NotLoggedImpl
-import com.ingjuanocampo.enfila.domain.di.domain.DomainModule
-import com.ingjuanocampo.enfila.domain.state.AppState
-import com.ingjuanocampo.enfila.domain.state.AppStateProvider
+import com.ingjuanocampo.enfila.domain.TwillioCredentialsImpl
+import com.ingjuanocampo.enfila.domain.state.states.LoggedState
+import com.ingjuanocampo.enfila.domain.state.states.NotLoggedState
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
+@InstallIn(SingletonComponent::class)
+@Module
+interface AppComponent {
+
+    @Binds
+    fun bindsNotLoggedImpl(notLoggedImpl: NotLoggedImpl): NotLoggedState
+
+    @Binds
+    fun bindsLoggedImpl(loggedState: LoggedStateImpl): LoggedState
 
 
-object AppComponent {
+    @Binds
+    fun bindsCredentials(twillioCredentials: TwillioCredentialsImpl): TwillioCredentials
 
-    @SuppressLint("StaticFieldLeak")
-    lateinit var domainModule: DomainModule
-
-    fun init(context: Context) {
-        domainModule = DomainModule(context)
-    }
-
-    private val notLoggedState by lazy { NotLoggedImpl(AppEnFila.context) }
-    private val loggedState by lazy { LoggedStateImpl(AppEnFila.context) }
-    private val appStateProvider by lazy { AppStateProvider(loggedState = loggedState, notLoggedState = notLoggedState,
-    isLoggedMethod = domainModule.provideIsUserLoggedMethod()) }
-
-    fun providesState(): AppState = appStateProvider.provideCurrentState()
-
-    fun provideSignUC() = domainModule.provideSignUC(appStateProvider)
 
 }

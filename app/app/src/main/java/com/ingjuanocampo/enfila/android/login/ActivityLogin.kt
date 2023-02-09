@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.login.viewmodel.ViewModelLogin
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ActivityLogin: AppCompatActivity() {
 
-    val viewModel by viewModels<ViewModelLogin> ()
+    val viewModel: ViewModelLogin by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

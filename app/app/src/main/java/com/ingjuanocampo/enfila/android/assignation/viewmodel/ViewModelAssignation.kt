@@ -2,23 +2,26 @@ package com.ingjuanocampo.enfila.android.assignation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
-import com.ingjuanocampo.enfila.domain.di.domain.DomainModule
+import com.ingjuanocampo.enfila.domain.usecases.ShiftInteractions
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ViewModelAssignation : ViewModel() {
+@HiltViewModel
+class ViewModelAssignation @Inject constructor(
+    private val shiftInteractions: ShiftInteractions,
+    private val clientRepository: ClientRepository,
+): ViewModel() {
 
     var tunr: Int = 0
 
     var closestTurn = 0
 
-    private val shiftInteractions = AppComponent.domainModule.providesShiftInteractions()
-    private val clientRepository: ClientRepository = AppComponent.domainModule.provideClientRepository()
     val assignationState: MutableLiveData<AssignationState> = MutableLiveData(AssignationState.IDLE)
 
     var phoneNumber: String = ""

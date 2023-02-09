@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -17,8 +15,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.AssignationState
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
+import dagger.hilt.android.AndroidEntryPoint
 
-class BottomSheetAssignation: BottomSheetDialogFragment() {
+@AndroidEntryPoint
+class BottomSheetAssignation : BottomSheetDialogFragment() {
 
     private val navController by lazy { findNavController(this) }
     private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { this })
@@ -38,10 +38,12 @@ class BottomSheetAssignation: BottomSheetDialogFragment() {
 
         return dialog
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

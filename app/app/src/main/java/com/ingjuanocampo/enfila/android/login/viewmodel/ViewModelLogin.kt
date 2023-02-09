@@ -6,25 +6,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
-import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
 import com.ingjuanocampo.enfila.domain.usecases.signing.SignInUC
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ViewModelLogin : ViewModel() {
+@HiltViewModel
+class ViewModelLogin @Inject constructor(
+    private val signUC: SignInUC
+) : ViewModel() {
 
     var verificationCode: String? = null
     private var verificationId: String? = null
     val state = MutableLiveData<LoginState>()
     var activity: Activity? = null
-
-    val signUC: SignInUC = AppComponent.provideSignUC()
 
     var phoneNumber: String = ""
         set(value) {
@@ -76,14 +81,26 @@ class ViewModelLogin : ViewModel() {
                 }
 
             } else {
-                state.postValue(LoginState.AuthenticationProcessState(AuthState.AuthError(task.exception ?: Exception("No login"))))
+                state.postValue(
+                    LoginState.AuthenticationProcessState(
+                        AuthState.AuthError(
+                            task.exception ?: Exception("No login")
+                        )
+                    )
+                )
             }
         } else {
 
             if (task.exception is FirebaseAuthInvalidCredentialsException) {
                 // The verification code entered was invalid
             }
-            state.postValue(LoginState.AuthenticationProcessState(AuthState.AuthError(task.exception ?: Exception("No login"))))
+            state.postValue(
+                LoginState.AuthenticationProcessState(
+                    AuthState.AuthError(
+                        task.exception ?: Exception("No login")
+                    )
+                )
+            )
             // Update UI
         }
     }

@@ -11,8 +11,9 @@ import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.getShiftState
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class ShiftsRemoteSourceFirebase {
+class ShiftsRemoteSourceFirebase @Inject constructor() {
     private val remote by lazy { Firebase.firestore }
     private val shiftPath = "shifts"
 

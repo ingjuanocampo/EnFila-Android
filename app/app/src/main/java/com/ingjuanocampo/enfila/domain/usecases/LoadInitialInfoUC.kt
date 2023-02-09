@@ -5,11 +5,12 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
+import javax.inject.Inject
 
-class LoadInitialInfoUC(private val userRepository: UserRepository,
-                        private val shiftRepository: ShiftRepository,
-                        private val companyRepo: CompanyRepository,
-private val clientRepository: ClientRepository) {
+class LoadInitialInfoUC @Inject constructor(private val userRepository: UserRepository,
+                                            private val shiftRepository: ShiftRepository,
+                                            private val companyRepo: CompanyRepository,
+                                            private val clientRepository: ClientRepository) {
 
     suspend operator fun invoke() = userRepository.getCurrent().let { user ->
             if (user?.id != null && user.id.isNotEmpty()) {

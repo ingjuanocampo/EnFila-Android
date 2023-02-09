@@ -12,10 +12,11 @@ import com.ingjuanocampo.enfila.domain.entity.Client
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import javax.inject.Inject
 
 const val clientPath = basePath + "_client"
 
-class ClientRemoteSourceFB : RemoteSource<Client> {
+class ClientRemoteSourceFB @Inject constructor() : RemoteSource<Client> {
     private val remote by lazy { Firebase.firestore }
 
     override suspend fun fetchDataAll(id: String): List<Client>? {

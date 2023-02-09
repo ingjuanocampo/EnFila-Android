@@ -4,10 +4,11 @@ import com.ingjuanocampo.enfila.domain.data.source.LocalSource
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
 var companySite: CompanySite? = null
 
-class CompanySiteLocalSource: LocalSource<CompanySite> {
+class CompanySiteLocalSource @Inject constructor(): LocalSource<CompanySite> {
 
     override suspend fun createOrUpdate(data: CompanySite) {
         companySite = data

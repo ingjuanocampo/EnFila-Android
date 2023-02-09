@@ -11,4 +11,5 @@ fun DependencyHandler.appDependencies() {
     uiCommons()
     material()
     navigationComponent()
+    hilt()
 }

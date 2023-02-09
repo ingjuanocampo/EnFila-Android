@@ -1,13 +1,31 @@
 package com.enfila.data.messaging.di
 
 import com.enfila.data.messaging.MessageRepository
+import com.enfila.data.messaging.TwillioCredentials
 import com.enfila.data.messaging.source.MessageRepositoryImpl
 import com.enfila.data.messaging.source.RemoteMessageSource
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-class MessagingModule(private val fetchCredentials: () -> Pair<String, String>) {
+@InstallIn(SingletonComponent::class)
+@Module
+class MessagingModule {
 
-    private fun provideRemoteMessageSource() = RemoteMessageSource(fetchCredentials)
+    @Singleton
+    @Provides
+    fun provideRemoteMessageSource(twillioCredentials: TwillioCredentials) =
+        RemoteMessageSource(twillioCredentials)
 
-    val repository: MessageRepository by lazy { MessageRepositoryImpl(provideRemoteMessageSource()) }
+}
 
+@InstallIn(SingletonComponent::class)
+@Module
+interface MessagingModuleBinds {
+    @Singleton
+    @Binds
+    fun binds(repositoryImpl: MessageRepositoryImpl): MessageRepository
 }

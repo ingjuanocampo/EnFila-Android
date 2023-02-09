@@ -1,6 +1,6 @@
 package com.ingjuanocampo.enfila.android.home.profile.viewmodel
 
-import com.ingjuanocampo.enfila.android.home.profile.domain.ProfileCard
+import com.ingjuanocampo.enfila.android.home.profile.model.ProfileCard
 
 sealed class ProfileState {
     object LoadingProfileInfo: ProfileState()

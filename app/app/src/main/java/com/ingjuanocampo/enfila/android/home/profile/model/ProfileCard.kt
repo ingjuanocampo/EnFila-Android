@@ -1,4 +1,4 @@
-package com.ingjuanocampo.enfila.android.home.profile.domain
+package com.ingjuanocampo.enfila.android.home.profile.model
 
 data class ProfileCard(
     val companyName: String,

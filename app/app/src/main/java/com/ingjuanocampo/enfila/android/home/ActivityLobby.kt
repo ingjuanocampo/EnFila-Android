@@ -12,7 +12,9 @@ import com.ingjuanocampo.enfila.android.home.list.FragmentListItems
 import com.ingjuanocampo.enfila.android.home.profile.FragmentProfile
 import com.ingjuanocampo.enfila.android.home.tips.FragmentTips
 import com.ingjuanocampo.enfila.android.menu.BottomMenuBuilder
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ActivityLobby: AppCompatActivity() {
     
     private val bottomNavBuilder by lazy {

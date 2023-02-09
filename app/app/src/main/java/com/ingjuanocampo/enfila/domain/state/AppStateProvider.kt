@@ -2,14 +2,18 @@ package com.ingjuanocampo.enfila.domain.state
 
 import com.ingjuanocampo.enfila.domain.state.states.LoggedState
 import com.ingjuanocampo.enfila.domain.state.states.NotLoggedState
+import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppStateProvider(
+@Singleton
+class AppStateProvider @Inject constructor(
     private val loggedState: LoggedState,
     private val notLoggedState: NotLoggedState,
-    isLoggedMethod: () -> Boolean
+    private val userRepository: UserRepository,
 ) {
 
-    private var currentState: AppState = if (isLoggedMethod()) loggedState else notLoggedState
+    private var currentState: AppState = if (userRepository.isUserLogged()) loggedState else notLoggedState
 
     fun provideCurrentState(): AppState {
         return currentState

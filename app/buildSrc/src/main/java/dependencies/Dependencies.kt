@@ -13,6 +13,11 @@ object Dependencies {
     const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:$daggerVersion"
     const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:$daggerVersion"
 
+    const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+
+
     const val picasso = "com.squareup.picasso:picasso:$picassoVersion"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -65,6 +70,7 @@ object Dependencies {
     const val iconsMaterialComposeExtended = "androidx.compose.material:material-icons-extended:1.1.1"
     // Integration with observables
     const val liveDataCompose = "androidx.compose.runtime:runtime-livedata:1.1.1"
+    const val fragments = "androidx.fragment:fragment-ktx:1.5.5"
 
 
 }
@@ -108,6 +114,11 @@ fun DependencyHandler.fireStore() {
 fun DependencyHandler.dagger() {
     implementation(Dependencies.dagger)
     kotlinImplementation(Dependencies.daggerCompiler)
+}
+
+fun DependencyHandler.hilt() {
+    implementation(Dependencies.hiltAndroid)
+    kotlinImplementation(Dependencies.hiltCompiler)
 }
 
 fun DependencyHandler.coroutines() {
@@ -162,6 +173,7 @@ fun DependencyHandler.uiCommons() {
     implementation(Dependencies.recyclerView)
     implementation(Dependencies.androidCore)
     implementation(Dependencies.composeAdapter)
+    implementation(Dependencies.fragments)
     compose()
     projectImplementation(":data")
 }

@@ -14,9 +14,17 @@ import com.ingjuanocampo.enfila.android.login.new_account.viewmodel.ProfileState
 import com.ingjuanocampo.enfila.android.login.new_account.viewmodel.ViewModelFragmentProfile
 import com.ingjuanocampo.enfila.android.login.fragment.showToast
 import com.ingjuanocampo.enfila.di.AppComponent
+import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FragmentNewCompany : Fragment() {
+
+
+    @Inject
+    lateinit var stateProvider : AppStateProvider
 
     companion object {
         fun newInstance() = FragmentNewCompany()
@@ -60,7 +68,7 @@ class FragmentNewCompany : Fragment() {
 
     private fun handleAuthProcess(authState: AuthState) {
         when (authState) {
-            AuthState.Authenticated -> AppComponent.providesState().navigateLaunchScreen()
+            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen()
             is AuthState.AuthError -> showToast("Error, something when wrong")
         }
     }

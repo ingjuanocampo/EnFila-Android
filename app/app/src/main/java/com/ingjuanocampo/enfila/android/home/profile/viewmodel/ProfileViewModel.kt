@@ -2,17 +2,19 @@ package com.ingjuanocampo.enfila.android.home.profile.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ingjuanocampo.enfila.android.home.profile.domain.ProfileCard
+import com.ingjuanocampo.enfila.android.home.profile.model.ProfileCard
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.di.AppComponent
-import kotlinx.coroutines.delay
+import com.ingjuanocampo.enfila.domain.usecases.LoadUserProfile
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ProfileViewModel: ViewModel() {
-
-    val loadProfileUC = AppComponent.domainModule.providesLoadUserProfile()
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    private val loadProfileUC: LoadUserProfile,
+): ViewModel() {
 
     private val state = MutableStateFlow<ProfileState>(ProfileState.LoadingProfileInfo)
 

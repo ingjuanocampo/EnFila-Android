@@ -13,8 +13,9 @@ import com.ingjuanocampo.enfila.android.home.home.delegate.*
 import com.ingjuanocampo.enfila.android.home.home.viewmodel.ViewModelHome
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.domain.state.home.HomeState
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FragmentHome : Fragment() {
 
     companion object {

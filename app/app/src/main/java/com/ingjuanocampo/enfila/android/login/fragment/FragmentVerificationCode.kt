@@ -16,10 +16,16 @@ import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.login.viewmodel.LoginState
 import com.ingjuanocampo.enfila.android.login.viewmodel.ViewModelLogin
 import com.ingjuanocampo.enfila.di.AppComponent
+import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FragmentVerificationCode : Fragment() {
 
+    @Inject
+    lateinit var stateProvider: AppStateProvider
     val viewModel by viewModels<ViewModelLogin> (ownerProducer = { requireActivity() })
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
@@ -43,7 +49,7 @@ class FragmentVerificationCode : Fragment() {
             when(it) {
                 is LoginState.AuthenticationProcessState ->
                     when (it.authState) {
-                    AuthState.Authenticated ->  AppComponent.providesState().navigateLaunchScreen()
+                    AuthState.Authenticated ->  stateProvider.provideCurrentState().navigateLaunchScreen()
                     is AuthState.NewAccount -> navController.navigate(R.id.action_fragmentVerificationCode_to_fragmentProfile, Bundle().apply {
                         putString("phone", viewModel.phoneNumber)
                         putString("id", it.authState.id)

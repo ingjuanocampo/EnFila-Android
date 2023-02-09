@@ -3,8 +3,9 @@ package com.ingjuanocampo.enfila.domain.data.source.shifts
 import com.ingjuanocampo.enfila.domain.data.source.template.GenericLocalStoreImp
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
+import javax.inject.Inject
 
-class ShiftLocalSourceGenericCache: ShiftLocalSource, GenericLocalStoreImp<Shift>() {
+class ShiftLocalSourceGenericCache @Inject constructor(): ShiftLocalSource, GenericLocalStoreImp<Shift>() {
 
     override suspend fun  getClosestShift(): Shift? {
         return getAllData()?.firstOrNull{ it.state == ShiftState.WAITING }
