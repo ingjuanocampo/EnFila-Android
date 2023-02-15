@@ -36,9 +36,10 @@ class ProfileViewModel @Inject constructor(
                 email = user.companyName,
                 numberClients = "#${clientCounter}",
                 totalShifts = "#${user.totalShiftHistory}",
-                "20",
-                "12",
-                "12 mins"
+                shiftByDay = user.shiftByDay,
+                clientsByDay = user.clientsByDay,
+                waitingTime = user.waitingTime,
+                attentionTime = user.attentionTime
 
             )
             state.value = ProfileState.ProfileLoaded(profileCard)

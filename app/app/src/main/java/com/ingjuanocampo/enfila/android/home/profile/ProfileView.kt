@@ -98,7 +98,7 @@ fun ProfileView(profile: ProfileCard) {
 }
 
 @Composable
-fun Logout(modifier: Modifier, viewModel: ProfileViewModel = viewModel()) {
+fun Logout(modifier: Modifier) {
 
     Column(modifier = modifier, Arrangement.Top) {
         Divider(
@@ -265,15 +265,7 @@ fun StatictisView(profile: ProfileCard) {
         }
     }
 
-    StatisticsSection(listOf(
-        StatisticsSectionUI(
-        "# Turns", profile.totalShifts,
-        "# Clients", profile.numberClients,
-    ), StatisticsSectionUI(
-        "Shifts by day", profile.shiftByDay,
-        "Clients by day", profile.clientsByDay
-    )
-    ))
+    StatisticsSection(profile.buildSections())
 
 }
 
@@ -358,7 +350,8 @@ fun ProfilePreview() {
     AppTheme {
         ProfileView(
             ProfileCard("Company", "31231313", "indawa.com",
-                "123", "33", "32", "12", "1Mins" )
+                "123", "33", "32", "12", "1Mins",
+                "12 min" )
         )
     }
 }

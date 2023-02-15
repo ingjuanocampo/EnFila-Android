@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="# Total de turnos \n activos:"
+                android:text="# Total de turnos \n activos hoy:"
                 android:textColor="?colorSecondary" />
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Tiempo de espera \npromedio:"
+                android:text="Tiempo de espera \npromedio hoy:"
                 android:textColor="?colorSecondary"/>
 
             <TextView

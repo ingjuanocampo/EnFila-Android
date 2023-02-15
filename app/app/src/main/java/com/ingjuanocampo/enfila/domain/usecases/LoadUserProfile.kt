@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
+import com.ingjuanocampo.enfila.commons.toYearMonthDayFormat
 import com.ingjuanocampo.enfila.domain.usecases.model.UserProfile
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
@@ -13,6 +14,7 @@ class LoadUserProfile @Inject constructor(
     private val userRepository: UserRepository,
     private val shiftRepository: ShiftRepository,
     private val clientRepository: ClientRepository,
+    private val calculateShiftAverageWaitTimes: CalculateShiftAverageWaitTimes,
 ) {
 
 
@@ -22,8 +24,27 @@ class LoadUserProfile @Inject constructor(
         shiftRepository.id = companyRepo.id
         val currentCompany = companyRepo.loadAllData()?.firstOrNull()!!
 
-        val totalShifts = shiftRepository.loadAllData()!!.count()
+        val shifts = shiftRepository.loadAllData()!!
+
+        val waitingTimeAverage = calculateShiftAverageWaitTimes(shifts)
+
+        val totalShifts = shifts.count()
         val totalClients = clientRepository.loadAllData()!!.count()
+
+        var counterOfShiftsByDay = 0
+        var counterOfClientsByDay = 0
+        val shiftByDay =
+            shifts.groupBy {
+                it.date.toYearMonthDayFormat()
+            }
+        val totalDays = shiftByDay.count()
+
+        shiftByDay.forEach { day, shifts ->
+            counterOfShiftsByDay = counterOfClientsByDay + shifts.size
+            counterOfClientsByDay = counterOfShiftsByDay + shifts.groupBy { it.contactId }.count()
+        }
+
+        // TODO review how to get the waitingTime and attentionTime
 
         return UserProfile(
             companyName = currentCompany.name!!,
@@ -31,9 +52,11 @@ class LoadUserProfile @Inject constructor(
             email = user.id,
             phone = user.phone,
             totalNumberClients = totalClients,
-            totalShiftHistory = totalShifts
-
-
+            totalShiftHistory = totalShifts,
+            shiftByDay = "${counterOfShiftsByDay / totalDays}",
+            clientsByDay = "${counterOfShiftsByDay / totalDays}",
+            waitingTime = "$waitingTimeAverage",
+            attentionTime = "", // Not ready yet
         )
     }
 

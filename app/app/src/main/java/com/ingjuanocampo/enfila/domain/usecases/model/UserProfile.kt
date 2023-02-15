@@ -9,4 +9,8 @@ data class UserProfile(
     val averageOfClientMonths: String,*/
     val totalNumberClients: Int,
     val totalShiftHistory: Int,
+    val shiftByDay: String,
+    val clientsByDay: String, // level 3
+    val waitingTime: String,
+    val attentionTime: String,
 )
