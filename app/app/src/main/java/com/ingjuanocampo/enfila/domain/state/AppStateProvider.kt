@@ -16,6 +16,11 @@ class AppStateProvider @Inject constructor(
     private var currentState: AppState = if (userRepository.isUserLogged()) loggedState else notLoggedState
 
     fun provideCurrentState(): AppState {
+        if (userRepository.isUserLogged()) {
+            toLoggedState()
+        } else {
+            toNotLoggedState()
+        }
         return currentState
     }
 
