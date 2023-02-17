@@ -10,8 +10,9 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
 
-class SignInUC(
+class SignInUC @Inject constructor(
     private val userRepository: UserRepository,
     private val companySiteRepository: CompanyRepository,
     private val appStateProvider: AppStateProvider,

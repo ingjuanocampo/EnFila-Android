@@ -6,8 +6,9 @@ import com.ingjuanocampo.enfila.domain.entity.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
-class UserRemoteImpl(private val userRemoteSource: UserRemoteSource): RemoteSource<User> {
+class UserRemoteImpl @Inject constructor(private val userRemoteSource: UserRemoteSource): RemoteSource<User> {
 
      override suspend fun fetchDataAll(id: String): List<User>? =  listOf(fetchData(id)!!)
 

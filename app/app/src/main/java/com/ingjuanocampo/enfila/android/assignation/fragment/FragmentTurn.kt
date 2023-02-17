@@ -13,7 +13,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.AssignationState
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentTurn : Fragment() {
     private val navController by lazy { NavHostFragment.findNavController(this) }
 

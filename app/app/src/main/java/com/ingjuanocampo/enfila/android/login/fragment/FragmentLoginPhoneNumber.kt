@@ -14,10 +14,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.login.viewmodel.LoginState
 import com.ingjuanocampo.enfila.android.login.viewmodel.ViewModelLogin
-import com.ingjuanocampo.enfila.di.AppComponent
+import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FragmentLoginPhoneNumber: Fragment() {
+
+    @Inject
+    lateinit var stateProvider : AppStateProvider
 
     private lateinit var doVerificationButton: FloatingActionButton
     private val navController by lazy { NavHostFragment.findNavController(this) }
@@ -58,7 +64,7 @@ class FragmentLoginPhoneNumber: Fragment() {
 
     private fun process(authState: AuthState) {
         when(authState) {
-            AuthState.Authenticated -> AppComponent.providesState().navigateLaunchScreen()
+            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen()
             is AuthState.AuthError ->  showToast("Error" + authState.e.toString())
         }
     }

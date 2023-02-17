@@ -4,8 +4,9 @@ import com.ingjuanocampo.enfila.data.source.shifts.ShiftsRemoteSourceFirebase
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import javax.inject.Inject
 
-internal class ShiftsRemoteSourceImpl(private val shiftsRemoteSourceFirebase: ShiftsRemoteSourceFirebase): ShiftRemoteSource {
+class ShiftsRemoteSourceImpl @Inject constructor(private val shiftsRemoteSourceFirebase: ShiftsRemoteSourceFirebase): ShiftRemoteSource {
 
 
     override suspend fun fetchDataAll(id: String): List<Shift>? {

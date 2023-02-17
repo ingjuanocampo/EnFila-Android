@@ -4,17 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
+    android:background="?colorSurface"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <include
+        android:id="@+id/toolbarInclude"
+        layout="@layout/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <FrameLayout
+        app:layout_constraintTop_toBottomOf="@+id/toolbarInclude"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
-        app:layout_constraintTop_toTopOf="parent"
          />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,7 +32,7 @@
         android:layout_gravity="bottom"
         app:itemIconTint="@color/color_home_selector"
         app:itemTextColor="@color/color_home_selector"
-        android:background="?colorPrimaryContainer"
+        android:background="?colorSurface"
         android:elevation="0dp"
         android:id="@+id/bottomNav"/>
 

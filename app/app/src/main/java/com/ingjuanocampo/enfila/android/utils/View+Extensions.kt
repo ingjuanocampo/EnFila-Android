@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Chronometer
 import androidx.core.view.isVisible
 import com.ingjuanocampo.enfila.android.databinding.ViewActiveProgressBinding
-import com.ingjuanocampo.enfila.android.lobby.list.model.ShiftItem
+import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
 import android.widget.Chronometer.OnChronometerTickListener
 import java.util.concurrent.TimeUnit

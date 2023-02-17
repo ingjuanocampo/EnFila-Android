@@ -13,6 +13,11 @@ object Dependencies {
     const val daggerAndroidSupport = "com.google.dagger:dagger-android-support:$daggerVersion"
     const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:$daggerVersion"
 
+    const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+
+
     const val picasso = "com.squareup.picasso:picasso:$picassoVersion"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -31,15 +36,18 @@ object Dependencies {
     const val constraitLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     const val recyclerView = "androidx.recyclerview:recyclerview:$recyclerViewXVersion"
 
+
     const val androidXLegacy = "androidx.legacy:legacy-support-v4:$androidLegacyXVersion"
     const val androidMaterial = "com.google.android.material:material:$materialVersion"
+    const val material3 = "androidx.compose.material3:material3:1.0.0-beta01"
+    const val material3Windows = "androidx.compose.material3:material3-window-size-class:1.0.0-beta01"
 
     const val navigationAndroid = "androidx.navigation:navigation-fragment-ktx:$navigationComponent"
     const val navigationUI = "androidx.navigation:navigation-ui-ktx:$navigationComponent"
 
     const val composeAdapter = "com.github.ingjuanocampo:CompositeDelegateAdapter:1.0.3"
 
-    const val firebaseBom = "com.google.firebase:firebase-bom:30.3.1"
+    const val firebaseBom = "com.google.firebase:firebase-bom:31.1.0"
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
     const val firebaseStore = "com.google.firebase:firebase-firestore-ktx"
     const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"
@@ -48,7 +56,9 @@ object Dependencies {
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
 
+    const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:$constraintCompose"
     const val composeUi = "androidx.compose.ui:ui:1.1.1"
+    const val composeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
     // Tooling support (Previews, etc.)
     const val tooling = "androidx.compose.ui:ui-tooling:1.1.1"
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
@@ -60,13 +70,14 @@ object Dependencies {
     const val iconsMaterialComposeExtended = "androidx.compose.material:material-icons-extended:1.1.1"
     // Integration with observables
     const val liveDataCompose = "androidx.compose.runtime:runtime-livedata:1.1.1"
+    const val fragments = "androidx.fragment:fragment-ktx:1.5.5"
 
 
 }
 
 object Android {
-    const val compileAndroidSdkVersion = ANDROID_32
-    const val minAndroidSdkVersion = ANDROID_32
+    const val compileAndroidSdkVersion = ANDROID_33
+    const val minAndroidSdkVersion = ANDROID_33
 }
 
 
@@ -105,6 +116,11 @@ fun DependencyHandler.dagger() {
     kotlinImplementation(Dependencies.daggerCompiler)
 }
 
+fun DependencyHandler.hilt() {
+    implementation(Dependencies.hiltAndroid)
+    kotlinImplementation(Dependencies.hiltCompiler)
+}
+
 fun DependencyHandler.coroutines() {
     implementation(Dependencies.coroutineCore)
 }
@@ -116,6 +132,8 @@ fun DependencyHandler.navigationComponent() {
 
 fun DependencyHandler.material() {
     implementation(Dependencies.androidMaterial)
+    implementation(Dependencies.material3)
+    implementation(Dependencies.material3Windows)
     implementation(Dependencies.androidXLegacy)
 }
 
@@ -155,18 +173,21 @@ fun DependencyHandler.uiCommons() {
     implementation(Dependencies.recyclerView)
     implementation(Dependencies.androidCore)
     implementation(Dependencies.composeAdapter)
+    implementation(Dependencies.fragments)
     compose()
     projectImplementation(":data")
 }
 
 fun DependencyHandler.compose() {
     implementation(Dependencies.composeUi)
+    implementation(Dependencies.composeViewModel)
     implementation(Dependencies.tooling)
     implementation(Dependencies.foundationCompose)
     implementation(Dependencies.materialCompose)
     implementation(Dependencies.iconsMaterialCompose)
     implementation(Dependencies.iconsMaterialComposeExtended)
     implementation(Dependencies.liveDataCompose)
+    implementation(Dependencies.constraintLayoutCompose)
 }
 
 

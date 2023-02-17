@@ -1,10 +1,12 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
 import com.ingjuanocampo.cdapter.RecyclerViewType
-import com.ingjuanocampo.enfila.android.lobby.list.model.HeaderItem
-import com.ingjuanocampo.enfila.android.lobby.list.model.mapToUI
+import com.ingjuanocampo.enfila.android.home.list.model.HeaderItem
+import com.ingjuanocampo.enfila.android.home.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.android.utils.toDurationText
+import com.ingjuanocampo.enfila.commons.toYearMonthDayFormat
+import com.ingjuanocampo.enfila.commons.toYearMonthFormat
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
@@ -17,8 +19,11 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import java.util.Date
+import javax.inject.Inject
 
-class HomeUC(
+class HomeUC @Inject constructor(
+    private val calculateShiftAverageWaitTimes: CalculateShiftAverageWaitTimes,
     private val companyRepo: CompanyRepository,
     private val userRepository: UserRepository,
     private val shiftRepository: ShiftRepository,
@@ -26,22 +31,17 @@ class HomeUC(
 ) {
 
 
+    // TODO this should filter only the current day information
     fun load(): Flow<HomeState> {
         return shiftRepository.getAllObserveData().map { shifts ->
 
             if (shifts.isNullOrEmpty().not()) {
 
-
-                // Averange calculation
-
-                val shiftTimes = shifts!!.filter { it.state == ShiftState.FINISHED }.filter { it.endDate != null && it.endDate!! >= 0 && it.endDate!! > it.date }.map {
-                    return@map it.endDate!!.minus(it.date)
+                // average calculation
+                val todayShift = shifts!!.filter {
+                    Date().time.toYearMonthDayFormat() == it.date.toYearMonthDayFormat() // Only for the current month
                 }
-                var totalTimes = 0L
-                shiftTimes.forEach {
-                    totalTimes += it
-                }
-                val average = (totalTimes/shiftTimes.size).toLong().toDurationText()
+                val average = calculateShiftAverageWaitTimes(todayShift)
 
                 // End of average calculation
 
@@ -54,10 +54,9 @@ class HomeUC(
 
                 val resume = HomeResume(
                     selectedCompany = currentCompany ?: CompanySite(),
-                    totalTurns = shiftRepository.loadAllData()!!.filter { it.isActive() }.count(),
+                    totalTurns = todayShift!!.filter { it.isActive() }.count(),
                     avrTime = average
                 )
-                resume.totalTurns = shifts!!.size
 
                 items.add(resume)
 

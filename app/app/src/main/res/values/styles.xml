@@ -20,7 +20,7 @@ d
     </style>
 
     <style name="Text.Bold.Green">
-        <item name="android:textColor">?colorSecondary</item>
+        <item name="android:textColor">?colorOnPrimaryContainer</item>
     </style>
 
     <style name="Text.Large">
@@ -33,16 +33,16 @@ d
     </style>
 
     <style name="Text.Large.Bold.SecondaryColor">
-        <item name="android:textColor">?colorSecondary</item>
+        <item name="android:textColor">?colorOnPrimaryContainer</item>
     </style>
 
     <style name="Text.Large.Bold.PrimaryColor">
-        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textColor">?colorOnPrimary</item>
     </style>
 
     <style name="Text.PrimaryColor">
-        <item name="android:textColor">?colorPrimary</item>
-        <item name="hintTextColor">?colorPrimary</item>
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="hintTextColor">?colorOnPrimary</item>
     </style>
 
 
@@ -56,7 +56,7 @@ d
     </style>
 
     <style name="Text.Medium.Bold.SecondaryColor">
-        <item name="android:textColor">?colorSecondary</item>
+        <item name="android:textColor">?colorOnPrimaryContainer</item>
     </style>
 
 
@@ -80,7 +80,7 @@ d
 
 
     <style name="Text.Small.Bold.SecondaryColor">
-        <item name="android:textColor">?colorAccent</item>
+        <item name="android:textColor">?colorOnPrimaryContainer</item>
     </style>
 
 
@@ -98,9 +98,9 @@ d
     </style>
 
     <style name="Text.Extra.Bold.PrimaryColor">
-        <item name="android:textColor">?colorPrimary</item>
-        <item name="hintTextColor">?colorPrimary</item>
-        <item name="android:textColorHint">?colorPrimary</item>
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="hintTextColor">?colorOnPrimary</item>
+        <item name="android:textColorHint">?colorOnPrimary</item>
     </style>
 
     <style name="Text.Extra.Bold.Color2">
@@ -122,8 +122,10 @@ d
     </style>
 
 
-    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+    <style name="ButtonStyle" >
         <item name="android:textSize">13sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/second_color_selector</item>
         <item name="android:textColor">?colorOnPrimary</item>
         <item name="fontFamily">sans-serif-medium</item>
@@ -132,9 +134,9 @@ d
     </style>
 
 
-    <style name="ButtonStyle.Stroke" parent="Widget.AppCompat.Button">
+    <style name="ButtonStyle.Stroke">
         <item name="android:background">@drawable/oval_stroke_selector</item>
-        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="android:textColor">?colorOnTertiary</item>
         <item name="textAllCaps">false</item>
     </style>
 

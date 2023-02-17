@@ -4,8 +4,9 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class FinishShiftUC(private val shiftRepository: ShiftRepository,
+class FinishShiftUC @Inject constructor(private val shiftRepository: ShiftRepository,
                     private val shiftInteractions: ShiftInteractions) {
 
 

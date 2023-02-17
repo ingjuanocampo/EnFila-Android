@@ -10,12 +10,13 @@ import com.ingjuanocampo.enfila.domain.data.source.LocalSource
 import com.ingjuanocampo.enfila.domain.data.source.db.realm.entity.toEntity
 import com.ingjuanocampo.enfila.domain.data.source.db.realm.entity.toList
 import com.ingjuanocampo.enfila.domain.entity.User
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-
-class UserLocalSource(private val context: Context): LocalSource<User> {
+class UserLocalSource @Inject constructor(@ApplicationContext private val context: Context): LocalSource<User> {
 
 
     val Context.userPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("settings")
