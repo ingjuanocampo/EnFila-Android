@@ -38,7 +38,6 @@ android {
         jvmTarget = "1.8"
     }
 
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -50,14 +49,13 @@ android {
 }
 
 dependencies {
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     appDependencies()
     implementation(platform(Dependencies.firebaseBom))
     fireStore()
     dataStore()
     coroutinesWithAndroid()
     architectureComponents()
-
 }
 
 apply(plugin = "com.google.gms.google-services")

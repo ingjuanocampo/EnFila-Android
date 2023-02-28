@@ -24,7 +24,6 @@ class ViewModelHome @Inject constructor(
             homeUC.load().collect {
                 state.postValue(it)
             }
-
         }
     }
 
@@ -33,7 +32,6 @@ class ViewModelHome @Inject constructor(
             finishShiftUC.invoke(id).collect { }
         }
     }
-
 
     fun cancel(id: String) {
         viewModelScope.launchGeneral {
@@ -46,5 +44,4 @@ class ViewModelHome @Inject constructor(
             homeUC.next(id).collect { }
         }
     }
-
 }

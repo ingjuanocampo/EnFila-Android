@@ -4,5 +4,5 @@ enum class ShiftState {
     WAITING,
     CALLING,
     CANCELLED,
-    FINISHED
+    FINISHED,
 }

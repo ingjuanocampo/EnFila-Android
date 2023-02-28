@@ -3,7 +3,6 @@ package com.ingjuanocampo.enfila.android.assignation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
-import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.usecases.ShiftInteractions
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ import javax.inject.Inject
 class ViewModelAssignation @Inject constructor(
     private val shiftInteractions: ShiftInteractions,
     private val clientRepository: ClientRepository,
-): ViewModel() {
+) : ViewModel() {
 
     var tunr: Int = 0
 
@@ -81,5 +80,4 @@ class ViewModelAssignation @Inject constructor(
             }
         }
     }
-
 }

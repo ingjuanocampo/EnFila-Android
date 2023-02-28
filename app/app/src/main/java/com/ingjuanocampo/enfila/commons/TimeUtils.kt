@@ -3,7 +3,6 @@ package com.ingjuanocampo.enfila.commons
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 fun Long.toYearMonthFormat(): String =
     this.toFormatDate("yyyy/MM")
 

@@ -21,9 +21,6 @@ interface AppComponent {
     @Binds
     fun bindsLoggedImpl(loggedState: LoggedStateImpl): LoggedState
 
-
     @Binds
     fun bindsCredentials(twillioCredentials: TwillioCredentialsImpl): TwillioCredentials
-
-
 }

@@ -51,6 +51,5 @@ class BottomMenuBuilder {
         }
     }
 
-
     internal class BottomMenuItem(val fragmentFactory: () -> Fragment, val title: String, val icon: Drawable?)
 }

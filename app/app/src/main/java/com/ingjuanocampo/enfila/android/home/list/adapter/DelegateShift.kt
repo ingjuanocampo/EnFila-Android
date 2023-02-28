@@ -14,10 +14,9 @@ class DelegateShift(
     parent: ViewGroup,
     private val listener: (String) -> Unit = {},
     private val binding: DelegateShiftBinding =
-        DelegateShiftBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        DelegateShiftBinding.inflate(LayoutInflater.from(parent.context), parent, false),
 ) :
     DelegateViewHolder(binding.root) {
-
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         with(binding) {
@@ -33,7 +32,5 @@ class DelegateShift(
             progressContainer.finish.isVisible = recyclerViewType.isCancellable
             progressContainer.set(listener, recyclerViewType.id)
         }
-
-
     }
 }

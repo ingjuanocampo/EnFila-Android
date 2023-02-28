@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelLogin @Inject constructor(
-    private val signUC: SignInUC
+    private val signUC: SignInUC,
 ) : ViewModel() {
 
     var verificationCode: String? = null
@@ -52,26 +52,23 @@ class ViewModelLogin @Inject constructor(
 
         override fun onCodeSent(
             _verificationId: String,
-            token: PhoneAuthProvider.ForceResendingToken
+            token: PhoneAuthProvider.ForceResendingToken,
         ) {
             super.onCodeSent(_verificationId, token)
             verificationId = _verificationId
             state.value = LoginState.ToVerifyCode
         }
-
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(activity!!) { task ->
                 completeSignFlow(task)
-
             }
     }
 
     private fun completeSignFlow(task: Task<AuthResult>) = viewModelScope.launchGeneral {
         if (task.isSuccessful) {
-
             val user = task.result?.user
             if (user != null) {
                 withContext(Dispatchers.IO) {
@@ -79,27 +76,25 @@ class ViewModelLogin @Inject constructor(
                         state.postValue(LoginState.AuthenticationProcessState(it))
                     }
                 }
-
             } else {
                 state.postValue(
                     LoginState.AuthenticationProcessState(
                         AuthState.AuthError(
-                            task.exception ?: Exception("No login")
-                        )
-                    )
+                            task.exception ?: Exception("No login"),
+                        ),
+                    ),
                 )
             }
         } else {
-
             if (task.exception is FirebaseAuthInvalidCredentialsException) {
                 // The verification code entered was invalid
             }
             state.postValue(
                 LoginState.AuthenticationProcessState(
                     AuthState.AuthError(
-                        task.exception ?: Exception("No login")
-                    )
-                )
+                        task.exception ?: Exception("No login"),
+                    ),
+                ),
             )
             // Update UI
         }
@@ -110,13 +105,12 @@ class ViewModelLogin @Inject constructor(
 
         viewModelScope.launchGeneral {
             val options = PhoneAuthOptions.newBuilder(auth)
-                .setPhoneNumber("+57$phoneNumber") ///.setPhoneNumber("+16505553434")//      // Phone number to verify
+                .setPhoneNumber("+57$phoneNumber") // /.setPhoneNumber("+16505553434")//      // Phone number to verify
                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                .setActivity(activity)                 // Activity (for callback binding)
-                .setCallbacks(authCallbacks)          // OnVerificationStateChangedCallbacks
+                .setActivity(activity) // Activity (for callback binding)
+                .setCallbacks(authCallbacks) // OnVerificationStateChangedCallbacks
                 .build()
             PhoneAuthProvider.verifyPhoneNumber(options)
-
         }
     }
 
@@ -124,9 +118,6 @@ class ViewModelLogin @Inject constructor(
         viewModelScope.launchGeneral {
             val credential = PhoneAuthProvider.getCredential(verificationId!!, verificationCode!!)
             signInWithPhoneAuthCredential(credential)
-
-
         }
     }
-
 }

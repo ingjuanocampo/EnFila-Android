@@ -12,8 +12,7 @@ interface Storage<T> {
 
     fun deleteById(id: String)
 
-    fun getData() : List<T>
+    fun getData(): List<T>
 
     fun observeData(): Flow<List<T>>
-
 }

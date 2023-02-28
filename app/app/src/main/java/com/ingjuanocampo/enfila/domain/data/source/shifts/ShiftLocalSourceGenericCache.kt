@@ -5,10 +5,10 @@ import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
 import javax.inject.Inject
 
-class ShiftLocalSourceGenericCache @Inject constructor(): ShiftLocalSource, GenericLocalStoreImp<Shift>() {
+class ShiftLocalSourceGenericCache @Inject constructor() : ShiftLocalSource, GenericLocalStoreImp<Shift>() {
 
-    override suspend fun  getClosestShift(): Shift? {
-        return getAllData()?.firstOrNull{ it.state == ShiftState.WAITING }
+    override suspend fun getClosestShift(): Shift? {
+        return getAllData()?.firstOrNull { it.state == ShiftState.WAITING }
     }
 
     override suspend fun getLastShift(): Shift? {
@@ -17,6 +17,5 @@ class ShiftLocalSourceGenericCache @Inject constructor(): ShiftLocalSource, Gene
 
     override suspend fun getCallingShift(): Shift? {
         return getAllData()?.firstOrNull { it.state == ShiftState.CALLING }
-
     }
 }

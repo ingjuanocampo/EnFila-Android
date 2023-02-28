@@ -6,5 +6,5 @@ enum class ViewTypes {
     HOME_RESUME,
     NEXT_SHIFT,
     ACTIVE_SHIFT,
-    HEADER_LINK
+    HEADER_LINK,
 }

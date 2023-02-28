@@ -10,6 +10,4 @@ interface LocalSource<Data> {
     fun getAllObserveData(): Flow<List<Data>?>
     suspend fun getAllData(): List<Data>?
     suspend fun getById(id: String): Data?
-
 }
-

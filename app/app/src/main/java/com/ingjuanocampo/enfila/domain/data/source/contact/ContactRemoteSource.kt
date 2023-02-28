@@ -6,8 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 @Deprecated("")
-class ContactRemoteSource: RemoteSource<Client> {
-
+class ContactRemoteSource : RemoteSource<Client> {
 
     override suspend fun fetchDataAll(id: String): List<Client> {
         return emptyList()

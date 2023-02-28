@@ -1,14 +1,13 @@
 package com.ingjuanocampo.enfila.domain.data.source.companysite
 
-import com.ingjuanocampo.enfila.domain.data.source.LocalSource
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
-private val listOfMockCompanies = arrayListOf(CompanySite(
-    id = "companyid",
-    name = "Sanduches Cuba"
-))
+private val listOfMockCompanies = arrayListOf(
+    CompanySite(
+        id = "companyid",
+        name = "Sanduches Cuba",
+    ),
+)
 
 /*
 class CompanySiteMockSource: LocalSource<List<CompanySite>> {

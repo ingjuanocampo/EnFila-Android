@@ -2,8 +2,5 @@ package com.ingjuanocampo.enfila.domain.data.source.shifts
 
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.Shift
-import kotlinx.coroutines.flow.Flow
 
-interface ShiftRemoteSource: RemoteSource<Shift> {
-
-}
+interface ShiftRemoteSource : RemoteSource<Shift>

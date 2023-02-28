@@ -6,8 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
-class ShiftsRemoteSourceImpl @Inject constructor(private val shiftsRemoteSourceFirebase: ShiftsRemoteSourceFirebase): ShiftRemoteSource {
-
+class ShiftsRemoteSourceImpl @Inject constructor(private val shiftsRemoteSourceFirebase: ShiftsRemoteSourceFirebase) : ShiftRemoteSource {
 
     override suspend fun fetchDataAll(id: String): List<Shift>? {
         return shiftsRemoteSourceFirebase.fetchShiftsByCompanyId(id).firstOrNull()
@@ -25,5 +24,4 @@ class ShiftsRemoteSourceImpl @Inject constructor(private val shiftsRemoteSourceF
     override fun uploadData(data: Shift): Flow<Shift?> {
         return shiftsRemoteSourceFirebase.updateData(data)
     }
-
 }

@@ -31,7 +31,7 @@ class ShiftsRemoteSourceFirebase @Inject constructor() {
         contactId = it["contactId"] as String? ?: EMPTY_STRING,
         notes = it["notes"] as String? ?: EMPTY_STRING,
         state = getShiftState((it["state"] as Long? ?: 0).toInt()),
-        endDate = it["endDate"] as Long? ?: 0
+        endDate = it["endDate"] as Long? ?: 0,
     )
 
     fun fetchByShiftId(shiftId: String, companyId: String): Flow<Shift?> {
@@ -39,7 +39,6 @@ class ShiftsRemoteSourceFirebase @Inject constructor() {
             mapToModel(it)
         }, getPath(companyId), shiftId)
     }
-
 
     private fun getPath(parentCompanySite: String) =
         "$companyInfoPath/$parentCompanySite/$shiftPath"
@@ -64,8 +63,6 @@ class ShiftsRemoteSourceFirebase @Inject constructor() {
         "contactId" to it.contactId,
         "notes" to it.notes,
         "state" to it.state.ordinal,
-        "endDate" to it.endDate
+        "endDate" to it.endDate,
     )
 }
-
-

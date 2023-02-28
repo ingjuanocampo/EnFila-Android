@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ShiftInteractions @Inject constructor(
-    private val shiftRepository: ShiftRepository, private val clientRepository: ClientRepository,
-    private val messagingRepository: MessageRepository
+    private val shiftRepository: ShiftRepository,
+    private val clientRepository: ClientRepository,
+    private val messagingRepository: MessageRepository,
 ) {
 
     fun active(current: Shift?): Flow<Boolean> {
@@ -26,9 +27,12 @@ class ShiftInteractions @Inject constructor(
     private fun updateShiftTo(shift: Shift?, state: ShiftState): Flow<Boolean> {
         return flowOf(shift?.copy()).flatMapLatest { current ->
             current?.let {
-                updateShift(it.apply {
-                    endDate = getNow()
-                }, state).map { true }
+                updateShift(
+                    it.apply {
+                        endDate = getNow()
+                    },
+                    state,
+                ).map { true }
             } ?: flowOf(false)
         }
     }
@@ -56,15 +60,17 @@ class ShiftInteractions @Inject constructor(
         val client = Client(id = phoneNumber, name = name)
         return clientRepository.updateData(client).flatMapLatest {
             shiftRepository.updateData(
-                (ShiftFactory.createWaiting(
-                    tunr,
-                    client.id,
-                    note ?: "",
-                    shiftRepository.id
-                ))
+                (
+                    ShiftFactory.createWaiting(
+                        tunr,
+                        client.id,
+                        note ?: "",
+                        shiftRepository.id,
+                    )
+                    ),
             )
         }.map {
-            messagingRepository.sendMessage("573137550993", "14155238886","Hola $name Fuiste anadido al turno $tunr")
+            messagingRepository.sendMessage("573137550993", "14155238886", "Hola $name Fuiste anadido al turno $tunr")
             it
         }
     }

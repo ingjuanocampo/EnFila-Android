@@ -9,9 +9,15 @@ import com.ingjuanocampo.enfila.android.databinding.DelegateNextTurnBinding
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
 import com.ingjuanocampo.enfila.android.utils.set
 
-class DelegateNextShift(val parent: ViewGroup,
-                        private val biding : DelegateNextTurnBinding = DelegateNextTurnBinding.inflate(
-                           LayoutInflater.from(parent.context), parent, false), val listener: (NextShiftActions) -> Unit): DelegateViewHolder(biding.root) {
+class DelegateNextShift(
+    val parent: ViewGroup,
+    private val biding: DelegateNextTurnBinding = DelegateNextTurnBinding.inflate(
+        LayoutInflater.from(parent.context),
+        parent,
+        false,
+    ),
+    val listener: (NextShiftActions) -> Unit,
+) : DelegateViewHolder(biding.root) {
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem
@@ -29,18 +35,15 @@ class DelegateNextShift(val parent: ViewGroup,
             setButtonsVisible(false)
             listener.invoke(NextShiftActions.Cancel(recyclerViewType.id))
         }
-
     }
 
     private fun setButtonsVisible(visible: Boolean) {
         biding.progressBar.isVisible = !visible
         biding.buttonsContainer.isVisible = visible
     }
-
-
 }
 
 sealed class NextShiftActions {
-    data class Cancel(val id: String): NextShiftActions()
-    data class Active(val id: String): NextShiftActions()
+    data class Cancel(val id: String) : NextShiftActions()
+    data class Active(val id: String) : NextShiftActions()
 }

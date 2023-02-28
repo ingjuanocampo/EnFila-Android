@@ -26,21 +26,23 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
         cacheList.values.toList()
 
     override fun observeData(): Flow<List<T>> {
-        return merge(flow {
-            val observerChannel = Channel<Unit>(Channel.CONFLATED)
+        return merge(
+            flow {
+                val observerChannel = Channel<Unit>(Channel.CONFLATED)
 
-            observerChannel.trySend(Unit) // Initial signal to perform first query.
+                observerChannel.trySend(Unit) // Initial signal to perform first query.
 
-            try {
-                // Iterate until cancelled, transforming observer signals to query results to
-                // be emitted to the flow.
-                for (signal in observerChannel) {
-                    emit(getData())
+                try {
+                    // Iterate until cancelled, transforming observer signals to query results to
+                    // be emitted to the flow.
+                    for (signal in observerChannel) {
+                        emit(getData())
+                    }
+                } finally {
                 }
-            } finally {
-            }
-
-        }, shareCacheFlow)
+            },
+            shareCacheFlow,
+        )
     }
 
     override fun deleteAll() {

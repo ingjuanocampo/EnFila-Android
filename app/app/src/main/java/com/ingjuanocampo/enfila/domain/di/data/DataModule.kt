@@ -19,7 +19,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
 @InstallIn(SingletonComponent::class)
 @Module
 class DataModule {
@@ -28,7 +27,7 @@ class DataModule {
     @Provides
     fun bindsUserRepository(
         userRemoteImpl: UserRemoteImpl,
-        userLocalSource: UserLocalSource
+        userLocalSource: UserLocalSource,
     ): UserRepository {
         return UserRepositoryImpl(userRemoteImpl, userLocalSource)
     }
@@ -54,9 +53,8 @@ class DataModule {
     @Provides
     fun providesShiftRepository(
         shiftsRemoteSourceImpl: ShiftsRemoteSourceImpl,
-        ShiftLocalSourceGenericCache: ShiftLocalSourceGenericCache
+        ShiftLocalSourceGenericCache: ShiftLocalSourceGenericCache,
     ): ShiftRepository {
         return ShiftRepositoryImpl(shiftsRemoteSourceImpl, ShiftLocalSourceGenericCache)
     }
-
 }

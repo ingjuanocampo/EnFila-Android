@@ -11,7 +11,7 @@ class CalculateShiftAverageWaitTimes @Inject constructor() {
 
     operator fun invoke(shifts: List<Shift>): String {
         if (shifts.isEmpty()) return "- -"
-        val shiftTimes =  shifts.filter { it.state == ShiftState.FINISHED }
+        val shiftTimes = shifts.filter { it.state == ShiftState.FINISHED }
             .filter { it.endDate != null && it.endDate!! >= 0 && it.endDate!! > it.date }.map {
                 return@map it.endDate!!.minus(it.date)
             }
@@ -19,6 +19,6 @@ class CalculateShiftAverageWaitTimes @Inject constructor() {
         shiftTimes.forEach {
             totalTimes += it
         }
-        return (totalTimes/shiftTimes.size).toDurationText()
+        return (totalTimes / shiftTimes.size).toDurationText()
     }
 }

@@ -1,10 +1,10 @@
 package com.ingjuanocampo.enfila.android.home.list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -28,8 +28,9 @@ class FragmentListItems : Fragment() {
     val viewModel: ViewModelListItems by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_list_items, container, false)
     }
@@ -40,14 +41,17 @@ class FragmentListItems : Fragment() {
 
         adapter = CompositeDelegateAdapter(1).apply {
             appendDelegate(
-                ViewTypes.SHIFT.ordinal
+                ViewTypes.SHIFT.ordinal,
             ) { DelegateShift(it, ::stopListener) }
         }
         recycler.addItemDecoration(DividerItemDecoration(requireContext(), OrientationHelper.VERTICAL))
         recycler.adapter = adapter
-        viewModel.state.observe(viewLifecycleOwner, Observer {
-            adapter.updateItems(it)
-        })
+        viewModel.state.observe(
+            viewLifecycleOwner,
+            Observer {
+                adapter.updateItems(it)
+            },
+        )
         viewModel.load()
     }
 

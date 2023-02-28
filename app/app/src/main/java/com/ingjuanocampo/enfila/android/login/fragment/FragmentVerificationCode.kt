@@ -15,7 +15,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.login.viewmodel.LoginState
 import com.ingjuanocampo.enfila.android.login.viewmodel.ViewModelLogin
-import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.signing.AuthState
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +31,7 @@ class FragmentVerificationCode : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.verification_code, container, false)
     }
@@ -45,27 +44,30 @@ class FragmentVerificationCode : Fragment() {
             viewModel.verificationCode = (it.toString())
         }
 
-        viewModel.state.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is LoginState.AuthenticationProcessState ->
-                    when (it.authState) {
-                    AuthState.Authenticated ->  stateProvider.provideCurrentState().navigateLaunchScreen()
-                    is AuthState.NewAccount -> navController.navigate(R.id.action_fragmentVerificationCode_to_fragmentProfile, Bundle().apply {
-                        putString("phone", viewModel.phoneNumber)
-                        putString("id", it.authState.id)
-                    })
-                    is AuthState.AuthError -> showToast("Error" + it.authState.e.toString())
+        viewModel.state.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    is LoginState.AuthenticationProcessState ->
+                        when (it.authState) {
+                            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen()
+                            is AuthState.NewAccount -> navController.navigate(
+                                R.id.action_fragmentVerificationCode_to_fragmentProfile,
+                                Bundle().apply {
+                                    putString("phone", viewModel.phoneNumber)
+                                    putString("id", it.authState.id)
+                                },
+                            )
+                            is AuthState.AuthError -> showToast("Error" + it.authState.e.toString())
+                        }
                 }
-            }
-        })
-
+            },
+        )
 
         var doVerificationButton = view.findViewById<FloatingActionButton>(R.id.floatButton)
         doVerificationButton.setOnClickListener {
             viewModel.verify()
         }
-
-
     }
 }
 

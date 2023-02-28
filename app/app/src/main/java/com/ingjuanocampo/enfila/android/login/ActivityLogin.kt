@@ -9,17 +9,17 @@ import com.ingjuanocampo.enfila.android.login.viewmodel.ViewModelLogin
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActivityLogin: AppCompatActivity() {
+class ActivityLogin : AppCompatActivity() {
 
     val viewModel: ViewModelLogin by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.state.observe(this, Observer {
-
-        })
+        viewModel.state.observe(
+            this,
+            Observer {
+            },
+        )
         setContentView(R.layout.activity_login)
-
     }
-
 }

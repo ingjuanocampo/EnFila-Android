@@ -46,7 +46,6 @@ import com.ingjuanocampo.enfila.android.ui.common.AnimatedButtonState
 import com.ingjuanocampo.enfila.android.ui.common.AnimatedComposeButton
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 
-
 @Composable
 fun ProfileScreen(profileViewModel: ProfileViewModel = viewModel()) {
     AppTheme {
@@ -60,25 +59,23 @@ fun ProfileScreen(profileViewModel: ProfileViewModel = viewModel()) {
                 ProfileView(profile = (state as ProfileState.ProfileLoaded).profileCard)
             }
         }
-
     }
-
 }
-
 
 @Composable
 fun ProfileView(profile: ProfileCard) {
     ConstraintLayout(
         Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)) {
+            .background(MaterialTheme.colorScheme.surface),
+    ) {
         val (headerRef, bodyRef, logoutRef) = createRefs()
 
         ProfileHeader(
             profile,
             Modifier.constrainAs(headerRef) {
                 top.linkTo(parent.top)
-            }
+            },
         )
         ProfileOptions(
             profile,
@@ -86,26 +83,24 @@ fun ProfileView(profile: ProfileCard) {
                 top.linkTo(headerRef.bottom)
                 bottom.linkTo(logoutRef.top)
                 height = Dimension.fillToConstraints
-            }
+            },
         )
         Logout(
             Modifier.constrainAs(logoutRef) {
                 bottom.linkTo(parent.bottom)
-            }
+            },
         )
     }
-
 }
 
 @Composable
 fun Logout(modifier: Modifier) {
-
     Column(modifier = modifier, Arrangement.Top) {
         Divider(
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(1.dp)
+                .height(1.dp),
         )
 
         var state by remember { mutableStateOf(AnimatedButtonState.IDLE) }
@@ -114,13 +109,12 @@ fun Logout(modifier: Modifier) {
                 .width(100.dp)
                 .padding(all = 8.dp),
             state,
-          ) {
+        ) {
             Row(
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
                         state = AnimatedButtonState.PROGRESS
-                    })
-                    ,
+                    }),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
@@ -134,13 +128,11 @@ fun Logout(modifier: Modifier) {
                     modifier = Modifier,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         MaterialTheme.colorScheme.onErrorContainer,
-                        fontWeight = FontWeight.Medium
-                    )
+                        fontWeight = FontWeight.Medium,
+                    ),
                 )
             }
         }
-
-
     }
 }
 
@@ -150,10 +142,10 @@ fun ProfileOptions(profile: ProfileCard, modifier: Modifier) {
         modifier = modifier.verticalScroll(rememberScrollState()),
         Arrangement.Top,
 
-        ) {
+    ) {
         profile.options.forEach {
             Row(
-                modifier = Modifier.padding(all = 8.dp)
+                modifier = Modifier.padding(all = 8.dp),
             ) {
                 Image(
                     painter = painterResource(it.icon),
@@ -163,7 +155,7 @@ fun ProfileOptions(profile: ProfileCard, modifier: Modifier) {
                     text = it.title,
                     textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth(),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -182,8 +174,6 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
            )
            Spacer(modifier = Modifier.width(8.dp))
    */
-
-
     }
 
     Surface(
@@ -192,7 +182,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
             .padding(all = 8.dp),
         color = MaterialTheme.colorScheme.surface,
         shape = RoundedCornerShape(2.dp),
-        elevation = 2.dp
+        elevation = 2.dp,
 
     ) {
         val textColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -201,7 +191,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                 text = profile.companyName,
                 style = MaterialTheme.typography.titleLarge
                     .copy(fontWeight = FontWeight.Bold),
-                color = textColor
+                color = textColor,
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -210,7 +200,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                 text = profile.phone,
                 modifier = Modifier.padding(all = 4.dp),
                 style = MaterialTheme.typography.titleMedium,
-                color = textColor
+                color = textColor,
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -225,32 +215,26 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
     }
 
     Column(modifier = Modifier.padding(all = 8.dp), Arrangement.Center) {
-
         StatictisView(profile)
-
     }
-
 }
 
 @Composable
 fun StatictisView(profile: ProfileCard) {
-
-    Surface(color = MaterialTheme.colorScheme.tertiaryContainer,
+    Surface(
+        color = MaterialTheme.colorScheme.tertiaryContainer,
         shape = RoundedCornerShape(2.dp),
-        elevation = 2.dp
+        elevation = 2.dp,
     ) {
         Row(
             modifier = Modifier.height(50.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-
-
             Column(
                 modifier = Modifier
                     .weight(1f, true)
                     .padding(horizontal = 20.dp),
             ) {
-
                 Text(
                     text = "Statistics",
                     textAlign = TextAlign.Left,
@@ -258,43 +242,36 @@ fun StatictisView(profile: ProfileCard) {
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
                 )
-
             }
-
-
         }
     }
 
     StatisticsSection(profile.buildSections())
-
 }
 
 @Composable
 private fun StatisticsSection(listOf: List<StatisticsSectionUI>) {
-
     listOf.forEach { row ->
-        Surface(color = MaterialTheme.colorScheme.primaryContainer,
+        Surface(
+            color = MaterialTheme.colorScheme.primaryContainer,
             shape = RoundedCornerShape(2.dp),
-            elevation = 2.dp
+            elevation = 2.dp,
         ) {
             Row(
                 modifier = Modifier.height(50.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-
-
                 Column(
                     modifier = Modifier
                         .weight(1f, true)
                         .padding(horizontal = 20.dp),
                 ) {
-
                     Text(
                         text = row.title,
                         textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
 
                     Text(
@@ -302,25 +279,21 @@ private fun StatisticsSection(listOf: List<StatisticsSectionUI>) {
                         textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
-
-
                 }
-
 
                 Column(
                     modifier = Modifier
                         .weight(1f, true)
                         .padding(all = 4.dp),
                 ) {
-
                     Text(
                         text = row.title2,
                         textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
 
                     Text(
@@ -328,15 +301,13 @@ private fun StatisticsSection(listOf: List<StatisticsSectionUI>) {
                         textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth(),
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 }
             }
         }
     }
-
 }
-
 
 fun Boolean.toButtonState() = when (this) {
     true -> AnimatedButtonState.PROGRESS
@@ -344,14 +315,18 @@ fun Boolean.toButtonState() = when (this) {
 }
 
 @Composable
-@Preview(device = Devices.PIXEL_4_XL,
-    showBackground = true,)
+@Preview(
+    device = Devices.PIXEL_4_XL,
+    showBackground = true,
+)
 fun ProfilePreview() {
     AppTheme {
         ProfileView(
-            ProfileCard("Company", "31231313", "indawa.com",
+            ProfileCard(
+                "Company", "31231313", "indawa.com",
                 "123", "33", "32", "12", "1Mins",
-                "12 min" )
+                "12 min",
+            ),
         )
     }
 }

@@ -16,13 +16,13 @@ class UserRemoteSource @Inject constructor() {
 
     private val db by lazy { Firebase.firestore }
 
-     fun fetchData(id: String): Flow<User?> {
+    fun fetchData(id: String): Flow<User?> {
         return db.fetchProcess({ data ->
             return@fetchProcess User(
                 id = id,
                 name = data.get("name") as String?,
                 phone = data.get("phone") as String,
-                companyIds = data.get("companyIds") as? List<String>
+                companyIds = data.get("companyIds") as? List<String>,
             )
         }, userPath, id)
     }
@@ -32,7 +32,7 @@ class UserRemoteSource @Inject constructor() {
             return@uploadProcess hashMapOf(
                 "name" to data.name,
                 "phone" to data.phone,
-                "companyIds" to data.companyIds
+                "companyIds" to data.companyIds,
             )
         }, data, userPath, data.id)
     }

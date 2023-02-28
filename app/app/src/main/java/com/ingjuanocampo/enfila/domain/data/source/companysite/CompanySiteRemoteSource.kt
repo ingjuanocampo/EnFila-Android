@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
-class CompanySiteRemoteSource @Inject constructor(private val companySiteLocalSource: CompanyInfoRemoteSource): RemoteSource<CompanySite> {
+class CompanySiteRemoteSource @Inject constructor(private val companySiteLocalSource: CompanyInfoRemoteSource) : RemoteSource<CompanySite> {
 
     override fun uploadData(data: CompanySite): Flow<CompanySite?> {
         return companySiteLocalSource.updateData(data = data)
@@ -26,5 +26,4 @@ class CompanySiteRemoteSource @Inject constructor(private val companySiteLocalSo
     override suspend fun fetchData(id: String): CompanySite? {
         return fetchDataAll(id)?.firstOrNull()
     }
-
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-fun<T> FirebaseFirestore.uploadProcess(dataMapper: (T)-> Any, data: T, path: String, id: String): Flow<T?> {
+fun<T> FirebaseFirestore.uploadProcess(dataMapper: (T) -> Any, data: T, path: String, id: String): Flow<T?> {
     val sharedFlow = MutableSharedFlow<T?>()
     val toUpload = dataMapper(data)
     this.collection(path)
@@ -27,7 +27,7 @@ fun<T> FirebaseFirestore.uploadProcess(dataMapper: (T)-> Any, data: T, path: Str
     return sharedFlow
 }
 
-fun<T> FirebaseFirestore.uploadProcessMultiples(dataMapper: (T)-> Any, dataList: List<IdentifyObject>, path: String): Flow<List<T>?> {
+fun<T> FirebaseFirestore.uploadProcessMultiples(dataMapper: (T) -> Any, dataList: List<IdentifyObject>, path: String): Flow<List<T>?> {
     val sharedFlow = MutableSharedFlow<List<T>?>()
     dataList.forEach { data ->
         val toUpload = dataMapper(data as T)
@@ -48,8 +48,7 @@ fun<T> FirebaseFirestore.uploadProcessMultiples(dataMapper: (T)-> Any, dataList:
     return sharedFlow
 }
 
-
-fun<T> FirebaseFirestore.fetchProcessMultiples(dataMapper: (Map<String, Any>)-> T, path: String): Flow<List<T>?> {
+fun<T> FirebaseFirestore.fetchProcessMultiples(dataMapper: (Map<String, Any>) -> T, path: String): Flow<List<T>?> {
     val sharedFlow = MutableSharedFlow<List<T>?>()
     try {
         this.collection(path)
@@ -66,7 +65,6 @@ fun<T> FirebaseFirestore.fetchProcessMultiples(dataMapper: (Map<String, Any>)-> 
                         sharedFlow.emit(null)
                     }
                 }
-
             }.addOnFailureListener {
                 GlobalScope.launch {
                     sharedFlow.emit(null)
@@ -74,14 +72,14 @@ fun<T> FirebaseFirestore.fetchProcessMultiples(dataMapper: (Map<String, Any>)-> 
             }
     } catch (e: Exception) {
         GlobalScope.launch {
-            sharedFlow.emit(null)// This scenario  is not working, review
+            sharedFlow.emit(null) // This scenario  is not working, review
         }
     }
 
     return sharedFlow
 }
 
-fun<T> FirebaseFirestore.fetchProcess(dataMapper: (Map<String, Any>)-> T, path: String, id: String): Flow<T?> {
+fun<T> FirebaseFirestore.fetchProcess(dataMapper: (Map<String, Any>) -> T, path: String, id: String): Flow<T?> {
     val sharedFlow = MutableSharedFlow<T?>()
     try {
         this.collection(path).document(id)
@@ -91,13 +89,12 @@ fun<T> FirebaseFirestore.fetchProcess(dataMapper: (Map<String, Any>)-> T, path: 
                     try {
                         val data = result.data?.let { dataMapper(it) }
                         sharedFlow.emit(
-                            data
+                            data,
                         )
                     } catch (e: Exception) {
                         sharedFlow.emit(null)
                     }
                 }
-
             }.addOnFailureListener {
                 GlobalScope.launch {
                     sharedFlow.emit(null)
@@ -111,4 +108,3 @@ fun<T> FirebaseFirestore.fetchProcess(dataMapper: (Map<String, Any>)-> T, path: 
 
     return sharedFlow
 }
-

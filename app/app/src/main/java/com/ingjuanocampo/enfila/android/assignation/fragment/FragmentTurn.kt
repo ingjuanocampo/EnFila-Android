@@ -1,13 +1,12 @@
 package com.ingjuanocampo.enfila.android.assignation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.enfila.android.R
@@ -26,8 +25,9 @@ class FragmentTurn : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_turn, container, false)
     }
@@ -62,13 +62,12 @@ class FragmentTurn : Fragment() {
         }
 
         viewModel.assignationState.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 AssignationState.Loading -> {
                     progressBar.isVisible = true
                     next.isVisible = false
                 }
             }
-
         }
     }
 

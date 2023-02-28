@@ -32,10 +32,9 @@ fun AnimatedComposeButton(
     state: AnimatedButtonState = AnimatedButtonState.IDLE,
     content: @Composable() () -> Unit,
 ) {
-
     Box(
         modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         val contentStateVisibility = remember {
             MutableTransitionState(true)
@@ -50,21 +49,21 @@ fun AnimatedComposeButton(
         AnimatedVisibility(
             visibleState = progressStateVisibility,
             enter = fadeIn(spring(stiffness = animationSprint)) + scaleIn(spring(stiffness = animationSprint)),
-            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint + animationSprint/2))
+            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint + animationSprint / 2)),
         ) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .padding(2.dp)
                     .size(30.dp),
                 color = MaterialTheme.colorScheme.primary,
-                strokeWidth = 3.dp
+                strokeWidth = 3.dp,
             )
         }
 
         AnimatedVisibility(
             visibleState = contentStateVisibility,
-            enter = fadeIn(spring(stiffness = animationSprint + animationSprint/2)) + scaleIn(spring(stiffness = animationSprint+ animationSprint/2)),
-            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint))
+            enter = fadeIn(spring(stiffness = animationSprint + animationSprint / 2)) + scaleIn(spring(stiffness = animationSprint + animationSprint / 2)),
+            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint)),
         ) {
             content()
         }
@@ -80,13 +79,11 @@ fun AnimatedComposeButton(
             }
         }
     }
-
-
 }
 
 enum class AnimatedButtonState {
     IDLE,
-    PROGRESS
+    PROGRESS,
 }
 
 @Composable
@@ -95,7 +92,6 @@ enum class AnimatedButtonState {
     showBackground = true,
 )
 private fun ProgressableButtonPreview() {
-
     Column(Modifier.fillMaxWidth()) {
         AnimatedComposeButton(state = AnimatedButtonState.PROGRESS) {
             Button(onClick = { /*TODO*/ }) {
@@ -109,5 +105,4 @@ private fun ProgressableButtonPreview() {
             }
         }
     }
-
 }

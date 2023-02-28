@@ -17,7 +17,7 @@ class SignInUC @Inject constructor(
     private val companySiteRepository: CompanyRepository,
     private val appStateProvider: AppStateProvider,
     private val shiftRepository: ShiftRepository,
-    private val clientRepository: ClientRepository
+    private val clientRepository: ClientRepository,
 ) {
 
     operator fun invoke(id: String): Flow<AuthState> {
@@ -43,7 +43,8 @@ class SignInUC @Inject constructor(
     suspend fun createUserAndSignIn(user: User, companyName: String): AuthState {
         val company = CompanySite(
             id = getNow().toString() + "CompanyId",
-            name = companyName)
+            name = companyName,
+        )
         companySiteRepository.updateData(company)
         user.companyIds = listOf(company?.id)
         userRepository.updateData(user)

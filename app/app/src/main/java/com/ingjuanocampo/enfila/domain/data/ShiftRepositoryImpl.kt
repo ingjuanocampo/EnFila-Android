@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.map
 
 class ShiftRepositoryImpl(
     private val remoteSource: RemoteSource<Shift>,
-    private val localSource: ShiftLocalSource
-): ShiftRepository, RepositoryImp<Shift>(remoteSource, localSource) {
+    private val localSource: ShiftLocalSource,
+) : ShiftRepository, RepositoryImp<Shift>(remoteSource, localSource) {
 
     override fun getAllObserveData(): Flow<List<Shift>?> {
-        return super.getAllObserveData().map { it?.sortedBy { shift->  shift.number } }
+        return super.getAllObserveData().map { it?.sortedBy { shift -> shift.number } }
     }
 
     override suspend fun loadAllData(): List<Shift>? {

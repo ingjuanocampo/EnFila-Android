@@ -17,7 +17,6 @@ class LoadUserProfile @Inject constructor(
     private val calculateShiftAverageWaitTimes: CalculateShiftAverageWaitTimes,
 ) {
 
-
     suspend operator fun invoke(): UserProfile {
         val user = userRepository.getCurrent()!!
         companyRepo.id = user.companyIds?.first() ?: EMPTY_STRING
@@ -59,6 +58,4 @@ class LoadUserProfile @Inject constructor(
             attentionTime = "", // Not ready yet
         )
     }
-
-
 }
