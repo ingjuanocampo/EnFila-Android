@@ -19,7 +19,6 @@ class MessagingModule {
     @Provides
     fun provideRemoteMessageSource(twillioCredentials: TwillioCredentials) =
         RemoteMessageSource(twillioCredentials)
-
 }
 
 @InstallIn(SingletonComponent::class)

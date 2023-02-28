@@ -17,7 +17,6 @@ class LoadUserProfile @Inject constructor(
     private val calculateShiftAverageWaitTimes: CalculateShiftAverageWaitTimes,
 ) {
 
-
     suspend operator fun invoke(): UserProfile {
         val user = userRepository.getCurrent()!!
         companyRepo.id = user.companyIds?.first() ?: EMPTY_STRING
@@ -27,6 +26,8 @@ class LoadUserProfile @Inject constructor(
         val shifts = shiftRepository.loadAllData()!!
 
         val waitingTimeAverage = calculateShiftAverageWaitTimes(shifts)
+        val attentionTimeAverage = calculateShiftAverageWaitTimes.attentionTime(shifts)
+
 
         val totalShifts = shifts.count()
         val totalClients = clientRepository.loadAllData()!!.count()
@@ -44,7 +45,7 @@ class LoadUserProfile @Inject constructor(
             counterOfClientsByDay = counterOfShiftsByDay + shifts.groupBy { it.contactId }.count()
         }
 
-        // TODO review how to get the waitingTime and attentionTime
+        // TODO review how to get the attentionTime
 
         return UserProfile(
             companyName = currentCompany.name!!,
@@ -55,10 +56,8 @@ class LoadUserProfile @Inject constructor(
             totalShiftHistory = totalShifts,
             shiftByDay = "${counterOfShiftsByDay / totalDays}",
             clientsByDay = "${counterOfShiftsByDay / totalDays}",
-            waitingTime = "$waitingTimeAverage",
-            attentionTime = "", // Not ready yet
+            waitingTime = waitingTimeAverage,
+            attentionTime = attentionTimeAverage, // Not ready yet
         )
     }
-
-
 }

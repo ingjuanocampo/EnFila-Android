@@ -4,7 +4,7 @@ import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 
-data class HeaderItem(val headerText: String, val icon: Int = R.drawable.ic_navigate_next, val linkText: String?= null): RecyclerViewType {
+data class HeaderItem(val headerText: String, val icon: Int = R.drawable.ic_navigate_next, val linkText: String? = null) : RecyclerViewType {
     override fun getDelegateId(): Int {
         return this.hashCode().toInt()
     }

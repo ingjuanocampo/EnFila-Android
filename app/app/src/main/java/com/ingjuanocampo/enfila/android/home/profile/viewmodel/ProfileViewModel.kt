@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.enfila.android.home.profile.model.ProfileCard
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
-import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.usecases.LoadUserProfile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val loadProfileUC: LoadUserProfile,
-): ViewModel() {
+) : ViewModel() {
 
     private val state = MutableStateFlow<ProfileState>(ProfileState.LoadingProfileInfo)
 
@@ -34,19 +33,17 @@ class ProfileViewModel @Inject constructor(
                 companyName = user.companyName,
                 phone = user.phone,
                 email = user.companyName,
-                numberClients = "#${clientCounter}",
+                numberClients = "#$clientCounter",
                 totalShifts = "#${user.totalShiftHistory}",
                 shiftByDay = user.shiftByDay,
                 clientsByDay = user.clientsByDay,
                 waitingTime = user.waitingTime,
-                attentionTime = user.attentionTime
+                attentionTime = user.attentionTime,
 
             )
             state.value = ProfileState.ProfileLoaded(profileCard)
-           // startUpdates()
-
+            // startUpdates()
         }
-
     }
 
    /* private suspend fun startUpdates() {
@@ -60,6 +57,4 @@ class ProfileViewModel @Inject constructor(
 
 
     }*/
-
-
 }

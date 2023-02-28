@@ -4,9 +4,7 @@ import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.home.list.model.HeaderItem
 import com.ingjuanocampo.enfila.android.home.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
-import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.commons.toYearMonthDayFormat
-import com.ingjuanocampo.enfila.commons.toYearMonthFormat
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
@@ -27,16 +25,14 @@ class HomeUC @Inject constructor(
     private val companyRepo: CompanyRepository,
     private val userRepository: UserRepository,
     private val shiftRepository: ShiftRepository,
-    private val shiftInteractions: ShiftInteractions
+    private val shiftInteractions: ShiftInteractions,
 ) {
-
 
     // TODO this should filter only the current day information
     fun load(): Flow<HomeState> {
         return shiftRepository.getAllObserveData().map { shifts ->
 
             if (shifts.isNullOrEmpty().not()) {
-
                 // average calculation
                 val todayShift = shifts!!.filter {
                     Date().time.toYearMonthDayFormat() == it.date.toYearMonthDayFormat() // Only for the current month
@@ -55,17 +51,15 @@ class HomeUC @Inject constructor(
                 val resume = HomeResume(
                     selectedCompany = currentCompany ?: CompanySite(),
                     totalTurns = todayShift!!.filter { it.isActive() }.count(),
-                    avrTime = average
+                    avrTime = average,
                 )
 
                 items.add(resume)
 
-
-
                 getNextTurn(shifts)?.let { next ->
                     items.add(HeaderItem("Siguiente turno"))
                     items.add(
-                        shiftInteractions.loadShiftWithClient(next).mapToUI(ViewTypes.NEXT_SHIFT)
+                        shiftInteractions.loadShiftWithClient(next).mapToUI(ViewTypes.NEXT_SHIFT),
                     )
                 }
 
@@ -75,7 +69,7 @@ class HomeUC @Inject constructor(
                     activeShifts.forEach { active ->
                         items.add(
                             shiftInteractions.loadShiftWithClient(active)
-                                .mapToUI(ViewTypes.ACTIVE_SHIFT)
+                                .mapToUI(ViewTypes.ACTIVE_SHIFT),
                         )
                     }
                 }
@@ -84,16 +78,12 @@ class HomeUC @Inject constructor(
             } else {
                 HomeState.Empty
             }
-
-
         }.flowOn(Dispatchers.Default)
     }
-
 
     private fun getNextTurn(shifts: List<Shift>): Shift? {
         return shifts.filter { it.state == ShiftState.WAITING }.firstOrNull { sh -> sh.state == ShiftState.WAITING }
     }
-
 
     private fun getActiveShifts(shifts: List<Shift>): List<Shift>? {
         return shifts.filter { sh -> sh.state == ShiftState.CALLING }.take(5)
@@ -104,16 +94,11 @@ class HomeUC @Inject constructor(
         return shiftInteractions.cancel(shiftToCancel)
     }
 
-
     suspend fun next(id: String): Flow<Boolean> {
         val next = shiftRepository.loadById(id)
         return shiftInteractions.active(next)
     }
 
-
     fun delete() {
     }
-
-
-
 }

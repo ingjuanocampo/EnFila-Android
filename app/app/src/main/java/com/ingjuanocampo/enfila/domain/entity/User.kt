@@ -6,5 +6,5 @@ data class User(
     val id: String,
     val phone: String,
     val name: String? = EMPTY_STRING,
-    var companyIds: List<String>? = null
+    var companyIds: List<String>? = null,
 )

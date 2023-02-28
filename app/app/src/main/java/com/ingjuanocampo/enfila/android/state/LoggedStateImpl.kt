@@ -10,12 +10,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoggedStateImpl @Inject constructor(@ApplicationContext private val context: Context): LoggedState {
+class LoggedStateImpl @Inject constructor(@ApplicationContext private val context: Context) : LoggedState {
 
     override fun navigateLaunchScreen() {
-        context.startActivity(Intent(context, ActivityLobby::class.java).apply {
-            flags = FLAG_ACTIVITY_NEW_TASK
-        })
+        context.startActivity(
+            Intent(context, ActivityLobby::class.java).apply {
+                flags = FLAG_ACTIVITY_NEW_TASK
+            },
+        )
     }
-
 }

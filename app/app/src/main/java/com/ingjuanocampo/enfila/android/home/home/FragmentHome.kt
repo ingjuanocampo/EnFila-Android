@@ -29,17 +29,16 @@ class FragmentHome : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val adapter = CompositeDelegateAdapter(10)
 
@@ -69,10 +68,8 @@ class FragmentHome : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 HomeState.Loading -> {
-
                 }
                 HomeState.Empty -> {
-
                 }
                 is HomeState.HomeLoaded -> {
                     adapter.updateItems(it.items)
@@ -81,18 +78,16 @@ class FragmentHome : Fragment() {
         }
 
         binding.addButton.setOnClickListener {
-          startAdditionProcess()
+            startAdditionProcess()
         }
-
-
     }
 
     private fun startAdditionProcess() {
         BottomSheetAssignation().apply {
-            //setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_Dialog_Transparent_Adjust_Resize)
+            // setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_Dialog_Transparent_Adjust_Resize)
         }.show(requireActivity().supportFragmentManager, "")
 
-       // startActivity(Intent(requireContext(), ActivityAssignation::class.java))
+        // startActivity(Intent(requireContext(), ActivityAssignation::class.java))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -101,7 +96,7 @@ class FragmentHome : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-       startAdditionProcess()
+        startAdditionProcess()
         return true
     }
 
@@ -126,6 +121,4 @@ class FragmentHome : Fragment() {
     }
 
      */
-
-
 }

@@ -16,8 +16,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class UserLocalSource @Inject constructor(@ApplicationContext private val context: Context): LocalSource<User> {
-
+class UserLocalSource @Inject constructor(@ApplicationContext private val context: Context) : LocalSource<User> {
 
     val Context.userPreferencesDataStore: DataStore<Preferences> by preferencesDataStore("settings")
 
@@ -26,20 +25,18 @@ class UserLocalSource @Inject constructor(@ApplicationContext private val contex
     private val USER_PHONE = stringPreferencesKey("user_phone")
     private val USER_COMPANY_IDS = stringPreferencesKey("user_company_ids")
 
-
     override suspend fun createOrUpdate(data: User) {
         context.userPreferencesDataStore.edit {
             it[USER_NAME] = data.name.orEmpty()
             it[USER_ID] = data.id
             it[USER_PHONE] = data.phone
             it[USER_COMPANY_IDS] = data.companyIds.toEntity()
-
         }
     }
 
     override suspend fun delete(dataToDelete: User) {
         context.userPreferencesDataStore.edit {
-            it[USER_NAME] =""
+            it[USER_NAME] = ""
             it[USER_ID] = ""
             it[USER_PHONE] = ""
             it[USER_COMPANY_IDS] = ""
@@ -48,7 +45,7 @@ class UserLocalSource @Inject constructor(@ApplicationContext private val contex
 
     override suspend fun delete(id: String) {
         context.userPreferencesDataStore.edit {
-            it[USER_NAME] =""
+            it[USER_NAME] = ""
             it[USER_ID] = ""
             it[USER_PHONE] = ""
             it[USER_COMPANY_IDS] = ""
@@ -57,8 +54,12 @@ class UserLocalSource @Inject constructor(@ApplicationContext private val contex
 
     override fun getAllObserveData(): Flow<List<User>?> {
         return context.userPreferencesDataStore.data.map {
-            User(id = it[USER_ID].orEmpty(), name = it[USER_NAME],
-            phone = it[USER_PHONE].orEmpty(), companyIds = it[USER_COMPANY_IDS]?.toList())
+            User(
+                id = it[USER_ID].orEmpty(),
+                name = it[USER_NAME],
+                phone = it[USER_PHONE].orEmpty(),
+                companyIds = it[USER_COMPANY_IDS]?.toList(),
+            )
         }.map { listOf(it) }
     }
 
@@ -75,6 +76,4 @@ class UserLocalSource @Inject constructor(@ApplicationContext private val contex
             createOrUpdate(it)
         }
     }
-
-
 }

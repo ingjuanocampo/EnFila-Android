@@ -11,11 +11,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelSplash @Inject constructor(
-    val loadInitInfoUC: LoadInitialInfoUC
+    val loadInitInfoUC: LoadInitialInfoUC,
 ) : ViewModel() {
 
     val state = MutableLiveData<SplashState>()
-
 
     fun launchSplash() {
         launchGeneral {
@@ -25,5 +24,4 @@ class ViewModelSplash @Inject constructor(
             }
         }
     }
-
 }

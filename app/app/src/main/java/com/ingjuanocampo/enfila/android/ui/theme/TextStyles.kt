@@ -10,10 +10,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-
 val TextColor: Color
-@Composable
-get() = MaterialTheme.colorScheme.onPrimaryContainer
+    @Composable
+    get() = MaterialTheme.colorScheme.onPrimaryContainer
 
 val TextStyleRoboto: TextStyle
     @Composable
@@ -27,7 +26,7 @@ val Body3: TextStyle
     get() = TextStyleRoboto.copy(
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
-        fontStyle = FontStyle(FontStyle.Normal.value)
+        fontStyle = FontStyle(FontStyle.Normal.value),
     )
 
 val Body1: TextStyle
@@ -48,5 +47,5 @@ val Typography: Typography
     get() = Typography(
         titleMedium = Body3,
         bodyMedium = Body1,
-        titleLarge = TitleStyle
+        titleLarge = TitleStyle,
     )

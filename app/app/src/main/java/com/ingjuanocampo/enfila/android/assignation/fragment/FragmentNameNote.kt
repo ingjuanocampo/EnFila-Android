@@ -1,13 +1,13 @@
 package com.ingjuanocampo.enfila.android.assignation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.enfila.android.R
@@ -26,8 +26,9 @@ class FragmentNameNote : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_name_note, container, false)
@@ -47,7 +48,7 @@ class FragmentNameNote : Fragment() {
             viewModel.name = editable.toString()
         }
         noteEd.addTextChangedListener { editable ->
-        viewModel.note = editable.toString()
+            viewModel.note = editable.toString()
         }
         back.setOnClickListener {
             navController.popBackStack()

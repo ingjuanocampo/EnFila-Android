@@ -8,10 +8,15 @@ import com.ingjuanocampo.enfila.android.databinding.DelegateActiveTurnBinding
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
 import com.ingjuanocampo.enfila.android.utils.set
 
-class DelegateActiveShift(val parent: ViewGroup,
-                          private val biding : DelegateActiveTurnBinding = DelegateActiveTurnBinding.inflate(
-                             LayoutInflater.from(parent.context), parent, false),
-                          private val listener: (String) -> Unit): DelegateViewHolder(biding.root) {
+class DelegateActiveShift(
+    val parent: ViewGroup,
+    private val biding: DelegateActiveTurnBinding = DelegateActiveTurnBinding.inflate(
+        LayoutInflater.from(parent.context),
+        parent,
+        false,
+    ),
+    private val listener: (String) -> Unit,
+) : DelegateViewHolder(biding.root) {
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem
@@ -20,8 +25,5 @@ class DelegateActiveShift(val parent: ViewGroup,
         biding.clientName.text = recyclerViewType.name
 
         biding.progressContainer.set(listener, recyclerViewType.id)
-
     }
-
-
 }

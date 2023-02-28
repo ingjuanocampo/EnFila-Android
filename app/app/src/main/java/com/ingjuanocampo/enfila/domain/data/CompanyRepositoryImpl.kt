@@ -5,7 +5,6 @@ import com.ingjuanocampo.enfila.domain.data.source.companysite.CompanySiteRemote
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 
-class CompanyRepositoryImpl(val remoteSource: CompanySiteRemoteSource, val localSource: CompanySiteLocalSource):
+class CompanyRepositoryImpl(val remoteSource: CompanySiteRemoteSource, val localSource: CompanySiteLocalSource) :
     CompanyRepository,
-    RepositoryImp<CompanySite>(remoteSource, localSource) {
-}
+    RepositoryImp<CompanySite>(remoteSource, localSource)

@@ -9,11 +9,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NotLoggedImpl @Inject constructor(@ApplicationContext private val context: Context): NotLoggedState {
+class NotLoggedImpl @Inject constructor(@ApplicationContext private val context: Context) : NotLoggedState {
 
     override fun navigateLaunchScreen() {
-        context.startActivity(Intent(context, ActivityLogin::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        })
+        context.startActivity(
+            Intent(context, ActivityLogin::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            },
+        )
     }
 }

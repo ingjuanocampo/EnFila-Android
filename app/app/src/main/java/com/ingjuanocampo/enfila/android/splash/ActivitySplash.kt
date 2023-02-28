@@ -23,15 +23,17 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val tv: TextView = findViewById(R.id.text_view)
-        viewModel.state.observe(this, Observer {
-            finishAffinity()
-            stateProvider.provideCurrentState().navigateLaunchScreen()
-        })
+        viewModel.state.observe(
+            this,
+            Observer {
+                finishAffinity()
+                stateProvider.provideCurrentState().navigateLaunchScreen()
+            },
+        )
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.launchSplash()
     }
-
 }

@@ -8,17 +8,17 @@ import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-data class ShiftItem(val id: String,
-                     val phone: String,
-                     val name: String,
-                     val currentTurn: String,
-                     val issueDate: Long,
-                     val endDate: Long,
-                     val state: String,
-                     val viewType: ViewTypes = ViewTypes.SHIFT,
-                     val isCancellable: Boolean = false
-): RecyclerViewType {
+data class ShiftItem(
+    val id: String,
+    val phone: String,
+    val name: String,
+    val currentTurn: String,
+    val issueDate: Long,
+    val endDate: Long,
+    val state: String,
+    val viewType: ViewTypes = ViewTypes.SHIFT,
+    val isCancellable: Boolean = false,
+) : RecyclerViewType {
 
     fun geElapsedTime(): Long {
         val current = getNow()
@@ -57,7 +57,6 @@ data class ShiftItem(val id: String,
     override fun getViewType(): Int = viewType.ordinal
 }
 
-
 fun ShiftWithClient.mapToUI(viewType: ViewTypes = ViewTypes.SHIFT): ShiftItem {
     return ShiftItem(
         id = this.shift.id,
@@ -68,7 +67,7 @@ fun ShiftWithClient.mapToUI(viewType: ViewTypes = ViewTypes.SHIFT): ShiftItem {
         state = this.shift.state.name,
         endDate = this.shift.endDate ?: 0L,
         viewType = viewType,
-        isCancellable = this.shift.state == ShiftState.CALLING
+        isCancellable = this.shift.state == ShiftState.CALLING,
 
     )
 }

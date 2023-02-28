@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 var companySite: CompanySite? = null
 
-class CompanySiteLocalSource @Inject constructor(): LocalSource<CompanySite> {
+class CompanySiteLocalSource @Inject constructor() : LocalSource<CompanySite> {
 
     override suspend fun createOrUpdate(data: CompanySite) {
         companySite = data
@@ -25,7 +25,7 @@ class CompanySiteLocalSource @Inject constructor(): LocalSource<CompanySite> {
     }
 
     override suspend fun getAllData(): List<CompanySite>? {
-        return (companySite.let { listOf(it) }?: listOf<CompanySite>()) as List<CompanySite>?
+        return (companySite.let { listOf(it) } ?: listOf<CompanySite>()) as List<CompanySite>?
     }
 
     override suspend fun getById(id: String): CompanySite? {
@@ -33,11 +33,9 @@ class CompanySiteLocalSource @Inject constructor(): LocalSource<CompanySite> {
     }
 
     override suspend fun delete(id: String) {
-
     }
 
     override suspend fun createOrUpdate(data: List<CompanySite>) {
         companySite = data.firstOrNull()
     }
-
 }

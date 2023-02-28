@@ -28,12 +28,12 @@ class FragmentHistory : Fragment() {
     val viewModel: ViewModelListItems by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_list_items, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,17 +41,18 @@ class FragmentHistory : Fragment() {
 
         adapter = CompositeDelegateAdapter(1).apply {
             appendDelegate(
-                ViewTypes.SHIFT.ordinal
+                ViewTypes.SHIFT.ordinal,
             ) { DelegateShift(it) }
         }
         recycler.addItemDecoration(DividerItemDecoration(requireContext(), OrientationHelper.VERTICAL))
         recycler.adapter = adapter
-        viewModel.state.observe(viewLifecycleOwner, Observer {
-            adapter.updateItems(it)
-        })
+        viewModel.state.observe(
+            viewLifecycleOwner,
+            Observer {
+                adapter.updateItems(it)
+            },
+        )
 
         viewModel.load(false)
-
     }
-
 }

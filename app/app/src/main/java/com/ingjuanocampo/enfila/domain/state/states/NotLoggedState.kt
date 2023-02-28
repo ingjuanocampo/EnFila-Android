@@ -2,4 +2,4 @@ package com.ingjuanocampo.enfila.domain.state.states
 
 import com.ingjuanocampo.enfila.domain.state.AppState
 
-interface NotLoggedState: AppState
+interface NotLoggedState : AppState

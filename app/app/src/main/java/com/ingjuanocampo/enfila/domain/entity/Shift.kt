@@ -11,7 +11,8 @@ data class Shift internal constructor(
     val contactId: String,
     val notes: String?,
     var state: ShiftState,
-    var endDate: Long? = null
+    var attentionStartDate: Long? = null,
+    var endDate: Long? = null,
 ) : Comparable<Shift>, IdentifyObject {
 
     override fun compareTo(other: Shift): Int {
@@ -32,13 +33,14 @@ fun getShiftState(value: Int?): ShiftState {
     return ShiftState.values().firstOrNull { it.ordinal == value ?: 0 } ?: ShiftState.WAITING
 }
 
-
 object ShiftFactory {
 
-    fun createWaiting(number: Int,
-                      contactId: String,
-                      notes: String,
-                      currentCompanySiteId: String): Shift {
+    fun createWaiting(
+        number: Int,
+        contactId: String,
+        notes: String,
+        currentCompanySiteId: String,
+    ): Shift {
         val instantNow = getNow()
         return Shift(
             date = instantNow,
@@ -47,7 +49,7 @@ object ShiftFactory {
             number = number,
             contactId = contactId,
             notes = notes,
-            state = ShiftState.WAITING
+            state = ShiftState.WAITING,
         )
     }
 }

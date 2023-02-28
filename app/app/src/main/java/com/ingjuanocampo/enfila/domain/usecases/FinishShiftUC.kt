@@ -6,11 +6,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FinishShiftUC @Inject constructor(private val shiftRepository: ShiftRepository,
-                    private val shiftInteractions: ShiftInteractions) {
-
+class FinishShiftUC @Inject constructor(
+    private val shiftRepository: ShiftRepository,
+    private val shiftInteractions: ShiftInteractions,
+) {
 
     fun invoke(id: String): Flow<Boolean> {
-        return flow { emit(shiftRepository.loadById(id))}.flatMapLatest { shiftInteractions.finish(it) }
+        return flow { emit(shiftRepository.loadById(id)) }.flatMapLatest { shiftInteractions.finish(it) }
     }
 }

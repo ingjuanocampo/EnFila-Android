@@ -11,9 +11,11 @@ class DelegateHeaderLink(
     val parent: ViewGroup,
     private val biding: DelegateHeaderLinkBinding = DelegateHeaderLinkBinding.inflate(
         LayoutInflater.from(
-            parent.context
-        ), parent, false
-    )
+            parent.context,
+        ),
+        parent,
+        false,
+        ),
 ) : DelegateViewHolder(biding.root) {
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
@@ -28,6 +30,5 @@ class DelegateHeaderLink(
         recyclerViewType.icon?.let {
             biding.headerIcon.setImageResource(recyclerViewType.icon)
         }
-
     }
 }

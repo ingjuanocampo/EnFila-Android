@@ -13,7 +13,7 @@ import java.util.*
 
 open class RepositoryImp<Data>(
     private val remoteSource: RemoteSource<Data>,
-    private val localSource: LocalSource<Data>
+    private val localSource: LocalSource<Data>,
 ) : Repository<Data> {
 
     override var id: String = EMPTY_STRING
@@ -27,7 +27,7 @@ open class RepositoryImp<Data>(
 
         override fun shouldFetch(result: List<Data>?): Boolean {
             return result.isNullOrEmpty() || rateLimiter.shouldFetch(
-                RepositoryImp::class.simpleName + id
+                RepositoryImp::class.simpleName + id,
             )
         }
 
@@ -92,6 +92,8 @@ open class RepositoryImp<Data>(
                 localSource.createOrUpdate(it)
             }
             remoteVal
-        } else localValue
+        } else {
+            localValue
+        }
     }
 }

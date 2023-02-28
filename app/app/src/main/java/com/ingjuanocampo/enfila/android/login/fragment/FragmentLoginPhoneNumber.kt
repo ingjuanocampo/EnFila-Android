@@ -20,10 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FragmentLoginPhoneNumber: Fragment() {
+class FragmentLoginPhoneNumber : Fragment() {
 
     @Inject
-    lateinit var stateProvider : AppStateProvider
+    lateinit var stateProvider: AppStateProvider
 
     private lateinit var doVerificationButton: FloatingActionButton
     private val navController by lazy { NavHostFragment.findNavController(this) }
@@ -33,11 +33,10 @@ class FragmentLoginPhoneNumber: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.login_phone_number, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,21 +52,22 @@ class FragmentLoginPhoneNumber: Fragment() {
             viewModel.doLogin(requireActivity())
         }
 
-        viewModel.state.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                LoginState.ToVerifyCode -> navController.navigate(R.id.action_fragmentLoginPhoneNumber_to_fragmentVerificationCode)
-                is LoginState.AuthenticationProcessState -> process(it.authState)
-                LoginState.NumberSet -> doVerificationButton.isEnabled = true
-            }
-        })
+        viewModel.state.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    LoginState.ToVerifyCode -> navController.navigate(R.id.action_fragmentLoginPhoneNumber_to_fragmentVerificationCode)
+                    is LoginState.AuthenticationProcessState -> process(it.authState)
+                    LoginState.NumberSet -> doVerificationButton.isEnabled = true
+                }
+            },
+        )
     }
 
     private fun process(authState: AuthState) {
-        when(authState) {
+        when (authState) {
             AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen()
-            is AuthState.AuthError ->  showToast("Error" + authState.e.toString())
+            is AuthState.AuthError -> showToast("Error" + authState.e.toString())
         }
     }
-
-
 }

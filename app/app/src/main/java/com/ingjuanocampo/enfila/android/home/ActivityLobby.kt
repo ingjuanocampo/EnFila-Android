@@ -15,8 +15,8 @@ import com.ingjuanocampo.enfila.android.menu.BottomMenuBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActivityLobby: AppCompatActivity() {
-    
+class ActivityLobby : AppCompatActivity() {
+
     private val bottomNavBuilder by lazy {
         BottomMenuBuilder()
             .appendItem(fragmentFactory = { FragmentTips.newInstance() }, icon = getDrawable(R.drawable.ic_tips_and_updates), title = "Tips")
@@ -24,7 +24,6 @@ class ActivityLobby: AppCompatActivity() {
             .appendItem(fragmentFactory = { FragmentHome.newInstance() }, icon = getDrawable(R.drawable.ic_home), title = "Panel", default = true)
             .appendItem(fragmentFactory = { FragmentHistory.newInstance() }, icon = getDrawable(R.drawable.ic_history), title = "Historial")
             .appendItem(fragmentFactory = { FragmentProfile.newInstance() }, icon = getDrawable(R.drawable.ic_account), title = "Profile")
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,5 +35,4 @@ class ActivityLobby: AppCompatActivity() {
         bottomNav.labelVisibilityMode = LABEL_VISIBILITY_SELECTED
         bottomNavBuilder.attachMenu(bottomNav, this)
     }
-
 }

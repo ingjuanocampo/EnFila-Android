@@ -1,13 +1,13 @@
 package com.ingjuanocampo.enfila.android.assignation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
@@ -26,8 +26,9 @@ class FragmentPhoneNumber : Fragment() {
     private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { requireParentFragment().requireParentFragment() })
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_phone_number, container, false)
     }
@@ -47,14 +48,13 @@ class FragmentPhoneNumber : Fragment() {
             viewModel.phoneNumber = (it.toString())
         }
 
-
-        viewModel.assignationState.observe(viewLifecycleOwner, Observer {
-            if (it is AssignationState.NumberSet) {
-                next.isEnabled = true
-            }
-        })
-
-
+        viewModel.assignationState.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it is AssignationState.NumberSet) {
+                    next.isEnabled = true
+                }
+            },
+        )
     }
-
 }

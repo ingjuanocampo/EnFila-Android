@@ -1,7 +1,6 @@
 package com.ingjuanocampo.enfila.domain.data.source.db.realm.entity
 
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.ingjuanocampo.enfila.domain.entity.User
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 
@@ -35,13 +34,14 @@ fun String.toUser(): User? {
     }
 }
 
-fun UserEntity.toModel() : User{
+fun UserEntity.toModel(): User {
     val here = this
     return User(
         id = here.id,
         phone = here.phone,
         name = here.name,
-        companyIds = here.companyIds.toList())
+        companyIds = here.companyIds.toList(),
+    )
 }
 
 fun List<String>?.toEntity(): String {

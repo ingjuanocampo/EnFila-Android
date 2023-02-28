@@ -1,34 +1,40 @@
 package com.ingjuanocampo.enfila.android.home.profile.model
 
-
 data class ProfileCard(
     val companyName: String,
     val phone: String,
     val email: String,
     val numberClients: String,
-    val totalShifts: String,// level 1
+    val totalShifts: String, // level 1
     val shiftByDay: String,
     val clientsByDay: String, // level 3
     val waitingTime: String,
     val attentionTime: String,
-    val options: List<OptionCard> = emptyList()
+    val options: List<OptionCard> = emptyList(),
 ) {
 
     fun buildSections(): List<StatisticsSectionUI> {
         return listOf(
             StatisticsSectionUI(
-                "# Turns", totalShifts,
-                "# Clients", numberClients,
-            ), StatisticsSectionUI(
-                "Shifts by day", shiftByDay,
-                "Clients by day", clientsByDay
+                "# Turns",
+                totalShifts,
+                "# Clients",
+                numberClients,
             ),
             StatisticsSectionUI(
-                "Waiting  time", waitingTime,
-                "Attention time", attentionTime,
-            )
+                "Shifts by day",
+                shiftByDay,
+                "Clients by day",
+                clientsByDay,
+            ),
+            StatisticsSectionUI(
+                "Waiting  time",
+                waitingTime,
+                "Attention time",
+                attentionTime,
+            ),
         )
     }
 }
 
-data class OptionCard(val icon: Int, val title: String, val callback: ()-> Unit)
+data class OptionCard(val icon: Int, val title: String, val callback: () -> Unit)

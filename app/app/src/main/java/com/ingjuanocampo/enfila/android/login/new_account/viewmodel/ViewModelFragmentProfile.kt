@@ -4,17 +4,15 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
-import com.ingjuanocampo.enfila.di.AppComponent
 import com.ingjuanocampo.enfila.domain.entity.User
 import com.ingjuanocampo.enfila.domain.usecases.signing.SignInUC
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-
 @HiltViewModel
 class ViewModelFragmentProfile @Inject constructor(
-    private val signUc: SignInUC
-): ViewModel() {
+    private val signUc: SignInUC,
+) : ViewModel() {
 
     private var id: String? = null
     private var phone: String? = null
@@ -37,12 +35,9 @@ class ViewModelFragmentProfile @Inject constructor(
         launchGeneral {
             val it = signUc.createUserAndSignIn(
                 User(id = id!!, phone = phone!!, name = name),
-                companyName
+                companyName,
             )
             state.postValue(ProfileState.AuthProcess(it))
-
         }
     }
-
-
 }

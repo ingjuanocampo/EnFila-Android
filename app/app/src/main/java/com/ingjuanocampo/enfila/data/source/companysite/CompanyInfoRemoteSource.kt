@@ -2,9 +2,9 @@ package com.ingjuanocampo.enfila.data.source.companysite
 
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.ingjuanocampo.enfila.data.source.user.basePath
 import com.ingjuanocampo.enfila.data.util.fetchProcess
 import com.ingjuanocampo.enfila.data.util.uploadProcess
-import com.ingjuanocampo.enfila.data.source.user.basePath
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class CompanyInfoRemoteSource @Inject constructor() {
             return@fetchProcess CompanySite(
                 id = id,
                 name = data["name"] as String?,
-                shiftsIdList = data["shiftList"] as List<String>?
+                shiftsIdList = data["shiftList"] as List<String>?,
             )
         }, companyInfoPath, id)
     }
@@ -29,7 +29,7 @@ class CompanyInfoRemoteSource @Inject constructor() {
             return@uploadProcess hashMapOf(
                 "id" to data.id,
                 "name" to data.name,
-                "shiftList" to data.shiftsIdList
+                "shiftList" to data.shiftsIdList,
             )
         }, data, companyInfoPath, data.id)
     }

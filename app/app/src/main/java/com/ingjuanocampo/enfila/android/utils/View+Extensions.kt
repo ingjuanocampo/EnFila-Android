@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Chronometer
+import android.widget.Chronometer.OnChronometerTickListener
 import androidx.core.view.isVisible
 import com.ingjuanocampo.enfila.android.databinding.ViewActiveProgressBinding
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
-import android.widget.Chronometer.OnChronometerTickListener
 import java.util.concurrent.TimeUnit
-
 
 fun ViewGroup.inflate(layout: Int): View {
     return LayoutInflater.from(context).inflate(layout, this, false)
@@ -27,7 +26,6 @@ fun Chronometer.set(shiftItem: ShiftItem) {
 
                 chronometer.text = t.toDurationText()
             }
-
     } else {
         this.stop()
         this.text = "0"
@@ -35,7 +33,6 @@ fun Chronometer.set(shiftItem: ShiftItem) {
 }
 
 fun Long.toDurationText(): String {
-
     var t = this
     val days = TimeUnit.MILLISECONDS.toDays(t)
     t -= TimeUnit.DAYS.toMillis(days)
@@ -48,21 +45,18 @@ fun Long.toDurationText(): String {
 
     val seconds = TimeUnit.MILLISECONDS.toSeconds(t)
 
-    val text =if (days >= 1) {
+    val text = if (days >= 1) {
         "${days.completeZero()} Dias ${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
-
     } else {
         "${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
     }
 
     return text
-
 }
 
 fun Long.completeZero(): String {
     return if (this < 10) "0$this" else this.toString()
 }
-
 
 fun ViewActiveProgressBinding.set(listener: (String) -> Unit, id: String) {
     setProgressVisible(false)

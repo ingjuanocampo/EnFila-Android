@@ -8,24 +8,24 @@ import kotlinx.coroutines.flow.flow
 val list = arrayListOf(
     Client(
         id = "3137550991",
-        name = "Topacio"
+        name = "Topacio",
     ),
     Client(
         id = "3137550992",
-        name = "Julia"
+        name = "Julia",
     ),
     Client(
         id = "3137550993",
-        name = "Jose"
+        name = "Jose",
     ),
     Client(
         id = "3137550994",
-        name = "Benito"
+        name = "Benito",
     ),
     Client(
         id = "3137550995",
-        name = "Sofitronica"
-    )
+        name = "Sofitronica",
+    ),
 )
 
 class ContactMockSource : LocalSource<Client> {
@@ -38,13 +38,10 @@ class ContactMockSource : LocalSource<Client> {
         return list
     }
 
-
     override suspend fun delete(id: String) {
     }
 
-
     override suspend fun createOrUpdate(data: Client) {
-
     }
 
     override suspend fun delete(dataToDelete: Client) {

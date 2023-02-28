@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ListUC @Inject constructor(
     private val shiftRepository: ShiftRepository,
     private val shiftInteractions: ShiftInteractions,
-    private val clientRepository: ClientRepository
+    private val clientRepository: ClientRepository,
 ) {
 
     fun loadActiveShift() = shiftRepository
@@ -26,7 +26,6 @@ class ListUC @Inject constructor(
             }.sortedBy { it.shift.number }
         }
 
-
     fun loadInactiveShift() = shiftRepository
         .getAllObserveData().map {
             clientRepository.refresh()
@@ -38,8 +37,6 @@ class ListUC @Inject constructor(
                 shiftInteractions.loadShiftWithClient(it)
             }
         }
-
-
 }
 
 fun Shift.isActive(): Boolean {

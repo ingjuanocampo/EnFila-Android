@@ -31,6 +31,4 @@ class AppStateProvider @Inject constructor(
     fun toLoggedState() {
         currentState = loggedState
     }
-
-
 }

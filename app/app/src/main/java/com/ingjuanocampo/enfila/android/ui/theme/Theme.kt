@@ -7,10 +7,8 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily.Companion.SansSerif
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-
 
 private val LightColors = lightColorScheme(
     surfaceTint = md_theme_light_surfaceTint,
@@ -42,7 +40,6 @@ private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
 )
 
-
 private val DarkColors = darkColorScheme(
     surfaceTint = md_theme_dark_surfaceTint,
     onErrorContainer = md_theme_dark_onErrorContainer,
@@ -73,11 +70,10 @@ private val DarkColors = darkColorScheme(
     primary = md_theme_dark_primary,
 )
 
-
 @Composable
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable() () -> Unit,
 ) {
     val colors = if (!useDarkTheme) {
         LightColors
@@ -88,7 +84,7 @@ fun AppTheme(
     MaterialTheme(
         colorScheme = colors,
         content = content,
-        typography = Typography
+        typography = Typography,
     )
 }
 
@@ -99,7 +95,7 @@ internal object TextAppStyles {
         color = MaterialTheme.colorScheme.secondary,
         fontSize = 25.sp,
         fontFamily = SansSerif,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
     )
 
     @Composable
@@ -107,7 +103,7 @@ internal object TextAppStyles {
         color = MaterialTheme.colorScheme.secondary,
         fontSize = 16.sp,
         fontFamily = SansSerif,
-        fontWeight = FontWeight.Medium
+        fontWeight = FontWeight.Medium,
     )
 
     @Composable
@@ -115,7 +111,7 @@ internal object TextAppStyles {
         color = MaterialTheme.colorScheme.error,
         fontSize = 16.sp,
         fontFamily = SansSerif,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
     )
 
     @Composable
@@ -123,7 +119,7 @@ internal object TextAppStyles {
         color = MaterialTheme.colorScheme.tertiary,
         fontSize = 16.sp,
         fontFamily = SansSerif,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
     )
 
     @Composable
@@ -140,6 +136,3 @@ internal object TextAppStyles {
         fontFamily = SansSerif,
     )
 }
-
-
-

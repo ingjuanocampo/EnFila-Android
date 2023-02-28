@@ -28,21 +28,19 @@ class ClientRemoteSourceFB @Inject constructor() : RemoteSource<Client> {
     private fun map(it: Map<String, Any>) = Client(
         id = it["id"] as String,
         name = it["name"] as String? ?: EMPTY_STRING,
-        shifts = it["shifts"] as List<String>?
+        shifts = it["shifts"] as List<String>?,
     )
-
 
     override fun uploadData(data: List<Client>): Flow<List<Client>?> {
         return remote.uploadProcessMultiples({
             return@uploadProcessMultiples mapToRemote(it)
         }, data, clientPath)
-
     }
 
     private fun mapToRemote(it: Client) = hashMapOf(
         "id" to it.id,
         "name" to it.name,
-        "shifts" to it.shifts
+        "shifts" to it.shifts,
     )
 
     override fun uploadData(data: Client): Flow<Client?> {
@@ -56,6 +54,4 @@ class ClientRemoteSourceFB @Inject constructor() : RemoteSource<Client> {
             return@fetchProcess map(it)
         }, clientPath, id).firstOrNull()
     }
-
-
 }

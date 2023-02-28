@@ -23,9 +23,7 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
     private val navController by lazy { findNavController(this) }
     private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { this })
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
         val dialog = super.onCreateDialog(savedInstanceState)
 
         dialog.setOnShowListener { dialog ->
@@ -41,13 +39,12 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.activity_assignation, container, true)
     }
@@ -55,13 +52,13 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.assignationState.observe(viewLifecycleOwner, Observer {
-            if (it is AssignationState.AssignationSet) {
-                dismiss()
-            }
-        })
-
+        viewModel.assignationState.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it is AssignationState.AssignationSet) {
+                    dismiss()
+                }
+            },
+        )
     }
-
-
 }
