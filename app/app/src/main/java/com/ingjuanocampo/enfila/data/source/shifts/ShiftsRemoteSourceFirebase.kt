@@ -32,6 +32,7 @@ class ShiftsRemoteSourceFirebase @Inject constructor() {
         notes = it["notes"] as String? ?: EMPTY_STRING,
         state = getShiftState((it["state"] as Long? ?: 0).toInt()),
         endDate = it["endDate"] as Long? ?: 0,
+        attentionStartDate = it["attentionStartDate"] as Long? ?: 0,
     )
 
     fun fetchByShiftId(shiftId: String, companyId: String): Flow<Shift?> {
@@ -64,5 +65,6 @@ class ShiftsRemoteSourceFirebase @Inject constructor() {
         "notes" to it.notes,
         "state" to it.state.ordinal,
         "endDate" to it.endDate,
+        "attentionStartDate" to it.attentionStartDate,
     )
 }

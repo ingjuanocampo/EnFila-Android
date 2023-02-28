@@ -11,6 +11,7 @@ data class Shift internal constructor(
     val contactId: String,
     val notes: String?,
     var state: ShiftState,
+    var attentionStartDate: Long? = null,
     var endDate: Long? = null,
 ) : Comparable<Shift>, IdentifyObject {
 

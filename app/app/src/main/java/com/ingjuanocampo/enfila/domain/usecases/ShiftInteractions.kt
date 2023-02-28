@@ -18,7 +18,9 @@ class ShiftInteractions @Inject constructor(
 ) {
 
     fun active(current: Shift?): Flow<Boolean> {
-        return updateShiftTo(current, ShiftState.CALLING).map {
+        return updateShiftTo(current?.apply {
+            this.attentionStartDate = getNow()
+        }, ShiftState.CALLING).map {
             messagingRepository.sendMessage("573137550993", "14155238886", "Es tu turno ahora, acercate por favor")
             true
         }
@@ -28,9 +30,7 @@ class ShiftInteractions @Inject constructor(
         return flowOf(shift?.copy()).flatMapLatest { current ->
             current?.let {
                 updateShift(
-                    it.apply {
-                        endDate = getNow()
-                    },
+                    it,
                     state,
                 ).map { true }
             } ?: flowOf(false)
@@ -76,6 +76,7 @@ class ShiftInteractions @Inject constructor(
     }
 
     fun cancel(shiftToCancel: Shift?): Flow<Boolean> {
+        shiftToCancel?.endDate = getNow()
         return updateShiftTo(shiftToCancel, ShiftState.CANCELLED)
     }
 

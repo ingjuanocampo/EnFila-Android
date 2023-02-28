@@ -19,6 +19,34 @@ class CalculateShiftAverageWaitTimes @Inject constructor() {
         shiftTimes.forEach {
             totalTimes += it
         }
-        return (totalTimes / shiftTimes.size).toDurationText()
+        return if (totalTimes == 0L) {
+            "- -"
+        } else {
+            (totalTimes / shiftTimes.size).toDurationText()
+        }
+    }
+
+    fun attentionTime(shifts: List<Shift>): String {
+        if (shifts.isEmpty()) return "- -"
+        val shiftTimes = shifts.filter { it.state == ShiftState.FINISHED }
+            .filter {
+                it.endDate != null
+                        && it.endDate!! > 0
+                        && it.attentionStartDate != null
+                        && it.attentionStartDate!! > 0
+                        && it.endDate!! > it.attentionStartDate!!
+            }.map {
+                return@map it.endDate!!.minus(it.attentionStartDate!!)
+            }
+        var totalTimes = 0L
+        shiftTimes.forEach {
+            totalTimes += it
+        }
+
+        return if (totalTimes == 0L) {
+            "- -"
+        } else {
+            (totalTimes / shiftTimes.size).toDurationText()
+        }
     }
 }
