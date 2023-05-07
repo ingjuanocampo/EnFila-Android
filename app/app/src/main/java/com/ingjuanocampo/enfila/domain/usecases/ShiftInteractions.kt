@@ -56,8 +56,7 @@ class ShiftInteractions @Inject constructor(
         return ShiftWithClient(shift, client ?: defaultClient)
     }
 
-    fun addNewTurn(tunr: Int, phoneNumber: String, name: String?, note: String?): Flow<Shift?> {
-        val client = Client(id = phoneNumber, name = name)
+    fun addNewTurn(tunr: Int, client: Client, note: String?): Flow<Shift?> {
         return clientRepository.updateData(client).flatMapLatest {
             shiftRepository.updateData(
                 (
@@ -70,7 +69,7 @@ class ShiftInteractions @Inject constructor(
                     ),
             )
         }.map {
-            messagingRepository.sendMessage("573137550993", "14155238886", "Hola $name Fuiste anadido al turno $tunr")
+            messagingRepository.sendMessage("573137550993", "14155238886", "Hola ${client.name} Fuiste anadido al turno $tunr")
             it
         }
     }

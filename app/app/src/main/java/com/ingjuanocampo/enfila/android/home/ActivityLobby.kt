@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode.LABEL_VISIBILITY_SELECTED
 import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.home.clients.FragmentClientList
 import com.ingjuanocampo.enfila.android.home.history.FragmentHistory
 import com.ingjuanocampo.enfila.android.home.home.FragmentHome
 import com.ingjuanocampo.enfila.android.home.list.FragmentListItems
@@ -22,7 +23,8 @@ class ActivityLobby : AppCompatActivity() {
             .appendItem(fragmentFactory = { FragmentTips.newInstance() }, icon = getDrawable(R.drawable.ic_tips_and_updates), title = "Tips")
             .appendItem(fragmentFactory = { FragmentListItems.newInstance() }, icon = getDrawable(R.drawable.ic_format_list), title = "Turnos")
             .appendItem(fragmentFactory = { FragmentHome.newInstance() }, icon = getDrawable(R.drawable.ic_home), title = "Panel", default = true)
-            .appendItem(fragmentFactory = { FragmentHistory.newInstance() }, icon = getDrawable(R.drawable.ic_history), title = "Historial")
+           // .appendItem(fragmentFactory = { FragmentHistory.newInstance() }, icon = getDrawable(R.drawable.ic_history), title = "Historial")
+            .appendItem(fragmentFactory = { FragmentClientList.newInstance() }, icon = getDrawable(R.drawable.ic_stop), title = "Clientes")
             .appendItem(fragmentFactory = { FragmentProfile.newInstance() }, icon = getDrawable(R.drawable.ic_account), title = "Profile")
     }
 

@@ -3,11 +3,11 @@ package com.ingjuanocampo.enfila.android.assignation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
+import com.ingjuanocampo.enfila.domain.entity.Client
 import com.ingjuanocampo.enfila.domain.usecases.ShiftInteractions
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -23,15 +23,17 @@ class ViewModelAssignation @Inject constructor(
 
     val assignationState: MutableLiveData<AssignationState> = MutableLiveData(AssignationState.IDLE)
 
+    private var client: Client? = null
+
     var phoneNumber: String = ""
         set(value) {
             if (value.isNotEmpty() && value.count() == 10) {
                 field = value
                 launchGeneral {
-                    val client = clientRepository.getById(value)
+                    client = clientRepository.getById(value)
                     if (client != null) {
                         withContext(Dispatchers.Main) {
-                            name = client.name!!
+                            name = client!!.name!!
                         }
                     }
                     assignationState.postValue(AssignationState.NumberSet)
@@ -75,7 +77,14 @@ class ViewModelAssignation @Inject constructor(
     fun createAssignation() {
         launchGeneral {
             assignationState.postValue(AssignationState.Loading)
-            shiftInteractions.addNewTurn(tunr, phoneNumber, name, note).collect {
+            client = if (client == null ) {
+                Client(id = phoneNumber, name = name, shifts = listOf(tunr.toString()))
+            } else {
+                client!!.copy(shifts = client!!.shifts?.toMutableList()?.apply {
+                    add(tunr.toString())
+                }?: listOf(tunr.toString()))
+            }
+            shiftInteractions.addNewTurn(tunr, client!!, note).collect {
                 assignationState.postValue(AssignationState.AssignationSet)
             }
         }
