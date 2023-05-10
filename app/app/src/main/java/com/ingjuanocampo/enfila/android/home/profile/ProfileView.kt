@@ -23,9 +23,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -40,30 +37,26 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.home.profile.model.ProfileCard
 import com.ingjuanocampo.enfila.android.home.profile.model.StatisticsSectionUI
-import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileState
 import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileViewModel
 import com.ingjuanocampo.enfila.android.ui.common.AnimatedButtonState
 import com.ingjuanocampo.enfila.android.ui.common.AnimatedComposeButton
+import com.ingjuanocampo.enfila.android.ui.common.toLoadingState
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 
 @Composable
 fun ProfileScreen(profileViewModel: ProfileViewModel = viewModel()) {
     AppTheme {
-        val state by profileViewModel.getState().collectAsState()
-
-        when (state) {
-            ProfileState.LoadingProfileInfo -> {}
-            ProfileState.LoggedOut -> {}
-            ProfileState.LoggingOut -> {}
-            is ProfileState.ProfileLoaded -> {
-                ProfileView(profile = (state as ProfileState.ProfileLoaded).profileCard)
-            }
+        val state by profileViewModel.state.collectAsState()
+        ProfileView(profile = state) {
+            profileViewModel.onLogout()
         }
     }
 }
 
 @Composable
-fun ProfileView(profile: ProfileCard) {
+fun ProfileView(
+    profile: ProfileCard, onLogoutAction: () -> Unit
+) {
     ConstraintLayout(
         Modifier
             .fillMaxSize()
@@ -89,12 +82,14 @@ fun ProfileView(profile: ProfileCard) {
             Modifier.constrainAs(logoutRef) {
                 bottom.linkTo(parent.bottom)
             },
+            isLoading = profile.loadingLogout,
+            onLogoutAction
         )
     }
 }
 
 @Composable
-fun Logout(modifier: Modifier) {
+fun Logout(modifier: Modifier, isLoading: Boolean, onLogoutAction: () -> Unit) {
     Column(modifier = modifier, Arrangement.Top) {
         Divider(
             color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -103,17 +98,19 @@ fun Logout(modifier: Modifier) {
                 .height(1.dp),
         )
 
-        var state by remember { mutableStateOf(AnimatedButtonState.IDLE) }
+        val loadingState = isLoading.toLoadingState()
+
         AnimatedComposeButton(
             Modifier
                 .width(100.dp)
                 .padding(all = 8.dp),
-            state,
+            loadingState,
         ) {
             Row(
                 modifier = Modifier
                     .clickable(enabled = true, onClick = {
-                        state = AnimatedButtonState.PROGRESS
+                        //state = AnimatedButtonState.PROGRESS
+                        onLogoutAction()
                     }),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -142,7 +139,7 @@ fun ProfileOptions(profile: ProfileCard, modifier: Modifier) {
         modifier = modifier.verticalScroll(rememberScrollState()),
         Arrangement.Top,
 
-    ) {
+        ) {
         profile.options.forEach {
             Row(
                 modifier = Modifier.padding(all = 8.dp),
@@ -184,7 +181,7 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
         shape = RoundedCornerShape(2.dp),
         elevation = 2.dp,
 
-    ) {
+        ) {
         val textColor = MaterialTheme.colorScheme.onPrimaryContainer
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
             Text(
@@ -327,6 +324,9 @@ fun ProfilePreview() {
                 "123", "33", "32", "12", "1Mins",
                 "12 min",
             ),
+            {
+
+            }
         )
     }
 }

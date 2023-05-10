@@ -50,7 +50,7 @@ class FragmentVerificationCode : Fragment() {
                 when (it) {
                     is LoginState.AuthenticationProcessState ->
                         when (it.authState) {
-                            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen()
+                            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen(requireActivity())
                             is AuthState.NewAccount -> navController.navigate(
                                 R.id.action_fragmentVerificationCode_to_fragmentProfile,
                                 Bundle().apply {

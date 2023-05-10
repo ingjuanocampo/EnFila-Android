@@ -25,4 +25,11 @@ interface Repository<Data> {
     suspend fun delete(listOf: Data)
 
     suspend fun deleteById(id: String)
+
+    suspend fun deleteAll()
+}
+
+
+interface Deletable {
+    suspend fun deleteAll()
 }

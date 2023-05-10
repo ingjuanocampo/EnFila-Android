@@ -72,6 +72,10 @@ open class RepositoryImp<Data>(
         return@withContext localSource.delete(id)
     }
 
+    override suspend fun deleteAll() {
+        localSource.deleteAll()
+    }
+
     override fun updateData(data: Data): Flow<Data?> {
         return remoteSource.uploadData(data).map {
             localSource.createOrUpdate(data)

@@ -67,6 +67,15 @@ class UserLocalSource @Inject constructor(@ApplicationContext private val contex
         return getAllObserveData().firstOrNull()
     }
 
+    override suspend fun deleteAll() {
+        context.userPreferencesDataStore.edit {
+            it[USER_NAME] = ""
+            it[USER_ID] = ""
+            it[USER_PHONE] = ""
+            it[USER_COMPANY_IDS] = ""
+        }
+    }
+
     override suspend fun getById(id: String): User? {
         return getAllObserveData().firstOrNull()?.firstOrNull()
     }

@@ -1,30 +1,36 @@
 package com.ingjuanocampo.enfila.android.home.profile.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ingjuanocampo.common.composable.LogoutOut
+import com.ingjuanocampo.common.composable.MviBaseViewModel
 import com.ingjuanocampo.enfila.android.home.profile.model.ProfileCard
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.domain.usecases.LoadUserProfile
+import com.ingjuanocampo.enfila.domain.usecases.LogoutUC
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.last
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val loadProfileUC: LoadUserProfile,
-) : ViewModel() {
+    private val logoutUC: LogoutUC
+) : MviBaseViewModel<ProfileCard>(ProfileCard()) {
 
-    private val state = MutableStateFlow<ProfileState>(ProfileState.LoadingProfileInfo)
-
-    fun getState(): StateFlow<ProfileState> = state
+    fun onLogout() {
+        viewModelScope.launchGeneral {
+            _state.value = state.value.copy(loadingLogout = true)
+            logoutUC.invoke()
+            _event.emit(LogoutOut)
+        }
+    }
 
     var clientCounter = 0
 
     init {
         viewModelScope.launchGeneral {
 
-            state.value = ProfileState.LoadingProfileInfo
+            //state.value = ProfileState.LoadingProfileInfo
 
             val user = loadProfileUC.invoke()
             clientCounter = user.totalNumberClients
@@ -40,21 +46,21 @@ class ProfileViewModel @Inject constructor(
                 waitingTime = user.waitingTime,
                 attentionTime = user.attentionTime,
 
-            )
-            state.value = ProfileState.ProfileLoaded(profileCard)
+                )
+            _state.value = profileCard
             // startUpdates()
         }
     }
 
-   /* private suspend fun startUpdates() {
-        while (true) {
-            delay(TimeUnit.SECONDS.toMillis(1))
-            clientCounter += 1
-            val profileCard = state.value.copy(numberClients = "#${clientCounter}")
-            state.value = profileCard
+    /* private suspend fun startUpdates() {
+         while (true) {
+             delay(TimeUnit.SECONDS.toMillis(1))
+             clientCounter += 1
+             val profileCard = state.value.copy(numberClients = "#${clientCounter}")
+             state.value = profileCard
 
-        }
+         }
 
 
-    }*/
+     }*/
 }

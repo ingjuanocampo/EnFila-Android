@@ -22,9 +22,6 @@ internal class ViewModelClientList @Inject constructor(
         }
     }
 
-    override suspend fun handleIntent(intent: Any) {
-        TODO("Not yet implemented")
-    }
 
     fun onSearch(query: String) {
         launchGeneral {

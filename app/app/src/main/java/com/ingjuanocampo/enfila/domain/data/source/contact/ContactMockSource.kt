@@ -38,6 +38,10 @@ class ContactMockSource : LocalSource<Client> {
         return list
     }
 
+    override suspend fun deleteAll() {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun delete(id: String) {
     }
 

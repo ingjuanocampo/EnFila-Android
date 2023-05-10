@@ -86,6 +86,12 @@ enum class AnimatedButtonState {
     PROGRESS,
 }
 
+fun Boolean.toLoadingState(): AnimatedButtonState {
+    return if (this) {
+        AnimatedButtonState.PROGRESS
+    } else AnimatedButtonState.IDLE
+}
+
 @Composable
 @Preview(
     device = Devices.PIXEL_4_XL,

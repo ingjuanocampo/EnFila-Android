@@ -70,7 +70,7 @@ class FragmentNewCompany : Fragment() {
 
     private fun handleAuthProcess(authState: AuthState) {
         when (authState) {
-            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen()
+            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen(requireActivity())
             is AuthState.AuthError -> showToast("Error, something when wrong")
         }
     }

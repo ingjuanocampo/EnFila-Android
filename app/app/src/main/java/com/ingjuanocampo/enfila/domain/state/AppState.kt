@@ -1,5 +1,7 @@
 package com.ingjuanocampo.enfila.domain.state
 
+import android.content.Context
+
 interface AppState {
-    fun navigateLaunchScreen()
+    fun navigateLaunchScreen(context: Context)
 }

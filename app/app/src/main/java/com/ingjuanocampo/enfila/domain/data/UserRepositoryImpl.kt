@@ -17,4 +17,9 @@ class UserRepositoryImpl(
         this.id = currentUser?.id ?: EMPTY_STRING
         return currentUser
     }
+
+    override suspend fun deleteAll() {
+        super.deleteAll()
+        this.id = ""
+    }
 }

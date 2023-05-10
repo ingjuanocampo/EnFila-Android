@@ -66,7 +66,7 @@ class FragmentLoginPhoneNumber : Fragment() {
 
     private fun process(authState: AuthState) {
         when (authState) {
-            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen()
+            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen(requireContext())
             is AuthState.AuthError -> showToast("Error" + authState.e.toString())
         }
     }

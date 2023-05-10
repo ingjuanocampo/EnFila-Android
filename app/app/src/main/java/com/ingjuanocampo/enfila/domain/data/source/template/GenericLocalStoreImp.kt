@@ -32,6 +32,10 @@ open class GenericLocalStoreImp<Data : IdentifyObject> : LocalSource<Data> {
         return genericCache.getData()
     }
 
+    override suspend fun deleteAll() {
+        genericCache.deleteAll()
+    }
+
     override suspend fun getById(id: String): Data? {
         return genericCache.getData().firstOrNull { it.id == id }
     }

@@ -28,6 +28,10 @@ class CompanySiteLocalSource @Inject constructor() : LocalSource<CompanySite> {
         return (companySite.let { listOf(it) } ?: listOf<CompanySite>()) as List<CompanySite>?
     }
 
+    override suspend fun deleteAll() {
+        companySite = null
+    }
+
     override suspend fun getById(id: String): CompanySite? {
         return companySite
     }
