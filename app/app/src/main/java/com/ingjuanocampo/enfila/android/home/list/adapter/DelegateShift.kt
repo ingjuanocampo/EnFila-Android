@@ -27,7 +27,7 @@ class DelegateShift(
             state.text = shiftItem.state
             timeElapse.set(recyclerViewType)
             timeElapseContainer.isVisible = recyclerViewType.state == ShiftState.WAITING.name
-            issueDate.text = shiftItem.getStringIssueDate()
+            issueDate.text = shiftItem.formmattedIssueDate
 
             progressContainer.finish.isVisible = recyclerViewType.isCancellable
             progressContainer.set(listener, recyclerViewType.id)

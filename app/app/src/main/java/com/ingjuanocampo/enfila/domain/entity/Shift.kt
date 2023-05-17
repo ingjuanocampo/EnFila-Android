@@ -1,10 +1,11 @@
 package com.ingjuanocampo.enfila.domain.entity
 
+import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 import java.util.*
 
 data class Shift internal constructor(
-    val date: Long,
+    val date: Long, // Create date
     override val id: String = EMPTY_STRING,
     val parentCompanySite: String,
     var number: Int = 0,
@@ -28,6 +29,10 @@ data class Shift internal constructor(
         return current - date
     }
 }
+
+fun Shift.getAttentionTime(): String = try {
+    endDate!!.minus(attentionStartDate!!).toDurationText()
+} catch (e: Exception) { "" }
 
 fun getShiftState(value: Int?): ShiftState {
     return ShiftState.values().firstOrNull { it.ordinal == value ?: 0 } ?: ShiftState.WAITING

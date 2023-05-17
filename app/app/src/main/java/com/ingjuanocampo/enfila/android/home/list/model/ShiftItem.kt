@@ -1,23 +1,31 @@
 package com.ingjuanocampo.enfila.android.home.list.model
 
+import android.os.SystemClock
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
+import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
+import com.ingjuanocampo.enfila.domain.entity.getAttentionTime
 import com.ingjuanocampo.enfila.domain.entity.getNow
 import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
 import java.text.SimpleDateFormat
 import java.util.*
 
 data class ShiftItem(
-    val id: String,
-    val phone: String,
-    val name: String,
-    val currentTurn: String,
-    val issueDate: Long,
-    val endDate: Long,
-    val state: String,
+    val id: String = "",
+    val phone: String= "",
+    val name: String= "",
+    val currentTurn: String= "",
+    val issueDate: Long = 0L,
+    val endDate: Long = 0L,
+    val state: String = "",
     val viewType: ViewTypes = ViewTypes.SHIFT,
     val isCancellable: Boolean = false,
+    val scheduledHour: String = "", // Not being mapped yet
+    val notes: String = "",
+    val attentionTime: String = "",
+    val waitTime: String = "",
+    val formmattedIssueDate: String = ""
 ) : RecyclerViewType {
 
     fun geElapsedTime(): Long {
@@ -25,15 +33,7 @@ data class ShiftItem(
         return current - issueDate
     }
 
-    fun geEndElapsedTime(): Long {
-        return endDate - issueDate
-    }
-
-    fun getStringIssueDate(): String {
-        return SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(issueDate))
-    }
-
-    fun getTotalElapsedTime(): String {
+   /* fun getTotalElapsedTime(): String {
         var diff = geEndElapsedTime()
 
         val day = 60 * 60 * 24
@@ -50,7 +50,7 @@ data class ShiftItem(
 
         val seconds = (diff).toInt()
         return "$hours:$minutes:$seconds"
-    }
+    }*/
 
     override fun getDelegateId(): Int = id.hashCode()
 
@@ -68,6 +68,10 @@ fun ShiftWithClient.mapToUI(viewType: ViewTypes = ViewTypes.SHIFT): ShiftItem {
         endDate = this.shift.endDate ?: 0L,
         viewType = viewType,
         isCancellable = this.shift.state == ShiftState.CALLING,
+        notes = this.shift.notes.orEmpty(),
+        attentionTime = this.shift.getAttentionTime(),
+        waitTime = (SystemClock.elapsedRealtime() - (getNow() - this.shift.date)).toDurationText(),
+        formmattedIssueDate = SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(this.shift.date))
 
     )
 }
