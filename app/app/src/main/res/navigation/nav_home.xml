@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home"
+    app:startDestination="@id/fragmentHome">
+
+    <fragment
+        android:id="@+id/fragmentClientList"
+        android:name="com.ingjuanocampo.enfila.android.home.clients.FragmentClientList"
+        android:label="Clientes" />
+    <fragment
+        android:id="@+id/fragmentTips"
+        android:name="com.ingjuanocampo.enfila.android.home.tips.FragmentTips"
+        android:label="Tips"
+        tools:layout="@layout/fragment_tips" />
+    <fragment
+        android:id="@+id/fragmentHome"
+        android:name="com.ingjuanocampo.enfila.android.home.home.FragmentHome"
+        android:label="Home" />
+    <fragment
+        android:id="@+id/fragmentShiftPager"
+        android:name="com.ingjuanocampo.enfila.android.home.shift_pager.FragmentShiftPager"
+        android:label="Turnos" >
+        <action
+            android:id="@+id/action_fragmentShiftPager_to_fragmentShiftDetail"
+            app:destination="@id/fragmentShiftDetail"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim" >
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.ingjuanocampo.enfila.android.home.profile.FragmentProfile"
+        android:label="Cuenta" />
+
+    <fragment
+        android:id="@+id/fragmentShiftDetail"
+        android:name="com.ingjuanocampo.enfila.android.home.list.details.FragmentShiftDetail"
+        android:label="Detalles del Turno" />
+
+</navigation>

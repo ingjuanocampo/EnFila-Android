@@ -15,12 +15,15 @@ class DelegateShift(
     private val listener: (String) -> Unit = {},
     private val binding: DelegateShiftBinding =
         DelegateShiftBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+    private val onShiftListener: (String) -> Unit = {},
+
 ) :
     DelegateViewHolder(binding.root) {
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         with(binding) {
             val shiftItem = recyclerViewType as ShiftItem
+            binding.root.setOnClickListener { onShiftListener(shiftItem.id) }
             currentTurn.text = shiftItem.currentTurn
             number.text = shiftItem.phone
             name.text = shiftItem.name

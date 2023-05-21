@@ -1,18 +1,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/fragmentTips"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
-        android:title="Current"/>
+        android:icon="@drawable/ic_tips_and_updates"
+        android:title="Tips"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/fragmentShiftPager"
         android:enabled="true"
         android:icon="@drawable/ic_format_list"
-        android:title="Fila"/>
+        android:title="Turnos"/>
 
     <item
-        android:id="@+id/page_3"
+        android:id="@+id/fragmentHome"
         android:enabled="true"
-        android:icon="@drawable/ic_history"
-        android:title="History"/>
+        android:icon="@drawable/ic_home"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/fragmentClientList"
+        android:enabled="true"
+        android:icon="@drawable/ic_groups_48px"
+        android:title="Clientes"/>
+
+    <item
+        android:id="@+id/fragmentProfile"
+        android:enabled="true"
+        android:icon="@drawable/ic_account"
+        android:title="Cuenta"/>
 </menu>
