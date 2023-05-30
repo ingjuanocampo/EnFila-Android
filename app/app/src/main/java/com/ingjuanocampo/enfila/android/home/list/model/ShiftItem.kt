@@ -25,7 +25,8 @@ data class ShiftItem(
     val notes: String = "",
     val attentionTime: String = "",
     val waitTime: String = "",
-    val formmattedIssueDate: String = ""
+    val formmattedIssueDate: String = "",
+    val isProcessingActions: Boolean = false,
 ) : RecyclerViewType {
 
     fun geElapsedTime(): Long {

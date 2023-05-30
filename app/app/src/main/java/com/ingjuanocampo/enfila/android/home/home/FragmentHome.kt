@@ -3,8 +3,10 @@ package com.ingjuanocampo.enfila.android.home.home
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.BottomSheetAssignation
@@ -28,6 +30,9 @@ class FragmentHome : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
+    private val navController by lazy { NavHostFragment.findNavController(this) }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,18 +49,18 @@ class FragmentHome : Fragment() {
 
         adapter.appendDelegate(ViewTypes.HOME_RESUME.ordinal) { DelegateResume(it) }
         adapter.appendDelegate(ViewTypes.ACTIVE_SHIFT.ordinal) {
-            DelegateActiveShift(it) { id ->
+            DelegateActiveShift(it , finishListener = { id ->
                 viewModel.finish(id)
-            }
+            }, onShiftListener = ::navigateToDetails)
         }
 
         adapter.appendDelegate(ViewTypes.NEXT_SHIFT.ordinal) {
-            DelegateNextShift(it) { actions ->
+            DelegateNextShift(it, listener = { actions ->
                 when (actions) {
                     is NextShiftActions.Active -> viewModel.next(actions.id)
                     is NextShiftActions.Cancel -> viewModel.cancel(actions.id)
                 }
-            }
+            }, onShiftSelected = ::navigateToDetails)
         }
 
         adapter.appendDelegate(ViewTypes.HEADER_LINK.ordinal) { DelegateHeaderLink(it) }
@@ -80,6 +85,11 @@ class FragmentHome : Fragment() {
         binding.addButton.setOnClickListener {
             startAdditionProcess()
         }
+    }
+
+    private fun navigateToDetails(it: String) {
+        val bundle = bundleOf("id" to it)
+        navController.navigate(R.id.action_fragmentHome_to_navigation, bundle)
     }
 
     private fun startAdditionProcess() {

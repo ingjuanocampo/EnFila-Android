@@ -11,4 +11,7 @@
     <string name="name">Nombre</string>
     <string name="Telefono">Telefono</string>
     <string name="companyName">Nombre de la Empresa</string>
+    <string name="active">Active</string>
+    <string name="cancel">Cancel</string>
+    <string name="finish">Finish</string>
 </resources>

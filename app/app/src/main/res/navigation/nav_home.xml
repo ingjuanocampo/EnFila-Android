@@ -17,14 +17,19 @@
     <fragment
         android:id="@+id/fragmentHome"
         android:name="com.ingjuanocampo.enfila.android.home.home.FragmentHome"
-        android:label="Home" />
+        android:label="Home" >
+        <action
+            android:id="@+id/action_fragmentHome_to_navigation"
+            app:destination="@id/navigation" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentShiftPager"
         android:name="com.ingjuanocampo.enfila.android.home.shift_pager.FragmentShiftPager"
         android:label="Turnos" >
         <action
+            app:launchSingleTop="true"
             android:id="@+id/action_fragmentShiftPager_to_fragmentShiftDetail"
-            app:destination="@id/fragmentShiftDetail"
+            app:destination="@id/navigation"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@animator/nav_default_exit_anim" >
         </action>
@@ -34,9 +39,12 @@
         android:name="com.ingjuanocampo.enfila.android.home.profile.FragmentProfile"
         android:label="Cuenta" />
 
-    <fragment
-        android:id="@+id/fragmentShiftDetail"
-        android:name="com.ingjuanocampo.enfila.android.home.list.details.FragmentShiftDetail"
-        android:label="Detalles del Turno" />
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/fragmentShiftDetail">
+        <fragment
+            android:id="@+id/fragmentShiftDetail"
+            android:name="com.ingjuanocampo.enfila.android.home.list.details.FragmentShiftDetail"
+            android:label="Detalles del Turno" />
+    </navigation>
 
 </navigation>

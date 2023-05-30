@@ -15,15 +15,17 @@ class DelegateActiveShift(
         parent,
         false,
     ),
-    private val listener: (String) -> Unit,
-) : DelegateViewHolder(biding.root) {
+    private val finishListener: (String) -> Unit,
+    private val onShiftListener: (String) -> Unit,
+
+    ) : DelegateViewHolder(biding.root) {
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem
         biding.currentNumber.text = recyclerViewType.currentTurn
         biding.clientPhone.text = recyclerViewType.phone
         biding.clientName.text = recyclerViewType.name
-
-        biding.progressContainer.set(listener, recyclerViewType.id)
+        biding.root.setOnClickListener { onShiftListener.invoke(recyclerViewType.id) }
+        biding.progressContainer.set(finishListener, recyclerViewType.id)
     }
 }

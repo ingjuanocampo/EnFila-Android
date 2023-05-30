@@ -1,49 +1,127 @@
 package com.ingjuanocampo.enfila.android.home.list.details
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
+import com.ingjuanocampo.enfila.android.ui.common.AnimatedComposeButton
+import com.ingjuanocampo.enfila.android.ui.common.toLoadingState
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
-import com.ingjuanocampo.enfila.android.utils.toDurationText
+import com.ingjuanocampo.enfila.android.ui.theme.ButtonError
+import com.ingjuanocampo.enfila.android.ui.theme.ButtonGrayStroke
+import com.ingjuanocampo.enfila.android.ui.theme.ButtonPrimary
+import com.ingjuanocampo.enfila.domain.entity.ShiftState
 
 @Composable
-fun ShiftDetailScreen(shiftDetailUi: ShiftItem) {
+fun ShiftDetailScreen(
+    shiftDetailUi: ShiftItem,
+    onCancel: () -> Unit,
+    onActive: () -> Unit,
+    onFinish: () -> Unit
+) {
     AppTheme {
-        Column(modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())) {
-            TableItem(label = "Name", value = shiftDetailUi.name)
-            DividerBody()
-            TableItem(label = "Phone", value = shiftDetailUi.phone)
-            DividerBody()
-            TableItem(label = "Created Date", value = shiftDetailUi.formmattedIssueDate)
-/*            DividerBody()
-            TableItem(label = "Duration", value = shiftDetailUi.geEndElapsedTime().toDurationText())*/
-            DividerBody()
-            TableItem(label = "Waiting Time", value = shiftDetailUi.waitTime)
-            DividerBody()
-            TableItem(label = "Number Turn", value = shiftDetailUi.currentTurn)
-            DividerBody()
-            TableItem(label = "Attention Duration", value = shiftDetailUi.attentionTime)
-            DividerBody()
-            TableItem(label = "Scheduled Hour", value = shiftDetailUi.scheduledHour)
-            DividerBody()
-            TableItem(label = "Notes", value = shiftDetailUi.notes)
+
+        ConstraintLayout {
+            val (columRef, buttonsRef) = createRefs()
+            Column(modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState())
+                .constrainAs(columRef) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(buttonsRef.top)
+                }) {
+                TableItem(label = "Name", value = shiftDetailUi.name)
+                DividerBody()
+                TableItem(label = "Phone", value = shiftDetailUi.phone)
+                DividerBody()
+                TableItem(label = "Created Date", value = shiftDetailUi.formmattedIssueDate)
+                /*            DividerBody()
+                            TableItem(label = "Duration", value = shiftDetailUi.geEndElapsedTime().toDurationText())*/
+                DividerBody()
+                TableItem(label = "Waiting Time", value = shiftDetailUi.waitTime)
+                DividerBody()
+                TableItem(label = "Number Turn", value = shiftDetailUi.currentTurn)
+                DividerBody()
+                TableItem(label = "Attention Duration", value = shiftDetailUi.attentionTime)
+                DividerBody()
+                TableItem(label = "Scheduled Hour", value = shiftDetailUi.scheduledHour)
+                DividerBody()
+                TableItem(label = "Notes", value = shiftDetailUi.notes)
+            }
+            val loadingState = shiftDetailUi.isProcessingActions.toLoadingState()
+            AnimatedComposeButton(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .constrainAs(buttonsRef) {
+                        top.linkTo(columRef.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    },
+                state = loadingState) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                    ,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    when (shiftDetailUi.state.toUpperCase()) {
+                        ShiftState.WAITING.name -> {
+                            ButtonPrimary(
+                                {
+                                    onActive()
+                                }, stringResource(id = R.string.active),
+                                modifier = Modifier.weight(0.5f)
+                            )
+                            Spacer(modifier = Modifier.size(10.dp))
+                            ButtonGrayStroke(
+                                {
+                                    onCancel()
+                                }, stringResource(id = R.string.cancel),
+                                modifier = Modifier.weight(0.5f)
+                            )
+                        }
+
+                        ShiftState.CALLING.name -> {
+                            ButtonError(
+                                {
+                                    onFinish()
+                                }, stringResource(id = R.string.finish),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                        else -> {
+                        }
+                    }
+                }
+            }
+
         }
+
     }
 
 }
@@ -59,10 +137,12 @@ private fun TableItem(label: String, value: String) {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.weight(0.2f)
         )
-        Text(text = value,
+        Text(
+            text = value,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            modifier = Modifier.weight(0.8f))
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.weight(0.8f)
+        )
 
 
     }
@@ -70,10 +150,12 @@ private fun TableItem(label: String, value: String) {
 
 @Composable
 private fun DividerBody() {
-    Divider(modifier = Modifier
-        .fillMaxWidth()
-        .height(1.dp),
-        color = MaterialTheme.colorScheme.onPrimaryContainer)
+    Divider(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(0.5.dp),
+        color = MaterialTheme.colorScheme.outline
+    )
 }
 
 @Preview(
@@ -93,9 +175,9 @@ fun TableScreenPreview() {
         scheduledHour = "09:00 AM",
         notes = "Lorem ipsum dolor sit amet",
         endDate = 0L,
-        state = "Shif",
+        state = "WAITING",
         issueDate = 0L,
-        phone = "31312313"
+        phone = "31312313",
     )
-    ShiftDetailScreen(shiftDetailUi)
+    ShiftDetailScreen(shiftDetailUi ,{}, {}, {})
 }

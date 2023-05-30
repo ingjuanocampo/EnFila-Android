@@ -12,9 +12,9 @@ import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentShiftDetail: BaseComposableFragment<ShiftItem>() {
+class FragmentShiftDetail : BaseComposableFragment<ShiftItem>() {
 
-    private val detailViewModel : ShiftDetailsViewModel by viewModels()
+    private val detailViewModel: ShiftDetailsViewModel by viewModels()
     override val viewModel: MviBaseViewModel<ShiftItem>
         get() = detailViewModel
 
@@ -26,13 +26,23 @@ class FragmentShiftDetail: BaseComposableFragment<ShiftItem>() {
         detailViewModel.init(requireArguments())
         return super.onCreateView(inflater, container, savedInstanceState)
     }
+
     @Composable
     override fun render(state: ShiftItem) {
-        ShiftDetailScreen(state)
+        ShiftDetailScreen(state,
+            onCancel = {
+                detailViewModel.onCancel()
+            },
+            onActive = {
+                detailViewModel.onActive()
+            },
+            onFinish = {
+                detailViewModel.onFinish()
+            })
     }
 
     companion object {
-        fun newInstance(id: String):FragmentShiftDetail {
+        fun newInstance(id: String): FragmentShiftDetail {
             val args = Bundle()
             args.putString("id", id)
             val fragment = FragmentShiftDetail()
