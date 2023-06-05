@@ -71,7 +71,7 @@ fun ShiftWithClient.mapToUI(viewType: ViewTypes = ViewTypes.SHIFT): ShiftItem {
         isCancellable = this.shift.state == ShiftState.CALLING,
         notes = this.shift.notes.orEmpty(),
         attentionTime = this.shift.getAttentionTime(),
-        waitTime = (SystemClock.elapsedRealtime() - (getNow() - this.shift.date)).toDurationText(),
+        waitTime = ((getNow() - this.shift.date)).toDurationText(),
         formmattedIssueDate = SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(this.shift.date))
 
     )

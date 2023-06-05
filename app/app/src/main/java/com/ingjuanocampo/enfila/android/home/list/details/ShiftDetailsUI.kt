@@ -14,11 +14,15 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +35,11 @@ import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 import com.ingjuanocampo.enfila.android.ui.theme.ButtonError
 import com.ingjuanocampo.enfila.android.ui.theme.ButtonGrayStroke
 import com.ingjuanocampo.enfila.android.ui.theme.ButtonPrimary
+import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
+import com.ingjuanocampo.enfila.domain.entity.getNow
+import kotlinx.coroutines.delay
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun ShiftDetailScreen(
@@ -62,7 +70,27 @@ fun ShiftDetailScreen(
                 /*            DividerBody()
                             TableItem(label = "Duration", value = shiftDetailUi.geEndElapsedTime().toDurationText())*/
                 DividerBody()
-                TableItem(label = "Waiting Time", value = shiftDetailUi.waitTime)
+
+                var chronometer: String by remember { mutableStateOf(shiftDetailUi.waitTime) }
+
+                if (shiftDetailUi.state == ShiftState.WAITING.name) {
+                    LaunchedEffect(Unit) {
+                        var ticks = 0L
+                        val initialNow = getNow()
+                        while (true) {
+                            delay(1000)
+                            ticks++
+                            chronometer =
+                                ((initialNow- (shiftDetailUi.issueDate - TimeUnit.SECONDS.toMillis(
+                                    ticks
+                                ))).toDurationText())
+                        }
+                    }
+                }
+
+                TableItem(label = "Waiting Time", value = chronometer)
+
+
                 DividerBody()
                 TableItem(label = "Number Turn", value = shiftDetailUi.currentTurn)
                 DividerBody()
@@ -74,7 +102,8 @@ fun ShiftDetailScreen(
             }
             val loadingState = shiftDetailUi.isProcessingActions.toLoadingState()
             AnimatedComposeButton(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .constrainAs(buttonsRef) {
                         top.linkTo(columRef.bottom)
@@ -82,11 +111,11 @@ fun ShiftDetailScreen(
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom)
                     },
-                state = loadingState) {
+                state = loadingState
+            ) {
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                    ,
+                        .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     when (shiftDetailUi.state.toUpperCase()) {
@@ -114,6 +143,7 @@ fun ShiftDetailScreen(
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
+
                         else -> {
                         }
                     }
@@ -179,5 +209,5 @@ fun TableScreenPreview() {
         issueDate = 0L,
         phone = "31312313",
     )
-    ShiftDetailScreen(shiftDetailUi ,{}, {}, {})
+    ShiftDetailScreen(shiftDetailUi, {}, {}, {})
 }
