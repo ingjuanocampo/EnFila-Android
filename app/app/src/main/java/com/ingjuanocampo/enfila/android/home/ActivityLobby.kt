@@ -3,6 +3,10 @@ package com.ingjuanocampo.enfila.android.home
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode.LABEL_VISIBILITY_SELECTED
 import com.ingjuanocampo.enfila.android.R
@@ -17,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ActivityLobby : AppCompatActivity() {
 
-    private val bottomNavBuilder by lazy {
+  /*  private val bottomNavBuilder by lazy {
         BottomMenuBuilder()
             .appendItem(
                 fragmentFactory = { FragmentTips.newInstance() },
@@ -46,15 +50,26 @@ class ActivityLobby : AppCompatActivity() {
                 title = "Profile"
             )
     }
+*/
+  private lateinit var navController: NavController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val toolbar = findViewById<Toolbar>(R.id.toolbarWidget)
+     /*   val toolbar = findViewById<Toolbar>(R.id.toolbarWidget)
         setSupportActionBar(toolbar)
         var bottomNav: BottomNavigationView = findViewById(R.id.bottomNav)
         bottomNav.labelVisibilityMode = LABEL_VISIBILITY_SELECTED
-        bottomNavBuilder.attachMenu(bottomNav, this)
+        bottomNavBuilder.attachMenu(bottomNav, this)*/
+
+        navController = findNavController(R.id.nav_host_fragment)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNavigationView.setupWithNavController(navController)
+
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        findViewById<Toolbar>(R.id.toolbarWidget)
+            .setupWithNavController(navController, appBarConfiguration)
     }
 }

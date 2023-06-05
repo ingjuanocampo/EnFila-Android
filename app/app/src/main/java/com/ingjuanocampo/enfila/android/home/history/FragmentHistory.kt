@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentHistory : Fragment() {
 
+    private val navController by lazy { findNavController(this) }
     companion object {
         fun newInstance() = FragmentHistory()
     }
@@ -42,7 +45,10 @@ class FragmentHistory : Fragment() {
         adapter = CompositeDelegateAdapter(1).apply {
             appendDelegate(
                 ViewTypes.SHIFT.ordinal,
-            ) { DelegateShift(it) }
+            ) { DelegateShift(it, onShiftListener = {
+                val bundle = bundleOf("id" to it)
+                navController.navigate(R.id.action_fragmentShiftPager_to_fragmentShiftDetail, bundle)
+            }) }
         }
         recycler.addItemDecoration(DividerItemDecoration(requireContext(), OrientationHelper.VERTICAL))
         recycler.adapter = adapter

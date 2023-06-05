@@ -17,11 +17,15 @@ class DelegateNextShift(
         false,
     ),
     val listener: (NextShiftActions) -> Unit,
+    val onShiftSelected: (String) -> Unit,
 ) : DelegateViewHolder(biding.root) {
 
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem
         biding.waitTime.set(recyclerViewType)
+        biding.root.setOnClickListener {
+            onShiftSelected.invoke(recyclerViewType.id)
+        }
         biding.currentNumber.text = recyclerViewType.currentTurn
         biding.clientPhone.text = recyclerViewType.phone
         biding.clientName.text = recyclerViewType.name

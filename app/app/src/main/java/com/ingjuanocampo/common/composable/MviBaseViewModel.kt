@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.lastOrNull
 
 
 abstract class MviBaseViewModel<STATE>(
@@ -23,6 +24,10 @@ abstract class MviBaseViewModel<STATE>(
     )
 
     val event: SharedFlow<ViewEffect> = _event.asSharedFlow()
+
+    open fun setState(block: STATE.() -> STATE) {
+        _state.value = block.invoke(_state.value)
+    }
 
 
 }
