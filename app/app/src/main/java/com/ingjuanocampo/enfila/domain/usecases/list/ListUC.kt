@@ -14,6 +14,18 @@ class ListUC @Inject constructor(
     private val clientRepository: ClientRepository,
 ) {
 
+    fun loadByClientId(clientId: String) =  shiftRepository
+        .getAllObserveData().map {
+            clientRepository.refresh()
+            it
+        }.map { shifts ->
+            shifts!!.filter {
+                it.contactId == clientId
+            }.map {
+                shiftInteractions.loadShiftWithClient(it)
+            }.sortedBy { it.shift.number }
+        }
+
     fun loadActiveShift() = shiftRepository
         .getAllObserveData().map {
             clientRepository.refresh()

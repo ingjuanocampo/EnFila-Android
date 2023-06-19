@@ -60,7 +60,7 @@ class FragmentListItems : Fragment() {
                 adapter.updateItems(it)
             },
         )
-        viewModel.load()
+        viewModel.load(bundle = arguments)
     }
 
     fun stopListener(id: String) {

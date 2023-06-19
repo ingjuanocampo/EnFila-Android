@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.android.home.list.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,9 +21,13 @@ class ViewModelListItems @Inject constructor(
 
     val state = MutableLiveData<List<ShiftItem>>()
 
-    fun load(isActive: Boolean = true) {
+    fun load(isActive: Boolean = true, bundle: Bundle? = null) {
+        val clientId = bundle?.getString("ClientId")
         launchGeneral {
-            (if (isActive) listUC.loadActiveShift() else listUC.loadInactiveShift()).map { shifts ->
+            (if (clientId.isNullOrEmpty().not()) {
+                listUC.loadByClientId(clientId!!)
+            } else if (isActive) listUC.loadActiveShift()
+            else listUC.loadInactiveShift()).map { shifts ->
                 shifts.map {
                     it.mapToUI()
                 }
