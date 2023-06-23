@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ingjuanocampo.common.composable.MviBaseViewModel
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
 import com.ingjuanocampo.enfila.android.home.list.model.mapToUI
+import com.ingjuanocampo.enfila.android.navigation.NavigationDestinations
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.domain.usecases.FinishShiftUC
 import com.ingjuanocampo.enfila.domain.usecases.list.ListUC

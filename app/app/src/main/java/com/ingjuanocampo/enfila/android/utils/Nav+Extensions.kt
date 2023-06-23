@@ -1,11 +1,8 @@
 package com.ingjuanocampo.enfila.android.utils
 
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigator
 import com.ingjuanocampo.common.composable.NavigationEffect
-import com.ingjuanocampo.enfila.android.R
-import com.ingjuanocampo.enfila.android.home.list.FragmentListItems
 
 
 fun NavController.navigateToCustomDest(navigationEffect: NavigationEffect) {
@@ -21,6 +18,6 @@ fun NavController.navigateToCustomDest(navigationEffect: NavigationEffect) {
     this.graph.addDestination(destination)
 
     //val bundle = bundleOf("ClientId" to it)
-    this.navigate(R.id.new_fragment, navigationEffect.bundle)
+    this.navigate(destination.id, navigationEffect.bundle)
 
 }

@@ -1,6 +1,7 @@
 package com.ingjuanocampo.enfila.android.home.clients.viewmodel
 
 import com.ingjuanocampo.common.composable.MviBaseViewModel
+import com.ingjuanocampo.enfila.android.navigation.NavigationDestinations
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.domain.entity.Client
 import com.ingjuanocampo.enfila.domain.usecases.LoadClientListInformation
@@ -9,8 +10,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ViewModelClientList @Inject constructor(
-    private val loadClientListInformation: LoadClientListInformation
-) : MviBaseViewModel<ClientsViewState>(ClientsViewState.Loading) {
+    private val loadClientListInformation: LoadClientListInformation,
+    private val navigation: NavigationDestinations,
+
+    ) : MviBaseViewModel<ClientsViewState>(ClientsViewState.Loading) {
 
     private var cacheClients: List<Client>? = null
     init {
@@ -32,6 +35,10 @@ internal class ViewModelClientList @Inject constructor(
                 _state.value = ClientsViewState.DataLoaded(filteredList)
             }
         }
+    }
+
+    fun onClientSelected(id: String) = launchGeneral {
+        _event.emit(navigation.toShiftByClient(id))
     }
 
 }

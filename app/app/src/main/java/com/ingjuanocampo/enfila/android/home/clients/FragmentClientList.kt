@@ -17,8 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentClientList : BaseComposableFragment<ClientsViewState>() {
 
-    private val navController by lazy { NavHostFragment.findNavController(this) }
-
     override val viewModel: MviBaseViewModel<ClientsViewState> by viewModels<ViewModelClientList>()
 
     @Composable
@@ -27,18 +25,7 @@ class FragmentClientList : BaseComposableFragment<ClientsViewState>() {
             is ClientsViewState.DataLoaded -> ClientListScreenChat(clientList = state.clients, {
                 (viewModel as ViewModelClientList).onSearch(it)
             }, {
-                val navigator: FragmentNavigator =
-                    navController.navigatorProvider.getNavigator(FragmentNavigator::class.java)
-
-                val destination: FragmentNavigator.Destination = navigator.createDestination()
-                    .setClassName(FragmentListItems::class.qualifiedName.orEmpty())
-                destination.id = R.id.new_fragment
-                destination.label = "Shifts for the selected client"
-
-                navController.graph.addDestination(destination)
-
-                val bundle = bundleOf("ClientId" to it)
-                navController.navigate(R.id.new_fragment, bundle)
+                (viewModel as ViewModelClientList).onClientSelected(it)
             })
         }
 
