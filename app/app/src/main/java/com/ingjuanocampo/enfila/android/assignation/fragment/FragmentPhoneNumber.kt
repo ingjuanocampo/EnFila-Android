@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.enfila.android.R
@@ -23,7 +23,7 @@ class FragmentPhoneNumber : Fragment() {
         fun newInstance() = FragmentPhoneNumber()
     }
 
-    private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { requireParentFragment().requireParentFragment() })
+    private val viewModel: ViewModelAssignation by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +35,7 @@ class FragmentPhoneNumber : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val next = view.findViewById<ImageView>(R.id.next)
+        val next = view.findViewById<Button>(R.id.nextCta)
         next.setOnClickListener {
             navController.navigate(R.id.action_fragmentNumber_to_fragmentNameAndNote)
         }

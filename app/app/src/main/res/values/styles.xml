@@ -36,15 +36,6 @@ d
         <item name="android:textColor">?colorOnPrimaryContainer</item>
     </style>
 
-    <style name="Text.Large.Bold.PrimaryColor">
-        <item name="android:textColor">?colorOnPrimary</item>
-    </style>
-
-    <style name="Text.PrimaryColor">
-        <item name="android:textColor">?colorOnPrimary</item>
-        <item name="hintTextColor">?colorOnPrimary</item>
-    </style>
-
 
     <style name="Text.Medium">
         <item name="fontFamily">sans-serif-medium</item>
@@ -95,12 +86,6 @@ d
 
     <style name="Text.Extra.Bold.PrimaryDarkColor">
         <item name="android:textColor">?colorSecondary</item>
-    </style>
-
-    <style name="Text.Extra.Bold.PrimaryColor">
-        <item name="android:textColor">?colorOnPrimary</item>
-        <item name="hintTextColor">?colorOnPrimary</item>
-        <item name="android:textColorHint">?colorOnPrimary</item>
     </style>
 
     <style name="Text.Extra.Bold.Color2">

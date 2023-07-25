@@ -22,6 +22,7 @@ import com.ingjuanocampo.enfila.android.utils.navigateToCustomDest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// REVIEW CREATION PROCESS, CREATE CHAT TO CONTACT CLIENTS USING WHATS APP, LAUNCH APP 
 @AndroidEntryPoint
 class FragmentListItems : Fragment() {
 
