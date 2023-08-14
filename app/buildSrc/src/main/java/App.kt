@@ -1,9 +1,8 @@
-import dependencies.ANDROID_33
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import dependencies.*
 
 object Android {
-    const val compileAndroidSdkVersion = ANDROID_33
+    const val compileAndroidSdkVersion = 34
     const val minAndroidSdkVersion = 26
 }
 

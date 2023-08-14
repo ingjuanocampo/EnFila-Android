@@ -27,6 +27,8 @@ class FragmentClientList : BaseComposableFragment<ClientsViewState>() {
             }, {
                 (viewModel as ViewModelClientList).onClientSelected(it)
             })
+
+            else -> {}
         }
 
     }

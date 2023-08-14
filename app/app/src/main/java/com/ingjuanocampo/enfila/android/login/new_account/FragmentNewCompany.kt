@@ -72,6 +72,7 @@ class FragmentNewCompany : Fragment() {
         when (authState) {
             AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen(requireActivity())
             is AuthState.AuthError -> showToast("Error, something when wrong")
+            else -> {}
         }
     }
 

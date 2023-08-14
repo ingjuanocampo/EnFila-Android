@@ -11,12 +11,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion(compileAndroidSdkVersion)
+    namespace = "com.ingjuanocampo.enfila.android"
+
+    compileSdk = compileAndroidSdkVersion
     defaultConfig {
         applicationId = "com.ingjuanocampo.enfila.android"
 
-        minSdkVersion(minAndroidSdkVersion)
-        targetSdkVersion(compileAndroidSdkVersion)
+        minSdk = minAndroidSdkVersion
+        targetSdk = compileAndroidSdkVersion
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -35,27 +37,26 @@ android {
 
     // For Kotlin projects
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-alpha08"
+        kotlinCompilerExtensionVersion = "1.4.8"
     }
 }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     appDependencies()
-    implementation(platform(Dependencies.firebaseBom))
+    implementation(platform(AppDependencies.firebaseBom))
     fireStore()
     dataStore()
     coroutinesWithAndroid()
     architectureComponents()
 }
 
-apply(plugin = "com.google.gms.google-services")

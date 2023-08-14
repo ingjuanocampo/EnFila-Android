@@ -68,6 +68,7 @@ class FragmentLoginPhoneNumber : Fragment() {
         when (authState) {
             AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen(requireContext())
             is AuthState.AuthError -> showToast("Error" + authState.e.toString())
+            else -> {}
         }
     }
 }

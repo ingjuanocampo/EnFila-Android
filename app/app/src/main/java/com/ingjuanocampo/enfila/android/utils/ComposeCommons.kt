@@ -68,7 +68,7 @@ fun SearchBox(
         },
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
-            textColor = textColor,
+            //textColor = textColor,
             cursorColor = accentColor,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent

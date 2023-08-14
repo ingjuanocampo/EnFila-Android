@@ -46,7 +46,7 @@ class SignInUC @Inject constructor(
             name = companyName,
         )
         companySiteRepository.updateData(company)
-        user.companyIds = listOf(company?.id)
+        user.companyIds = listOf(company?.id.orEmpty())
         userRepository.updateData(user)
         appStateProvider.toLoggedState()
         return AuthState.Authenticated
