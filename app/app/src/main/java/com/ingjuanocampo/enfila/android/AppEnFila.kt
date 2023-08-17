@@ -18,5 +18,6 @@ class AppEnFila : Application() {
     override fun onCreate() {
         super.onCreate()
         context = this
+        FirebaseApp.initializeApp(this)
     }
 }
