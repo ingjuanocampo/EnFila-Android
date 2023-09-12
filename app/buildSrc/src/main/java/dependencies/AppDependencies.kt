@@ -51,12 +51,15 @@ object AppDependencies {
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
     const val firebaseStore = "com.google.firebase:firebase-firestore-ktx"
     const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"
+    const val googleAuthenticator = "com.google.android.gms:play-services-auth:20.6.0"
+
 
 
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
     const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:$constraintCompose"
     const val composeUi = "androidx.compose.ui:ui:$composeVersion"
+    const val composeActivity = "androidx.activity:activity-compose:$composeVersion"
     const val composeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:$composeVMVersion"
     // Tooling support (Previews, etc.)
     const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
@@ -103,6 +106,7 @@ fun DependencyHandler.fireStore() {
     implementation ("com.google.android.gms:play-services-safetynet:18.0.1")
     implementation(AppDependencies.firebaseStore)
     implementation(AppDependencies.firebaseRemoteConfig)
+    implementation(AppDependencies.googleAuthenticator)
 }
 
 fun DependencyHandler.dagger() {
@@ -181,6 +185,7 @@ fun DependencyHandler.compose() {
     implementation(AppDependencies.iconsMaterialCompose)
     implementation(AppDependencies.iconsMaterialComposeExtended)
     implementation(AppDependencies.liveDataCompose)
+    implementation(AppDependencies.composeActivity)
     implementation(AppDependencies.constraintLayoutCompose)
 }
 
