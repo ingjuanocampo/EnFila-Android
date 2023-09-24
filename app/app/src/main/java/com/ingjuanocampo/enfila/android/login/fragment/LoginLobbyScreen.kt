@@ -1,6 +1,5 @@
 package com.ingjuanocampo.enfila.android.login.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -23,46 +22,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.login.viewmodel.ViewModelLoginLobby
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 import com.ingjuanocampo.enfila.android.ui.theme.ButtonPrimary
 import com.ingjuanocampo.enfila.android.ui.theme.ButtonPrimaryStroke
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.io.Serializable
 
 @Composable
-fun LoginLobbyScreen(onPhoneLogin: () -> Unit) {
+fun LoginLobbyScreen(onPhoneLogin: () -> Unit,
+                     viewModel: ViewModelLoginLobby) {
     AppTheme {
         val context = LocalContext.current
 
         val launcher = rememberLauncherForActivityResult(
             ActivityResultContracts.StartIntentSenderForResult()
         ) { result ->
-            if (result.resultCode != Activity.RESULT_OK) {
-                // The user cancelled the login, was it due to an Exception?
-                if (result.data?.action == ActivityResultContracts.StartIntentSenderForResult.ACTION_INTENT_SENDER_REQUEST) {
-                    val exception: Serializable? = result.data?.getSerializableExtra(
-                        ActivityResultContracts.StartIntentSenderForResult.EXTRA_SEND_INTENT_EXCEPTION
-                    )
-                    Log.e("LOG", "Couldn't start One Tap UI: ${exception?.toString()}")
-                }
-                return@rememberLauncherForActivityResult
-            }
-            val oneTapClient = Identity.getSignInClient(context)
-            val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
-            val idToken = credential.googleIdToken
-            if (idToken != null) {
-                // Got an ID token from Google. Use it to authenticate
-                // with your backend.
-                Log.d("LOG", idToken)
-            } else {
-                Log.d("LOG", "Null Token")
-            }
+            viewModel.processResults(result, context)
         }
 
         Column(
@@ -110,13 +90,13 @@ fun LoginLobbyScreen(onPhoneLogin: () -> Unit) {
 
 }
 
-@Preview
+/*@Preview
 @Composable
 fun Preview() {
     LoginLobbyScreen({
 
     })
-}
+}*/
 
 suspend fun signIn(
     context: Context,
