@@ -69,12 +69,12 @@ fun LoginLobbyScreen(onPhoneLogin: () -> Unit,
             ButtonPrimary(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    scope.launch {
-                        signIn(
+
+                        viewModel.signIn(
                             context = context,
                             launcher = launcher
                         )
-                    }
+
                 },
                 text = "Google Sign in"
             )
@@ -98,37 +98,5 @@ fun Preview() {
     })
 }*/
 
-suspend fun signIn(
-    context: Context,
-    launcher: ActivityResultLauncher<IntentSenderRequest>
-) {
-    val oneTapClient = Identity.getSignInClient(context)
-    val signInRequest = BeginSignInRequest.builder()
-        .setGoogleIdTokenRequestOptions(
-            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                .setSupported(true)
-                // Your server's client ID, not your Android client ID.
-                .setServerClientId("589084343729-6iointridcnan0bb6aqmpmdaersjm303.apps.googleusercontent.com")
-                // Only show accounts previously used to sign in.
-                .setFilterByAuthorizedAccounts(false)
-                .build()
-        )
-        // Automatically sign in when exactly one credential is retrieved.
-        .setAutoSelectEnabled(true)
-        .build()
 
-    try {
-        // Use await() from https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-play-services
-        // Instead of listeners that aren't cleaned up automatically
-        val result = oneTapClient.beginSignIn(signInRequest).await()
-
-        // Now construct the IntentSenderRequest the launcher requires
-        val intentSenderRequest = IntentSenderRequest.Builder(result.pendingIntent).build()
-        launcher.launch(intentSenderRequest)
-    } catch (e: Exception) {
-        // No saved credentials found. Launch the One Tap sign-up flow, or
-        // do nothing and continue presenting the signed-out UI.
-        Log.d("LOG", e.message.toString())
-    }
-}
 

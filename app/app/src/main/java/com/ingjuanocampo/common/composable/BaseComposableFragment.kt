@@ -11,19 +11,20 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import com.ingjuanocampo.enfila.android.ui.common.ComposeBottomSheetDialog
 import com.ingjuanocampo.enfila.android.utils.navigateToCustomDest
-import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 abstract class BaseComposableFragment<STATE> : Fragment() {
 
     abstract val viewModel: MviBaseViewModel<STATE>
     protected val navController by lazy { NavHostFragment.findNavController(this) }
+    private val showDialog: MutableStateFlow<ShowErrorDialogEffect?> = MutableStateFlow(null)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +35,10 @@ abstract class BaseComposableFragment<STATE> : Fragment() {
             setContent {
                 val state by viewModel.state.collectAsState()
                 render(state)
+                val showErrorDialog by showDialog.collectAsState()
+                showErrorDialog?.let {
+                    ComposeBottomSheetDialog(it)
+                }
             }
         }
     }
@@ -58,6 +63,9 @@ abstract class BaseComposableFragment<STATE> : Fragment() {
                 }
                 is NavigationEffect -> {
                     navController.navigateToCustomDest(it)
+                }
+                is ShowErrorDialogEffect -> {
+                    showDialog.emit(it)
                 }
                 else -> {
                     withContext(Dispatchers.Main) {
