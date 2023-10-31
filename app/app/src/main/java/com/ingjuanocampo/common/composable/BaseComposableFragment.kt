@@ -35,10 +35,8 @@ abstract class BaseComposableFragment<STATE> : Fragment() {
             setContent {
                 val state by viewModel.state.collectAsState()
                 render(state)
-                val showErrorDialog by showDialog.collectAsState()
-                showErrorDialog?.let {
-                    ComposeBottomSheetDialog(it)
-                }
+                ComposeBottomSheetDialog(showDialog)
+
             }
         }
     }
