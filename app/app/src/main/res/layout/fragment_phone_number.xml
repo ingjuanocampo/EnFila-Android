@@ -29,10 +29,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            style="@style/Text.Extra.Bold.PrimaryColor"
+            style="@style/Text.Extra.Bold"
             android:id="@+id/phoneNumber"
             android:hint="@string/Telefono"
             android:layout_width="match_parent"
@@ -44,15 +44,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <ImageView
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_arrow_forward"
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_margin="20dp"
+        android:id="@+id/nextCta"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Next"/>
+        android:text="Siguiente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,13 +16,20 @@ import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.home.list.adapter.DelegateShift
 import com.ingjuanocampo.enfila.android.home.list.viewmodel.ViewModelListItems
+import com.ingjuanocampo.enfila.android.navigation.NavigationDestinations
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
+import com.ingjuanocampo.enfila.android.utils.navigateToCustomDest
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+// REVIEW CREATION PROCESS, CREATE CHAT TO CONTACT CLIENTS USING WHATS APP, LAUNCH APP 
 @AndroidEntryPoint
 class FragmentListItems : Fragment() {
 
     private val navController by lazy { NavHostFragment.findNavController(this) }
+
+    @Inject
+    lateinit var navigationDestinations: NavigationDestinations
 
     companion object {
         fun newInstance() = FragmentListItems()
@@ -47,9 +54,7 @@ class FragmentListItems : Fragment() {
             appendDelegate(
                 ViewTypes.SHIFT.ordinal,
             ) { DelegateShift(it, ::stopListener, onShiftListener = {
-                val bundle = bundleOf("id" to it)
-                navController.navigate(R.id.action_fragmentShiftPager_to_fragmentShiftDetail, bundle)
-
+                navController.navigateToCustomDest(navigationDestinations.navigateToShiftDetails(it))
             }) }
         }
         recycler.addItemDecoration(DividerItemDecoration(requireContext(), OrientationHelper.VERTICAL))
@@ -60,7 +65,7 @@ class FragmentListItems : Fragment() {
                 adapter.updateItems(it)
             },
         )
-        viewModel.load()
+        viewModel.load(bundle = arguments)
     }
 
     fun stopListener(id: String) {

@@ -1,10 +1,13 @@
 package com.ingjuanocampo.enfila.android.home.list.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ingjuanocampo.common.composable.MviBaseViewModel
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
 import com.ingjuanocampo.enfila.android.home.list.model.mapToUI
+import com.ingjuanocampo.enfila.android.navigation.NavigationDestinations
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.domain.usecases.FinishShiftUC
 import com.ingjuanocampo.enfila.domain.usecases.list.ListUC
@@ -20,9 +23,13 @@ class ViewModelListItems @Inject constructor(
 
     val state = MutableLiveData<List<ShiftItem>>()
 
-    fun load(isActive: Boolean = true) {
+    fun load(isActive: Boolean = true, bundle: Bundle? = null) {
+        val clientId = bundle?.getString("ClientId")
         launchGeneral {
-            (if (isActive) listUC.loadActiveShift() else listUC.loadInactiveShift()).map { shifts ->
+            (if (clientId.isNullOrEmpty().not()) {
+                listUC.loadByClientId(clientId!!)
+            } else if (isActive) listUC.loadActiveShift()
+            else listUC.loadInactiveShift()).map { shifts ->
                 shifts.map {
                     it.mapToUI()
                 }

@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.android.home.clients
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +25,11 @@ import com.ingjuanocampo.enfila.domain.entity.defaultClient
 
 
 @Composable
-fun ClientListScreenChat(clientList: List<Client>, onSearch: (String) -> Unit) {
+fun ClientListScreenChat(
+    clientList: List<Client>,
+    onSearch: (String) -> Unit,
+    onClientSelected: (String) -> Unit
+) {
     AppTheme {
         Column(Modifier.fillMaxSize()) {
             SearchBox(
@@ -39,7 +44,10 @@ fun ClientListScreenChat(clientList: List<Client>, onSearch: (String) -> Unit) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp, vertical = 12.dp),
+                            .padding(horizontal = 8.dp, vertical = 12.dp)
+                            .clickable {
+                                onClientSelected.invoke(client.id)
+                            },
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -78,6 +86,6 @@ fun ClientListScreenChat(clientList: List<Client>, onSearch: (String) -> Unit) {
 @Preview
 @Composable
 private fun PreviewClientItem() {
-    ClientListScreenChat(listOf(defaultClient, defaultClient, defaultClient), {})
+    ClientListScreenChat(listOf(defaultClient, defaultClient, defaultClient), {}, {})
 }
 

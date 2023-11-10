@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="shifts_by_client" type="id">@+id/shifts_by_client</item>
+    <item name="shifts_detail" type="id">@+id/shifts_detail</item>
+
+</resources>

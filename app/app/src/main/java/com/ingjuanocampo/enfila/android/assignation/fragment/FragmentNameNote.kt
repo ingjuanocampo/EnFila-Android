@@ -4,22 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO navigation and general error handling
 @AndroidEntryPoint
 class FragmentNameNote : Fragment() {
 
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
-    private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { requireParentFragment().requireParentFragment() })
+    private val viewModel: ViewModelAssignation by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,6 @@ class FragmentNameNote : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val back = view.findViewById<ImageView>(R.id.back)
         val nameEd = view.findViewById<EditText>(R.id.nameEd).apply {
             setText(viewModel.name)
         }
@@ -50,10 +50,7 @@ class FragmentNameNote : Fragment() {
         noteEd.addTextChangedListener { editable ->
             viewModel.note = editable.toString()
         }
-        back.setOnClickListener {
-            navController.popBackStack()
-        }
-        val next = view.findViewById<ImageView>(R.id.next)
+        val next = view.findViewById<Button>(R.id.nextCta)
         next.setOnClickListener {
             navController.navigate(R.id.action_fragmentNameAndNote_to_fragmentTurn)
         }

@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import com.ingjuanocampo.enfila.android.utils.navigateToCustomDest
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -21,7 +23,7 @@ import javax.inject.Inject
 abstract class BaseComposableFragment<STATE> : Fragment() {
 
     abstract val viewModel: MviBaseViewModel<STATE>
-
+    protected val navController by lazy { NavHostFragment.findNavController(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +55,9 @@ abstract class BaseComposableFragment<STATE> : Fragment() {
                 }
                 is InvalidateMenuOptions -> {
                     requireActivity().invalidateOptionsMenu()
+                }
+                is NavigationEffect -> {
+                    navController.navigateToCustomDest(it)
                 }
                 else -> {
                     withContext(Dispatchers.Main) {

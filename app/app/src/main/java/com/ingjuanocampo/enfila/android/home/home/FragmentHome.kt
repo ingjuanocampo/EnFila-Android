@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.android.home.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
 import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.assignation.ActivityAssignation
 import com.ingjuanocampo.enfila.android.assignation.BottomSheetAssignation
 import com.ingjuanocampo.enfila.android.databinding.FragmentHomeBinding
 import com.ingjuanocampo.enfila.android.home.home.delegate.*
@@ -93,11 +95,11 @@ class FragmentHome : Fragment() {
     }
 
     private fun startAdditionProcess() {
-        BottomSheetAssignation().apply {
+/*        BottomSheetAssignation().apply {
             // setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_Dialog_Transparent_Adjust_Resize)
-        }.show(requireActivity().supportFragmentManager, "")
+        }.show(requireActivity().supportFragmentManager, "")*/
 
-        // startActivity(Intent(requireContext(), ActivityAssignation::class.java))
+        startActivity(Intent(requireContext(), ActivityAssignation::class.java))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
