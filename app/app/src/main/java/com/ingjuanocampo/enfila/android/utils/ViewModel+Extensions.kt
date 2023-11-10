@@ -4,6 +4,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ingjuanocampo.common.composable.MviBaseViewModel
+import com.ingjuanocampo.common.composable.ShowErrorDialogEffect
 import com.ingjuanocampo.enfila.android.AppEnFila
 import kotlinx.coroutines.*
 
@@ -22,6 +24,19 @@ fun CoroutineScope.launchGeneral(function: suspend () -> Unit) {
 
 fun ViewModel.launchGeneral(function: suspend () -> Unit) {
     viewModelScope.launch(handler + Dispatchers.Default) {
+        function()
+    }
+}
+
+fun MviBaseViewModel<*>.launchGeneralWithErrorHandling(function: suspend () -> Unit) {
+    viewModelScope.launch(CoroutineExceptionHandler { _, exception ->
+        _event.tryEmit(
+            ShowErrorDialogEffect(
+            title = "Something went wrong",
+            description = "Please try later"
+        )
+        )
+    } + Dispatchers.Default) {
         function()
     }
 }

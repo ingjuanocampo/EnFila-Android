@@ -18,7 +18,7 @@ abstract class MviBaseViewModel<STATE>(
     protected val _state = MutableStateFlow<STATE>(initialState)
     val state: StateFlow<STATE> = _state.asStateFlow()
 
-    protected val _event = MutableSharedFlow<ViewEffect>(
+    val _event = MutableSharedFlow<ViewEffect>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
