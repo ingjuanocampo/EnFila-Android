@@ -1,6 +1,5 @@
 package com.ingjuanocampo.enfila.android.home.clients
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,9 +44,10 @@ fun ClientListScreenChat(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp, vertical = 12.dp)
-                            .clickable {
+// fix this
+                         /*   .clickable {
                                 onClientSelected.invoke(client.id)
-                            },
+                            }*/,
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {

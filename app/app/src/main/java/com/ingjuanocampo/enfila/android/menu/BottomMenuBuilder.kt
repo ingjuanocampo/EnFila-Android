@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ingjuanocampo.enfila.android.R
 
+/*
 class BottomMenuBuilder {
 
     private val listOfItems = ArrayList<BottomMenuItem>()
@@ -53,3 +54,4 @@ class BottomMenuBuilder {
 
     internal class BottomMenuItem(val fragmentFactory: () -> Fragment, val title: String, val icon: Drawable?)
 }
+*/

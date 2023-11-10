@@ -63,6 +63,7 @@ class FragmentTurn : Fragment() {
                     next.isVisible = false
                 }
                 AssignationState.AssignationSet -> requireActivity().finish()
+                else -> {}
             }
         }
     }

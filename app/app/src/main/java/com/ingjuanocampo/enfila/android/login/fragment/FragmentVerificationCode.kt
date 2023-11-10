@@ -45,24 +45,27 @@ class FragmentVerificationCode : Fragment() {
         }
 
         viewModel.state.observe(
-            viewLifecycleOwner,
-            Observer {
-                when (it) {
-                    is LoginState.AuthenticationProcessState ->
-                        when (it.authState) {
-                            AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen(requireActivity())
-                            is AuthState.NewAccount -> navController.navigate(
-                                R.id.action_fragmentVerificationCode_to_fragmentProfile,
-                                Bundle().apply {
-                                    putString("phone", viewModel.phoneNumber)
-                                    putString("id", it.authState.id)
-                                },
-                            )
-                            is AuthState.AuthError -> showToast("Error" + it.authState.e.toString())
-                        }
-                }
-            },
-        )
+            viewLifecycleOwner) {
+            when (it) {
+                is LoginState.AuthenticationProcessState ->
+                    when (it.authState) {
+                        AuthState.Authenticated -> stateProvider.provideCurrentState()
+                            .navigateLaunchScreen(requireActivity())
+
+                        is AuthState.NewAccount -> navController.navigate(
+                            R.id.action_fragmentVerificationCode_to_fragmentProfile,
+                            Bundle().apply {
+                                putString("phone", viewModel.phoneNumber)
+                                putString("id", it.authState.id)
+                            },
+                        )
+
+                        is AuthState.AuthError -> showToast("Error" + it.authState.e.toString())
+                    }
+
+                else -> {}
+            }
+        }
 
         var doVerificationButton = view.findViewById<FloatingActionButton>(R.id.floatButton)
         doVerificationButton.setOnClickListener {

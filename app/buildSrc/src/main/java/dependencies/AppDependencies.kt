@@ -3,7 +3,7 @@ package dependencies
 import base.*
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
-object Dependencies {
+object AppDependencies {
 
     const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
     const val coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
@@ -25,7 +25,7 @@ object Dependencies {
     const val gson = "com.google.code.gson:gson:2.9.1"
 
 
-    const val extensions =  "androidx.lifecycle:lifecycle-extensions:$architectureComponentVersion"
+    const val extensions =  "androidx.lifecycle:lifecycle-extensions:2.2.0"
     const val viewModel =  "androidx.lifecycle:lifecycle-viewmodel-ktx:$architectureComponentVersion"
     const val liveDataLifeCycle = "androidx.lifecycle:lifecycle-runtime-ktx:$architectureComponentVersion"
     const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:$architectureComponentVersion"
@@ -39,8 +39,8 @@ object Dependencies {
 
     const val androidXLegacy = "androidx.legacy:legacy-support-v4:$androidLegacyXVersion"
     const val androidMaterial = "com.google.android.material:material:$materialVersion"
-    const val material3 = "androidx.compose.material3:material3:1.0.0-beta01"
-    const val material3Windows = "androidx.compose.material3:material3-window-size-class:1.0.0-beta01"
+    const val material3 = "androidx.compose.material3:material3:$composeMaterial3Version"
+    const val material3Windows = "androidx.compose.material3:material3-window-size-class:$composeMaterial3Version"
 
     const val navigationAndroid = "androidx.navigation:navigation-fragment-ktx:$navigationComponent"
     const val navigationUI = "androidx.navigation:navigation-ui-ktx:$navigationComponent"
@@ -51,33 +51,30 @@ object Dependencies {
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
     const val firebaseStore = "com.google.firebase:firebase-firestore-ktx"
     const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"
+    const val googleAuthenticator = "com.google.android.gms:play-services-auth:20.6.0"
+
 
 
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
 
-
     const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:$constraintCompose"
-    const val composeUi = "androidx.compose.ui:ui:1.1.1"
-    const val composeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+    const val composeUi = "androidx.compose.ui:ui:$composeVersion"
+    const val composeActivity = "androidx.activity:activity-compose:$composeVersion"
+    const val composeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:$composeVMVersion"
     // Tooling support (Previews, etc.)
-    const val tooling = "androidx.compose.ui:ui-tooling:1.1.1"
+    const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    const val foundationCompose = "androidx.compose.foundation:foundation:1.1.1"
+    const val foundationCompose = "androidx.compose.foundation:foundation:$composeVersion"
     // Material Design
-    const val materialCompose = "androidx.compose.material:material:1.1.1"
+    const val materialCompose = "androidx.compose.material:material:$composeVersion"
     // Material design icons
-    const val iconsMaterialCompose = "androidx.compose.material:material-icons-core:1.1.1"
-    const val iconsMaterialComposeExtended = "androidx.compose.material:material-icons-extended:1.1.1"
+    const val iconsMaterialCompose = "androidx.compose.material:material-icons-core:$composeVersion"
+    const val iconsMaterialComposeExtended = "androidx.compose.material:material-icons-extended:$composeVersion"
     // Integration with observables
-    const val liveDataCompose = "androidx.compose.runtime:runtime-livedata:1.1.1"
-    const val fragments = "androidx.fragment:fragment-ktx:1.5.5"
+    const val liveDataCompose = "androidx.compose.runtime:runtime-livedata:$composeVersion"
+    const val fragments = "androidx.fragment:fragment-ktx:1.5.7"
 
 
-}
-
-object Android {
-    const val compileAndroidSdkVersion = ANDROID_33
-    const val minAndroidSdkVersion = ANDROID_33
 }
 
 
@@ -94,58 +91,59 @@ fun DependencyHandler.kotlinClassPath() {
 }
 
 fun DependencyHandler.retrofit() {
-    implementation(Dependencies.retrofit)
-    implementation(Dependencies.gsonConverter)
+    implementation(AppDependencies.retrofit)
+    implementation(AppDependencies.gsonConverter)
     //implementation(Dependencies.gson)
 }
 
 fun DependencyHandler.dataStore() {
-    implementation(Dependencies.dataStore)
-    implementation(Dependencies.gson)
+    implementation(AppDependencies.dataStore)
+    implementation(AppDependencies.gson)
 }
 
 fun DependencyHandler.fireStore() {
-    implementation(Dependencies.firebaseAuth)
+    implementation(AppDependencies.firebaseAuth)
     implementation ("com.google.android.gms:play-services-safetynet:18.0.1")
-    implementation(Dependencies.firebaseStore)
-    implementation(Dependencies.firebaseRemoteConfig)
+    implementation(AppDependencies.firebaseStore)
+    implementation(AppDependencies.firebaseRemoteConfig)
+    implementation(AppDependencies.googleAuthenticator)
 }
 
 fun DependencyHandler.dagger() {
-    implementation(Dependencies.dagger)
-    kotlinImplementation(Dependencies.daggerCompiler)
+    implementation(AppDependencies.dagger)
+    kotlinImplementation(AppDependencies.daggerCompiler)
 }
 
 fun DependencyHandler.hilt() {
-    implementation(Dependencies.hiltAndroid)
-    kotlinImplementation(Dependencies.hiltCompiler)
+    implementation(AppDependencies.hiltAndroid)
+    kotlinImplementation(AppDependencies.hiltCompiler)
 }
 
 fun DependencyHandler.coroutines() {
-    implementation(Dependencies.coroutineCore)
+    implementation(AppDependencies.coroutineCore)
 }
 
 fun DependencyHandler.navigationComponent() {
-    implementation(Dependencies.navigationAndroid)
-    implementation(Dependencies.navigationUI)
+    implementation(AppDependencies.navigationAndroid)
+    implementation(AppDependencies.navigationUI)
 }
 
 fun DependencyHandler.material() {
-    implementation(Dependencies.androidMaterial)
-    implementation(Dependencies.material3)
-    implementation(Dependencies.material3Windows)
-    implementation(Dependencies.androidXLegacy)
+    implementation(AppDependencies.androidMaterial)
+    implementation(AppDependencies.material3)
+    implementation(AppDependencies.material3Windows)
+    implementation(AppDependencies.androidXLegacy)
 }
 
 fun DependencyHandler.coroutinesWithAndroid() {
     coroutines()
-    implementation(Dependencies.coroutineAndroid)
+    implementation(AppDependencies.coroutineAndroid)
 }
 
 fun DependencyHandler.daggerWithAndroid() {
     dagger()
-    implementation(Dependencies.daggerAndroidSupport)
-    kotlinImplementation(Dependencies.daggerAndroidProcessor)
+    implementation(AppDependencies.daggerAndroidSupport)
+    kotlinImplementation(AppDependencies.daggerAndroidProcessor)
 }
 
 fun DependencyHandler.testDependencies() {
@@ -159,35 +157,36 @@ fun DependencyHandler.testAndroidDependencies() {
 }
 
 fun DependencyHandler.architectureComponents() {
-    implementation(Dependencies.viewModel)
-    implementation(Dependencies.extensions)
-    implementation(Dependencies.liveDataLifeCycle)
-    implementation(Dependencies.liveData)
+    implementation(AppDependencies.viewModel)
+    implementation(AppDependencies.extensions)
+    implementation(AppDependencies.liveDataLifeCycle)
+    implementation(AppDependencies.liveData)
 }
 
 fun DependencyHandler.uiCommons() {
     //implementation(Dependencies.picasso) non compatible with latest gradle
-    implementation(Dependencies.appCompat)
-    implementation(Dependencies.kotlinStdlib)
-    implementation(Dependencies.constraitLayout)
-    implementation(Dependencies.recyclerView)
-    implementation(Dependencies.androidCore)
-    implementation(Dependencies.composeAdapter)
-    implementation(Dependencies.fragments)
+    implementation(AppDependencies.appCompat)
+    implementation(AppDependencies.kotlinStdlib)
+    implementation(AppDependencies.constraitLayout)
+    implementation(AppDependencies.recyclerView)
+    implementation(AppDependencies.androidCore)
+    implementation(AppDependencies.composeAdapter)
+    implementation(AppDependencies.fragments)
     compose()
     projectImplementation(":data")
 }
 
 fun DependencyHandler.compose() {
-    implementation(Dependencies.composeUi)
-    implementation(Dependencies.composeViewModel)
-    implementation(Dependencies.tooling)
-    implementation(Dependencies.foundationCompose)
-    implementation(Dependencies.materialCompose)
-    implementation(Dependencies.iconsMaterialCompose)
-    implementation(Dependencies.iconsMaterialComposeExtended)
-    implementation(Dependencies.liveDataCompose)
-    implementation(Dependencies.constraintLayoutCompose)
+    implementation(AppDependencies.composeUi)
+    implementation(AppDependencies.composeViewModel)
+    implementation(AppDependencies.tooling)
+    implementation(AppDependencies.foundationCompose)
+    implementation(AppDependencies.materialCompose)
+    implementation(AppDependencies.iconsMaterialCompose)
+    implementation(AppDependencies.iconsMaterialComposeExtended)
+    implementation(AppDependencies.liveDataCompose)
+    implementation(AppDependencies.composeActivity)
+    implementation(AppDependencies.constraintLayoutCompose)
 }
 
 
