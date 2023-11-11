@@ -105,7 +105,7 @@ class ViewModelLogin @Inject constructor(
 
         viewModelScope.launchGeneral {
             val options = PhoneAuthOptions.newBuilder(auth)
-                .setPhoneNumber("+57$phoneNumber") // /.setPhoneNumber("+16505553434")//      // Phone number to verify
+                .setPhoneNumber("+57$phoneNumber") // /.setPhoneNumber("+16505553434")// // Phone number to verify
                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                 .setActivity(activity) // Activity (for callback binding)
                 .setCallbacks(authCallbacks) // OnVerificationStateChangedCallbacks

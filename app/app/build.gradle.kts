@@ -52,6 +52,9 @@ android {
 }
 
 dependencies {
+    implementation(fileTree("libs") {
+        include("*.jar")
+    })
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     appDependencies()
     implementation(platform(AppDependencies.firebaseBom))

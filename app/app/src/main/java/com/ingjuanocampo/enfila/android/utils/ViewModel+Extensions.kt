@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 val handler = CoroutineExceptionHandler { _, exception ->
     Log.e("GeneralError", "got ${exception.printStackTrace()}")
     GlobalScope.launch(Dispatchers.Main) { // Bad practice just for testing
-        Toast.makeText(AppEnFila.context, "General Error ${exception.localizedMessage}", Toast.LENGTH_LONG).show()
+        Toast.makeText(AppEnFila.context, "Something went wrong, please try later", Toast.LENGTH_LONG).show()
     }
 }
 
