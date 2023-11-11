@@ -35,12 +35,31 @@ Open Android Studio and build and run the app on an Android emulator or a physic
 ## Usage
 Users can sign up, join queues, and receive notifications.
 Businesses can log in, create/manage queues, and access analytics.
-Screenshots
-Screenshot 1
-Caption for screenshot 1.
 
-Screenshot 2
-Caption for screenshot 2.
+
+## Screenshots
+
+### Login
+<img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_083915.png" height="600">
+
+### Turn Assignation Process
+<img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_084035.png" height="600"> <img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_084117.png" height="600"> <img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_084137.png" height="600">
+
+### Home
+<img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_084304.png" height="600">
+
+### List of Turns
+<img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_084321.png" height="600">
+
+### Account
+<img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_084321.png" height="600">
+
+### List of Clients
+<img src="https://github.com/ingjuanocampo/EnFila-Android/blob/main/app/Screenshots/Screenshot_20231110_084411.png" height="600">
+
+
+
+
 
 ## Contributing
 Contributions are welcome! Please reach me directly via Email for more information (If you are dev, just coding is enought) 
