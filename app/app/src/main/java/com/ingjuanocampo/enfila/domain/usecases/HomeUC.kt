@@ -29,6 +29,7 @@ class HomeUC @Inject constructor(
 ) {
 
     // TODO this should filter only the current day information
+    // Need to split the usage of this class so we can use the empty state
     fun load(): Flow<HomeState> {
         return shiftRepository.getAllObserveData().map { shifts ->
 

@@ -14,4 +14,11 @@
     <string name="active">Active</string>
     <string name="cancel">Cancel</string>
     <string name="finish">Finish</string>
+    <string name="empty_home">"You are all catch up. Create new turns and managment them here. "</string>
+    <string name="empty_fragment_list">There are not open turns.</string>
+    <string name="empty_fragment_history">There are historical turns yet.</string>
+    <string name="empty_fragment_clients">No Clients founds</string>
+
+
+
 </resources>

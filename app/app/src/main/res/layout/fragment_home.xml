@@ -25,4 +25,11 @@
         android:id="@+id/addButton"
         />
 
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/emptyComposeContainer"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
