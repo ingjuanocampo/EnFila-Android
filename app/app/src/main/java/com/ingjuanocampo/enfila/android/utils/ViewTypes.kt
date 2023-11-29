@@ -7,4 +7,5 @@ enum class ViewTypes {
     NEXT_SHIFT,
     ACTIVE_SHIFT,
     HEADER_LINK,
+    EMPTY_VIEW
 }

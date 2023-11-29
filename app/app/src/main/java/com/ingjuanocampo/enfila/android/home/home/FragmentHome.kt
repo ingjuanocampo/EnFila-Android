@@ -60,6 +60,10 @@ class FragmentHome : Fragment() {
             }, onShiftListener = ::navigateToDetails)
         }
 
+        adapter.appendDelegate(ViewTypes.EMPTY_VIEW.ordinal) {
+            DelegateEmpty(it)
+        }
+
         adapter.appendDelegate(ViewTypes.NEXT_SHIFT.ordinal) {
             DelegateNextShift(it, listener = { actions ->
                 when (actions) {
