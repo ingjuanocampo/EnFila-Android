@@ -1,6 +1,9 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
+import android.content.Context
 import com.ingjuanocampo.cdapter.RecyclerViewType
+import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.home.list.model.EmptyDelegate
 import com.ingjuanocampo.enfila.android.home.list.model.HeaderItem
 import com.ingjuanocampo.enfila.android.home.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
@@ -15,20 +18,26 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import java.util.Date
 import javax.inject.Inject
 
+@ViewModelScoped
 class HomeUC @Inject constructor(
     private val calculateShiftAverageWaitTimes: CalculateShiftAverageWaitTimes,
     private val companyRepo: CompanyRepository,
     private val userRepository: UserRepository,
     private val shiftRepository: ShiftRepository,
     private val shiftInteractions: ShiftInteractions,
+    @ApplicationContext
+    private val context: Context,
 ) {
 
     // TODO this should filter only the current day information
+    // Need to split the usage of this class so we can use the empty state
     fun load(): Flow<HomeState> {
         return shiftRepository.getAllObserveData().map { shifts ->
 
@@ -56,22 +65,40 @@ class HomeUC @Inject constructor(
 
                 items.add(resume)
 
-                getNextTurn(shifts)?.let { next ->
+
+               val nextTurn =  getNextTurn(shifts)
+
+                if (nextTurn != null) {
                     items.add(HeaderItem("Siguiente turno"))
                     items.add(
-                        shiftInteractions.loadShiftWithClient(next).mapToUI(ViewTypes.NEXT_SHIFT),
+                        shiftInteractions.loadShiftWithClient(nextTurn).mapToUI(ViewTypes.NEXT_SHIFT),
                     )
                 }
 
-                getActiveShifts(shifts)?.let { activeShifts ->
+                val activeShifts = getActiveShifts(shifts)
 
+                if (activeShifts.isNullOrEmpty().not()) {
                     items.add(HeaderItem("Turnos activos"))
-                    activeShifts.forEach { active ->
+                    activeShifts?.forEach { active ->
                         items.add(
                             shiftInteractions.loadShiftWithClient(active)
                                 .mapToUI(ViewTypes.ACTIVE_SHIFT),
                         )
                     }
+                }
+
+                if (activeShifts.isNullOrEmpty() && nextTurn == null) {
+                    items.add(EmptyDelegate(
+                        context.getString(
+                            R.string.empty_turn_home
+                        )
+                    ))
+                }
+
+                if (items.isNullOrEmpty()) {
+                    HomeState.Empty
+                } else {
+                    HomeState.HomeLoaded(items)
                 }
 
                 HomeState.HomeLoaded(items)
