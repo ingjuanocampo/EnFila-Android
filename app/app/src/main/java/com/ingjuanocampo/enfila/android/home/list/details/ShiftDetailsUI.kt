@@ -1,9 +1,11 @@
 package com.ingjuanocampo.enfila.android.home.list.details
 
-import androidx.compose.foundation.background
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -49,19 +51,17 @@ fun ShiftDetailScreen(
     onFinish: () -> Unit
 ) {
     AppTheme {
-
-        ConstraintLayout {
+        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (columRef, buttonsRef) = createRefs()
             Column(modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
                 .constrainAs(columRef) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    bottom.linkTo(buttonsRef.top)
-                }) {
+                },
+                verticalArrangement = Arrangement.Top) {
                 TableItem(label = "Name", value = shiftDetailUi.name)
                 DividerBody()
                 TableItem(label = "Phone", value = shiftDetailUi.phone)
@@ -104,9 +104,8 @@ fun ShiftDetailScreen(
             AnimatedComposeButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 16.dp, vertical = 20.dp)
                     .constrainAs(buttonsRef) {
-                        top.linkTo(columRef.bottom)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom)
@@ -195,6 +194,31 @@ private fun DividerBody() {
 )
 @Composable
 fun TableScreenPreview() {
+    val shiftDetailUi = ShiftItem(
+        id = "",
+        name = "John Doe",
+        formmattedIssueDate = "2023-05-13",
+        waitTime = "2 hours",
+        currentTurn = "5",
+        attentionTime = "30 minutes",
+        scheduledHour = "09:00 AM",
+        notes = "Lorem ipsum dolor sit amet",
+        endDate = 0L,
+        state = "WAITING",
+        issueDate = 0L,
+        phone = "31312313",
+    )
+    ShiftDetailScreen(shiftDetailUi, {}, {}, {})
+}
+
+@Preview(
+    backgroundColor = 0x000000,
+    showSystemUi = true,
+    device = Devices.NEXUS_5,
+    uiMode = UI_MODE_NIGHT_YES
+)
+@Composable
+fun TableScreenPreviewDark() {
     val shiftDetailUi = ShiftItem(
         id = "",
         name = "John Doe",
