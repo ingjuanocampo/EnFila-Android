@@ -4,7 +4,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,7 +39,7 @@ fun ClientListScreenChat(
     AppTheme {
         Column(
             Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
         ) {
             SearchBox(
                 onSearch = onSearch,
@@ -51,7 +50,7 @@ fun ClientListScreenChat(
                 GenericEmptyState(title = stringResource(
                     R.string.empty_fragment_clients
                 ), icon = Icons.Outlined.Person,
-                    modifier = Modifier.fillMaxHeight())
+                    modifier = Modifier.fillMaxSize())
             } else {
                 LazyColumn {
                     items(clientList) { client ->
@@ -71,13 +70,13 @@ fun ClientListScreenChat(
                                 Text(
                                     text = client.name ?: "N/A",
                                     maxLines = 1,
-                                    style = MaterialTheme.typography.bodyLarge,
+                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
                                     color = MaterialTheme.colorScheme.onSurface,
                                 )
                                 Text(
                                     text = "ID: ${client.id}",
                                     maxLines = 1,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurface,
                                 )
                             }
