@@ -19,6 +19,19 @@
     <string name="empty_fragment_history">There are historical turns yet.</string>
     <string name="empty_fragment_clients">No Clients founds</string>
     <string name="empty_turn_home">There are not enquee items. Add a turn pressing the + button</string>
+    <string name="client_name">Name</string>
+    <string name="client_phone">Phone</string>
+    <string name="shift_created_date">Created Date</string>
+    <string name="shift_waiting_time">Waiting Time</string>
+    <string name="shift_number_turn">Number Turn</string>
+    <string name="shift_attention_duration">Attention Duration</string>
+    <string name="shift_scheduled_hour">Scheduled Hour</string>
+    <string name="shift_notes">Notes</string>
+    <string name="shift_status">Status</string>
+    <string name="watting">Waitting</string>
+    <string name="calling">Calling</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="finished">Finished</string>
 
 
 </resources>

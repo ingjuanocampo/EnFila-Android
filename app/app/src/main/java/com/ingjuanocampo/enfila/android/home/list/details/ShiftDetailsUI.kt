@@ -62,11 +62,11 @@ fun ShiftDetailScreen(
                     end.linkTo(parent.end)
                 },
                 verticalArrangement = Arrangement.Top) {
-                TableItem(label = "Name", value = shiftDetailUi.name)
+                TableItem(label = stringResource(R.string.client_name), value = shiftDetailUi.name)
                 DividerBody()
-                TableItem(label = "Phone", value = shiftDetailUi.phone)
+                TableItem(label = stringResource(R.string.client_phone), value = shiftDetailUi.phone)
                 DividerBody()
-                TableItem(label = "Created Date", value = shiftDetailUi.formmattedIssueDate)
+                TableItem(label = stringResource(R.string.shift_created_date), value = shiftDetailUi.formmattedIssueDate)
                 /*            DividerBody()
                             TableItem(label = "Duration", value = shiftDetailUi.geEndElapsedTime().toDurationText())*/
                 DividerBody()
@@ -88,17 +88,19 @@ fun ShiftDetailScreen(
                     }
                 }
 
-                TableItem(label = "Waiting Time", value = chronometer)
+                TableItem(label = stringResource(R.string.shift_waiting_time), value = chronometer)
 
 
                 DividerBody()
-                TableItem(label = "Number Turn", value = shiftDetailUi.currentTurn)
+                TableItem(label = stringResource(R.string.shift_number_turn), value = shiftDetailUi.currentTurn)
                 DividerBody()
-                TableItem(label = "Attention Duration", value = shiftDetailUi.attentionTime)
+                TableItem(label = stringResource(R.string.shift_attention_duration), value = shiftDetailUi.attentionTime)
                 DividerBody()
-                TableItem(label = "Scheduled Hour", value = shiftDetailUi.scheduledHour)
+                TableItem(label = stringResource(R.string.shift_status), value = shiftDetailUi.visualStatus)
                 DividerBody()
-                TableItem(label = "Notes", value = shiftDetailUi.notes)
+/*                TableItem(label = stringResource(R.string.shift_scheduled_hour), value = shiftDetailUi.scheduledHour)
+                DividerBody()*/
+                TableItem(label = stringResource(R.string.shift_notes), value = shiftDetailUi.notes)
             }
             val loadingState = shiftDetailUi.isProcessingActions.toLoadingState()
             AnimatedComposeButton(
@@ -157,20 +159,19 @@ fun ShiftDetailScreen(
 
 @Composable
 private fun TableItem(label: String, value: String) {
-    Row(modifier = Modifier.padding(vertical = 8.dp)) {
+    Column(modifier = Modifier.padding(vertical = 8.dp)) {
         Text(
-            text = "$label:",
-            style = MaterialTheme.typography.bodyMedium,
+            text = "$label",
+            style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.weight(0.2f)
+            modifier = Modifier
         )
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.weight(0.8f)
+            modifier = Modifier
         )
 
 
