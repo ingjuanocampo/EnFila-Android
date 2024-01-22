@@ -23,6 +23,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: access app file
+        run: cd app 
       - uses: actions/checkout@v3
       - uses: gradle/gradle-build-action@v2
         with:
@@ -36,6 +38,6 @@ jobs:
           java-version: '17'
 
       - name: Restart Daemon
-        run: app/./gradlew --stop
+        run: ./gradlew --stop
       - name: Android Lint
-        run: app/./gradlew lintMain
+        run: ./gradlew lintMain
