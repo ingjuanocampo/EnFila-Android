@@ -36,6 +36,6 @@ jobs:
           java-version: '17'
 
       - name: Restart Daemon
-        run: ./gradlew --stop
+        run: app/./gradlew --stop
       - name: Android Lint
-        run: ./gradlew lintMain
+        run: app/./gradlew lintMain
