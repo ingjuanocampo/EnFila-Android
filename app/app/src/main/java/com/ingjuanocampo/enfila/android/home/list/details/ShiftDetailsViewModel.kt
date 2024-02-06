@@ -1,15 +1,18 @@
 package com.ingjuanocampo.enfila.android.home.list.details
 
+import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.viewModelScope
 import com.ingjuanocampo.common.composable.MviBaseViewModel
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
+import com.ingjuanocampo.enfila.android.home.list.model.getVisualStatus
 import com.ingjuanocampo.enfila.android.home.list.model.mapToUI
 import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.domain.usecases.FinishShiftUC
 import com.ingjuanocampo.enfila.domain.usecases.HomeUC
 import com.ingjuanocampo.enfila.domain.usecases.LoadShiftDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -19,6 +22,7 @@ class ShiftDetailsViewModel @Inject constructor(
     private val loadShiftDetails: LoadShiftDetails,
     private val homeUC: HomeUC,
     private val finishShiftUC: FinishShiftUC,
+    @ApplicationContext private val context: Context
 ): MviBaseViewModel<ShiftItem>(ShiftItem()) {
 
     private var id: String? = null
@@ -26,7 +30,8 @@ class ShiftDetailsViewModel @Inject constructor(
     fun init(arguments: Bundle) {
         launchGeneral {
             id =  arguments.getString("id")
-            val shiftClient = loadShiftDetails.invoke(id!!).mapToUI()
+            var shiftClient = loadShiftDetails.invoke(id!!).mapToUI()
+            shiftClient = shiftClient.copy(visualStatus = shiftClient.getVisualStatus(context))
            _state.value  = shiftClient
         }
     }

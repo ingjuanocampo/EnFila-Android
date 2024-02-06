@@ -1,9 +1,11 @@
 package com.ingjuanocampo.enfila.android.home.list.details
 
-import androidx.compose.foundation.background
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -49,24 +51,22 @@ fun ShiftDetailScreen(
     onFinish: () -> Unit
 ) {
     AppTheme {
-
-        ConstraintLayout {
+        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (columRef, buttonsRef) = createRefs()
             Column(modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
                 .constrainAs(columRef) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    bottom.linkTo(buttonsRef.top)
-                }) {
-                TableItem(label = "Name", value = shiftDetailUi.name)
+                },
+                verticalArrangement = Arrangement.Top) {
+                TableItem(label = stringResource(R.string.client_name), value = shiftDetailUi.name)
                 DividerBody()
-                TableItem(label = "Phone", value = shiftDetailUi.phone)
+                TableItem(label = stringResource(R.string.client_phone), value = shiftDetailUi.phone)
                 DividerBody()
-                TableItem(label = "Created Date", value = shiftDetailUi.formmattedIssueDate)
+                TableItem(label = stringResource(R.string.shift_created_date), value = shiftDetailUi.formmattedIssueDate)
                 /*            DividerBody()
                             TableItem(label = "Duration", value = shiftDetailUi.geEndElapsedTime().toDurationText())*/
                 DividerBody()
@@ -88,25 +88,26 @@ fun ShiftDetailScreen(
                     }
                 }
 
-                TableItem(label = "Waiting Time", value = chronometer)
+                TableItem(label = stringResource(R.string.shift_waiting_time), value = chronometer)
 
 
                 DividerBody()
-                TableItem(label = "Number Turn", value = shiftDetailUi.currentTurn)
+                TableItem(label = stringResource(R.string.shift_number_turn), value = shiftDetailUi.currentTurn)
                 DividerBody()
-                TableItem(label = "Attention Duration", value = shiftDetailUi.attentionTime)
+                TableItem(label = stringResource(R.string.shift_attention_duration), value = shiftDetailUi.attentionTime)
                 DividerBody()
-                TableItem(label = "Scheduled Hour", value = shiftDetailUi.scheduledHour)
+                TableItem(label = stringResource(R.string.shift_status), value = shiftDetailUi.visualStatus)
                 DividerBody()
-                TableItem(label = "Notes", value = shiftDetailUi.notes)
+/*                TableItem(label = stringResource(R.string.shift_scheduled_hour), value = shiftDetailUi.scheduledHour)
+                DividerBody()*/
+                TableItem(label = stringResource(R.string.shift_notes), value = shiftDetailUi.notes)
             }
             val loadingState = shiftDetailUi.isProcessingActions.toLoadingState()
             AnimatedComposeButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 16.dp, vertical = 20.dp)
                     .constrainAs(buttonsRef) {
-                        top.linkTo(columRef.bottom)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom)
@@ -158,20 +159,19 @@ fun ShiftDetailScreen(
 
 @Composable
 private fun TableItem(label: String, value: String) {
-    Row(modifier = Modifier.padding(vertical = 8.dp)) {
+    Column(modifier = Modifier.padding(vertical = 8.dp)) {
         Text(
-            text = "$label:",
-            style = MaterialTheme.typography.bodyMedium,
+            text = "$label",
+            style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.weight(0.2f)
+            modifier = Modifier
         )
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.weight(0.8f)
+            modifier = Modifier
         )
 
 
@@ -195,6 +195,31 @@ private fun DividerBody() {
 )
 @Composable
 fun TableScreenPreview() {
+    val shiftDetailUi = ShiftItem(
+        id = "",
+        name = "John Doe",
+        formmattedIssueDate = "2023-05-13",
+        waitTime = "2 hours",
+        currentTurn = "5",
+        attentionTime = "30 minutes",
+        scheduledHour = "09:00 AM",
+        notes = "Lorem ipsum dolor sit amet",
+        endDate = 0L,
+        state = "WAITING",
+        issueDate = 0L,
+        phone = "31312313",
+    )
+    ShiftDetailScreen(shiftDetailUi, {}, {}, {})
+}
+
+@Preview(
+    backgroundColor = 0x000000,
+    showSystemUi = true,
+    device = Devices.NEXUS_5,
+    uiMode = UI_MODE_NIGHT_YES
+)
+@Composable
+fun TableScreenPreviewDark() {
     val shiftDetailUi = ShiftItem(
         id = "",
         name = "John Doe",

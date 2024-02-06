@@ -7,6 +7,7 @@ import com.ingjuanocampo.cdapter.DelegateViewHolder
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.databinding.DelegateShiftBinding
 import com.ingjuanocampo.enfila.android.home.list.model.ShiftItem
+import com.ingjuanocampo.enfila.android.home.list.model.getVisualStatus
 import com.ingjuanocampo.enfila.android.utils.set
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
 
@@ -27,7 +28,7 @@ class DelegateShift(
             currentTurn.text = shiftItem.currentTurn
             number.text = shiftItem.phone
             name.text = shiftItem.name
-            state.text = shiftItem.state
+            state.text = shiftItem.getVisualStatus(binding.root.context)
             timeElapse.set(recyclerViewType)
             timeElapseContainer.isVisible = recyclerViewType.state == ShiftState.WAITING.name
             issueDate.text = shiftItem.formmattedIssueDate
