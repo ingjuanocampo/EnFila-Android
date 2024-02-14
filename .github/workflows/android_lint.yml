@@ -39,8 +39,7 @@ jobs:
 
       - name: Restart Daemon
         run: |
-          cd app
-          ./gradlew --stop
+          cd app && ./gradlew --stop
       - name: Android Lint
         run: |
           cd app
