@@ -38,7 +38,6 @@ dependencyResolutionManagement {
     }
 }
 
-
 rootProject.name = "EnFila"
 include(":app")
 include(":data")

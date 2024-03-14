@@ -21,14 +21,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentLoginPhoneNumber : Fragment() {
-
     @Inject
     lateinit var stateProvider: AppStateProvider
 
     private lateinit var doVerificationButton: FloatingActionButton
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
-    val viewModel by viewModels<ViewModelLogin> (ownerProducer = { requireActivity() })
+    val viewModel by viewModels<ViewModelLogin>(ownerProducer = { requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +37,10 @@ class FragmentLoginPhoneNumber : Fragment() {
         return inflater.inflate(R.layout.login_phone_number, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val phoneNumber = view.findViewById<EditText>(R.id.phoneNumber)
 

@@ -11,15 +11,15 @@ import com.ingjuanocampo.enfila.android.utils.set
 
 class DelegateNextShift(
     val parent: ViewGroup,
-    private val biding: DelegateNextTurnBinding = DelegateNextTurnBinding.inflate(
-        LayoutInflater.from(parent.context),
-        parent,
-        false,
-    ),
+    private val biding: DelegateNextTurnBinding =
+        DelegateNextTurnBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        ),
     val listener: (NextShiftActions) -> Unit,
     val onShiftSelected: (String) -> Unit,
 ) : DelegateViewHolder(biding.root) {
-
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem
         biding.waitTime.set(recyclerViewType)
@@ -49,5 +49,6 @@ class DelegateNextShift(
 
 sealed class NextShiftActions {
     data class Cancel(val id: String) : NextShiftActions()
+
     data class Active(val id: String) : NextShiftActions()
 }

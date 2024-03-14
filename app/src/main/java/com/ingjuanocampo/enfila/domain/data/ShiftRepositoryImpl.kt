@@ -11,7 +11,6 @@ class ShiftRepositoryImpl(
     private val remoteSource: RemoteSource<Shift>,
     private val localSource: ShiftLocalSource,
 ) : ShiftRepository, RepositoryImp<Shift>(remoteSource, localSource) {
-
     override fun getAllObserveData(): Flow<List<Shift>?> {
         return super.getAllObserveData().map { it?.sortedBy { shift -> shift.number } }
     }

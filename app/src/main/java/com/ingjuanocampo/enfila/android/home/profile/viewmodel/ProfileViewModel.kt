@@ -8,49 +8,49 @@ import com.ingjuanocampo.enfila.android.utils.launchGeneral
 import com.ingjuanocampo.enfila.domain.usecases.LoadUserProfile
 import com.ingjuanocampo.enfila.domain.usecases.LogoutUC
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.last
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
-    private val loadProfileUC: LoadUserProfile,
-    private val logoutUC: LogoutUC
-) : MviBaseViewModel<ProfileCard>(ProfileCard()) {
-
-    fun onLogout() {
-        viewModelScope.launchGeneral {
-            _state.value = state.value.copy(loadingLogout = true)
-            logoutUC.invoke()
-            _event.emit(LogoutOut)
+class ProfileViewModel
+    @Inject
+    constructor(
+        private val loadProfileUC: LoadUserProfile,
+        private val logoutUC: LogoutUC,
+    ) : MviBaseViewModel<ProfileCard>(ProfileCard()) {
+        fun onLogout() {
+            viewModelScope.launchGeneral {
+                _state.value = state.value.copy(loadingLogout = true)
+                logoutUC.invoke()
+                _event.emit(LogoutOut)
+            }
         }
-    }
 
-    var clientCounter = 0
+        var clientCounter = 0
 
-    init {
-        viewModelScope.launchGeneral {
+        init {
+            viewModelScope.launchGeneral {
 
-            //state.value = ProfileState.LoadingProfileInfo
+                // state.value = ProfileState.LoadingProfileInfo
 
-            val user = loadProfileUC.invoke()
-            clientCounter = user.totalNumberClients
+                val user = loadProfileUC.invoke()
+                clientCounter = user.totalNumberClients
 
-            val profileCard = ProfileCard(
-                companyName = user.companyName,
-                phone = user.phone,
-                email = user.companyName,
-                numberClients = "#$clientCounter",
-                totalShifts = "#${user.totalShiftHistory}",
-                shiftByDay = user.shiftByDay,
-                clientsByDay = user.clientsByDay,
-                waitingTime = user.waitingTime,
-                attentionTime = user.attentionTime,
-
-                )
-            _state.value = profileCard
-            // startUpdates()
+                val profileCard =
+                    ProfileCard(
+                        companyName = user.companyName,
+                        phone = user.phone,
+                        email = user.companyName,
+                        numberClients = "#$clientCounter",
+                        totalShifts = "#${user.totalShiftHistory}",
+                        shiftByDay = user.shiftByDay,
+                        clientsByDay = user.clientsByDay,
+                        waitingTime = user.waitingTime,
+                        attentionTime = user.attentionTime,
+                    )
+                _state.value = profileCard
+                // startUpdates()
+            }
         }
-    }
 
     /* private suspend fun startUpdates() {
          while (true) {
@@ -63,4 +63,4 @@ class ProfileViewModel @Inject constructor(
 
 
      }*/
-}
+    }

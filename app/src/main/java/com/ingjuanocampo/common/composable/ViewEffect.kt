@@ -9,14 +9,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 interface ViewEffect
 
 object FinishEffect : ViewEffect
+
 object BackEffect : ViewEffect
+
 object LogoutOut : ViewEffect
+
 data class UpdateToolbarTitle(val title: String) : ViewEffect
 
 data class ShowErrorDialogEffect(
-    val title: String, val description: String,
+    val title: String,
+    val description: String,
     val icon: ImageVector = Icons.Rounded.Warning,
-    ) : ViewEffect
+) : ViewEffect
 
 object IDLE : ViewEffect
 
@@ -26,5 +30,5 @@ data class NavigationEffect(
     @IdRes val id: Int,
     val label: String,
     val fragment: String,
-    val bundle: Bundle? = null
+    val bundle: Bundle? = null,
 ) : ViewEffect

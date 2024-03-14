@@ -5,7 +5,6 @@ import com.ingjuanocampo.enfila.domain.entity.IdentifyObject
 import kotlinx.coroutines.flow.Flow
 
 open class GenericLocalStoreImp<Data : IdentifyObject> : LocalSource<Data> {
-
     protected val genericCache = GenericCache<Data>()
 
     override suspend fun createOrUpdate(data: Data) {

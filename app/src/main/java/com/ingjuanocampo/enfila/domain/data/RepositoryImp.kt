@@ -15,62 +15,68 @@ open class RepositoryImp<Data>(
     private val remoteSource: RemoteSource<Data>,
     private val localSource: LocalSource<Data>,
 ) : Repository<Data> {
-
     override var id: String = EMPTY_STRING
 
     private val rateLimiter = RateLimiter<String>(60)
 
-    private val operation = object : RepositoryFlowOperation<List<Data>, List<Data>> {
-        override fun subscribeDbUpdates(): Flow<List<Data>?> {
-            return localSource.getAllObserveData()
+    private val operation =
+        object : RepositoryFlowOperation<List<Data>, List<Data>> {
+            override fun subscribeDbUpdates(): Flow<List<Data>?> {
+                return localSource.getAllObserveData()
+            }
+
+            override fun shouldFetch(result: List<Data>?): Boolean {
+                return result.isNullOrEmpty() ||
+                    rateLimiter.shouldFetch(
+                        RepositoryImp::class.simpleName + id,
+                    )
+            }
+
+            override suspend fun createCall(): List<Data> {
+                return remoteSource.fetchDataAll(id)!!
+            }
+
+            override fun mapCallResult(result: List<Data>): List<Data> {
+                return result
+            }
+
+            override suspend fun saveResult(result: List<Data>) {
+                localSource.createOrUpdate(result)
+            }
         }
 
-        override fun shouldFetch(result: List<Data>?): Boolean {
-            return result.isNullOrEmpty() || rateLimiter.shouldFetch(
-                RepositoryImp::class.simpleName + id,
-            )
+    override suspend fun createOrUpdate(data: Data) =
+        withContext(Dispatchers.Default) {
+            localSource.createOrUpdate(data)
         }
-
-        override suspend fun createCall(): List<Data> {
-            return remoteSource.fetchDataAll(id)!!
-        }
-
-        override fun mapCallResult(result: List<Data>): List<Data> {
-            return result
-        }
-
-        override suspend fun saveResult(result: List<Data>) {
-            localSource.createOrUpdate(result)
-        }
-    }
-
-    override suspend fun createOrUpdate(data: Data) = withContext(Dispatchers.Default) {
-        localSource.createOrUpdate(data)
-    }
 
     override suspend fun refresh() {
         operation.refresh()
     }
 
-    override suspend fun delete(listOf: Data) = withContext(Dispatchers.Default) {
-        localSource.delete(listOf)
-    }
+    override suspend fun delete(listOf: Data) =
+        withContext(Dispatchers.Default) {
+            localSource.delete(listOf)
+        }
 
     override fun getAllObserveData(): Flow<List<Data>?> {
         return operation.asFlow()
     }
 
-    override suspend fun loadAllData(): List<Data>? = withContext(Dispatchers.Default) {
-        return@withContext localSource.getAllData()
-    }
+    override suspend fun loadAllData(): List<Data>? =
+        withContext(Dispatchers.Default) {
+            return@withContext localSource.getAllData()
+        }
 
-    override suspend fun loadById(id: String): Data? = withContext(Dispatchers.Default) {
-        return@withContext localSource.getById(id)
-    }
+    override suspend fun loadById(id: String): Data? =
+        withContext(Dispatchers.Default) {
+            return@withContext localSource.getById(id)
+        }
 
-    override suspend fun deleteById(id: String) = withContext(Dispatchers.Default) {
-        return@withContext localSource.delete(id)
-    }
+    override suspend fun deleteById(id: String) =
+        withContext(Dispatchers.Default) {
+            return@withContext localSource.delete(id)
+        }
 
     override suspend fun deleteAll() {
         localSource.deleteAll()

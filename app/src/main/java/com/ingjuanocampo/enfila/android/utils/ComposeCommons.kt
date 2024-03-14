@@ -50,8 +50,9 @@ fun SearchBox(
         label = { Text(hint) },
         leadingIcon = {
             Icon(
-                Icons.Default.Search, contentDescription = "Search",
-                tint = accentColor
+                Icons.Default.Search,
+                contentDescription = "Search",
+                tint = accentColor,
             )
         },
         trailingIcon = {
@@ -67,23 +68,25 @@ fun SearchBox(
             }
         },
         singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
-            //textColor = textColor,
-            cursorColor = accentColor,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-        ),
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search
-        ),
-        keyboardActions = KeyboardActions(
-            onSearch = {
-                onSearch(text)
-            }
-        )
+        colors =
+            TextFieldDefaults.textFieldColors(
+                // textColor = textColor,
+                cursorColor = accentColor,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+            ),
+        keyboardOptions =
+            KeyboardOptions(
+                imeAction = ImeAction.Search,
+            ),
+        keyboardActions =
+            KeyboardActions(
+                onSearch = {
+                    onSearch(text)
+                },
+            ),
     )
 }
-
 
 @Preview
 @Composable
@@ -91,8 +94,9 @@ fun SearchBoxPreview() {
     AppTheme {
         SearchBox(
             onSearch = {},
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
         )
     }
 }

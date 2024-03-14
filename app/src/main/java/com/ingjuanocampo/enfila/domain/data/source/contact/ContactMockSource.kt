@@ -5,31 +5,31 @@ import com.ingjuanocampo.enfila.domain.entity.Client
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-val list = arrayListOf(
-    Client(
-        id = "3137550991",
-        name = "Topacio",
-    ),
-    Client(
-        id = "3137550992",
-        name = "Julia",
-    ),
-    Client(
-        id = "3137550993",
-        name = "Jose",
-    ),
-    Client(
-        id = "3137550994",
-        name = "Benito",
-    ),
-    Client(
-        id = "3137550995",
-        name = "Sofitronica",
-    ),
-)
+val list =
+    arrayListOf(
+        Client(
+            id = "3137550991",
+            name = "Topacio",
+        ),
+        Client(
+            id = "3137550992",
+            name = "Julia",
+        ),
+        Client(
+            id = "3137550993",
+            name = "Jose",
+        ),
+        Client(
+            id = "3137550994",
+            name = "Benito",
+        ),
+        Client(
+            id = "3137550995",
+            name = "Sofitronica",
+        ),
+    )
 
 class ContactMockSource : LocalSource<Client> {
-
     override fun getAllObserveData(): Flow<List<Client>> {
         return flow { emit(list) }
     }

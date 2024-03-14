@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-
     private val viewModel: ViewModelSplash by viewModels()
 
     @Inject

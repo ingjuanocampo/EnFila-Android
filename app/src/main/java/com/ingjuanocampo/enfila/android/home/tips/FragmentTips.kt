@@ -11,7 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentTips : Fragment() {
-
     companion object {
         fun newInstance() = FragmentTips()
     }

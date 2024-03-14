@@ -6,14 +6,13 @@ data class ProfileCard(
     val email: String = "",
     val numberClients: String = "",
     val totalShifts: String = "", // level 1
-    val shiftByDay: String =  "",
+    val shiftByDay: String = "",
     val clientsByDay: String = "", // level 3
     val waitingTime: String = "",
     val attentionTime: String = "",
     val options: List<OptionCard> = emptyList(),
-    val loadingLogout: Boolean = false
+    val loadingLogout: Boolean = false,
 ) {
-
     fun buildSections(): List<StatisticsSectionUI> {
         return listOf(
             StatisticsSectionUI(

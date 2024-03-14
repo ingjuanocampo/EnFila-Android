@@ -1,6 +1,5 @@
 package com.ingjuanocampo.enfila.android.home.shift_pager
 
-
 import com.ingjuanocampo.common.tab.FragmentBaseTab
 import com.ingjuanocampo.common.tab.FragmentTabItem
 import com.ingjuanocampo.enfila.android.home.history.FragmentHistory
@@ -8,21 +7,23 @@ import com.ingjuanocampo.enfila.android.home.list.FragmentListItems
 
 class FragmentShiftPager : FragmentBaseTab() {
     override val listItems: List<FragmentTabItem>
-        get() = listOf(FragmentTabItem(
-            title = "List",
-            fragmentInstance = { FragmentListItems.newInstance() }
-        ),
-            FragmentTabItem(
-                title = "History",
-                fragmentInstance = { FragmentHistory.newInstance() }
-            ))
+        get() =
+            listOf(
+                FragmentTabItem(
+                    title = "List",
+                    fragmentInstance = { FragmentListItems.newInstance() },
+                ),
+                FragmentTabItem(
+                    title = "History",
+                    fragmentInstance = { FragmentHistory.newInstance() },
+                ),
+            )
 
     companion object {
         fun newInstance(): FragmentShiftPager {
             return FragmentShiftPager()
         }
     }
-
 }
 
 /*

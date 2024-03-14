@@ -5,7 +5,6 @@ import com.ingjuanocampo.enfila.domain.entity.getShiftState
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 
 class ShiftEntity {
-
     var date: Long = 0
     var id: String = EMPTY_STRING
     var parentCompanySite: String = EMPTY_STRING

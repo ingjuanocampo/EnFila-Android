@@ -9,8 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ingjuanocampo.enfila.android.databinding.FragmentBaseTabBinding
 
-abstract class FragmentBaseTab: Fragment() {
-
+abstract class FragmentBaseTab : Fragment() {
     protected lateinit var binding: FragmentBaseTabBinding
 
     abstract val listItems: List<FragmentTabItem>
@@ -18,29 +17,31 @@ abstract class FragmentBaseTab: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentBaseTabBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.viewPager.adapter = object : FragmentStateAdapter(requireActivity()) {
-            override fun getItemCount(): Int {
-                return listItems.size
-            }
+        binding.viewPager.adapter =
+            object : FragmentStateAdapter(requireActivity()) {
+                override fun getItemCount(): Int {
+                    return listItems.size
+                }
 
-            override fun createFragment(position: Int): Fragment {
-                return listItems[position].fragmentInstance()
+                override fun createFragment(position: Int): Fragment {
+                    return listItems[position].fragmentInstance()
+                }
             }
-
-        }
 
         TabLayoutMediator(binding.toolbarTabs, binding.viewPager) { tab, pos ->
             tab.text = listItems[pos].title
         }.attach()
     }
-
 }
