@@ -20,13 +20,16 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentNewCompany : Fragment() {
-
     @Inject
     lateinit var stateProvider: AppStateProvider
 
     companion object {
         fun newInstance() = FragmentNewCompany()
-        fun newInstance(phone: String, id: String) = FragmentNewCompany().apply {
+
+        fun newInstance(
+            phone: String,
+            id: String,
+        ) = FragmentNewCompany().apply {
             val arguments = Bundle()
             arguments.putString("phone", phone)
             arguments.putString("id", id)
@@ -45,7 +48,10 @@ class FragmentNewCompany : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         phoneNumber = view.findViewById<EditText>(R.id.phoneNumber)
         val nameEd = view.findViewById<EditText>(R.id.nameEd)

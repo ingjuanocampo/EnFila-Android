@@ -1,11 +1,6 @@
 package com.ingjuanocampo.enfila.android.home.profile
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.ingjuanocampo.common.composable.BaseComposableFragment
 import com.ingjuanocampo.common.composable.LogoutOut
@@ -19,9 +14,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentProfile : BaseComposableFragment<ProfileCard>() {
-
     @Inject
     lateinit var stateProvider: AppStateProvider
+
     companion object {
         fun newInstance() = FragmentProfile()
     }
@@ -40,6 +35,5 @@ class FragmentProfile : BaseComposableFragment<ProfileCard>() {
                 stateProvider.provideCurrentState().navigateLaunchScreen(requireActivity())
             }
         }
-
     }
 }

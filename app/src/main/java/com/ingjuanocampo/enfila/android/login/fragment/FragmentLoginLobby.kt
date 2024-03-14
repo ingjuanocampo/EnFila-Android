@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentLoginLobby : BaseComposableFragment<Boolean>() {
-
     private val viewModelLobby: ViewModelLoginLobby by viewModels()
+
     @Inject
     lateinit var stateProvider: AppStateProvider
     override val viewModel: MviBaseViewModel<Boolean>
@@ -28,7 +28,7 @@ class FragmentLoginLobby : BaseComposableFragment<Boolean>() {
             onPhoneLogin = {
                 navController.navigate(R.id.action_fragmentLoginLobby_to_fragmentLoginPhoneNumber)
             },
-            viewModelLobby
+            viewModelLobby,
         )
     }
 
@@ -37,16 +37,18 @@ class FragmentLoginLobby : BaseComposableFragment<Boolean>() {
         viewEffect as AuthState
         when (viewEffect) {
             is AuthState.AuthError -> {
-                showToast("Error logging" )
+                showToast("Error logging")
             }
-            AuthState.Authenticated -> stateProvider.provideCurrentState()
-                .navigateLaunchScreen(requireActivity())
-            is AuthState.NewAccount -> navController.navigate(
-                R.id.action_fragmentVerificationCode_to_fragmentProfile,
-                Bundle().apply {
-                    putString("id", viewEffect.id)
-                },
-            )
+            AuthState.Authenticated ->
+                stateProvider.provideCurrentState()
+                    .navigateLaunchScreen(requireActivity())
+            is AuthState.NewAccount ->
+                navController.navigate(
+                    R.id.action_fragmentVerificationCode_to_fragmentProfile,
+                    Bundle().apply {
+                        putString("id", viewEffect.id)
+                    },
+                )
         }
     }
 }

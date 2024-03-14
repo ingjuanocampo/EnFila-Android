@@ -8,7 +8,12 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-fun<T> FirebaseFirestore.uploadProcess(dataMapper: (T) -> Any, data: T, path: String, id: String): Flow<T?> {
+fun <T> FirebaseFirestore.uploadProcess(
+    dataMapper: (T) -> Any,
+    data: T,
+    path: String,
+    id: String,
+): Flow<T?> {
     val sharedFlow = MutableSharedFlow<T?>()
     val toUpload = dataMapper(data)
     this.collection(path)
@@ -27,7 +32,11 @@ fun<T> FirebaseFirestore.uploadProcess(dataMapper: (T) -> Any, data: T, path: St
     return sharedFlow
 }
 
-fun<T> FirebaseFirestore.uploadProcessMultiples(dataMapper: (T) -> Any, dataList: List<IdentifyObject>, path: String): Flow<List<T>?> {
+fun <T> FirebaseFirestore.uploadProcessMultiples(
+    dataMapper: (T) -> Any,
+    dataList: List<IdentifyObject>,
+    path: String,
+): Flow<List<T>?> {
     val sharedFlow = MutableSharedFlow<List<T>?>()
     dataList.forEach { data ->
         val toUpload = dataMapper(data as T)
@@ -48,7 +57,10 @@ fun<T> FirebaseFirestore.uploadProcessMultiples(dataMapper: (T) -> Any, dataList
     return sharedFlow
 }
 
-fun<T> FirebaseFirestore.fetchProcessMultiples(dataMapper: (Map<String, Any>) -> T, path: String): Flow<List<T>?> {
+fun <T> FirebaseFirestore.fetchProcessMultiples(
+    dataMapper: (Map<String, Any>) -> T,
+    path: String,
+): Flow<List<T>?> {
     val sharedFlow = MutableSharedFlow<List<T>?>()
     try {
         this.collection(path)
@@ -79,7 +91,11 @@ fun<T> FirebaseFirestore.fetchProcessMultiples(dataMapper: (Map<String, Any>) ->
     return sharedFlow
 }
 
-fun<T> FirebaseFirestore.fetchProcess(dataMapper: (Map<String, Any>) -> T, path: String, id: String): Flow<T?> {
+fun <T> FirebaseFirestore.fetchProcess(
+    dataMapper: (Map<String, Any>) -> T,
+    path: String,
+    id: String,
+): Flow<T?> {
     val sharedFlow = MutableSharedFlow<T?>()
     try {
         this.collection(path).document(id)

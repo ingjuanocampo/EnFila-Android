@@ -23,11 +23,9 @@ import dagger.multibindings.IntoSet
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-
 @InstallIn(SingletonComponent::class)
 @Module
 class DataModule {
-
     @Singleton
     @Provides
     fun bindsUserRepository(
@@ -48,9 +46,7 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun bindClientRepository(
-        clientRemoteSourceFB: ClientRemoteSourceFB,
-    ): ClientRepository {
+    fun bindClientRepository(clientRemoteSourceFB: ClientRemoteSourceFB): ClientRepository {
         return ClientRepositoryImpl(clientRemoteSourceFB, GenericLocalStoreImp())
     }
 
@@ -64,7 +60,6 @@ class DataModule {
     }
 }
 
-
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class DELETABLE
@@ -76,6 +71,7 @@ internal interface DeletableModule {
     @Binds
     @IntoSet
     fun bindsUserRemoteImpl(userRemoteImpl: UserRepository): Repository<*>
+
     @DELETABLE
     @Binds
     @IntoSet
@@ -90,6 +86,4 @@ internal interface DeletableModule {
     @Binds
     @IntoSet
     fun bindsShiftRepository(ShiftRepository: ShiftRepository): Repository<*>
-
 }
-

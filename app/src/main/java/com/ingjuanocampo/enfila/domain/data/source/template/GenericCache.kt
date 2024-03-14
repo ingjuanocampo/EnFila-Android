@@ -6,7 +6,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 
 class GenericCache<T : IdentifyObject> : Storage<T> {
-
     private val cacheList: HashMap<String, T> = HashMap<String, T>()
     private val shareCacheFlow = MutableSharedFlow<List<T>>()
 
@@ -22,8 +21,7 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
         shareCacheFlow.emit(getData())
     }
 
-    override fun getData(): List<T> =
-        cacheList.values.toList()
+    override fun getData(): List<T> = cacheList.values.toList()
 
     override fun observeData(): Flow<List<T>> {
         return merge(

@@ -5,7 +5,6 @@ import com.ingjuanocampo.enfila.domain.entity.User
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 
 class UserEntity {
-
     var id: String = EMPTY_STRING
     var phone: String = EMPTY_STRING
     var name: String = EMPTY_STRING

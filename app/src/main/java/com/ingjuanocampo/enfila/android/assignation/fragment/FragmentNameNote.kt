@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO navigation and general error handling
 @AndroidEntryPoint
 class FragmentNameNote : Fragment() {
-
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
     private val viewModel: ViewModelAssignation by activityViewModels()
@@ -35,14 +34,19 @@ class FragmentNameNote : Fragment() {
         return inflater.inflate(R.layout.fragment_name_note, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
-        val nameEd = view.findViewById<EditText>(R.id.nameEd).apply {
-            setText(viewModel.name)
-        }
-        val noteEd = view.findViewById<EditText>(R.id.noteEd).apply {
-            setText(viewModel.note)
-        }
+        val nameEd =
+            view.findViewById<EditText>(R.id.nameEd).apply {
+                setText(viewModel.name)
+            }
+        val noteEd =
+            view.findViewById<EditText>(R.id.noteEd).apply {
+                setText(viewModel.note)
+            }
 
         nameEd.addTextChangedListener { editable ->
             viewModel.name = editable.toString()
@@ -58,7 +62,6 @@ class FragmentNameNote : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            FragmentNameNote()
+        fun newInstance() = FragmentNameNote()
     }
 }

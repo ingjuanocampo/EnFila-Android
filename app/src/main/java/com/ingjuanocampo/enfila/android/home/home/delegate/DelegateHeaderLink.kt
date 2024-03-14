@@ -9,15 +9,15 @@ import com.ingjuanocampo.enfila.android.home.list.model.HeaderItem
 
 class DelegateHeaderLink(
     val parent: ViewGroup,
-    private val biding: DelegateHeaderLinkBinding = DelegateHeaderLinkBinding.inflate(
-        LayoutInflater.from(
-            parent.context,
-        ),
-        parent,
-        false,
+    private val biding: DelegateHeaderLinkBinding =
+        DelegateHeaderLinkBinding.inflate(
+            LayoutInflater.from(
+                parent.context,
+            ),
+            parent,
+            false,
         ),
 ) : DelegateViewHolder(biding.root) {
-
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as HeaderItem
 

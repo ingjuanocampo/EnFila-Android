@@ -10,16 +10,15 @@ import com.ingjuanocampo.enfila.android.utils.set
 
 class DelegateActiveShift(
     val parent: ViewGroup,
-    private val biding: DelegateActiveTurnBinding = DelegateActiveTurnBinding.inflate(
-        LayoutInflater.from(parent.context),
-        parent,
-        false,
-    ),
+    private val biding: DelegateActiveTurnBinding =
+        DelegateActiveTurnBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false,
+        ),
     private val finishListener: (String) -> Unit,
     private val onShiftListener: (String) -> Unit,
-
-    ) : DelegateViewHolder(biding.root) {
-
+) : DelegateViewHolder(biding.root) {
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem
         biding.currentNumber.text = recyclerViewType.currentTurn

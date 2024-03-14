@@ -28,7 +28,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FragmentHistory : Fragment() {
-
     @Inject
     lateinit var navigationDestinations: NavigationDestinations
 
@@ -51,28 +50,32 @@ class FragmentHistory : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val recycler: RecyclerView = view.findViewById(R.id.recycler)
 
-        adapter = CompositeDelegateAdapter(1).apply {
-            appendDelegate(
-                ViewTypes.SHIFT.ordinal,
-            ) {
-                DelegateShift(it, onShiftListener = {
-                    navController.navigateToCustomDest(
-                        navigationDestinations.navigateToShiftDetails(
-                            it
+        adapter =
+            CompositeDelegateAdapter(1).apply {
+                appendDelegate(
+                    ViewTypes.SHIFT.ordinal,
+                ) {
+                    DelegateShift(it, onShiftListener = {
+                        navController.navigateToCustomDest(
+                            navigationDestinations.navigateToShiftDetails(
+                                it,
+                            ),
                         )
-                    )
-                })
+                    })
+                }
             }
-        }
         recycler.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                OrientationHelper.VERTICAL
-            )
+                OrientationHelper.VERTICAL,
+            ),
         )
         recycler.adapter = adapter
         viewModel.state.observe(
@@ -84,7 +87,7 @@ class FragmentHistory : Fragment() {
                     binding.emptyComposeContainer.setContent {
                         GenericEmptyState(
                             title = getString(R.string.empty_fragment_list),
-                            icon = Icons.Outlined.List
+                            icon = Icons.Outlined.List,
                         )
                     }
                 } else {

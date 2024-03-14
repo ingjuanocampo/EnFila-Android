@@ -13,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentShiftDetail : BaseComposableFragment<ShiftItem>() {
-
     private val detailViewModel: ShiftDetailsViewModel by viewModels()
     override val viewModel: MviBaseViewModel<ShiftItem>
         get() = detailViewModel
@@ -21,7 +20,7 @@ class FragmentShiftDetail : BaseComposableFragment<ShiftItem>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         detailViewModel.init(requireArguments())
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -29,7 +28,8 @@ class FragmentShiftDetail : BaseComposableFragment<ShiftItem>() {
 
     @Composable
     override fun render(state: ShiftItem) {
-        ShiftDetailScreen(state,
+        ShiftDetailScreen(
+            state,
             onCancel = {
                 detailViewModel.onCancel()
             },
@@ -38,7 +38,8 @@ class FragmentShiftDetail : BaseComposableFragment<ShiftItem>() {
             },
             onFinish = {
                 detailViewModel.onFinish()
-            })
+            },
+        )
     }
 
     companion object {

@@ -1,13 +1,5 @@
 package com.ingjuanocampo.enfila.android.menu
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.ingjuanocampo.enfila.android.R
-
 /*
 class BottomMenuBuilder {
 

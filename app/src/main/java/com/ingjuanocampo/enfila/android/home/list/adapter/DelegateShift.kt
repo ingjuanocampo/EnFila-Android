@@ -16,10 +16,8 @@ class DelegateShift(
     private val binding: DelegateShiftBinding =
         DelegateShiftBinding.inflate(LayoutInflater.from(parent.context), parent, false),
     private val onShiftListener: (String) -> Unit = {},
-
 ) :
     DelegateViewHolder(binding.root) {
-
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         with(binding) {
             val shiftItem = recyclerViewType as ShiftItem

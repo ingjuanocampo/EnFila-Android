@@ -1,6 +1,5 @@
 package com.ingjuanocampo.enfila.android.home.list.model
 
-import android.os.SystemClock
 import com.ingjuanocampo.cdapter.RecyclerViewType
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.android.utils.toDurationText
@@ -13,9 +12,9 @@ import java.util.*
 
 data class ShiftItem(
     val id: String = "",
-    val phone: String= "",
-    val name: String= "",
-    val currentTurn: String= "",
+    val phone: String = "",
+    val name: String = "",
+    val currentTurn: String = "",
     val issueDate: Long = 0L,
     val endDate: Long = 0L,
     val state: String = "",
@@ -28,7 +27,6 @@ data class ShiftItem(
     val formmattedIssueDate: String = "",
     val isProcessingActions: Boolean = false,
 ) : RecyclerViewType {
-
     fun geElapsedTime(): Long {
         val current = getNow()
         return current - issueDate
@@ -72,7 +70,6 @@ fun ShiftWithClient.mapToUI(viewType: ViewTypes = ViewTypes.SHIFT): ShiftItem {
         notes = this.shift.notes.orEmpty(),
         attentionTime = this.shift.getAttentionTime(),
         waitTime = ((getNow() - this.shift.date)).toDurationText(),
-        formmattedIssueDate = SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(this.shift.date))
-
+        formmattedIssueDate = SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(this.shift.date)),
     )
 }

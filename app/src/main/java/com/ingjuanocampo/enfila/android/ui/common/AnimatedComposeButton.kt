@@ -30,19 +30,23 @@ import androidx.compose.ui.unit.dp
 fun AnimatedComposeButton(
     modifier: Modifier = Modifier,
     state: AnimatedButtonState = AnimatedButtonState.IDLE,
-    content: @Composable() () -> Unit,
+    content:
+        @Composable()
+        () -> Unit,
 ) {
     Box(
         modifier,
         contentAlignment = Alignment.Center,
     ) {
-        val contentStateVisibility = remember {
-            MutableTransitionState(true)
-        }
+        val contentStateVisibility =
+            remember {
+                MutableTransitionState(true)
+            }
 
-        val progressStateVisibility = remember {
-            MutableTransitionState(false)
-        }
+        val progressStateVisibility =
+            remember {
+                MutableTransitionState(false)
+            }
 
         val animationSprint = 700f
 
@@ -52,9 +56,10 @@ fun AnimatedComposeButton(
             exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint + animationSprint / 2)),
         ) {
             CircularProgressIndicator(
-                modifier = Modifier
-                    .padding(2.dp)
-                    .size(30.dp),
+                modifier =
+                    Modifier
+                        .padding(2.dp)
+                        .size(30.dp),
                 color = MaterialTheme.colorScheme.primary,
                 strokeWidth = 3.dp,
             )
@@ -89,7 +94,9 @@ enum class AnimatedButtonState {
 fun Boolean.toLoadingState(): AnimatedButtonState {
     return if (this) {
         AnimatedButtonState.PROGRESS
-    } else AnimatedButtonState.IDLE
+    } else {
+        AnimatedButtonState.IDLE
+    }
 }
 
 @Composable

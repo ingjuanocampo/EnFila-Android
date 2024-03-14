@@ -4,23 +4,23 @@ import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.*
 
 interface RepositoryFlowOperation<ResultType, RequestType> {
-
     suspend fun fetchAndUpdateInformationIfNeeded(initData: ResultType?) {
         if (shouldFetch(initData)) {
             refresh()
         }
     }
 
-    fun asFlow(): Flow<ResultType?> = flow {
-        val initData = getInitFromDb()
-        if (isValidInitData(initData)) {
-            initData?.let { emit(it) }
-        }
-        fetchAndUpdateInformationIfNeeded(initData)
-        subscribeDbUpdates().collect {
-            emit(it)
-        }
-    }.distinctUntilChanged()
+    fun asFlow(): Flow<ResultType?> =
+        flow {
+            val initData = getInitFromDb()
+            if (isValidInitData(initData)) {
+                initData?.let { emit(it) }
+            }
+            fetchAndUpdateInformationIfNeeded(initData)
+            subscribeDbUpdates().collect {
+                emit(it)
+            }
+        }.distinctUntilChanged()
 
     suspend fun refresh() {
         val remoteData = createCall()

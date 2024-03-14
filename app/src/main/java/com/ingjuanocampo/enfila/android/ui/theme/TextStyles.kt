@@ -16,36 +16,41 @@ val TextColor: Color
 
 val TextStyleRoboto: TextStyle
     @Composable
-    get() = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        color = TextColor,
-    )
+    get() =
+        TextStyle(
+            fontFamily = FontFamily.SansSerif,
+            color = TextColor,
+        )
 
 val Body3: TextStyle
     @Composable
-    get() = TextStyleRoboto.copy(
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Medium,
-        fontStyle = FontStyle(FontStyle.Normal.value),
-    )
+    get() =
+        TextStyleRoboto.copy(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+            fontStyle = FontStyle(FontStyle.Normal.value),
+        )
 
 val Body1: TextStyle
     @Composable
-    get() = TextStyleRoboto.copy(
-        fontSize = 14.sp,
-        color = TextColor,
-    )
+    get() =
+        TextStyleRoboto.copy(
+            fontSize = 14.sp,
+            color = TextColor,
+        )
 
 val TitleStyle: TextStyle
     @Composable
-    get() = TextStyleRoboto.copy(
-        fontSize = 20.sp,
-    )
+    get() =
+        TextStyleRoboto.copy(
+            fontSize = 20.sp,
+        )
 
 val Typography: Typography
     @Composable
-    get() = Typography(
-        titleMedium = Body3,
-        bodyMedium = Body1,
-        titleLarge = TitleStyle,
-    )
+    get() =
+        Typography(
+            titleMedium = Body3,
+            bodyMedium = Body1,
+            titleLarge = TitleStyle,
+        )

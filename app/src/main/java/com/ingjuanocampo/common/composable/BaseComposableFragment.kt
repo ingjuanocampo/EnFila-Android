@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 abstract class BaseComposableFragment<STATE> : Fragment() {
-
     abstract val viewModel: MviBaseViewModel<STATE>
     protected val navController by lazy { NavHostFragment.findNavController(this) }
     private val showDialog: MutableStateFlow<ShowErrorDialogEffect?> = MutableStateFlow(null)
@@ -29,14 +28,13 @@ abstract class BaseComposableFragment<STATE> : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
                 val state by viewModel.state.collectAsState()
                 render(state)
                 ComposeBottomSheetDialog(showDialog)
-
             }
         }
     }
@@ -46,33 +44,33 @@ abstract class BaseComposableFragment<STATE> : Fragment() {
         observeEvents()
     }
 
-    private fun observeEvents() = lifecycleScope.launch {
-        viewModel.event.onEach {
-            when (it) {
-
-                is FinishEffect -> {
-                    requireActivity().finish()
-                }
-                is BackEffect -> {
-                    requireActivity().onBackPressed()
-                }
-                is InvalidateMenuOptions -> {
-                    requireActivity().invalidateOptionsMenu()
-                }
-                is NavigationEffect -> {
-                    navController.navigateToCustomDest(it)
-                }
-                is ShowErrorDialogEffect -> {
-                    showDialog.emit(it)
-                }
-                else -> {
-                    withContext(Dispatchers.Main) {
-                        onNewViewEffect(it)
+    private fun observeEvents() =
+        lifecycleScope.launch {
+            viewModel.event.onEach {
+                when (it) {
+                    is FinishEffect -> {
+                        requireActivity().finish()
+                    }
+                    is BackEffect -> {
+                        requireActivity().onBackPressed()
+                    }
+                    is InvalidateMenuOptions -> {
+                        requireActivity().invalidateOptionsMenu()
+                    }
+                    is NavigationEffect -> {
+                        navController.navigateToCustomDest(it)
+                    }
+                    is ShowErrorDialogEffect -> {
+                        showDialog.emit(it)
+                    }
+                    else -> {
+                        withContext(Dispatchers.Main) {
+                            onNewViewEffect(it)
+                        }
                     }
                 }
-            }
-        }.launchIn(this)
-    }
+            }.launchIn(this)
+        }
 
     open fun onNewViewEffect(viewEffect: ViewEffect) {
         // Override when required

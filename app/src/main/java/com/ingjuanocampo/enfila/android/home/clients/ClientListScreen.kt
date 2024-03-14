@@ -30,12 +30,11 @@ import com.ingjuanocampo.enfila.android.utils.SearchBox
 import com.ingjuanocampo.enfila.domain.entity.Client
 import com.ingjuanocampo.enfila.domain.entity.defaultClient
 
-
 @Composable
 fun ClientListScreenChat(
     clientList: List<Client>,
     onSearch: (String) -> Unit,
-    onClientSelected: (String) -> Unit
+    onClientSelected: (String) -> Unit,
 ) {
     AppTheme {
         Column(
@@ -44,23 +43,29 @@ fun ClientListScreenChat(
         ) {
             SearchBox(
                 onSearch = onSearch,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
             )
             if (clientList.isEmpty()) {
-                GenericEmptyState(title = stringResource(
-                    R.string.empty_fragment_clients
-                ), icon = Icons.Outlined.Person,
-                    modifier = Modifier.fillMaxHeight())
+                GenericEmptyState(
+                    title =
+                        stringResource(
+                            R.string.empty_fragment_clients,
+                        ),
+                    icon = Icons.Outlined.Person,
+                    modifier = Modifier.fillMaxHeight(),
+                )
             } else {
                 LazyColumn {
                     items(clientList) { client ->
                         val textColor = MaterialTheme.colorScheme.onPrimaryContainer
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 12.dp),
-// fix this
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                            // fix this
                             /*   .clickable {
                                    onClientSelected.invoke(client.id)
                                }*/
@@ -83,8 +88,9 @@ fun ClientListScreenChat(
                             }
                             Text(
                                 text = "${client.shifts?.size ?: 0} shifts",
-                                style = MaterialTheme.typography.bodyMedium
-                                    .copy(fontWeight = FontWeight.Bold),
+                                style =
+                                    MaterialTheme.typography.bodyMedium
+                                        .copy(fontWeight = FontWeight.Bold),
                                 color = textColor,
                             )
                         }
@@ -94,11 +100,8 @@ fun ClientListScreenChat(
                 }
             }
         }
-
     }
-
 }
-
 
 @Preview(
     backgroundColor = 0XFFFFFF,
@@ -124,10 +127,9 @@ private fun PreviewClientItemEmpty() {
     backgroundColor = 0X000000,
     showSystemUi = true,
     device = Devices.PIXEL_XL,
-    uiMode = UI_MODE_NIGHT_YES
+    uiMode = UI_MODE_NIGHT_YES,
 )
 @Composable
 private fun PreviewClientItemDark() {
     ClientListScreenChat(listOf(defaultClient, defaultClient, defaultClient), {}, {})
 }
-
