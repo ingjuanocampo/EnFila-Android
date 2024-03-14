@@ -38,3 +38,5 @@ jobs:
         run: ./gradlew --stop
       - name: Android Lint
         run: ./gradlew lint
+      - name: Android Lint
+        run: ./gradlew ktlintCheck
