@@ -37,4 +37,4 @@ jobs:
       - name: Restart Daemon
         run: ./gradlew --stop
       - name: Android Lint
-        run: ./gradlew --lintMain
+        run: ./gradlew lint
