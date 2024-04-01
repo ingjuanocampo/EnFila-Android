@@ -10,7 +10,6 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class AppEnFila : Application() {
-
     companion object {
         lateinit var context: Context
     }

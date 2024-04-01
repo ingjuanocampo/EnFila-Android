@@ -25,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentHome : Fragment() {
-
     companion object {
         fun newInstance() = FragmentHome()
     }
@@ -38,7 +37,6 @@ class FragmentHome : Fragment() {
 
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,14 +46,17 @@ class FragmentHome : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = CompositeDelegateAdapter(10)
 
         adapter.appendDelegate(ViewTypes.HOME_RESUME.ordinal) { DelegateResume(it) }
         adapter.appendDelegate(ViewTypes.ACTIVE_SHIFT.ordinal) {
-            DelegateActiveShift(it , finishListener = { id ->
+            DelegateActiveShift(it, finishListener = { id ->
                 viewModel.finish(id)
             }, onShiftListener = ::navigateToDetails)
         }
@@ -90,7 +91,7 @@ class FragmentHome : Fragment() {
                     binding.emptyComposeContainer.setContent {
                         GenericEmptyState(
                             title = getString(R.string.empty_home),
-                            icon = Icons.Outlined.AddHome
+                            icon = Icons.Outlined.AddHome,
                         )
                     }
                 }
@@ -119,7 +120,10 @@ class FragmentHome : Fragment() {
         startActivity(Intent(requireContext(), ActivityAssignation::class.java))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.dashboard_menu, menu)
     }
@@ -128,5 +132,4 @@ class FragmentHome : Fragment() {
         startAdditionProcess()
         return true
     }
-
 }

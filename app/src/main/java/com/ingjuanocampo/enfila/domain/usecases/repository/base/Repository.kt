@@ -3,7 +3,6 @@ package com.ingjuanocampo.enfila.domain.usecases.repository.base
 import kotlinx.coroutines.flow.Flow
 
 interface Repository<Data> {
-
     var id: String
 
     fun updateData(data: Data): Flow<Data?>
@@ -28,7 +27,6 @@ interface Repository<Data> {
 
     suspend fun deleteAll()
 }
-
 
 interface Deletable {
     suspend fun deleteAll()

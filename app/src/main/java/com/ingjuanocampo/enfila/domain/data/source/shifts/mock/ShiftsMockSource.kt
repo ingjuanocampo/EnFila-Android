@@ -3,13 +3,14 @@ package com.ingjuanocampo.enfila.domain.data.source.shifts.mock
 import com.ingjuanocampo.enfila.domain.entity.ShiftFactory
 
 // Constant mock data
-private val list = arrayListOf(
-    ShiftFactory.createWaiting(1, "3137550991", "Fast please", ""),
-    ShiftFactory.createWaiting(2, "3137550992", "Fast please", ""),
-    ShiftFactory.createWaiting(3, "3137550993", "Fast please", ""),
-    ShiftFactory.createWaiting(4, "3137550994", "Fast please", ""),
-    ShiftFactory.createWaiting(5, "3137550995", "Fast please", ""),
-)
+private val list =
+    arrayListOf(
+        ShiftFactory.createWaiting(1, "3137550991", "Fast please", ""),
+        ShiftFactory.createWaiting(2, "3137550992", "Fast please", ""),
+        ShiftFactory.createWaiting(3, "3137550993", "Fast please", ""),
+        ShiftFactory.createWaiting(4, "3137550994", "Fast please", ""),
+        ShiftFactory.createWaiting(5, "3137550995", "Fast please", ""),
+    )
 /*
 
 class ShiftsMockSource : ShiftLocalSource {

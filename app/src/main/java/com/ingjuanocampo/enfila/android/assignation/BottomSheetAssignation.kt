@@ -16,13 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BottomSheetAssignation : BottomSheetDialogFragment() {
-
     private val navController by lazy { findNavController(this) }
     private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { this })
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-
 
         return dialog
     }
@@ -39,7 +37,10 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
         return inflater.inflate(R.layout.activity_assignation, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.assignationState.observe(

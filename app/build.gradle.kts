@@ -8,7 +8,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
-    id ("com.google.gms.google-services")
+    id("com.google.gms.google-services")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -55,9 +56,11 @@ android {
 }
 
 dependencies {
-    implementation(fileTree("libs") {
-        include("*.jar")
-    })
+    implementation(
+        fileTree("libs") {
+            include("*.jar")
+        },
+    )
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     appDependencies()
     implementation(platform(AppDependencies.firebaseBom))
@@ -66,4 +69,3 @@ dependencies {
     coroutinesWithAndroid()
     architectureComponents()
 }
-

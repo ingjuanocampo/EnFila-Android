@@ -2,12 +2,13 @@ package com.ingjuanocampo.enfila.domain.data.source.companysite
 
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 
-private val listOfMockCompanies = arrayListOf(
-    CompanySite(
-        id = "companyid",
-        name = "Sanduches Cuba",
-    ),
-)
+private val listOfMockCompanies =
+    arrayListOf(
+        CompanySite(
+            id = "companyid",
+            name = "Sanduches Cuba",
+        ),
+    )
 
 /*
 class CompanySiteMockSource: LocalSource<List<CompanySite>> {

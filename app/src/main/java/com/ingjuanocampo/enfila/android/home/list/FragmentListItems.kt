@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddHome
 import androidx.compose.material.icons.outlined.List
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,10 +25,9 @@ import com.ingjuanocampo.enfila.android.utils.navigateToCustomDest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-// REVIEW CREATION PROCESS, CREATE CHAT TO CONTACT CLIENTS USING WHATS APP, LAUNCH APP 
+// REVIEW CREATION PROCESS, CREATE CHAT TO CONTACT CLIENTS USING WHATS APP, LAUNCH APP
 @AndroidEntryPoint
 class FragmentListItems : Fragment() {
-
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
     @Inject
@@ -53,28 +51,32 @@ class FragmentListItems : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val recycler: RecyclerView = view.findViewById(R.id.recycler)
 
-        adapter = CompositeDelegateAdapter(1).apply {
-            appendDelegate(
-                ViewTypes.SHIFT.ordinal,
-            ) {
-                DelegateShift(it, ::stopListener, onShiftListener = {
-                    navController.navigateToCustomDest(
-                        navigationDestinations.navigateToShiftDetails(
-                            it
+        adapter =
+            CompositeDelegateAdapter(1).apply {
+                appendDelegate(
+                    ViewTypes.SHIFT.ordinal,
+                ) {
+                    DelegateShift(it, ::stopListener, onShiftListener = {
+                        navController.navigateToCustomDest(
+                            navigationDestinations.navigateToShiftDetails(
+                                it,
+                            ),
                         )
-                    )
-                })
+                    })
+                }
             }
-        }
         recycler.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                OrientationHelper.VERTICAL
-            )
+                OrientationHelper.VERTICAL,
+            ),
         )
         recycler.adapter = adapter
         viewModel.state.observe(
@@ -86,7 +88,7 @@ class FragmentListItems : Fragment() {
                 binding.emptyComposeContainer.setContent {
                     GenericEmptyState(
                         title = getString(R.string.empty_fragment_list),
-                        icon = Icons.Outlined.List
+                        icon = Icons.Outlined.List,
                     )
                 }
             } else {

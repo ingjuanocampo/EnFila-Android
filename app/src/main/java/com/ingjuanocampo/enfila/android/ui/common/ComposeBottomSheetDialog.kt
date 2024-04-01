@@ -39,21 +39,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(
-    ExperimentalMaterial3Api::class, DelicateCoroutinesApi::class
+    ExperimentalMaterial3Api::class,
+    DelicateCoroutinesApi::class,
 )
 @Composable
-fun ComposeBottomSheetDialog(
-    showDialog: MutableStateFlow<ShowErrorDialogEffect?>
-) {
+fun ComposeBottomSheetDialog(showDialog: MutableStateFlow<ShowErrorDialogEffect?>) {
     val showErrorDialog by showDialog.collectAsState()
-    showErrorDialog?.let { info->
+    showErrorDialog?.let { info ->
         AppTheme {
-            val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-                bottomSheetState = SheetState(
-                    skipPartiallyExpanded = false,
-                    density = LocalDensity.current, initialValue = SheetValue.Expanded
+            val bottomSheetScaffoldState =
+                rememberBottomSheetScaffoldState(
+                    bottomSheetState =
+                        SheetState(
+                            skipPartiallyExpanded = false,
+                            density = LocalDensity.current,
+                            initialValue = SheetValue.Expanded,
+                        ),
                 )
-            )
             val scope = rememberCoroutineScope()
 
             LaunchedEffect(bottomSheetScaffoldState) {
@@ -63,23 +65,22 @@ fun ComposeBottomSheetDialog(
                     }
                 }
             }
-            Box(modifier=Modifier.background(Color.Black.copy(alpha=0.6f)).fillMaxSize())
+            Box(modifier = Modifier.background(Color.Black.copy(alpha = 0.6f)).fillMaxSize())
             BottomSheetScaffold(
                 scaffoldState = bottomSheetScaffoldState,
                 sheetContent = {
                     BottomSheetContent(
                         info.title,
                         info.description,
-                        info.icon
+                        info.icon,
                     ) {
                         scope.launch {
                             bottomSheetScaffoldState.bottomSheetState.hide()
                         }
-
                     }
                 },
                 content = {
-                }
+                },
             )
         }
     }
@@ -90,43 +91,46 @@ fun BottomSheetContent(
     title: String,
     description: String,
     icon: ImageVector = Icons.Rounded.Warning,
-    onDismissClick: () -> Unit
+    onDismissClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = title,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp),
         )
 
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier
-                .size(48.dp)
-                .padding(bottom = 16.dp),
-            tint = MaterialTheme.colorScheme.error
+            modifier =
+                Modifier
+                    .size(48.dp)
+                    .padding(bottom = 16.dp),
+            tint = MaterialTheme.colorScheme.error,
         )
 
         Text(
             text = description,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp),
         )
 
         Button(
             onClick = {
                 onDismissClick()
             },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(),
         ) {
             Text(text = "Dismiss")
         }
@@ -138,10 +142,13 @@ fun BottomSheetContent(
 fun BottomSheetDialogExamplePreview() {
     AppTheme {
         ComposeBottomSheetDialog(
-            MutableStateFlow(ShowErrorDialogEffect(
-                "Title", "Description",
-                Icons.Filled.Warning
-            ))
+            MutableStateFlow(
+                ShowErrorDialogEffect(
+                    "Title",
+                    "Description",
+                    Icons.Filled.Warning,
+                ),
+            ),
         )
     }
 }

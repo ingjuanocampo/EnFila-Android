@@ -16,7 +16,6 @@ import com.ingjuanocampo.enfila.android.assignation.viewmodel.AssignationState
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
 
 class FragmentPhoneNumber : Fragment() {
-
     private val navController by lazy { NavHostFragment.findNavController(this) }
 
     companion object {
@@ -33,7 +32,10 @@ class FragmentPhoneNumber : Fragment() {
         return inflater.inflate(R.layout.fragment_phone_number, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val next = view.findViewById<Button>(R.id.nextCta)
         next.setOnClickListener {

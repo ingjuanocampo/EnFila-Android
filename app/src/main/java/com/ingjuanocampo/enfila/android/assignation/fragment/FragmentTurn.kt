@@ -32,19 +32,25 @@ class FragmentTurn : Fragment() {
         return inflater.inflate(R.layout.fragment_turn, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val nameTv = view.findViewById<TextView>(R.id.nameTv).apply {
-            text = viewModel.name
-        }
-        val phoneTv = view.findViewById<TextView>(R.id.phoneTv).apply {
-            text = viewModel.phoneNumber
-        }
-        val notesTv = view.findViewById<TextView>(R.id.notesTv)
-            .apply {
-                text = viewModel.note
+        val nameTv =
+            view.findViewById<TextView>(R.id.nameTv).apply {
+                text = viewModel.name
             }
+        val phoneTv =
+            view.findViewById<TextView>(R.id.phoneTv).apply {
+                text = viewModel.phoneNumber
+            }
+        val notesTv =
+            view.findViewById<TextView>(R.id.notesTv)
+                .apply {
+                    text = viewModel.note
+                }
         view.findViewById<TextView>(R.id.turnEd).apply {
             setText("${viewModel.closestTurn}")
         }
@@ -70,7 +76,9 @@ class FragmentTurn : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentTurn()
+        fun newInstance(
+            param1: String,
+            param2: String,
+        ) = FragmentTurn()
     }
 }

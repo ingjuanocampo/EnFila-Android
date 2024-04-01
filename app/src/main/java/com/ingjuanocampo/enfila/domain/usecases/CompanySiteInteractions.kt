@@ -8,7 +8,6 @@ class CompanySiteInteractions(
     private val shiftsRepo: Repository<List<Shift>>,
     private val companyRepo: Repository<List<CompanySite>>,
 ) {
-
     /*private var cacheCompany: CompanySite? = null
 
     suspend fun load() =

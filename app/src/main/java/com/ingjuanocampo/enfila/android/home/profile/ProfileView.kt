@@ -55,7 +55,8 @@ fun ProfileScreen(profileViewModel: ProfileViewModel = viewModel()) {
 
 @Composable
 fun ProfileView(
-    profile: ProfileCard, onLogoutAction: () -> Unit
+    profile: ProfileCard,
+    onLogoutAction: () -> Unit,
 ) {
     ConstraintLayout(
         Modifier
@@ -83,19 +84,24 @@ fun ProfileView(
                 bottom.linkTo(parent.bottom)
             },
             isLoading = profile.loadingLogout,
-            onLogoutAction
+            onLogoutAction,
         )
     }
 }
 
 @Composable
-fun Logout(modifier: Modifier, isLoading: Boolean, onLogoutAction: () -> Unit) {
+fun Logout(
+    modifier: Modifier,
+    isLoading: Boolean,
+    onLogoutAction: () -> Unit,
+) {
     Column(modifier = modifier, Arrangement.Top) {
         Divider(
             color = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(1.dp),
         )
 
         val loadingState = isLoading.toLoadingState()
@@ -107,11 +113,12 @@ fun Logout(modifier: Modifier, isLoading: Boolean, onLogoutAction: () -> Unit) {
             loadingState,
         ) {
             Row(
-                modifier = Modifier
-                    .clickable(enabled = true, onClick = {
-                        //state = AnimatedButtonState.PROGRESS
-                        onLogoutAction()
-                    }),
+                modifier =
+                    Modifier
+                        .clickable(enabled = true, onClick = {
+                            // state = AnimatedButtonState.PROGRESS
+                            onLogoutAction()
+                        }),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
@@ -123,10 +130,11 @@ fun Logout(modifier: Modifier, isLoading: Boolean, onLogoutAction: () -> Unit) {
                     text = "Log out",
                     textAlign = TextAlign.Start,
                     modifier = Modifier,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        MaterialTheme.colorScheme.onErrorContainer,
-                        fontWeight = FontWeight.Medium,
-                    ),
+                    style =
+                        MaterialTheme.typography.bodyMedium.copy(
+                            MaterialTheme.colorScheme.onErrorContainer,
+                            fontWeight = FontWeight.Medium,
+                        ),
                 )
             }
         }
@@ -134,12 +142,14 @@ fun Logout(modifier: Modifier, isLoading: Boolean, onLogoutAction: () -> Unit) {
 }
 
 @Composable
-fun ProfileOptions(profile: ProfileCard, modifier: Modifier) {
+fun ProfileOptions(
+    profile: ProfileCard,
+    modifier: Modifier,
+) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
         Arrangement.Top,
-
-        ) {
+    ) {
         profile.options.forEach {
             Row(
                 modifier = Modifier.padding(all = 8.dp),
@@ -160,7 +170,10 @@ fun ProfileOptions(profile: ProfileCard, modifier: Modifier) {
 }
 
 @Composable
-fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = modifier) {
+fun ProfileHeader(
+    profile: ProfileCard,
+    modifier: Modifier,
+) = Column(modifier = modifier) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
         /*   Image(
                painter = painterResource(R.drawable.ic_account),
@@ -170,24 +183,25 @@ fun ProfileHeader(profile: ProfileCard, modifier: Modifier) = Column(modifier = 
                    .clip(CircleShape)
            )
            Spacer(modifier = Modifier.width(8.dp))
-   */
+         */
     }
 
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(all = 8.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(all = 8.dp),
         color = MaterialTheme.colorScheme.surface,
         shape = RoundedCornerShape(2.dp),
         elevation = 2.dp,
-
-        ) {
+    ) {
         val textColor = MaterialTheme.colorScheme.onPrimaryContainer
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)) {
             Text(
                 text = profile.companyName,
-                style = MaterialTheme.typography.titleLarge
-                    .copy(fontWeight = FontWeight.Bold),
+                style =
+                    MaterialTheme.typography.titleLarge
+                        .copy(fontWeight = FontWeight.Bold),
                 color = textColor,
             )
 
@@ -228,9 +242,10 @@ fun StatictisView(profile: ProfileCard) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(
-                modifier = Modifier
-                    .weight(1f, true)
-                    .padding(horizontal = 20.dp),
+                modifier =
+                    Modifier
+                        .weight(1f, true)
+                        .padding(horizontal = 20.dp),
             ) {
                 Text(
                     text = "Statistics",
@@ -259,9 +274,10 @@ private fun StatisticsSection(listOf: List<StatisticsSectionUI>) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
-                    modifier = Modifier
-                        .weight(1f, true)
-                        .padding(horizontal = 20.dp),
+                    modifier =
+                        Modifier
+                            .weight(1f, true)
+                            .padding(horizontal = 20.dp),
                 ) {
                     Text(
                         text = row.title,
@@ -281,9 +297,10 @@ private fun StatisticsSection(listOf: List<StatisticsSectionUI>) {
                 }
 
                 Column(
-                    modifier = Modifier
-                        .weight(1f, true)
-                        .padding(all = 4.dp),
+                    modifier =
+                        Modifier
+                            .weight(1f, true)
+                            .padding(all = 4.dp),
                 ) {
                     Text(
                         text = row.title2,
@@ -306,10 +323,11 @@ private fun StatisticsSection(listOf: List<StatisticsSectionUI>) {
     }
 }
 
-fun Boolean.toButtonState() = when (this) {
-    true -> AnimatedButtonState.PROGRESS
-    false -> AnimatedButtonState.IDLE
-}
+fun Boolean.toButtonState() =
+    when (this) {
+        true -> AnimatedButtonState.PROGRESS
+        false -> AnimatedButtonState.IDLE
+    }
 
 @Composable
 @Preview(
@@ -325,8 +343,7 @@ fun ProfilePreview() {
                 "12 min",
             ),
             {
-
-            }
+            },
         )
     }
 }

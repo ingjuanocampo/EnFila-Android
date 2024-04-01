@@ -45,11 +45,12 @@ fun Long.toDurationText(): String {
 
     val seconds = TimeUnit.MILLISECONDS.toSeconds(t)
 
-    val text = if (days >= 1) {
-        "${days.completeZero()} Dias ${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
-    } else {
-        "${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
-    }
+    val text =
+        if (days >= 1) {
+            "${days.completeZero()} Dias ${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
+        } else {
+            "${hours.completeZero()}:${minutes.completeZero()}:${seconds.completeZero()}"
+        }
 
     return text
 }
@@ -58,7 +59,10 @@ fun Long.completeZero(): String {
     return if (this < 10) "0$this" else this.toString()
 }
 
-fun ViewActiveProgressBinding.set(listener: (String) -> Unit, id: String) {
+fun ViewActiveProgressBinding.set(
+    listener: (String) -> Unit,
+    id: String,
+) {
     setProgressVisible(false)
     this.finish.setOnClickListener {
         setProgressVisible(true)

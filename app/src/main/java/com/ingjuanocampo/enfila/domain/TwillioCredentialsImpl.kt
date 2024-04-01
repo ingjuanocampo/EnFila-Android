@@ -8,23 +8,24 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TwillioCredentialsImpl @Inject constructor() : TwillioCredentials {
+class TwillioCredentialsImpl
+    @Inject
+    constructor() : TwillioCredentials {
+        private val remoteConfig = Firebase.remoteConfig
 
-    private val remoteConfig = Firebase.remoteConfig
-
-    init {
-        remoteConfig.run {
-            setConfigSettingsAsync(
-                remoteConfigSettings {
-                    minimumFetchIntervalInSeconds = 20
-                },
-            )
-            fetchAndActivate()
+        init {
+            remoteConfig.run {
+                setConfigSettingsAsync(
+                    remoteConfigSettings {
+                        minimumFetchIntervalInSeconds = 20
+                    },
+                )
+                fetchAndActivate()
+            }
         }
-    }
 
-    override val token: String
-        get() = remoteConfig.getString("twilio_token")
-    override val sid: String
-        get() = remoteConfig.getString("twilio_sid")
-}
+        override val token: String
+            get() = remoteConfig.getString("twilio_token")
+        override val sid: String
+            get() = remoteConfig.getString("twilio_sid")
+    }
