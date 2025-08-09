@@ -1,21 +1,19 @@
-import Android.compileAndroidSdkVersion
-import Android.minAndroidSdkVersion
-import dependencies.*
+// Version catalog provides all dependency management
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "com.ingjuanocampo.enfila.data"
 
-    compileSdk = compileAndroidSdkVersion
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
-        minSdk = minAndroidSdkVersion
-        targetSdk = compileAndroidSdkVersion
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.compileSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,7 +29,14 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-    hilt()
-    retrofit()
+    // Kotlin
+    implementation(libs.kotlin.stdlib)
+
+    // Dependency Injection
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 }

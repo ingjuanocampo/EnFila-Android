@@ -1,26 +1,24 @@
-import Android.compileAndroidSdkVersion
-import Android.minAndroidSdkVersion
-import base.implementation
-import dependencies.*
+// Version catalog provides all dependency management
+// No imports needed from buildSrc dependencies package
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
-    id("com.google.gms.google-services")
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.ktlint)
 }
 
 android {
     namespace = "com.ingjuanocampo.enfila.android"
 
-    compileSdk = compileAndroidSdkVersion
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
         applicationId = "com.ingjuanocampo.enfila.android"
 
-        minSdk = minAndroidSdkVersion
-        targetSdk = compileAndroidSdkVersion
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.compileSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -59,13 +57,75 @@ dependencies {
     implementation(
         fileTree("libs") {
             include("*.jar")
-        },
+        }
     )
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-    appDependencies()
-    implementation(platform(AppDependencies.firebaseBom))
-    fireStore()
-    dataStore()
-    coroutinesWithAndroid()
-    architectureComponents()
+
+    // Kotlin
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.android)
+
+    // Android Core
+    implementation(libs.android.core)
+    implementation(libs.android.appcompat)
+    implementation(libs.android.legacy)
+    implementation(libs.constraintlayout)
+    implementation(libs.recyclerview)
+    implementation(libs.fragments)
+
+    // UI & Material Design
+    implementation(libs.material)
+
+    // Compose
+    implementation(libs.compose.ui)
+    implementation(libs.compose.activity)
+    implementation(libs.compose.viewmodel)
+    implementation(libs.compose.tooling)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material3.window)
+    implementation(libs.compose.icons.core)
+    implementation(libs.compose.icons.extended)
+    implementation(libs.compose.livedata)
+    implementation(libs.compose.constraintlayout)
+
+    // Architecture Components
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.extensions)
+    implementation(libs.lifecycle.runtime)
+    implementation(libs.lifecycle.livedata)
+
+    // Navigation
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+
+    // Dependency Injection
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.config)
+
+    // Google Services
+    implementation(libs.google.auth)
+    implementation(libs.google.safetynet)
+
+    // Data Storage
+    implementation(libs.datastore)
+    implementation(libs.gson)
+
+    // Custom Libraries
+    implementation(libs.compose.adapter)
+
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.android.test.runner)
+    androidTestImplementation(libs.android.test.espresso)
+
+    // Modules
+    implementation(project(":data"))
 }
