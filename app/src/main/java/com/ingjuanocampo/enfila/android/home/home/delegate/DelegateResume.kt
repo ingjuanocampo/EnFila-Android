@@ -13,8 +13,8 @@ class DelegateResume(
         DelegateShiftsInfoBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false
-        )
+            false,
+        ),
 ) : DelegateViewHolder(biding.root) {
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as HomeResume

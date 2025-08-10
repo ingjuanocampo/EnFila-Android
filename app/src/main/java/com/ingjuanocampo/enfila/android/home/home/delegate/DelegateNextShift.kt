@@ -15,10 +15,10 @@ class DelegateNextShift(
         DelegateNextTurnBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false
+            false,
         ),
     val listener: (NextShiftActions) -> Unit,
-    val onShiftSelected: (String) -> Unit
+    val onShiftSelected: (String) -> Unit,
 ) : DelegateViewHolder(biding.root) {
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem

@@ -32,11 +32,11 @@ fun AnimatedComposeButton(
     state: AnimatedButtonState = AnimatedButtonState.IDLE,
     content:
         @Composable()
-        () -> Unit
+        () -> Unit,
 ) {
     Box(
         modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         val contentStateVisibility =
             remember {
@@ -53,22 +53,22 @@ fun AnimatedComposeButton(
         AnimatedVisibility(
             visibleState = progressStateVisibility,
             enter = fadeIn(spring(stiffness = animationSprint)) + scaleIn(spring(stiffness = animationSprint)),
-            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint + animationSprint / 2))
+            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint + animationSprint / 2)),
         ) {
             CircularProgressIndicator(
                 modifier =
-                Modifier
-                    .padding(2.dp)
-                    .size(30.dp),
+                    Modifier
+                        .padding(2.dp)
+                        .size(30.dp),
                 color = MaterialTheme.colorScheme.primary,
-                strokeWidth = 3.dp
+                strokeWidth = 3.dp,
             )
         }
 
         AnimatedVisibility(
             visibleState = contentStateVisibility,
             enter = fadeIn(spring(stiffness = animationSprint + animationSprint / 2)) + scaleIn(spring(stiffness = animationSprint + animationSprint / 2)),
-            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint))
+            exit = fadeOut(spring(stiffness = animationSprint)) + scaleOut(spring(stiffness = animationSprint)),
         ) {
             content()
         }
@@ -88,7 +88,7 @@ fun AnimatedComposeButton(
 
 enum class AnimatedButtonState {
     IDLE,
-    PROGRESS
+    PROGRESS,
 }
 
 fun Boolean.toLoadingState(): AnimatedButtonState {
@@ -102,7 +102,7 @@ fun Boolean.toLoadingState(): AnimatedButtonState {
 @Composable
 @Preview(
     device = Devices.PIXEL_4_XL,
-    showBackground = true
+    showBackground = true,
 )
 private fun ProgressableButtonPreview() {
     Column(Modifier.fillMaxWidth()) {

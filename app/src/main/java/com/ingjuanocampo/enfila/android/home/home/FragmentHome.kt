@@ -40,7 +40,7 @@ class FragmentHome : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -48,7 +48,7 @@ class FragmentHome : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -91,7 +91,7 @@ class FragmentHome : Fragment() {
                     binding.emptyComposeContainer.setContent {
                         GenericEmptyState(
                             title = getString(R.string.empty_home),
-                            icon = Icons.Outlined.AddHome
+                            icon = Icons.Outlined.AddHome,
                         )
                     }
                 }
@@ -122,7 +122,7 @@ class FragmentHome : Fragment() {
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.dashboard_menu, menu)

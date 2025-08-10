@@ -11,7 +11,7 @@ data class ProfileCard(
     val waitingTime: String = "",
     val attentionTime: String = "",
     val options: List<OptionCard> = emptyList(),
-    val loadingLogout: Boolean = false
+    val loadingLogout: Boolean = false,
 ) {
     fun buildSections(): List<StatisticsSectionUI> {
         return listOf(
@@ -19,20 +19,20 @@ data class ProfileCard(
                 "# Turns",
                 totalShifts,
                 "# Clients",
-                numberClients
+                numberClients,
             ),
             StatisticsSectionUI(
                 "Shifts by day",
                 shiftByDay,
                 "Clients by day",
-                clientsByDay
+                clientsByDay,
             ),
             StatisticsSectionUI(
                 "Waiting  time",
                 waitingTime,
                 "Attention time",
-                attentionTime
-            )
+                attentionTime,
+            ),
         )
     }
 }

@@ -34,27 +34,27 @@ import com.ingjuanocampo.enfila.domain.entity.defaultClient
 fun ClientListScreenChat(
     clientList: List<Client>,
     onSearch: (String) -> Unit,
-    onClientSelected: (String) -> Unit
+    onClientSelected: (String) -> Unit,
 ) {
     AppTheme {
         Column(
             Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             SearchBox(
                 onSearch = onSearch,
                 modifier =
-                Modifier
-                    .fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth(),
             )
             if (clientList.isEmpty()) {
                 GenericEmptyState(
                     title =
-                    stringResource(
-                        R.string.empty_fragment_clients
-                    ),
+                        stringResource(
+                            R.string.empty_fragment_clients,
+                        ),
                     icon = Icons.Outlined.Person,
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier.fillMaxHeight(),
                 )
             } else {
                 LazyColumn {
@@ -62,36 +62,36 @@ fun ClientListScreenChat(
                         val textColor = MaterialTheme.colorScheme.onPrimaryContainer
                         Row(
                             modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 12.dp),
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 8.dp, vertical = 12.dp),
                             // fix this
                             /*   .clickable {
                                    onClientSelected.invoke(client.id)
                                }*/
                             horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Column {
                                 Text(
                                     text = client.name ?: "N/A",
                                     maxLines = 1,
                                     style = MaterialTheme.typography.bodyLarge,
-                                    color = MaterialTheme.colorScheme.onSurface
+                                    color = MaterialTheme.colorScheme.onSurface,
                                 )
                                 Text(
                                     text = "ID: ${client.id}",
                                     maxLines = 1,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurface
+                                    color = MaterialTheme.colorScheme.onSurface,
                                 )
                             }
                             Text(
                                 text = "${client.shifts?.size ?: 0} shifts",
                                 style =
-                                MaterialTheme.typography.bodyMedium
-                                    .copy(fontWeight = FontWeight.Bold),
-                                color = textColor
+                                    MaterialTheme.typography.bodyMedium
+                                        .copy(fontWeight = FontWeight.Bold),
+                                color = textColor,
                             )
                         }
 
@@ -106,7 +106,7 @@ fun ClientListScreenChat(
 @Preview(
     backgroundColor = 0XFFFFFF,
     showSystemUi = true,
-    device = Devices.PIXEL_XL
+    device = Devices.PIXEL_XL,
 )
 @Composable
 private fun PreviewClientItem() {
@@ -116,7 +116,7 @@ private fun PreviewClientItem() {
 @Preview(
     backgroundColor = 0XFFFFFF,
     showSystemUi = true,
-    device = Devices.PIXEL_XL
+    device = Devices.PIXEL_XL,
 )
 @Composable
 private fun PreviewClientItemEmpty() {
@@ -127,7 +127,7 @@ private fun PreviewClientItemEmpty() {
     backgroundColor = 0X000000,
     showSystemUi = true,
     device = Devices.PIXEL_XL,
-    uiMode = UI_MODE_NIGHT_YES
+    uiMode = UI_MODE_NIGHT_YES,
 )
 @Composable
 private fun PreviewClientItemDark() {

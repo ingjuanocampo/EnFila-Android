@@ -8,7 +8,7 @@ import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 
 class UserRepositoryImpl(
     private val remote: RemoteSource<User>,
-    private val localSource: LocalSource<User>
+    private val localSource: LocalSource<User>,
 ) : UserRepository, RepositoryImp<User>(remote, localSource) {
     override fun isUserLogged() = id.isNullOrBlank().not()
 

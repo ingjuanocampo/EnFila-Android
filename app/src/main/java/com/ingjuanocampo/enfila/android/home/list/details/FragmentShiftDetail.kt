@@ -20,7 +20,7 @@ class FragmentShiftDetail : BaseComposableFragment<ShiftItem>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         detailViewModel.init(requireArguments())
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -38,7 +38,7 @@ class FragmentShiftDetail : BaseComposableFragment<ShiftItem>() {
             },
             onFinish = {
                 detailViewModel.onFinish()
-            }
+            },
         )
     }
 

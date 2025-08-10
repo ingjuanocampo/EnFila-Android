@@ -24,7 +24,7 @@ class ActivityLogin : AppCompatActivity() {
         viewModel.state.observe(
             this,
             Observer {
-            }
+            },
         )
         setContentView(R.layout.activity_login)
 

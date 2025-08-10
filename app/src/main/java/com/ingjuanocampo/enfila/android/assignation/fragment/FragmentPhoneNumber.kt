@@ -27,14 +27,14 @@ class FragmentPhoneNumber : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_phone_number, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val next = view.findViewById<Button>(R.id.nextCta)
@@ -56,7 +56,7 @@ class FragmentPhoneNumber : Fragment() {
                 if (it is AssignationState.NumberSet) {
                     next.isEnabled = true
                 }
-            }
+            },
         )
     }
 }

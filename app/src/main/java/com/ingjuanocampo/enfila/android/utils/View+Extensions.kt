@@ -61,7 +61,7 @@ fun Long.completeZero(): String {
 
 fun ViewActiveProgressBinding.set(
     listener: (String) -> Unit,
-    id: String
+    id: String,
 ) {
     setProgressVisible(false)
     this.finish.setOnClickListener {

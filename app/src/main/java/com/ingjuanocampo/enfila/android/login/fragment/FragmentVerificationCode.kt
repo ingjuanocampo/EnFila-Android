@@ -29,14 +29,14 @@ class FragmentVerificationCode : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.verification_code, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val verificationCode = view.findViewById<EditText>(R.id.verificationCode)
@@ -46,7 +46,7 @@ class FragmentVerificationCode : Fragment() {
         }
 
         viewModel.state.observe(
-            viewLifecycleOwner
+            viewLifecycleOwner,
         ) {
             when (it) {
                 is LoginState.AuthenticationProcessState ->
@@ -61,7 +61,7 @@ class FragmentVerificationCode : Fragment() {
                                 Bundle().apply {
                                     putString("phone", viewModel.phoneNumber)
                                     putString("id", it.authState.id)
-                                }
+                                },
                             )
 
                         is AuthState.AuthError -> showToast("Error" + it.authState.e.toString())

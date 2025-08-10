@@ -17,45 +17,45 @@ import javax.inject.Inject
 const val clientPath = basePath + "_client"
 
 class ClientRemoteSourceFB
-@Inject
-constructor() : RemoteSource<Client> {
-    private val remote by lazy { Firebase.firestore }
+    @Inject
+    constructor() : RemoteSource<Client> {
+        private val remote by lazy { Firebase.firestore }
 
-    override suspend fun fetchDataAll(id: String): List<Client>? {
-        return remote.fetchProcessMultiples({
-            map(it)
-        }, clientPath).firstOrNull()
+        override suspend fun fetchDataAll(id: String): List<Client>? {
+            return remote.fetchProcessMultiples({
+                map(it)
+            }, clientPath).firstOrNull()
+        }
+
+        private fun map(it: Map<String, Any>) =
+            Client(
+                id = it["id"] as String,
+                name = it["name"] as String? ?: EMPTY_STRING,
+                shifts = it["shifts"] as List<String>?,
+            )
+
+        override fun uploadData(data: List<Client>): Flow<List<Client>?> {
+            return remote.uploadProcessMultiples({
+                return@uploadProcessMultiples mapToRemote(it)
+            }, data, clientPath)
+        }
+
+        private fun mapToRemote(it: Client) =
+            hashMapOf(
+                "id" to it.id,
+                "name" to it.name,
+                "shifts" to it.shifts,
+            )
+
+        override fun uploadData(data: Client): Flow<Client?> {
+            return remote.uploadProcess({
+                return@uploadProcess mapToRemote(it)
+            }, data, clientPath, data.id)
+        }
+
+        override suspend fun fetchData(id: String): Client? {
+            return remote.fetchProcess({
+                return@fetchProcess map(it)
+            }, clientPath, id).firstOrNull()
+        }
     }
-
-    private fun map(it: Map<String, Any>) =
-        Client(
-            id = it["id"] as String,
-            name = it["name"] as String? ?: EMPTY_STRING,
-            shifts = it["shifts"] as List<String>?
-        )
-
-    override fun uploadData(data: List<Client>): Flow<List<Client>?> {
-        return remote.uploadProcessMultiples({
-            return@uploadProcessMultiples mapToRemote(it)
-        }, data, clientPath)
-    }
-
-    private fun mapToRemote(it: Client) =
-        hashMapOf(
-            "id" to it.id,
-            "name" to it.name,
-            "shifts" to it.shifts
-        )
-
-    override fun uploadData(data: Client): Flow<Client?> {
-        return remote.uploadProcess({
-            return@uploadProcess mapToRemote(it)
-        }, data, clientPath, data.id)
-    }
-
-    override suspend fun fetchData(id: String): Client? {
-        return remote.fetchProcess({
-            return@fetchProcess map(it)
-        }, clientPath, id).firstOrNull()
-    }
-}

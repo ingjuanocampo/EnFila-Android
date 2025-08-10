@@ -28,7 +28,7 @@ class FragmentLoginLobby : BaseComposableFragment<Boolean>() {
             onPhoneLogin = {
                 navController.navigate(R.id.action_fragmentLoginLobby_to_fragmentLoginPhoneNumber)
             },
-            viewModelLobby
+            viewModelLobby,
         )
     }
 
@@ -47,7 +47,7 @@ class FragmentLoginLobby : BaseComposableFragment<Boolean>() {
                     R.id.action_fragmentVerificationCode_to_fragmentProfile,
                     Bundle().apply {
                         putString("id", viewEffect.id)
-                    }
+                    },
                 )
         }
     }

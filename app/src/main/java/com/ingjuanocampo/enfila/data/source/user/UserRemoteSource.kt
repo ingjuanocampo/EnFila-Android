@@ -13,28 +13,28 @@ const val basePath = "enfila_v1"
 private const val userPath = basePath + "_users"
 
 class UserRemoteSource
-@Inject
-constructor() {
-    private val db by lazy { Firebase.firestore }
+    @Inject
+    constructor() {
+        private val db by lazy { Firebase.firestore }
 
-    fun fetchData(id: String): Flow<User?> {
-        return db.fetchProcess({ data ->
-            return@fetchProcess User(
-                id = id,
-                name = data.get("name") as String?,
-                phone = data.get("phone") as String,
-                companyIds = data.get("companyIds") as? List<String>
-            )
-        }, userPath, id)
-    }
+        fun fetchData(id: String): Flow<User?> {
+            return db.fetchProcess({ data ->
+                return@fetchProcess User(
+                    id = id,
+                    name = data.get("name") as String?,
+                    phone = data.get("phone") as String,
+                    companyIds = data.get("companyIds") as? List<String>,
+                )
+            }, userPath, id)
+        }
 
-    fun updateData(data: User): Flow<User?> {
-        return db.uploadProcess({
-            return@uploadProcess hashMapOf(
-                "name" to data.name,
-                "phone" to data.phone,
-                "companyIds" to data.companyIds
-            )
-        }, data, userPath, data.id)
+        fun updateData(data: User): Flow<User?> {
+            return db.uploadProcess({
+                return@uploadProcess hashMapOf(
+                    "name" to data.name,
+                    "phone" to data.phone,
+                    "companyIds" to data.companyIds,
+                )
+            }, data, userPath, data.id)
+        }
     }
-}

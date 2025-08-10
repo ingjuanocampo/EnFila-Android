@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    DelicateCoroutinesApi::class
+    DelicateCoroutinesApi::class,
 )
 @Composable
 fun ComposeBottomSheetDialog(showDialog: MutableStateFlow<ShowErrorDialogEffect?>) {
@@ -50,11 +50,11 @@ fun ComposeBottomSheetDialog(showDialog: MutableStateFlow<ShowErrorDialogEffect?
             val bottomSheetScaffoldState =
                 rememberBottomSheetScaffoldState(
                     bottomSheetState =
-                    SheetState(
-                        skipPartiallyExpanded = false,
-                        density = LocalDensity.current,
-                        initialValue = SheetValue.Expanded
-                    )
+                        SheetState(
+                            skipPartiallyExpanded = false,
+                            density = LocalDensity.current,
+                            initialValue = SheetValue.Expanded,
+                        ),
                 )
             val scope = rememberCoroutineScope()
 
@@ -72,7 +72,7 @@ fun ComposeBottomSheetDialog(showDialog: MutableStateFlow<ShowErrorDialogEffect?
                     BottomSheetContent(
                         info.title,
                         info.description,
-                        info.icon
+                        info.icon,
                     ) {
                         scope.launch {
                             bottomSheetScaffoldState.bottomSheetState.hide()
@@ -80,7 +80,7 @@ fun ComposeBottomSheetDialog(showDialog: MutableStateFlow<ShowErrorDialogEffect?
                     }
                 },
                 content = {
-                }
+                },
             )
         }
     }
@@ -91,36 +91,36 @@ fun BottomSheetContent(
     title: String,
     description: String,
     icon: ImageVector = Icons.Rounded.Warning,
-    onDismissClick: () -> Unit
+    onDismissClick: () -> Unit,
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = title,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp),
         )
 
         Icon(
             imageVector = icon,
             contentDescription = null,
             modifier =
-            Modifier
-                .size(48.dp)
-                .padding(bottom = 16.dp),
-            tint = MaterialTheme.colorScheme.error
+                Modifier
+                    .size(48.dp)
+                    .padding(bottom = 16.dp),
+            tint = MaterialTheme.colorScheme.error,
         )
 
         Text(
             text = description,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp),
         )
 
         Button(
@@ -128,9 +128,9 @@ fun BottomSheetContent(
                 onDismissClick()
             },
             modifier =
-            Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxWidth()
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(),
         ) {
             Text(text = "Dismiss")
         }
@@ -146,9 +146,9 @@ fun BottomSheetDialogExamplePreview() {
                 ShowErrorDialogEffect(
                     "Title",
                     "Description",
-                    Icons.Filled.Warning
-                )
-            )
+                    Icons.Filled.Warning,
+                ),
+            ),
         )
     }
 }

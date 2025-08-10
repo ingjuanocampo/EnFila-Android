@@ -12,11 +12,11 @@ class DelegateHeaderLink(
     private val biding: DelegateHeaderLinkBinding =
         DelegateHeaderLinkBinding.inflate(
             LayoutInflater.from(
-                parent.context
+                parent.context,
             ),
             parent,
-            false
-        )
+            false,
+        ),
 ) : DelegateViewHolder(biding.root) {
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as HeaderItem

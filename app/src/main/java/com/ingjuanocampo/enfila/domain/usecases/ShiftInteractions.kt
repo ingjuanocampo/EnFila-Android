@@ -12,89 +12,89 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ShiftInteractions
-@Inject
-constructor(
-    private val shiftRepository: ShiftRepository,
-    private val clientRepository: ClientRepository,
-    private val messagingRepository: MessageRepository
-) {
-    fun active(current: Shift?): Flow<Boolean> {
-        return updateShiftTo(
-            current?.apply {
-                this.attentionStartDate = getNow()
-            },
-            ShiftState.CALLING
-        ).map {
-            messagingRepository.sendMessage("573137550993", "14155238886", "Es tu turno ahora, acercate por favor")
-            true
+    @Inject
+    constructor(
+        private val shiftRepository: ShiftRepository,
+        private val clientRepository: ClientRepository,
+        private val messagingRepository: MessageRepository,
+    ) {
+        fun active(current: Shift?): Flow<Boolean> {
+            return updateShiftTo(
+                current?.apply {
+                    this.attentionStartDate = getNow()
+                },
+                ShiftState.CALLING,
+            ).map {
+                messagingRepository.sendMessage("573137550993", "14155238886", "Es tu turno ahora, acercate por favor")
+                true
+            }
+        }
+
+        private fun updateShiftTo(
+            shift: Shift?,
+            state: ShiftState,
+        ): Flow<Boolean> {
+            return flowOf(shift?.copy()).flatMapLatest { current ->
+                current?.let {
+                    updateShift(
+                        it,
+                        state,
+                    ).map { true }
+                } ?: flowOf(false)
+            }
+        }
+
+        suspend fun getClosestNewShiftTurn(): Int {
+            val lastTurn = shiftRepository.loadAllData()?.lastOrNull()?.number
+            return if (lastTurn == null) {
+                1
+            } else {
+                lastTurn + 1
+            }
+        }
+
+        private fun updateShift(
+            shift: Shift,
+            state: ShiftState,
+        ): Flow<Shift?> {
+            shift.state = state
+            return shiftRepository.updateData(shift)
+        }
+
+        suspend fun loadShiftWithClient(shift: Shift): ShiftWithClient {
+            val client = clientRepository.loadById(shift.contactId)
+            return ShiftWithClient(shift, client ?: defaultClient)
+        }
+
+        fun addNewTurn(
+            tunr: Int,
+            client: Client,
+            note: String?,
+        ): Flow<Shift?> {
+            return clientRepository.updateData(client).flatMapLatest {
+                shiftRepository.updateData(
+                    (
+                        ShiftFactory.createWaiting(
+                            tunr,
+                            client.id,
+                            note ?: "",
+                            shiftRepository.id,
+                        )
+                    ),
+                )
+            }.map {
+                messagingRepository.sendMessage("573137550993", "14155238886", "Hola ${client.name} Fuiste anadido al turno $tunr")
+                it
+            }
+        }
+
+        fun cancel(shiftToCancel: Shift?): Flow<Boolean> {
+            shiftToCancel?.endDate = getNow()
+            return updateShiftTo(shiftToCancel, ShiftState.CANCELLED)
+        }
+
+        fun finish(shiftToFinish: Shift?): Flow<Boolean> {
+            shiftToFinish?.endDate = getNow()
+            return updateShiftTo(shiftToFinish, ShiftState.FINISHED)
         }
     }
-
-    private fun updateShiftTo(
-        shift: Shift?,
-        state: ShiftState
-    ): Flow<Boolean> {
-        return flowOf(shift?.copy()).flatMapLatest { current ->
-            current?.let {
-                updateShift(
-                    it,
-                    state
-                ).map { true }
-            } ?: flowOf(false)
-        }
-    }
-
-    suspend fun getClosestNewShiftTurn(): Int {
-        val lastTurn = shiftRepository.loadAllData()?.lastOrNull()?.number
-        return if (lastTurn == null) {
-            1
-        } else {
-            lastTurn + 1
-        }
-    }
-
-    private fun updateShift(
-        shift: Shift,
-        state: ShiftState
-    ): Flow<Shift?> {
-        shift.state = state
-        return shiftRepository.updateData(shift)
-    }
-
-    suspend fun loadShiftWithClient(shift: Shift): ShiftWithClient {
-        val client = clientRepository.loadById(shift.contactId)
-        return ShiftWithClient(shift, client ?: defaultClient)
-    }
-
-    fun addNewTurn(
-        tunr: Int,
-        client: Client,
-        note: String?
-    ): Flow<Shift?> {
-        return clientRepository.updateData(client).flatMapLatest {
-            shiftRepository.updateData(
-                (
-                    ShiftFactory.createWaiting(
-                        tunr,
-                        client.id,
-                        note ?: "",
-                        shiftRepository.id
-                    )
-                    )
-            )
-        }.map {
-            messagingRepository.sendMessage("573137550993", "14155238886", "Hola ${client.name} Fuiste anadido al turno $tunr")
-            it
-        }
-    }
-
-    fun cancel(shiftToCancel: Shift?): Flow<Boolean> {
-        shiftToCancel?.endDate = getNow()
-        return updateShiftTo(shiftToCancel, ShiftState.CANCELLED)
-    }
-
-    fun finish(shiftToFinish: Shift?): Flow<Boolean> {
-        shiftToFinish?.endDate = getNow()
-        return updateShiftTo(shiftToFinish, ShiftState.FINISHED)
-    }
-}

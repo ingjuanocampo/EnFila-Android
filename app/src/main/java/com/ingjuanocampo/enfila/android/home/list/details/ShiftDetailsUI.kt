@@ -46,23 +46,23 @@ fun ShiftDetailScreen(
     shiftDetailUi: ShiftItem,
     onCancel: () -> Unit,
     onActive: () -> Unit,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
 ) {
     AppTheme {
         ConstraintLayout {
             val (columRef, buttonsRef) = createRefs()
             Column(
                 modifier =
-                Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())
-                    .constrainAs(columRef) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(buttonsRef.top)
-                    }
+                    Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState())
+                        .constrainAs(columRef) {
+                            top.linkTo(parent.top)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(buttonsRef.top)
+                        },
             ) {
                 TableItem(label = "Name", value = shiftDetailUi.name)
                 DividerBody()
@@ -88,11 +88,11 @@ fun ShiftDetailScreen(
                                         initialNow - (
                                             shiftDetailUi.issueDate -
                                                 TimeUnit.SECONDS.toMillis(
-                                                    ticks
+                                                    ticks,
                                                 )
-                                            )
-                                        ).toDurationText()
-                                    )
+                                        )
+                                    ).toDurationText()
+                                )
                         }
                     }
                 }
@@ -111,22 +111,22 @@ fun ShiftDetailScreen(
             val loadingState = shiftDetailUi.isProcessingActions.toLoadingState()
             AnimatedComposeButton(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .constrainAs(buttonsRef) {
-                        top.linkTo(columRef.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    },
-                state = loadingState
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .constrainAs(buttonsRef) {
+                            top.linkTo(columRef.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(parent.bottom)
+                        },
+                state = loadingState,
             ) {
                 Row(
                     modifier =
-                    Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                        Modifier
+                            .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     when (shiftDetailUi.state.toUpperCase()) {
                         ShiftState.WAITING.name -> {
@@ -135,7 +135,7 @@ fun ShiftDetailScreen(
                                     onActive()
                                 },
                                 stringResource(id = R.string.active),
-                                modifier = Modifier.weight(0.5f)
+                                modifier = Modifier.weight(0.5f),
                             )
                             Spacer(modifier = Modifier.size(10.dp))
                             ButtonGrayStroke(
@@ -143,7 +143,7 @@ fun ShiftDetailScreen(
                                     onCancel()
                                 },
                                 stringResource(id = R.string.cancel),
-                                modifier = Modifier.weight(0.5f)
+                                modifier = Modifier.weight(0.5f),
                             )
                         }
 
@@ -153,7 +153,7 @@ fun ShiftDetailScreen(
                                     onFinish()
                                 },
                                 stringResource(id = R.string.finish),
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
                             )
                         }
 
@@ -169,7 +169,7 @@ fun ShiftDetailScreen(
 @Composable
 private fun TableItem(
     label: String,
-    value: String
+    value: String,
 ) {
     Row(modifier = Modifier.padding(vertical = 8.dp)) {
         Text(
@@ -177,13 +177,13 @@ private fun TableItem(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.weight(0.2f)
+            modifier = Modifier.weight(0.2f),
         )
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.weight(0.8f)
+            modifier = Modifier.weight(0.8f),
         )
     }
 }
@@ -192,17 +192,17 @@ private fun TableItem(
 private fun DividerBody() {
     Divider(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .height(0.5.dp),
-        color = MaterialTheme.colorScheme.outline
+            Modifier
+                .fillMaxWidth()
+                .height(0.5.dp),
+        color = MaterialTheme.colorScheme.outline,
     )
 }
 
 @Preview(
     backgroundColor = 0XFFFFFF,
     showSystemUi = true,
-    device = Devices.NEXUS_5
+    device = Devices.NEXUS_5,
 )
 @Composable
 fun TableScreenPreview() {
@@ -219,7 +219,7 @@ fun TableScreenPreview() {
             endDate = 0L,
             state = "WAITING",
             issueDate = 0L,
-            phone = "31312313"
+            phone = "31312313",
         )
     ShiftDetailScreen(shiftDetailUi, {}, {}, {})
 }

@@ -12,5 +12,5 @@ data class UserProfile(
     val shiftByDay: String,
     val clientsByDay: String, // level 3
     val waitingTime: String,
-    val attentionTime: String
+    val attentionTime: String,
 )

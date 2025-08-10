@@ -32,14 +32,14 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.activity_assignation, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,7 +49,7 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
                 if (it is AssignationState.AssignationSet) {
                     dismiss()
                 }
-            }
+            },
         )
     }
 }

@@ -25,7 +25,7 @@ data class ShiftItem(
     val attentionTime: String = "",
     val waitTime: String = "",
     val formmattedIssueDate: String = "",
-    val isProcessingActions: Boolean = false
+    val isProcessingActions: Boolean = false,
 ) : RecyclerViewType {
     fun geElapsedTime(): Long {
         val current = getNow()
@@ -70,6 +70,6 @@ fun ShiftWithClient.mapToUI(viewType: ViewTypes = ViewTypes.SHIFT): ShiftItem {
         notes = this.shift.notes.orEmpty(),
         attentionTime = this.shift.getAttentionTime(),
         waitTime = ((getNow() - this.shift.date)).toDurationText(),
-        formmattedIssueDate = SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(this.shift.date))
+        formmattedIssueDate = SimpleDateFormat("EEE, MMM dd, yyyy H:mm").format(Date(this.shift.date)),
     )
 }

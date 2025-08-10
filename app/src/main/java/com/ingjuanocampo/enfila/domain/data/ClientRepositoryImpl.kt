@@ -7,6 +7,6 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 
 class ClientRepositoryImpl(
     remoteSource: RemoteSource<Client>,
-    localSource: LocalSource<Client>
+    localSource: LocalSource<Client>,
 ) :
     RepositoryImp<Client>(remoteSource, localSource), ClientRepository

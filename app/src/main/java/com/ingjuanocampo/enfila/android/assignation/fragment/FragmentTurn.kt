@@ -27,14 +27,14 @@ class FragmentTurn : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_turn, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,7 +78,7 @@ class FragmentTurn : Fragment() {
         @JvmStatic
         fun newInstance(
             param1: String,
-            param2: String
+            param2: String,
         ) = FragmentTurn()
     }
 }

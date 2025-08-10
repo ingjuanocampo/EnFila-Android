@@ -12,7 +12,7 @@ fun <T> FirebaseFirestore.uploadProcess(
     dataMapper: (T) -> Any,
     data: T,
     path: String,
-    id: String
+    id: String,
 ): Flow<T?> {
     val sharedFlow = MutableSharedFlow<T?>()
     val toUpload = dataMapper(data)
@@ -35,7 +35,7 @@ fun <T> FirebaseFirestore.uploadProcess(
 fun <T> FirebaseFirestore.uploadProcessMultiples(
     dataMapper: (T) -> Any,
     dataList: List<IdentifyObject>,
-    path: String
+    path: String,
 ): Flow<List<T>?> {
     val sharedFlow = MutableSharedFlow<List<T>?>()
     dataList.forEach { data ->
@@ -59,7 +59,7 @@ fun <T> FirebaseFirestore.uploadProcessMultiples(
 
 fun <T> FirebaseFirestore.fetchProcessMultiples(
     dataMapper: (Map<String, Any>) -> T,
-    path: String
+    path: String,
 ): Flow<List<T>?> {
     val sharedFlow = MutableSharedFlow<List<T>?>()
     try {
@@ -94,7 +94,7 @@ fun <T> FirebaseFirestore.fetchProcessMultiples(
 fun <T> FirebaseFirestore.fetchProcess(
     dataMapper: (Map<String, Any>) -> T,
     path: String,
-    id: String
+    id: String,
 ): Flow<T?> {
     val sharedFlow = MutableSharedFlow<T?>()
     try {
@@ -105,7 +105,7 @@ fun <T> FirebaseFirestore.fetchProcess(
                     try {
                         val data = result.data?.let { dataMapper(it) }
                         sharedFlow.emit(
-                            data
+                            data,
                         )
                     } catch (e: Exception) {
                         sharedFlow.emit(null)

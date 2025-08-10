@@ -6,8 +6,8 @@ private val listOfMockCompanies =
     arrayListOf(
         CompanySite(
             id = "companyid",
-            name = "Sanduches Cuba"
-        )
+            name = "Sanduches Cuba",
+        ),
     )
 
 /*

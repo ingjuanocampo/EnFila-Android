@@ -28,32 +28,32 @@ import com.ingjuanocampo.enfila.android.ui.theme.ButtonPrimaryStroke
 @Composable
 fun LoginLobbyScreen(
     onPhoneLogin: () -> Unit,
-    viewModel: ViewModelLoginLobby
+    viewModel: ViewModelLoginLobby,
 ) {
     AppTheme {
         val context = LocalContext.current
 
         val launcher =
             rememberLauncherForActivityResult(
-                ActivityResultContracts.StartIntentSenderForResult()
+                ActivityResultContracts.StartIntentSenderForResult(),
             ) { result ->
                 viewModel.processResults(result, context)
             }
 
         Column(
             modifier =
-            Modifier
-                .fillMaxSize()
-                // .background(MaterialTheme.colorScheme.primaryContainer)
-                .padding(20.dp),
+                Modifier
+                    .fillMaxSize()
+                    // .background(MaterialTheme.colorScheme.primaryContainer)
+                    .padding(20.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 modifier = Modifier.padding(bottom = 40.dp),
                 text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
             )
 
             // Create a scope that is automatically cancelled
@@ -65,17 +65,17 @@ fun LoginLobbyScreen(
                 onClick = {
                     viewModel.signIn(
                         context = context,
-                        launcher = launcher
+                        launcher = launcher,
                     )
                 },
-                text = "Google Sign in"
+                text = "Google Sign in",
             )
 
             Spacer(modifier = Modifier.size(10.dp))
             ButtonPrimaryStroke(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = onPhoneLogin,
-                text = "Login with phone"
+                text = "Login with phone",
             )
         }
     }

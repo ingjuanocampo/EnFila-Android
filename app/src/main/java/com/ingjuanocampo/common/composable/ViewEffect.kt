@@ -19,7 +19,7 @@ data class UpdateToolbarTitle(val title: String) : ViewEffect
 data class ShowErrorDialogEffect(
     val title: String,
     val description: String,
-    val icon: ImageVector = Icons.Rounded.Warning
+    val icon: ImageVector = Icons.Rounded.Warning,
 ) : ViewEffect
 
 object IDLE : ViewEffect
@@ -30,5 +30,5 @@ data class NavigationEffect(
     @IdRes val id: Int,
     val label: String,
     val fragment: String,
-    val bundle: Bundle? = null
+    val bundle: Bundle? = null,
 ) : ViewEffect

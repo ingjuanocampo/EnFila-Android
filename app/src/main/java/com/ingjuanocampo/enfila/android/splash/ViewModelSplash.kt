@@ -11,18 +11,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelSplash
-@Inject
-constructor(
-    val loadInitInfoUC: LoadInitialInfoUC
-) : ViewModel() {
-    val state = MutableLiveData<SplashState>()
+    @Inject
+    constructor(
+        val loadInitInfoUC: LoadInitialInfoUC,
+    ) : ViewModel() {
+        val state = MutableLiveData<SplashState>()
 
-    fun launchSplash() {
-        launchGeneral {
-            loadInitInfoUC().let {
-                delay(TimeUnit.SECONDS.toMillis(1))
-                state.postValue(Navigate)
+        fun launchSplash() {
+            launchGeneral {
+                loadInitInfoUC().let {
+                    delay(TimeUnit.SECONDS.toMillis(1))
+                    state.postValue(Navigate)
+                }
             }
         }
     }
-}

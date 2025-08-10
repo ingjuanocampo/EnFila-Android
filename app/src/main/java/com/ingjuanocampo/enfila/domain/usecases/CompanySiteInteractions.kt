@@ -6,7 +6,7 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.base.Repository
 
 class CompanySiteInteractions(
     private val shiftsRepo: Repository<List<Shift>>,
-    private val companyRepo: Repository<List<CompanySite>>
+    private val companyRepo: Repository<List<CompanySite>>,
 ) {
     /*private var cacheCompany: CompanySite? = null
 

@@ -9,7 +9,7 @@ private val list =
         ShiftFactory.createWaiting(2, "3137550992", "Fast please", ""),
         ShiftFactory.createWaiting(3, "3137550993", "Fast please", ""),
         ShiftFactory.createWaiting(4, "3137550994", "Fast please", ""),
-        ShiftFactory.createWaiting(5, "3137550995", "Fast please", "")
+        ShiftFactory.createWaiting(5, "3137550995", "Fast please", ""),
     )
 /*
 

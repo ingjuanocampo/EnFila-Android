@@ -11,12 +11,12 @@ class FragmentShiftPager : FragmentBaseTab() {
             listOf(
                 FragmentTabItem(
                     title = "List",
-                    fragmentInstance = { FragmentListItems.newInstance() }
+                    fragmentInstance = { FragmentListItems.newInstance() },
                 ),
                 FragmentTabItem(
                     title = "History",
-                    fragmentInstance = { FragmentHistory.newInstance() }
-                )
+                    fragmentInstance = { FragmentHistory.newInstance() },
+                ),
             )
 
     companion object {

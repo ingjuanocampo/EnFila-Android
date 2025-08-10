@@ -30,7 +30,7 @@ class DataModule {
     @Provides
     fun bindsUserRepository(
         userRemoteImpl: UserRemoteImpl,
-        userLocalSource: UserLocalSource
+        userLocalSource: UserLocalSource,
     ): UserRepository {
         return UserRepositoryImpl(userRemoteImpl, userLocalSource)
     }
@@ -39,7 +39,7 @@ class DataModule {
     @Provides
     fun bindsCompanyRepository(
         companySiteRemoteSource: CompanySiteRemoteSource,
-        companySiteLocalSource: CompanySiteLocalSource
+        companySiteLocalSource: CompanySiteLocalSource,
     ): CompanyRepository {
         return CompanyRepositoryImpl(companySiteRemoteSource, companySiteLocalSource)
     }
@@ -54,7 +54,7 @@ class DataModule {
     @Provides
     fun providesShiftRepository(
         shiftsRemoteSourceImpl: ShiftsRemoteSourceImpl,
-        ShiftLocalSourceGenericCache: ShiftLocalSourceGenericCache
+        ShiftLocalSourceGenericCache: ShiftLocalSourceGenericCache,
     ): ShiftRepository {
         return ShiftRepositoryImpl(shiftsRemoteSourceImpl, ShiftLocalSourceGenericCache)
     }

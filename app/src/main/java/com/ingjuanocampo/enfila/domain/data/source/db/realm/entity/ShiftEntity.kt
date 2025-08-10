@@ -23,7 +23,7 @@ fun ShiftEntity.toModel(): Shift {
         number = this.number,
         contactId = this.contactId,
         notes = this.notes,
-        state = getShiftState(this.state)
+        state = getShiftState(this.state),
     )
 }
 

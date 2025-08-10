@@ -39,7 +39,7 @@ fun UserEntity.toModel(): User {
         id = here.id,
         phone = here.phone,
         name = here.name,
-        companyIds = here.companyIds.toList()
+        companyIds = here.companyIds.toList(),
     )
 }
 
