@@ -45,6 +45,11 @@
             android:id="@+id/fragmentShiftDetail"
             android:name="com.ingjuanocampo.enfila.android.home.list.details.FragmentShiftDetail"
             android:label="Detalles del Turno" />
+            
+        <fragment
+            android:id="@+id/client_details"
+            android:name="com.ingjuanocampo.enfila.android.home.clients.details.FragmentClientDetails"
+            android:label="Client Details" />
     </navigation>
 
 </navigation>

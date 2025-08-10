@@ -3,6 +3,7 @@ package com.ingjuanocampo.enfila.android.navigation
 import androidx.core.os.bundleOf
 import com.ingjuanocampo.common.composable.NavigationEffect
 import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.enfila.android.home.clients.details.FragmentClientDetails
 import com.ingjuanocampo.enfila.android.home.list.FragmentListItems
 import com.ingjuanocampo.enfila.android.home.list.details.FragmentShiftDetail
 import dagger.Binds
@@ -16,6 +17,8 @@ interface NavigationDestinations {
     fun toShiftByClient(clientId: String): NavigationEffect
 
     fun navigateToShiftDetails(id: String): NavigationEffect
+
+    fun navigateToClientDetails(clientId: String): NavigationEffect
 }
 
 class NavigationDestinationsListImp
@@ -36,6 +39,15 @@ class NavigationDestinationsListImp
                 label = "Shift details",
                 fragment = FragmentShiftDetail::class.qualifiedName.orEmpty(),
                 bundle = bundleOf("id" to id),
+            )
+        }
+
+        override fun navigateToClientDetails(clientId: String): NavigationEffect {
+            return NavigationEffect(
+                id = R.id.client_details,
+                label = "Client details",
+                fragment = FragmentClientDetails::class.qualifiedName.orEmpty(),
+                bundle = bundleOf("clientId" to clientId),
             )
         }
     }
