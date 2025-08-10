@@ -7,7 +7,7 @@ import com.ingjuanocampo.enfila.domain.entity.CompanySite
 data class HomeResume(
     val selectedCompany: CompanySite,
     var totalTurns: Int = 0,
-    var avrTime: String = "",
+    var avrTime: String = ""
 ) : RecyclerViewType {
     override fun getDelegateId(): Int {
         return selectedCompany.hashCode()

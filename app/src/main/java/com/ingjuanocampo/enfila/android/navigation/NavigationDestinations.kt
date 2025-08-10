@@ -19,26 +19,26 @@ interface NavigationDestinations {
 }
 
 class NavigationDestinationsListImp
-    @Inject
-    constructor() : NavigationDestinations {
-        override fun toShiftByClient(clientId: String): NavigationEffect {
-            return NavigationEffect(
-                id = R.id.shifts_by_client,
-                label = "Shift by client",
-                fragment = FragmentListItems::class.qualifiedName.orEmpty(),
-                bundle = bundleOf("ClientId" to clientId),
-            )
-        }
-
-        override fun navigateToShiftDetails(id: String): NavigationEffect {
-            return NavigationEffect(
-                id = R.id.shifts_detail,
-                label = "Shift details",
-                fragment = FragmentShiftDetail::class.qualifiedName.orEmpty(),
-                bundle = bundleOf("id" to id),
-            )
-        }
+@Inject
+constructor() : NavigationDestinations {
+    override fun toShiftByClient(clientId: String): NavigationEffect {
+        return NavigationEffect(
+            id = R.id.shifts_by_client,
+            label = "Shift by client",
+            fragment = FragmentListItems::class.qualifiedName.orEmpty(),
+            bundle = bundleOf("ClientId" to clientId)
+        )
     }
+
+    override fun navigateToShiftDetails(id: String): NavigationEffect {
+        return NavigationEffect(
+            id = R.id.shifts_detail,
+            label = "Shift details",
+            fragment = FragmentShiftDetail::class.qualifiedName.orEmpty(),
+            bundle = bundleOf("id" to id)
+        )
+    }
+}
 
 @InstallIn(SingletonComponent::class)
 @Module

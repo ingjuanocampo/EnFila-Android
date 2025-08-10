@@ -10,36 +10,36 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ViewModelClientList
-    @Inject
-    constructor(
-        private val loadClientListInformation: LoadClientListInformation,
-        private val navigation: NavigationDestinations,
-    ) : MviBaseViewModel<ClientsViewState>(ClientsViewState.Loading) {
-        private var cacheClients: List<Client>? = null
+@Inject
+constructor(
+    private val loadClientListInformation: LoadClientListInformation,
+    private val navigation: NavigationDestinations
+) : MviBaseViewModel<ClientsViewState>(ClientsViewState.Loading) {
+    private var cacheClients: List<Client>? = null
 
-        init {
-            launchGeneral {
-                loadClientListInformation.invoke().collect {
-                    cacheClients = it
-                    _state.value = ClientsViewState.DataLoaded(it)
-                }
+    init {
+        launchGeneral {
+            loadClientListInformation.invoke().collect {
+                cacheClients = it
+                _state.value = ClientsViewState.DataLoaded(it)
             }
         }
-
-        fun onSearch(query: String) {
-            launchGeneral {
-                val filteredList =
-                    cacheClients?.filter {
-                        it.name!!.toLowerCase().contains(query.toLowerCase())
-                    }
-                filteredList?.let {
-                    _state.value = ClientsViewState.DataLoaded(filteredList)
-                }
-            }
-        }
-
-        fun onClientSelected(id: String) =
-            launchGeneral {
-                _event.emit(navigation.toShiftByClient(id))
-            }
     }
+
+    fun onSearch(query: String) {
+        launchGeneral {
+            val filteredList =
+                cacheClients?.filter {
+                    it.name!!.toLowerCase().contains(query.toLowerCase())
+                }
+            filteredList?.let {
+                _state.value = ClientsViewState.DataLoaded(filteredList)
+            }
+        }
+    }
+
+    fun onClientSelected(id: String) =
+        launchGeneral {
+            _event.emit(navigation.toShiftByClient(id))
+        }
+}

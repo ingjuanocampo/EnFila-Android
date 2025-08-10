@@ -14,10 +14,10 @@ class DelegateActiveShift(
         DelegateActiveTurnBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false,
+            false
         ),
     private val finishListener: (String) -> Unit,
-    private val onShiftListener: (String) -> Unit,
+    private val onShiftListener: (String) -> Unit
 ) : DelegateViewHolder(biding.root) {
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as ShiftItem

@@ -18,7 +18,7 @@ android {
         applicationId = "com.ingjuanocampo.enfila.android"
 
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.compileSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -46,7 +46,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.8"
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     lint {
         baseline = file("lint-baseline.xml")
@@ -57,7 +57,7 @@ dependencies {
     implementation(
         fileTree("libs") {
             include("*.jar")
-        }
+        },
     )
 
     // Kotlin

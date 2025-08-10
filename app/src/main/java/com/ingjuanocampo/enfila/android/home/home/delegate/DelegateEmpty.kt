@@ -16,8 +16,8 @@ class DelegateEmpty(
         ComposableItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false,
-        ),
+            false
+        )
 ) : DelegateViewHolder(binding.root) {
     override fun onBindViewHolder(recyclerViewType: RecyclerViewType) {
         recyclerViewType as EmptyDelegate

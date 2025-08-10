@@ -38,7 +38,7 @@ private val LightColors =
         onPrimaryContainer = md_theme_light_onPrimaryContainer,
         onPrimary = md_theme_light_onPrimary,
         primaryContainer = md_theme_light_primaryContainer,
-        primary = md_theme_light_primary,
+        primary = md_theme_light_primary
     )
 
 private val DarkColors =
@@ -69,7 +69,7 @@ private val DarkColors =
         onPrimaryContainer = md_theme_dark_onPrimaryContainer,
         onPrimary = md_theme_dark_onPrimary,
         primaryContainer = md_theme_dark_primaryContainer,
-        primary = md_theme_dark_primary,
+        primary = md_theme_dark_primary
     )
 
 @Composable
@@ -77,7 +77,7 @@ fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content:
         @Composable()
-        () -> Unit,
+        () -> Unit
 ) {
     val colors =
         if (!useDarkTheme) {
@@ -89,7 +89,7 @@ fun AppTheme(
     MaterialTheme(
         colorScheme = colors,
         content = content,
-        typography = Typography,
+        typography = Typography
     )
 }
 
@@ -100,7 +100,7 @@ internal object TextAppStyles {
             color = MaterialTheme.colorScheme.secondary,
             fontSize = 25.sp,
             fontFamily = SansSerif,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Bold
         )
 
     @Composable
@@ -109,7 +109,7 @@ internal object TextAppStyles {
             color = MaterialTheme.colorScheme.secondary,
             fontSize = 16.sp,
             fontFamily = SansSerif,
-            fontWeight = FontWeight.Medium,
+            fontWeight = FontWeight.Medium
         )
 
     @Composable
@@ -118,7 +118,7 @@ internal object TextAppStyles {
             color = MaterialTheme.colorScheme.error,
             fontSize = 16.sp,
             fontFamily = SansSerif,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Bold
         )
 
     @Composable
@@ -127,7 +127,7 @@ internal object TextAppStyles {
             color = MaterialTheme.colorScheme.tertiary,
             fontSize = 16.sp,
             fontFamily = SansSerif,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Bold
         )
 
     @Composable
@@ -135,7 +135,7 @@ internal object TextAppStyles {
         TextStyle(
             color = MaterialTheme.colorScheme.secondary,
             fontSize = 14.sp,
-            fontFamily = SansSerif,
+            fontFamily = SansSerif
         )
 
     @Composable
@@ -143,6 +143,6 @@ internal object TextAppStyles {
         TextStyle(
             color = MaterialTheme.colorScheme.secondary,
             fontSize = 10.sp,
-            fontFamily = SansSerif,
+            fontFamily = SansSerif
         )
 }

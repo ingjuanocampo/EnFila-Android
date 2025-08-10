@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
             Observer {
                 finishAffinity()
                 stateProvider.provideCurrentState().navigateLaunchScreen(this)
-            },
+            }
         )
     }
 

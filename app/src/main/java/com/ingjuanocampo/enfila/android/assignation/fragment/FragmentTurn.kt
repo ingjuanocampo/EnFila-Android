@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.AssignationState
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentTurn : Fragment() {
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     private val viewModel: ViewModelAssignation by activityViewModels()
 
@@ -27,14 +27,14 @@ class FragmentTurn : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_turn, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,7 +78,7 @@ class FragmentTurn : Fragment() {
         @JvmStatic
         fun newInstance(
             param1: String,
-            param2: String,
+            param2: String
         ) = FragmentTurn()
     }
 }

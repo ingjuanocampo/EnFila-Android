@@ -1,61 +1,64 @@
 [versions]
 # Kotlin & Gradle
 kotlinAndroidGradle = "4.0.1"
-kotlin = "1.8.22"
+kotlin = "1.9.24"
+agp_version = "8.2.2"
 
 # Android SDK
 compileSdk = "34"
+targetSdk = "34"
 minSdk = "26"
 
-# Android Core
-androidX = "1.6.1"
-androidCore = "1.8.0"
+# Android Core  
+androidX = "1.7.0"
+androidCore = "1.12.0"
 androidLegacyX = "1.0.0"
 
 # Architecture Components
-architectureComponent = "2.6.1"
-coroutines = "1.7.3"
-hilt = "2.44"
-dagger = "2.47"
+architectureComponent = "2.7.0"
+coroutines = "1.8.1"
+hilt = "2.48"
+dagger = "2.48"
 
 # UI Components
-material = "1.11.0-alpha01"
+material = "1.12.0"
 constraintLayout = "2.1.4"
-recyclerViewX = "1.3.1"
-navigationComponent = "2.3.5"
+recyclerViewX = "1.3.2"
+navigationComponent = "2.7.4"
 
 # Compose
-compose = "1.5.0"
-composeVM = "2.6.1"
-composeMaterial3 = "1.2.0-alpha05"
+compose = "1.6.8"
+composeVM = "2.8.0"
+composeMaterial3 = "1.2.1"
 constraintCompose = "1.0.1"
+composeCompiler = "1.5.14"
 
 # Networking
-retrofit = "2.9.0"
-gson = "2.9.1"
+retrofit = "2.11.0"
+gson = "2.11.0"
 
 # Image Loading
-picasso = "2.71828"
+picasso = "2.8"
 
 # Firebase
-firebaseBom = "31.1.0"
+firebaseBom = "33.3.0"
 
 # Data Storage
-dataStore = "1.0.0"
+dataStore = "1.1.1"
 
 # Google Services
-googleAuth = "20.6.0"
-googleSafetyNet = "18.0.1"
+googleAuth = "21.2.0"
+googleSafetyNet = "18.1.0"
 
 # Custom Libraries
 composeAdapter = "1.0.3"
-fragments = "1.5.7"
+fragments = "1.8.2"
 
 # Testing
-junit = "4.12"
-mockito = "2.13.0"
-androidRunner = "1.1.1"
-androidEspresso = "3.1.1"
+junit = "4.13.2"
+mockito = "5.14.0"
+androidRunner = "1.6.2"
+androidEspresso = "3.6.1"
 
 [libraries]
 # Kotlin
@@ -152,10 +155,10 @@ retrofit = ["retrofit", "retrofit-gson", "gson"]
 testing = ["junit", "android-test-runner", "android-test-espresso"]
 
 [plugins]
-android-application = { id = "com.android.application", version = "8.1.0" }
-android-library = { id = "com.android.library", version = "8.1.0" }
+android-application = { id = "com.android.application", version.ref = "agp_version" }
+android-library = { id = "com.android.library", version.ref = "agp_version" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.5.1" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.2" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }

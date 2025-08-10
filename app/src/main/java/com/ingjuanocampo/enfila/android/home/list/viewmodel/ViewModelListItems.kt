@@ -15,46 +15,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelListItems
-    @Inject
-    constructor(
-        private val listUC: ListUC,
-        private val finishShiftUC: FinishShiftUC,
-    ) : ViewModel() {
-        val state = MutableLiveData<List<ShiftItem>>()
+@Inject
+constructor(
+    private val listUC: ListUC,
+    private val finishShiftUC: FinishShiftUC
+) : ViewModel() {
+    val state = MutableLiveData<List<ShiftItem>>()
 
-        fun load(
-            isActive: Boolean = true,
-            bundle: Bundle? = null,
-        ) {
-            val clientId = bundle?.getString("ClientId")
-            launchGeneral {
-                (
-                    if (clientId.isNullOrEmpty().not()) {
-                        listUC.loadByClientId(clientId!!)
-                    } else if (isActive) {
-                        listUC.loadActiveShift()
-                    } else {
-                        listUC.loadInactiveShift()
-                    }
-                ).map { shifts ->
-                    shifts.map {
-                        it.mapToUI()
-                    }
-                }.map {
-                    if (isActive) {
-                        it
-                    } else {
-                        it.sortedByDescending { item -> item.endDate }
-                    }
-                }.collect {
-                    state.postValue(it)
+    fun load(
+        isActive: Boolean = true,
+        bundle: Bundle? = null
+    ) {
+        val clientId = bundle?.getString("ClientId")
+        launchGeneral {
+            (
+                if (clientId.isNullOrEmpty().not()) {
+                    listUC.loadByClientId(clientId!!)
+                } else if (isActive) {
+                    listUC.loadActiveShift()
+                } else {
+                    listUC.loadInactiveShift()
                 }
-            }
-        }
-
-        fun finish(id: String) {
-            viewModelScope.launchGeneral {
-                finishShiftUC.invoke(id).collect { }
+                ).map { shifts ->
+                shifts.map {
+                    it.mapToUI()
+                }
+            }.map {
+                if (isActive) {
+                    it
+                } else {
+                    it.sortedByDescending { item -> item.endDate }
+                }
+            }.collect {
+                state.postValue(it)
             }
         }
     }
+
+    fun finish(id: String) {
+        viewModelScope.launchGeneral {
+            finishShiftUC.invoke(id).collect { }
+        }
+    }
+}

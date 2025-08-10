@@ -9,17 +9,17 @@ import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class UserRemoteImpl
-    @Inject
-    constructor(private val userRemoteSource: UserRemoteSource) : RemoteSource<User> {
-        override suspend fun fetchDataAll(id: String): List<User>? = listOf(fetchData(id)!!)
+@Inject
+constructor(private val userRemoteSource: UserRemoteSource) : RemoteSource<User> {
+    override suspend fun fetchDataAll(id: String): List<User>? = listOf(fetchData(id)!!)
 
-        override fun uploadData(data: User) = userRemoteSource.updateData(data)
+    override fun uploadData(data: User) = userRemoteSource.updateData(data)
 
-        override suspend fun fetchData(id: String): User? {
-            return userRemoteSource.fetchData(id).firstOrNull()
-        }
-
-        override fun uploadData(data: List<User>): Flow<List<User>?> {
-            return flowOf(data)
-        }
+    override suspend fun fetchData(id: String): User? {
+        return userRemoteSource.fetchData(id).firstOrNull()
     }
+
+    override fun uploadData(data: List<User>): Flow<List<User>?> {
+        return flowOf(data)
+    }
+}

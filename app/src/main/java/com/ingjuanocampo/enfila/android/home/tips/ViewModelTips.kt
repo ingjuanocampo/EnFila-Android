@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelTips
-    @Inject
-    constructor() : ViewModel() {
-        // TODO: Implement the ViewModel
-    }
+@Inject
+constructor() : ViewModel() {
+    // TODO: Implement the ViewModel
+}

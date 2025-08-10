@@ -11,14 +11,14 @@ import javax.inject.Singleton
 
 @Singleton
 class LoggedStateImpl
-    @Inject
-    constructor() : LoggedState {
-        override fun navigateLaunchScreen(context: Context) {
-            (context as? Activity)?.finishAffinity()
-            context.startActivity(
-                Intent(context, ActivityLobby::class.java).apply {
-                    flags = FLAG_ACTIVITY_NEW_TASK
-                },
-            )
-        }
+@Inject
+constructor() : LoggedState {
+    override fun navigateLaunchScreen(context: Context) {
+        (context as? Activity)?.finishAffinity()
+        context.startActivity(
+            Intent(context, ActivityLobby::class.java).apply {
+                flags = FLAG_ACTIVITY_NEW_TASK
+            }
+        )
     }
+}

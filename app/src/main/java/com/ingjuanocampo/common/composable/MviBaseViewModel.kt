@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 abstract class MviBaseViewModel<STATE>(
-    initialState: STATE,
+    initialState: STATE
 ) : ViewModel() {
     protected val _state = MutableStateFlow<STATE>(initialState)
     val state: StateFlow<STATE> = _state.asStateFlow()
@@ -18,7 +18,7 @@ abstract class MviBaseViewModel<STATE>(
     val _event =
         MutableSharedFlow<ViewEffect>(
             extraBufferCapacity = 1,
-            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
 
     val event: SharedFlow<ViewEffect> = _event.asSharedFlow()

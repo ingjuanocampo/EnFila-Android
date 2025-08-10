@@ -9,7 +9,7 @@ import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO navigation and general error handling
 @AndroidEntryPoint
 class FragmentNameNote : Fragment() {
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     private val viewModel: ViewModelAssignation by activityViewModels()
 
@@ -28,7 +28,7 @@ class FragmentNameNote : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_name_note, container, false)
@@ -36,7 +36,7 @@ class FragmentNameNote : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         val nameEd =

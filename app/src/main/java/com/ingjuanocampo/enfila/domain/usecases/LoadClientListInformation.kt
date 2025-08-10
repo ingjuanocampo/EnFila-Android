@@ -10,17 +10,17 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class LoadClientListInformation
-    @Inject
-    constructor(
-        private val clientRepository: ClientRepository,
-    ) {
-        operator fun invoke(): Flow<List<Client>> {
-            return clientRepository.getAllObserveData().filterNotNull().map {
-                it.sortedBy { client ->
-                    client.name
-                }.sortedByDescending { client ->
-                    client.shifts?.size
-                }
+@Inject
+constructor(
+    private val clientRepository: ClientRepository
+) {
+    operator fun invoke(): Flow<List<Client>> {
+        return clientRepository.getAllObserveData().filterNotNull().map {
+            it.sortedBy { client ->
+                client.name
+            }.sortedByDescending { client ->
+                client.shifts?.size
             }
         }
     }
+}

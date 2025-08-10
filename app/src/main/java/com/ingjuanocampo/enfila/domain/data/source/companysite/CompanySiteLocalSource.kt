@@ -9,38 +9,38 @@ import javax.inject.Inject
 var companySite: CompanySite? = null
 
 class CompanySiteLocalSource
-    @Inject
-    constructor() : LocalSource<CompanySite> {
-        override suspend fun createOrUpdate(data: CompanySite) {
-            companySite = data
-        }
-
-        override suspend fun delete(dataToDelete: CompanySite) {
-            companySite = null
-        }
-
-        override fun getAllObserveData(): Flow<List<CompanySite>?> {
-            return companySite?.let {
-                flowOf(listOf(it))
-            } ?: flowOf(null)
-        }
-
-        override suspend fun getAllData(): List<CompanySite>? {
-            return (companySite.let { listOf(it) } ?: listOf<CompanySite>()) as List<CompanySite>?
-        }
-
-        override suspend fun deleteAll() {
-            companySite = null
-        }
-
-        override suspend fun getById(id: String): CompanySite? {
-            return companySite
-        }
-
-        override suspend fun delete(id: String) {
-        }
-
-        override suspend fun createOrUpdate(data: List<CompanySite>) {
-            companySite = data.firstOrNull()
-        }
+@Inject
+constructor() : LocalSource<CompanySite> {
+    override suspend fun createOrUpdate(data: CompanySite) {
+        companySite = data
     }
+
+    override suspend fun delete(dataToDelete: CompanySite) {
+        companySite = null
+    }
+
+    override fun getAllObserveData(): Flow<List<CompanySite>?> {
+        return companySite?.let {
+            flowOf(listOf(it))
+        } ?: flowOf(null)
+    }
+
+    override suspend fun getAllData(): List<CompanySite>? {
+        return (companySite.let { listOf(it) } ?: listOf<CompanySite>()) as List<CompanySite>?
+    }
+
+    override suspend fun deleteAll() {
+        companySite = null
+    }
+
+    override suspend fun getById(id: String): CompanySite? {
+        return companySite
+    }
+
+    override suspend fun delete(id: String) {
+    }
+
+    override suspend fun createOrUpdate(data: List<CompanySite>) {
+        companySite = data.firstOrNull()
+    }
+}

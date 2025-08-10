@@ -16,54 +16,54 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShiftDetailsViewModel
-    @Inject
-    constructor(
-        private val loadShiftDetails: LoadShiftDetails,
-        private val homeUC: HomeUC,
-        private val finishShiftUC: FinishShiftUC,
-    ) : MviBaseViewModel<ShiftItem>(ShiftItem()) {
-        private var id: String? = null
+@Inject
+constructor(
+    private val loadShiftDetails: LoadShiftDetails,
+    private val homeUC: HomeUC,
+    private val finishShiftUC: FinishShiftUC
+) : MviBaseViewModel<ShiftItem>(ShiftItem()) {
+    private var id: String? = null
 
-        fun init(arguments: Bundle) {
-            launchGeneral {
-                id = arguments.getString("id")
-                val shiftClient = loadShiftDetails.invoke(id!!).mapToUI()
-                _state.value = shiftClient
-            }
-        }
-
-        fun onCancel() {
-            // TODO place a loader, make sure to reload or observe, and fix UI detaisl
-            viewModelScope.launchGeneral {
-                setProgress()
-                homeUC.cancel(id!!).reLoad()
-            }
-        }
-
-        private suspend fun Flow<*>.reLoad() =
-            this.map {
-                loadShiftDetails.invoke(id!!).mapToUI()
-            }.collect {
-                _state.value = it
-            }
-
-        private fun setProgress() {
-            setState {
-                copy(isProcessingActions = true)
-            }
-        }
-
-        fun onActive() {
-            viewModelScope.launchGeneral {
-                setProgress()
-                homeUC.next(id!!).reLoad()
-            }
-        }
-
-        fun onFinish() {
-            viewModelScope.launchGeneral {
-                setProgress()
-                finishShiftUC.invoke(id!!).reLoad()
-            }
+    fun init(arguments: Bundle) {
+        launchGeneral {
+            id = arguments.getString("id")
+            val shiftClient = loadShiftDetails.invoke(id!!).mapToUI()
+            _state.value = shiftClient
         }
     }
+
+    fun onCancel() {
+        // TODO place a loader, make sure to reload or observe, and fix UI detaisl
+        viewModelScope.launchGeneral {
+            setProgress()
+            homeUC.cancel(id!!).reLoad()
+        }
+    }
+
+    private suspend fun Flow<*>.reLoad() =
+        this.map {
+            loadShiftDetails.invoke(id!!).mapToUI()
+        }.collect {
+            _state.value = it
+        }
+
+    private fun setProgress() {
+        setState {
+            copy(isProcessingActions = true)
+        }
+    }
+
+    fun onActive() {
+        viewModelScope.launchGeneral {
+            setProgress()
+            homeUC.next(id!!).reLoad()
+        }
+    }
+
+    fun onFinish() {
+        viewModelScope.launchGeneral {
+            setProgress()
+            finishShiftUC.invoke(id!!).reLoad()
+        }
+    }
+}

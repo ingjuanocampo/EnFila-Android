@@ -12,27 +12,27 @@ import javax.inject.Inject
 const val companyInfoPath = basePath + "_company"
 
 class CompanyInfoRemoteSource
-    @Inject
-    constructor() {
-        private val db by lazy { Firebase.firestore }
+@Inject
+constructor() {
+    private val db by lazy { Firebase.firestore }
 
-        fun fetchData(id: String): Flow<CompanySite?> {
-            return db.fetchProcess({ data ->
-                return@fetchProcess CompanySite(
-                    id = id,
-                    name = data["name"] as String?,
-                    shiftsIdList = data["shiftList"] as List<String>?,
-                )
-            }, companyInfoPath, id)
-        }
-
-        fun updateData(data: CompanySite): Flow<CompanySite?> {
-            return db.uploadProcess({
-                return@uploadProcess hashMapOf(
-                    "id" to data.id,
-                    "name" to data.name,
-                    "shiftList" to data.shiftsIdList,
-                )
-            }, data, companyInfoPath, data.id)
-        }
+    fun fetchData(id: String): Flow<CompanySite?> {
+        return db.fetchProcess({ data ->
+            return@fetchProcess CompanySite(
+                id = id,
+                name = data["name"] as String?,
+                shiftsIdList = data["shiftList"] as List<String>?
+            )
+        }, companyInfoPath, id)
     }
+
+    fun updateData(data: CompanySite): Flow<CompanySite?> {
+        return db.uploadProcess({
+            return@uploadProcess hashMapOf(
+                "id" to data.id,
+                "name" to data.name,
+                "shiftList" to data.shiftsIdList
+            )
+        }, data, companyInfoPath, data.id)
+    }
+}

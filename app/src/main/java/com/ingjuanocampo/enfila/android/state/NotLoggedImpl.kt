@@ -10,14 +10,14 @@ import javax.inject.Singleton
 
 @Singleton
 class NotLoggedImpl
-    @Inject
-    constructor() : NotLoggedState {
-        override fun navigateLaunchScreen(context: Context) {
-            (context as? Activity)?.finishAffinity()
-            context.startActivity(
-                Intent(context, ActivityLogin::class.java).apply {
-                    // flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                },
-            )
-        }
+@Inject
+constructor() : NotLoggedState {
+    override fun navigateLaunchScreen(context: Context) {
+        (context as? Activity)?.finishAffinity()
+        context.startActivity(
+            Intent(context, ActivityLogin::class.java).apply {
+                // flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+        )
     }
+}

@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.login.viewmodel.LoginState
@@ -24,19 +24,19 @@ class FragmentVerificationCode : Fragment() {
     @Inject
     lateinit var stateProvider: AppStateProvider
     val viewModel by viewModels<ViewModelLogin>(ownerProducer = { requireActivity() })
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.verification_code, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         val verificationCode = view.findViewById<EditText>(R.id.verificationCode)
@@ -46,7 +46,7 @@ class FragmentVerificationCode : Fragment() {
         }
 
         viewModel.state.observe(
-            viewLifecycleOwner,
+            viewLifecycleOwner
         ) {
             when (it) {
                 is LoginState.AuthenticationProcessState ->
@@ -61,7 +61,7 @@ class FragmentVerificationCode : Fragment() {
                                 Bundle().apply {
                                     putString("phone", viewModel.phoneNumber)
                                     putString("id", it.authState.id)
-                                },
+                                }
                             )
 
                         is AuthState.AuthError -> showToast("Error" + it.authState.e.toString())

@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.ingjuanocampo.enfila.android.ui.common.ComposeBottomSheetDialog
 import com.ingjuanocampo.enfila.android.utils.navigateToCustomDest
 import kotlinx.coroutines.Dispatchers
@@ -22,13 +22,13 @@ import kotlinx.coroutines.withContext
 
 abstract class BaseComposableFragment<STATE> : Fragment() {
     abstract val viewModel: MviBaseViewModel<STATE>
-    protected val navController by lazy { NavHostFragment.findNavController(this) }
+    protected val navController by lazy { findNavController() }
     private val showDialog: MutableStateFlow<ShowErrorDialogEffect?> = MutableStateFlow(null)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {

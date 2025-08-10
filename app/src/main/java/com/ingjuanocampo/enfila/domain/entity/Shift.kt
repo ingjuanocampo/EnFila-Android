@@ -13,7 +13,7 @@ data class Shift internal constructor(
     val notes: String?,
     var state: ShiftState,
     var attentionStartDate: Long? = null,
-    var endDate: Long? = null,
+    var endDate: Long? = null
 ) : Comparable<Shift>, IdentifyObject {
     override fun compareTo(other: Shift): Int {
         val numberCompare = this.number.compareTo(other.number)
@@ -45,7 +45,7 @@ object ShiftFactory {
         number: Int,
         contactId: String,
         notes: String,
-        currentCompanySiteId: String,
+        currentCompanySiteId: String
     ): Shift {
         val instantNow = getNow()
         return Shift(
@@ -55,7 +55,7 @@ object ShiftFactory {
             number = number,
             contactId = contactId,
             notes = notes,
-            state = ShiftState.WAITING,
+            state = ShiftState.WAITING
         )
     }
 }

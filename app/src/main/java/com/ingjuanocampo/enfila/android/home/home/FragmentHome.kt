@@ -11,7 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.ingjuanocampo.cdapter.CompositeDelegateAdapter
 import com.ingjuanocampo.common.composable.GenericEmptyState
 import com.ingjuanocampo.enfila.android.R
@@ -35,12 +35,12 @@ class FragmentHome : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -48,7 +48,7 @@ class FragmentHome : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -91,7 +91,7 @@ class FragmentHome : Fragment() {
                     binding.emptyComposeContainer.setContent {
                         GenericEmptyState(
                             title = getString(R.string.empty_home),
-                            icon = Icons.Outlined.AddHome,
+                            icon = Icons.Outlined.AddHome
                         )
                     }
                 }
@@ -122,7 +122,7 @@ class FragmentHome : Fragment() {
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.dashboard_menu, menu)

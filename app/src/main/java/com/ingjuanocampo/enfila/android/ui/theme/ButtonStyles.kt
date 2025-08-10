@@ -30,25 +30,25 @@ fun ButtonPrimary(
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     disabledContainerColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     disabledContentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    enableState: MutableStateFlow<Boolean> = MutableStateFlow(true),
+    enableState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 ) {
     val isEnable by enableState.collectAsState()
     Button(
         modifier = modifier.height(44.dp),
         shape = MaterialTheme.shapes.medium,
         colors =
-            ButtonDefaults.buttonColors(
-                containerColor,
-                contentColor,
-                disabledContainerColor,
-                disabledContentColor,
-            ),
+        ButtonDefaults.buttonColors(
+            containerColor,
+            contentColor,
+            disabledContainerColor,
+            disabledContentColor
+        ),
         onClick = onClick,
-        enabled = isEnable,
+        enabled = isEnable
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyMedium.copy(color = contentColor, fontWeight = FontWeight.Medium),
+            style = MaterialTheme.typography.bodyMedium.copy(color = contentColor, fontWeight = FontWeight.Medium)
         )
     }
 }
@@ -57,7 +57,7 @@ fun ButtonPrimary(
 fun ButtonGrayStroke(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = ButtonPrimaryStroke(onClick, text, modifier, MaterialTheme.colorScheme.onSurface)
 
 @Composable
@@ -65,16 +65,16 @@ fun ButtonPrimaryStroke(
     onClick: () -> Unit,
     text: String,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.primary,
+    containerColor: Color = MaterialTheme.colorScheme.primary
 ) = OutlinedButton(
     modifier = modifier.height(44.dp),
     shape = MaterialTheme.shapes.medium,
     border = BorderStroke(1.dp, containerColor),
-    onClick = onClick,
+    onClick = onClick
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.bodyMedium.copy(color = containerColor, fontWeight = FontWeight.Medium),
+        style = MaterialTheme.typography.bodyMedium.copy(color = containerColor, fontWeight = FontWeight.Medium)
     )
 }
 
@@ -82,65 +82,65 @@ fun ButtonPrimaryStroke(
 fun ButtonSecondary(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = ButtonPrimary(
     onClick,
     text,
     modifier = modifier,
     containerColor = MaterialTheme.colorScheme.secondaryContainer,
-    contentColor = MaterialTheme.colorScheme.onSecondary,
+    contentColor = MaterialTheme.colorScheme.onSecondary
 )
 
 @Composable
 fun ButtonTertiary(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = ButtonPrimary(
     onClick,
     text,
     modifier = modifier,
     containerColor = MaterialTheme.colorScheme.tertiary,
-    contentColor = MaterialTheme.colorScheme.onTertiary,
+    contentColor = MaterialTheme.colorScheme.onTertiary
 )
 
 @Composable
 fun ButtonError(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = ButtonPrimary(
     onClick,
     text,
     modifier = modifier,
     containerColor = MaterialTheme.colorScheme.error,
-    contentColor = MaterialTheme.colorScheme.onError,
+    contentColor = MaterialTheme.colorScheme.onError
 )
 
 @Composable
 fun ButtonSurface(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = ButtonPrimary(
     onClick,
     text,
     modifier = modifier,
     containerColor = MaterialTheme.colorScheme.onSurface,
-    contentColor = MaterialTheme.colorScheme.onPrimary,
+    contentColor = MaterialTheme.colorScheme.onPrimary
 )
 
 @Composable
 fun ButtonGreyLight(
     onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = ButtonPrimary(
     onClick,
     text,
     modifier = modifier,
     containerColor = MaterialTheme.colorScheme.surface,
-    contentColor = MaterialTheme.colorScheme.onSurface,
+    contentColor = MaterialTheme.colorScheme.onSurface
 )
 
 @Composable
@@ -154,56 +154,56 @@ fun ButtonContainer() {
             {
             },
             "ButtonPrimary",
-            modifier,
+            modifier
         )
 
         ButtonGrayStroke(
             {
             },
             "ButtonGrayStroke",
-            modifier,
+            modifier
         )
 
         ButtonPrimaryStroke(
             {
             },
             "ButtonPrimaryStroke",
-            modifier,
+            modifier
         )
 
         ButtonGreyLight(
             {
             },
             "ButtonGreyLight",
-            modifier,
+            modifier
         )
 
         ButtonSecondary(
             {
             },
             "ButtonSecondary",
-            modifier,
+            modifier
         )
 
         ButtonTertiary(
             {
             },
             "ButtonTertiary",
-            modifier,
+            modifier
         )
 
         ButtonSurface(
             {
             },
             "ButtonSurface",
-            modifier,
+            modifier
         )
 
         ButtonError(
             {
             },
             "ButtonError",
-            modifier,
+            modifier
         )
     }
 }
@@ -211,7 +211,7 @@ fun ButtonContainer() {
 @Preview(
     device = Devices.PIXEL_4,
     backgroundColor = 0XFFFFFF,
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun PreviewButtons() {
@@ -223,7 +223,7 @@ fun PreviewButtons() {
 @Preview(
     device = Devices.PIXEL_4,
     backgroundColor = 0XFF000000,
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun PreviewButtonsDark() {

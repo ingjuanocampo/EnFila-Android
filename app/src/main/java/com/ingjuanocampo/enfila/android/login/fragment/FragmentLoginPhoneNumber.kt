@@ -9,7 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.login.viewmodel.LoginState
@@ -25,21 +25,21 @@ class FragmentLoginPhoneNumber : Fragment() {
     lateinit var stateProvider: AppStateProvider
 
     private lateinit var doVerificationButton: FloatingActionButton
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     val viewModel by viewModels<ViewModelLogin>(ownerProducer = { requireActivity() })
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.login_phone_number, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         val phoneNumber = view.findViewById<EditText>(R.id.phoneNumber)
@@ -62,7 +62,7 @@ class FragmentLoginPhoneNumber : Fragment() {
                     is LoginState.AuthenticationProcessState -> process(it.authState)
                     LoginState.NumberSet -> doVerificationButton.isEnabled = true
                 }
-            },
+            }
         )
     }
 

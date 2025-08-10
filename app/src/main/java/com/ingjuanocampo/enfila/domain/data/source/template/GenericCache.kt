@@ -39,7 +39,7 @@ class GenericCache<T : IdentifyObject> : Storage<T> {
                 } finally {
                 }
             },
-            shareCacheFlow,
+            shareCacheFlow
         )
     }
 

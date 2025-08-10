@@ -28,7 +28,7 @@ class FragmentNewCompany : Fragment() {
 
         fun newInstance(
             phone: String,
-            id: String,
+            id: String
         ) = FragmentNewCompany().apply {
             val arguments = Bundle()
             arguments.putString("phone", phone)
@@ -43,14 +43,14 @@ class FragmentNewCompany : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         phoneNumber = view.findViewById<EditText>(R.id.phoneNumber)
@@ -70,7 +70,7 @@ class FragmentNewCompany : Fragment() {
                     is ProfileState.CreationFlow -> setPhoneAsBlocked(it.phone)
                     is ProfileState.AuthProcess -> handleAuthProcess(it.authState)
                 }
-            },
+            }
         )
     }
 

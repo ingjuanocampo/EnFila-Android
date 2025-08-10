@@ -11,38 +11,38 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelFragmentProfile
-    @Inject
-    constructor(
-        private val signUc: SignInUC,
-    ) : ViewModel() {
-        private var id: String? = null
-        private var phone: String? = null
-        val state = MutableLiveData<ProfileState>()
+@Inject
+constructor(
+    private val signUc: SignInUC
+) : ViewModel() {
+    private var id: String? = null
+    private var phone: String? = null
+    val state = MutableLiveData<ProfileState>()
 
-        fun init(arguments: Bundle?) {
-            launchGeneral {
-                phone = arguments?.getString("phone")
-                id = arguments?.getString("id")
+    fun init(arguments: Bundle?) {
+        launchGeneral {
+            phone = arguments?.getString("phone")
+            id = arguments?.getString("id")
 
-                if (phone != null) {
-                    state.postValue(ProfileState.CreationFlow(phone!!))
-                } else {
-                    // Load info internally
-                }
-            }
-        }
-
-        fun createUserAndLogin(
-            name: String,
-            companyName: String,
-        ) {
-            launchGeneral {
-                val it =
-                    signUc.createUserAndSignIn(
-                        User(id = id!!, phone = phone!!, name = name),
-                        companyName,
-                    )
-                state.postValue(ProfileState.AuthProcess(it))
+            if (phone != null) {
+                state.postValue(ProfileState.CreationFlow(phone!!))
+            } else {
+                // Load info internally
             }
         }
     }
+
+    fun createUserAndLogin(
+        name: String,
+        companyName: String
+    ) {
+        launchGeneral {
+            val it =
+                signUc.createUserAndSignIn(
+                    User(id = id!!, phone = phone!!, name = name),
+                    companyName
+                )
+            state.postValue(ProfileState.AuthProcess(it))
+        }
+    }
+}

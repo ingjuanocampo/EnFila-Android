@@ -35,10 +35,10 @@ fun MviBaseViewModel<*>.launchGeneralWithErrorHandling(function: suspend () -> U
             _event.tryEmit(
                 ShowErrorDialogEffect(
                     title = "Something went wrong",
-                    description = "Please try later",
-                ),
+                    description = "Please try later"
+                )
             )
-        } + Dispatchers.Default,
+        } + Dispatchers.Default
     ) {
         function()
     }

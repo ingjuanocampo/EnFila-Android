@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.AssignationState
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BottomSheetAssignation : BottomSheetDialogFragment() {
-    private val navController by lazy { findNavController(this) }
+    private val navController by lazy { findNavController() }
     private val viewModel: ViewModelAssignation by viewModels(ownerProducer = { this })
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -32,14 +32,14 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.activity_assignation, container, false)
     }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,7 +49,7 @@ class BottomSheetAssignation : BottomSheetDialogFragment() {
                 if (it is AssignationState.AssignationSet) {
                     dismiss()
                 }
-            },
+            }
         )
     }
 }

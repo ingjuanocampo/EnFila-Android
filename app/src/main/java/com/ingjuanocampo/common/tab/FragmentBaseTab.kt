@@ -17,7 +17,7 @@ abstract class FragmentBaseTab : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentBaseTabBinding.inflate(inflater, container, false)
         return binding.root
@@ -25,7 +25,7 @@ abstract class FragmentBaseTab : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 

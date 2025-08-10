@@ -13,47 +13,47 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class SignInUC
-    @Inject
-    constructor(
-        private val userRepository: UserRepository,
-        private val companySiteRepository: CompanyRepository,
-        private val appStateProvider: AppStateProvider,
-        private val shiftRepository: ShiftRepository,
-        private val clientRepository: ClientRepository,
-    ) {
-        operator fun invoke(id: String): Flow<AuthState> {
-            userRepository.id = id
-            return flowOf(id).map {
-                userRepository.refresh()
-                val user = userRepository.loadById(id)
-                companySiteRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
-                shiftRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
-                companySiteRepository.refresh()
-                clientRepository.refresh()
-                val companyData = companySiteRepository.loadAllData()
-                if (companyData != null) {
-                    shiftRepository.refresh()
-                    appStateProvider.toLoggedState()
-                    AuthState.Authenticated
-                } else {
-                    AuthState.NewAccount(id)
-                }
+@Inject
+constructor(
+    private val userRepository: UserRepository,
+    private val companySiteRepository: CompanyRepository,
+    private val appStateProvider: AppStateProvider,
+    private val shiftRepository: ShiftRepository,
+    private val clientRepository: ClientRepository
+) {
+    operator fun invoke(id: String): Flow<AuthState> {
+        userRepository.id = id
+        return flowOf(id).map {
+            userRepository.refresh()
+            val user = userRepository.loadById(id)
+            companySiteRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
+            shiftRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
+            companySiteRepository.refresh()
+            clientRepository.refresh()
+            val companyData = companySiteRepository.loadAllData()
+            if (companyData != null) {
+                shiftRepository.refresh()
+                appStateProvider.toLoggedState()
+                AuthState.Authenticated
+            } else {
+                AuthState.NewAccount(id)
             }
         }
-
-        suspend fun createUserAndSignIn(
-            user: User,
-            companyName: String,
-        ): AuthState {
-            val company =
-                CompanySite(
-                    id = getNow().toString() + "CompanyId",
-                    name = companyName,
-                )
-            companySiteRepository.updateData(company)
-            user.companyIds = listOf(company?.id.orEmpty())
-            userRepository.updateData(user)
-            appStateProvider.toLoggedState()
-            return AuthState.Authenticated
-        }
     }
+
+    suspend fun createUserAndSignIn(
+        user: User,
+        companyName: String
+    ): AuthState {
+        val company =
+            CompanySite(
+                id = getNow().toString() + "CompanyId",
+                name = companyName
+            )
+        companySiteRepository.updateData(company)
+        user.companyIds = listOf(company?.id.orEmpty())
+        userRepository.updateData(user)
+        appStateProvider.toLoggedState()
+        return AuthState.Authenticated
+    }
+}
