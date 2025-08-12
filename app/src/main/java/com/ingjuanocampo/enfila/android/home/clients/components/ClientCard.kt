@@ -58,44 +58,49 @@ fun ClientCard(
         shiftTextSize,
         elevation,
         showCard,
-    ) = when (size) {
-        ClientCardSize.COMPACT -> ClientCardDimensions(
-            cardPadding = 12.dp,
-            avatarSize = 40.dp,
-            iconSize = 20.dp,
-            phoneIconSize = 14.dp,
-            titleTextSize = 16.sp,
-            subtitleTextSize = 14.sp,
-            shiftTextSize = 12.sp,
-            elevation = 0.dp,
-            showCard = false,
-        )
-        ClientCardSize.FULL -> ClientCardDimensions(
-            cardPadding = 20.dp,
-            avatarSize = 56.dp,
-            iconSize = 28.dp,
-            phoneIconSize = 16.dp,
-            titleTextSize = 22.sp,
-            subtitleTextSize = 16.sp,
-            shiftTextSize = 14.sp,
-            elevation = 0.dp,
-            showCard = true,
-        )
-    }
+    ) =
+        when (size) {
+            ClientCardSize.COMPACT ->
+                ClientCardDimensions(
+                    cardPadding = 12.dp,
+                    avatarSize = 40.dp,
+                    iconSize = 20.dp,
+                    phoneIconSize = 14.dp,
+                    titleTextSize = 16.sp,
+                    subtitleTextSize = 14.sp,
+                    shiftTextSize = 12.sp,
+                    elevation = 0.dp,
+                    showCard = false,
+                )
+            ClientCardSize.FULL ->
+                ClientCardDimensions(
+                    cardPadding = 20.dp,
+                    avatarSize = 56.dp,
+                    iconSize = 28.dp,
+                    phoneIconSize = 16.dp,
+                    titleTextSize = 22.sp,
+                    subtitleTextSize = 16.sp,
+                    shiftTextSize = 14.sp,
+                    elevation = 0.dp,
+                    showCard = true,
+                )
+        }
 
-    val cardModifier = if (onClick != null) {
-        modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-    } else {
-        modifier.fillMaxWidth()
-    }
+    val cardModifier =
+        if (onClick != null) {
+            modifier
+                .fillMaxWidth()
+                .clickable { onClick() }
+        } else {
+            modifier.fillMaxWidth()
+        }
 
     val content = @Composable {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(cardPadding),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(cardPadding),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -105,12 +110,13 @@ fun ClientCard(
             ) {
                 // Avatar
                 Box(
-                    modifier = Modifier
-                        .size(avatarSize)
-                        .background(
-                            MaterialTheme.colorScheme.primaryContainer,
-                            CircleShape,
-                        ),
+                    modifier =
+                        Modifier
+                            .size(avatarSize)
+                            .background(
+                                MaterialTheme.colorScheme.primaryContainer,
+                                CircleShape,
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -201,9 +207,10 @@ fun ClientCard(
         Card(
             modifier = cardModifier,
             elevation = CardDefaults.cardElevation(defaultElevation = elevation),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
         ) {
             content()
         }
