@@ -1,6 +1,7 @@
 package com.ingjuanocampo.enfila.android.home.clients
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,11 +65,10 @@ fun ClientListScreenChat(
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
+                                    .clickable {
+                                        onClientSelected.invoke(client.id)
+                                    }
                                     .padding(horizontal = 8.dp, vertical = 12.dp),
-                            // fix this
-                            /*   .clickable {
-                                   onClientSelected.invoke(client.id)
-                               }*/
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {

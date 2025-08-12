@@ -40,6 +40,6 @@ internal class ViewModelClientList
 
         fun onClientSelected(id: String) =
             launchGeneral {
-                _event.emit(navigation.toShiftByClient(id))
+                _event.emit(navigation.navigateToClientDetails(id))
             }
     }
