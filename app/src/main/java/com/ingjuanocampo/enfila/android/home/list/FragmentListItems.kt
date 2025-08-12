@@ -9,7 +9,7 @@ import androidx.compose.material.icons.outlined.List
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +28,7 @@ import javax.inject.Inject
 // REVIEW CREATION PROCESS, CREATE CHAT TO CONTACT CLIENTS USING WHATS APP, LAUNCH APP
 @AndroidEntryPoint
 class FragmentListItems : Fragment() {
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     @Inject
     lateinit var navigationDestinations: NavigationDestinations

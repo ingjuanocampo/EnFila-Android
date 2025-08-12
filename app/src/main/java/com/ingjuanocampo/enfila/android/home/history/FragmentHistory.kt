@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +31,7 @@ class FragmentHistory : Fragment() {
     @Inject
     lateinit var navigationDestinations: NavigationDestinations
 
-    private val navController by lazy { findNavController(this) }
+    private val navController by lazy { findNavController() }
     private lateinit var binding: FragmentListItemsBinding
 
     companion object {

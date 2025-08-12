@@ -10,13 +10,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.AssignationState
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
 
 class FragmentPhoneNumber : Fragment() {
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     companion object {
         fun newInstance() = FragmentPhoneNumber()

@@ -9,7 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.login.viewmodel.LoginState
@@ -25,7 +25,7 @@ class FragmentLoginPhoneNumber : Fragment() {
     lateinit var stateProvider: AppStateProvider
 
     private lateinit var doVerificationButton: FloatingActionButton
-    private val navController by lazy { NavHostFragment.findNavController(this) }
+    private val navController by lazy { findNavController() }
 
     val viewModel by viewModels<ViewModelLogin>(ownerProducer = { requireActivity() })
 
