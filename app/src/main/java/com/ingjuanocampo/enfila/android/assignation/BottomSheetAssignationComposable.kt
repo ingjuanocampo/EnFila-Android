@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ingjuanocampo.enfila.android.assignation.viewmodel.ViewModelAssignation
+import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,11 +26,13 @@ class BottomSheetAssignationComposable : BottomSheetDialogFragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                AssignationComposable(
-                    viewModel = viewModel,
-                    onClose = { dismiss() },
-                    onComplete = { dismiss() },
-                )
+                AppTheme {
+                    AssignationComposable(
+                        viewModel = viewModel,
+                        onClose = { dismiss() }
+                    )
+                }
+
             }
         }
     }
