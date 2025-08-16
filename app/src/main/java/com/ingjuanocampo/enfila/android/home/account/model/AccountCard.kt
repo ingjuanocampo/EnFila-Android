@@ -19,6 +19,11 @@ data class AccountCard(
     val monthlyGrowth: String = "",
     val totalRevenue: String = "",
     val activeClientsToday: String = "",
+    // Weekly performance data
+    val weeklyChartData: List<Float> = emptyList(),
+    val weeklyLabels: List<String> = emptyList(),
+    val weeklyTotal: Int = 0,
+    val weeklyAverage: Float = 0f,
 ) {
     fun buildSections(): List<StatisticsSectionUI> {
         return listOf(

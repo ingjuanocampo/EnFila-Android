@@ -67,6 +67,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -141,41 +142,21 @@ fun AccountView(
     ) {
         // Account Header with Company Info
         item {
-            AnimatedVisibility(
-                visible = animationPlayed,
-                enter = fadeIn(tween(600)) + slideInVertically(
-                    initialOffsetY = { -40 },
-                    animationSpec = tween(600)
-                )
-            ) {
-                AccountHeaderCard(account = account, onRefresh = onRefresh)
-            }
+
+            AccountHeaderCard(account = account, onRefresh = onRefresh)
+
         }
 
         // Dashboard Metrics
         item {
-            AnimatedVisibility(
-                visible = animationPlayed,
-                enter = fadeIn(tween(800, delayMillis = 200)) + slideInVertically(
-                    initialOffsetY = { -40 },
-                    animationSpec = tween(600, delayMillis = 200)
-                )
-            ) {
-                DashboardMetricsSection(account = account)
-            }
+
+            DashboardMetricsSection(account = account)
+
         }
 
         // Statistics Chart
         item {
-            AnimatedVisibility(
-                visible = animationPlayed,
-                enter = fadeIn(tween(800, delayMillis = 400)) + slideInVertically(
-                    initialOffsetY = { -40 },
-                    animationSpec = tween(600, delayMillis = 400)
-                )
-            ) {
-                StatisticsChartCard(account = account)
-            }
+            StatisticsChartCard(account = account)
         }
 
         /*// Performance Analytics
@@ -193,53 +174,20 @@ fun AccountView(
 
         // Statistics Sections
         items(account.buildSections()) { section ->
-            AnimatedVisibility(
-                visible = animationPlayed,
-                enter = fadeIn(tween(600, delayMillis = 800)) + slideInVertically(
-                    initialOffsetY = { 40 },
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
-                )
-            ) {
-                StatisticsSectionCard(section = section)
-            }
+            StatisticsSectionCard(section = section)
         }
 
         // Account Options
         item {
-            AnimatedVisibility(
-                visible = animationPlayed,
-                enter = fadeIn(tween(600, delayMillis = 1000)) + slideInVertically(
-                    initialOffsetY = { 40 },
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
-                )
-            ) {
-                AccountOptionsCard()
-            }
+            AccountOptionsCard()
         }
 
         // Logout Section
         item {
-            AnimatedVisibility(
-                visible = animationPlayed,
-                enter = fadeIn(tween(600, delayMillis = 1200)) + slideInVertically(
-                    initialOffsetY = { 40 },
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
-                )
-            ) {
-                LogoutCard(
-                    isLoading = account.loadingLogout,
-                    onLogoutAction = onLogoutAction
-                )
-            }
+            LogoutCard(
+                isLoading = account.loadingLogout,
+                onLogoutAction = onLogoutAction
+            )
         }
 
         // Bottom spacing
@@ -498,12 +446,19 @@ private fun StatisticsChartCard(account: AccountCard) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Weekly Performance",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+                Column {
+                    Text(
+                        text = "Weekly Performance",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = "Current week shifts by day",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    )
+                }
 
                 Icon(
                     imageVector = Icons.Default.TrendingUp,
@@ -514,14 +469,48 @@ private fun StatisticsChartCard(account: AccountCard) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Simple Line Chart
-            LineChart(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                data = listOf(20f, 45f, 30f, 60f, 40f, 70f, 55f), // Sample data
-                color = MaterialTheme.colorScheme.primary
-            )
+            // Real Weekly Performance Chart
+            Column {
+                // Y-axis title
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "# of Shifts",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                LineChart(
+                    modifier = Modifier.fillMaxWidth(),
+                    data = account.weeklyChartData.ifEmpty { listOf(0f, 0f, 0f, 0f, 0f, 0f, 0f) },
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            
+            // Day labels
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                account.weeklyLabels.ifEmpty { listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat") }
+                    .forEach { dayLabel ->
+                        Text(
+                            text = dayLabel,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -531,13 +520,18 @@ private fun StatisticsChartCard(account: AccountCard) {
             ) {
                 ChartLegendItem(
                     color = MaterialTheme.colorScheme.primary,
-                    label = "Shifts",
-                    value = account.totalShifts
+                    label = "This Week",
+                    value = "${account.weeklyTotal}"
                 )
                 ChartLegendItem(
                     color = MaterialTheme.colorScheme.secondary,
-                    label = "Clients",
-                    value = account.numberClients
+                    label = "Daily Avg",
+                    value = "${account.weeklyAverage.toInt()}"
+                )
+                ChartLegendItem(
+                    color = MaterialTheme.colorScheme.tertiary,
+                    label = "Peak",
+                    value = account.peakHours.split(" ").firstOrNull() ?: "N/A"
                 )
             }
         }
@@ -556,46 +550,132 @@ private fun LineChart(
         label = "chart_animation"
     )
 
-    Canvas(modifier = modifier) {
-        if (data.isEmpty()) return@Canvas
+    Row(modifier = modifier) {
+        // Y-axis with labels
+        YAxisLabels(
+            modifier = Modifier.height(120.dp),
+            data = data,
+            color = color
+        )
+        
+        Spacer(modifier = Modifier.width(8.dp))
+        
+        // Chart area
+        Canvas(
+            modifier = Modifier
+                .weight(1f)
+                .height(120.dp)
+        ) {
+            if (data.isEmpty() || data.size < 7) return@Canvas
 
-        val maxValue = data.maxOrNull() ?: 1f
-        val stepX = size.width / (data.size - 1)
-        val points = data.mapIndexed { index, value ->
-            Offset(
-                x = index * stepX,
-                y = size.height - (value / maxValue * size.height * animatedProgress)
+            val maxValue = data.maxOrNull()?.takeIf { it > 0 } ?: 1f
+            val stepX = size.width / (data.size - 1).coerceAtLeast(1)
+            
+            // Calculate chart area (leave space for axis)
+            val chartHeight = size.height
+            val chartWidth = size.width
+            
+            val points = data.mapIndexed { index, value ->
+                val yPosition = if (maxValue > 0) {
+                    chartHeight - (value / maxValue * chartHeight * animatedProgress)
+                } else {
+                    chartHeight * 0.5f // Center line if no data
+                }
+                Offset(
+                    x = index * stepX,
+                    y = yPosition
+                )
+            }
+
+            // Draw grid lines for better readability
+            val gridColor = color.copy(alpha = 0.15f)
+            val gridLines = 4
+            for (i in 0..gridLines) {
+                val y = (chartHeight / gridLines) * i
+                drawLine(
+                    color = gridColor,
+                    start = Offset(0f, y),
+                    end = Offset(chartWidth, y),
+                    strokeWidth = 1.dp.toPx()
+                )
+            }
+
+            // Draw line
+            val path = Path()
+            if (points.isNotEmpty()) {
+                path.moveTo(points[0].x, points[0].y)
+                for (i in 1 until points.size) {
+                    path.lineTo(points[i].x, points[i].y)
+                }
+            }
+
+            drawPath(
+                path = path,
+                color = color,
+                style = androidx.compose.ui.graphics.drawscope.Stroke(width = 3.dp.toPx())
             )
-        }
 
-        // Draw line
-        val path = Path()
-        if (points.isNotEmpty()) {
-            path.moveTo(points[0].x, points[0].y)
-            for (i in 1 until points.size) {
-                path.lineTo(points[i].x, points[i].y)
+            // Draw points
+            points.forEachIndexed { index, point ->
+                // Only draw point if there's data
+                if (data[index] > 0) {
+                    drawCircle(
+                        color = color,
+                        radius = 6.dp.toPx(),
+                        center = point
+                    )
+                    drawCircle(
+                        color = androidx.compose.ui.graphics.Color.White,
+                        radius = 3.dp.toPx(),
+                        center = point
+                    )
+                } else {
+                    // Draw smaller point for zero values
+                    drawCircle(
+                        color = color.copy(alpha = 0.3f),
+                        radius = 3.dp.toPx(),
+                        center = point
+                    )
+                }
             }
         }
+    }
+}
 
-        drawPath(
-            path = path,
-            color = color,
-            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 4.dp.toPx())
-        )
-
-        // Draw points
-        points.forEach { point ->
-            drawCircle(
-                color = color,
-                radius = 6.dp.toPx(),
-                center = point
-            )
-            drawCircle(
-                color = androidx.compose.ui.graphics.Color.White,
-                radius = 3.dp.toPx(),
-                center = point
+@Composable
+private fun YAxisLabels(
+    modifier: Modifier = Modifier,
+    data: List<Float>,
+    color: Color
+) {
+    val maxValue = data.maxOrNull()?.takeIf { it > 0 } ?: 1f
+    
+    // Calculate nice scale values
+    val scaleValues = calculateYAxisScale(maxValue)
+    
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.End
+    ) {
+        // Draw labels from top to bottom (high to low values)
+        scaleValues.reversed().forEach { value ->
+            Text(
+                text = "${value.toInt()}",
+                style = MaterialTheme.typography.bodySmall,
+                color = color.copy(alpha = 0.7f),
+                fontSize = 10.sp
             )
         }
+    }
+}
+
+private fun calculateYAxisScale(maxValue: Float): List<Float> {
+    val gridLines = 5 // 0, 25%, 50%, 75%, 100%
+    val stepValue = maxValue / (gridLines - 1)
+    
+    return (0 until gridLines).map { i ->
+        stepValue * i
     }
 }
 
@@ -978,11 +1058,15 @@ fun AccountScreenPreview() {
                 clientsByDay = "45",
                 waitingTime = "8 min",
                 attentionTime = "12 min",
-                avgShiftsPerWeek = "114",
-                peakHours = "2-4 PM",
+                avgShiftsPerWeek = "16",
+                peakHours = "Wed (25)",
                 customerSatisfaction = "4.8⭐",
                 monthlyGrowth = "+15%",
-                activeClientsToday = "8"
+                // Real weekly chart data sample
+                weeklyChartData = listOf(5f, 12f, 8f, 25f, 18f, 22f, 15f), // Sun-Sat
+                weeklyLabels = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
+                weeklyTotal = 105,
+                weeklyAverage = 15f
             ),
             onLogoutAction = {}
         )
@@ -1004,7 +1088,13 @@ fun AccountScreenPreviewDark() {
                 email = "night@cafe.com",
                 numberClients = "#89",
                 totalShifts = "#234",
-                loadingLogout = true
+                loadingLogout = true,
+                // Low activity week sample
+                weeklyChartData = listOf(2f, 5f, 3f, 8f, 6f, 12f, 4f),
+                weeklyLabels = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
+                weeklyTotal = 40,
+                weeklyAverage = 5.7f,
+                peakHours = "Fri (12)"
             ),
             onLogoutAction = {}
         )
