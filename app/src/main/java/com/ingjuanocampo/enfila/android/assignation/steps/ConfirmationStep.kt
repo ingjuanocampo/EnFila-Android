@@ -49,7 +49,7 @@ fun ConfirmationStep(
     onAssign: () -> Unit,
 ) {
     val assignationState by viewModel.assignationState.observeAsState(AssignationState.IDLE)
-    
+
     ConfirmationStepContent(
         clientName = viewModel.name,
         phoneNumber = viewModel.phoneNumber,
@@ -60,7 +60,7 @@ fun ConfirmationStep(
         onAssign = {
             viewModel.createAssignation()
             onAssign()
-        }
+        },
     )
 }
 
@@ -77,12 +77,13 @@ fun ConfirmationStepContent(
     val isLoading = assignationState == AssignationState.Loading
     val isAssigned = assignationState == AssignationState.AssignationSet
     val canAssign = !isLoading && !isAssigned
-    
+
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-            .imePadding(),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+                .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(32.dp))
@@ -110,9 +111,10 @@ fun ConfirmationStepContent(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                ),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    ),
             ) {
                 Column(
                     modifier = Modifier.padding(20.dp),
@@ -148,14 +150,16 @@ fun ConfirmationStepContent(
                     // Turn number display
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        ),
+                        colors =
+                            CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            ),
                     ) {
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
@@ -163,13 +167,13 @@ fun ConfirmationStepContent(
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                             )
-                            
+
                             val scale by animateFloatAsState(
                                 targetValue = if (isAssigned) 1.2f else 1f,
                                 animationSpec = tween(300),
-                                label = "turn_scale"
+                                label = "turn_scale",
                             )
-                            
+
                             Text(
                                 text = "#$turnNumber",
                                 style = MaterialTheme.typography.headlineLarge,
@@ -249,9 +253,10 @@ private fun SummaryRow(
     value: String,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
@@ -285,7 +290,7 @@ fun ConfirmationStepContentPreview() {
             assignationState = AssignationState.IDLE,
             turnNumber = 42,
             onBack = {},
-            onAssign = {}
+            onAssign = {},
         )
     }
 }
@@ -305,7 +310,7 @@ fun ConfirmationStepContentPreviewDark() {
             assignationState = AssignationState.Loading,
             turnNumber = 15,
             onBack = {},
-            onAssign = {}
+            onAssign = {},
         )
     }
 }
@@ -324,7 +329,7 @@ fun ConfirmationStepContentAssignedPreview() {
             assignationState = AssignationState.AssignationSet,
             turnNumber = 7,
             onBack = {},
-            onAssign = {}
+            onAssign = {},
         )
     }
 }

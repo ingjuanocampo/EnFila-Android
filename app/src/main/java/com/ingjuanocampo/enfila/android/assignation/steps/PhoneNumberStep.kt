@@ -74,7 +74,7 @@ fun PhoneNumberStep(
             keyboardController?.hide()
             // Phone validation is handled automatically in the setter
             onNext()
-        }
+        },
     )
 }
 
@@ -90,10 +90,11 @@ fun PhoneNumberStepContent(
     val isLoading = assignationState == AssignationState.Loading
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-            .imePadding(),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+                .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -106,12 +107,13 @@ fun PhoneNumberStepContent(
             ) {
                 // Icon
                 Box(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .background(
-                            MaterialTheme.colorScheme.primaryContainer,
-                            CircleShape,
-                        ),
+                    modifier =
+                        Modifier
+                            .size(80.dp)
+                            .background(
+                                MaterialTheme.colorScheme.primaryContainer,
+                                CircleShape,
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -162,20 +164,23 @@ fun PhoneNumberStepContent(
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done,
-                ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        if (canContinue) onNext()
-                    }
-                ),
+                keyboardOptions =
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done,
+                    ),
+                keyboardActions =
+                    KeyboardActions(
+                        onDone = {
+                            if (canContinue) onNext()
+                        },
+                    ),
                 modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                ),
+                colors =
+                    TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    ),
                 enabled = !isLoading,
             )
         }
@@ -188,7 +193,7 @@ fun PhoneNumberStepContent(
             enter = fadeIn(tween(500, delayMillis = 400)),
         ) {
             val buttonState = remember { MutableStateFlow(canContinue && !isLoading) }
-            
+
             // Update button state when conditions change
             buttonState.value = canContinue && !isLoading
 
@@ -213,7 +218,7 @@ fun PhoneNumberStepContentPreview() {
             phoneText = "3137550993",
             assignationState = AssignationState.IDLE,
             onPhoneChange = {},
-            onNext = {}
+            onNext = {},
         )
     }
 }
@@ -230,7 +235,7 @@ fun PhoneNumberStepContentPreviewDark() {
             phoneText = "313",
             assignationState = AssignationState.Loading,
             onPhoneChange = {},
-            onNext = {}
+            onNext = {},
         )
     }
 }
@@ -246,7 +251,7 @@ fun PhoneNumberStepContentEmptyPreview() {
             phoneText = "",
             assignationState = AssignationState.IDLE,
             onPhoneChange = {},
-            onNext = {}
+            onNext = {},
         )
     }
 }

@@ -32,29 +32,29 @@ data class AccountCard(
                 totalShifts,
                 "Total Clients",
                 numberClients,
-                StatisticsType.COUNTER
+                StatisticsType.COUNTER,
             ),
             StatisticsSectionUI(
                 "Daily Shifts",
                 shiftByDay,
                 "Daily Clients",
                 clientsByDay,
-                StatisticsType.DAILY
+                StatisticsType.DAILY,
             ),
             StatisticsSectionUI(
                 "Waiting Time",
                 waitingTime,
                 "Attention Time",
                 attentionTime,
-                StatisticsType.TIME
+                StatisticsType.TIME,
             ),
             StatisticsSectionUI(
                 "Weekly Average",
                 avgShiftsPerWeek,
                 "Peak Hours",
                 peakHours,
-                StatisticsType.TREND
-            )
+                StatisticsType.TREND,
+            ),
         )
     }
 
@@ -65,29 +65,29 @@ data class AccountCard(
                 value = clientsByDay,
                 subtitle = "clients by day",
                 type = MetricType.ACTIVE_STATUS,
-                trend = TrendDirection.NEUTRAL
+                trend = TrendDirection.NEUTRAL,
             ),
             DashboardMetric(
                 title = "Monthly Growth",
                 value = monthlyGrowth,
                 subtitle = "vs last month",
                 type = MetricType.GROWTH,
-                trend = if (monthlyGrowth.contains("+")) TrendDirection.UP else TrendDirection.DOWN
+                trend = if (monthlyGrowth.contains("+")) TrendDirection.UP else TrendDirection.DOWN,
             ),
             DashboardMetric(
                 title = "Satisfaction",
                 value = customerSatisfaction,
                 subtitle = "customer rating",
                 type = MetricType.RATING,
-                trend = TrendDirection.UP
+                trend = TrendDirection.UP,
             ),
             DashboardMetric(
                 title = "Efficiency",
                 value = attentionTime,
                 subtitle = "avg service time",
                 type = MetricType.TIME,
-                trend = TrendDirection.NEUTRAL
-            )
+                trend = TrendDirection.NEUTRAL,
+            ),
         )
     }
 }
@@ -96,7 +96,7 @@ data class OptionCard(
     val icon: Int,
     val title: String,
     val subtitle: String = "",
-    val callback: () -> Unit
+    val callback: () -> Unit,
 )
 
 data class DashboardMetric(
@@ -104,7 +104,7 @@ data class DashboardMetric(
     val value: String,
     val subtitle: String,
     val type: MetricType,
-    val trend: TrendDirection
+    val trend: TrendDirection,
 )
 
 enum class MetricType {
@@ -112,13 +112,13 @@ enum class MetricType {
     GROWTH,
     RATING,
     TIME,
-    COUNTER
+    COUNTER,
 }
 
 enum class TrendDirection {
     UP,
     DOWN,
-    NEUTRAL
+    NEUTRAL,
 }
 
 enum class StatisticsType {
@@ -126,5 +126,5 @@ enum class StatisticsType {
     DAILY,
     TIME,
     TREND,
-    PERFORMANCE
+    PERFORMANCE,
 }

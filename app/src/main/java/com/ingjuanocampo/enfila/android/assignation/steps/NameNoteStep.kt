@@ -66,7 +66,7 @@ fun NameNoteStep(
     NameNoteStepContent(
         nameText = nameText,
         noteText = noteText,
-        onNameChange = { 
+        onNameChange = {
             nameText = it
             viewModel.name = it
         },
@@ -79,7 +79,7 @@ fun NameNoteStep(
             // Name and note are handled automatically in the setters
             onNext()
         },
-        onBack = onBack
+        onBack = onBack,
     )
 }
 
@@ -97,11 +97,12 @@ fun NameNoteStepContent(
     val canContinue = nameText.isNotEmpty()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-            .imePadding()
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+                .imePadding()
+                .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(32.dp))
@@ -115,12 +116,13 @@ fun NameNoteStepContent(
             ) {
                 // Icon
                 Box(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .background(
-                            MaterialTheme.colorScheme.primaryContainer,
-                            CircleShape,
-                        ),
+                    modifier =
+                        Modifier
+                            .size(80.dp)
+                            .background(
+                                MaterialTheme.colorScheme.primaryContainer,
+                                CircleShape,
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -171,17 +173,20 @@ fun NameNoteStepContent(
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(nameFocusRequester),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                ),
+                keyboardOptions =
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .focusRequester(nameFocusRequester),
+                colors =
+                    TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    ),
             )
         }
 
@@ -197,17 +202,19 @@ fun NameNoteStepContent(
                 onValueChange = onNoteChange,
                 label = { Text("Notes (Optional)") },
                 placeholder = { Text("Any additional information...") },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done,
-                ),
+                keyboardOptions =
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done,
+                    ),
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3,
                 maxLines = 5,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                ),
+                colors =
+                    TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    ),
             )
         }
 
@@ -262,7 +269,7 @@ fun NameNoteStepContentPreview() {
             onNameChange = {},
             onNoteChange = {},
             onNext = {},
-            onBack = {}
+            onBack = {},
         )
     }
 }
@@ -281,7 +288,7 @@ fun NameNoteStepContentPreviewDark() {
             onNameChange = {},
             onNoteChange = {},
             onNext = {},
-            onBack = {}
+            onBack = {},
         )
     }
 }
@@ -299,7 +306,7 @@ fun NameNoteStepContentFilledPreview() {
             onNameChange = {},
             onNoteChange = {},
             onNext = {},
-            onBack = {}
+            onBack = {},
         )
     }
 }

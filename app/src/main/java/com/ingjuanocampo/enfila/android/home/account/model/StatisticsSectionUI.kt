@@ -5,5 +5,5 @@ data class StatisticsSectionUI(
     val value1: String,
     val title2: String,
     val value2: String,
-    val type: StatisticsType = StatisticsType.COUNTER
+    val type: StatisticsType = StatisticsType.COUNTER,
 )

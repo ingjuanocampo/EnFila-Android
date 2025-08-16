@@ -29,10 +29,9 @@ class BottomSheetAssignationComposable : BottomSheetDialogFragment() {
                 AppTheme {
                     AssignationComposable(
                         viewModel = viewModel,
-                        onClose = { dismiss() }
+                        onClose = { dismiss() },
                     )
                 }
-
             }
         }
     }
