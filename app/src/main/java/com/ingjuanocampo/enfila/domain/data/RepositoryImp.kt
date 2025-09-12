@@ -32,8 +32,8 @@ open class RepositoryImp<Data>(
                     )
             }
 
-            override suspend fun createCall(): List<Data> {
-                return remoteSource.fetchDataAll(id)!!
+            override suspend fun createCall(): List<Data>? {
+                return remoteSource.fetchDataAll(id)
             }
 
             override fun mapCallResult(result: List<Data>): List<Data> {

@@ -6,10 +6,19 @@ import com.ingjuanocampo.enfila.domain.entity.User
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 
+
 class UserRepositoryImpl(
     private val remote: RemoteSource<User>,
     private val localSource: LocalSource<User>,
 ) : UserRepository, RepositoryImp<User>(remote, localSource) {
+
+    override suspend fun refresh() {
+        val response = remote.fetchData(id)
+        response?.let {
+            localSource.createOrUpdate(it)
+        }
+    }
+
     override fun isUserLogged() = id.isNullOrBlank().not()
 
     override suspend fun getCurrent(): User? {
@@ -19,7 +28,8 @@ class UserRepositoryImpl(
     }
 
     override suspend fun deleteAll() {
-        super.deleteAll()
+        localSource.deleteAll()
         this.id = ""
     }
+
 }

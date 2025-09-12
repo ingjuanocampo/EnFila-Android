@@ -38,9 +38,16 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    // Networking
+    // Networking - Retrofit (for Twilio) + Ktor (for our backend)
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
+    
+    // Ktor Client for backend communication
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
     // Testing
     testImplementation(libs.junit)

@@ -24,7 +24,9 @@ interface RepositoryFlowOperation<ResultType, RequestType> {
 
     suspend fun refresh() {
         val remoteData = createCall()
-        saveResult(mapCallResult(remoteData))
+        remoteData?.let {
+            mapCallResult(it)?.let { mapped -> saveResult(mapped) }
+        }
     }
 
     @WorkerThread
@@ -34,10 +36,10 @@ interface RepositoryFlowOperation<ResultType, RequestType> {
     fun shouldFetch(result: ResultType?): Boolean
 
     @WorkerThread
-    suspend fun createCall(): RequestType
+    suspend fun createCall(): RequestType?
 
     @WorkerThread
-    fun mapCallResult(result: RequestType): ResultType
+    fun mapCallResult(result: RequestType): ResultType?
 
     @WorkerThread
     suspend fun saveResult(result: ResultType)

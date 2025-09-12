@@ -25,7 +25,7 @@ class SignInUC
             userRepository.id = id
             return flowOf(id).map {
                 userRepository.refresh()
-                val user = userRepository.loadById(id)
+                val user = userRepository.getCurrent()
                 companySiteRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
                 shiftRepository.id = user?.companyIds?.firstOrNull() ?: EMPTY_STRING
                 companySiteRepository.refresh()

@@ -100,6 +100,13 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
 
+    // Ktor Client for backend communication
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.serialization.kotlinx.json)
+
     // Dependency Injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

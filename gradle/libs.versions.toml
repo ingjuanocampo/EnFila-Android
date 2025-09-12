@@ -46,6 +46,9 @@ firebaseBom = "33.3.0"
 # Data Storage
 dataStore = "1.1.1"
 
+# Ktor for HTTP client (replace Firebase)
+ktor = "2.3.12"
+
 # Google Services
 googleAuth = "21.2.0"
 googleSafetyNet = "18.1.0"
@@ -121,6 +124,13 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-config = { module = "com.google.firebase:firebase-config-ktx" }
+
+# Ktor Client for HTTP requests
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 # Google Services
 google-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "googleAuth" }
