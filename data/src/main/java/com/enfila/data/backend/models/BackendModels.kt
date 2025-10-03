@@ -136,3 +136,11 @@ data class MessageResponse(
     val messageId: String? = null,
     val error: String? = null
 )
+
+// Error response for HTTP error status codes
+@Serializable
+data class ErrorResponse(
+    val error: String,
+    val code: String? = null,
+    val timestamp: Long = 0L
+)

@@ -51,7 +51,7 @@ class CompanySiteRepositoryImpl : CompanySiteRepository {
     }
     
     override suspend fun getById(id: String): CompanySite? = transaction {
-        CompanySitesTable.select { CompanySitesTable.id eq id }
+        CompanySitesTable.select { CompanySitesTable.id eq EntityID(id, CompanySitesTable) }
             .map { it.toCompanySite() }
             .singleOrNull()
     }
@@ -62,10 +62,10 @@ class CompanySiteRepositoryImpl : CompanySiteRepository {
     }
     
     override suspend fun update(id: String, request: UpdateCompanySiteRequest): CompanySite? = newSuspendedTransaction {
-        val exists = CompanySitesTable.select { CompanySitesTable.id eq id }.count() > 0
+        val exists = CompanySitesTable.select { CompanySitesTable.id eq EntityID(id, CompanySitesTable) }.count() > 0
         if (!exists) return@newSuspendedTransaction null
         
-        CompanySitesTable.update({ CompanySitesTable.id eq id }) {
+        CompanySitesTable.update({ CompanySitesTable.id eq EntityID(id, CompanySitesTable) }) {
             if (request.name != null) it[name] = request.name
             it[updatedAt] = Instant.now()
         }
@@ -74,7 +74,7 @@ class CompanySiteRepositoryImpl : CompanySiteRepository {
     }
     
     override suspend fun delete(id: String): Boolean = transaction {
-        CompanySitesTable.deleteWhere { CompanySitesTable.id eq id } > 0
+        CompanySitesTable.deleteWhere { CompanySitesTable.id eq EntityID(id, CompanySitesTable) } > 0
     }
     
     override suspend fun addShiftToCompanySite(companySiteId: String, shiftId: String): Boolean = newSuspendedTransaction {
@@ -84,7 +84,7 @@ class CompanySiteRepositoryImpl : CompanySiteRepository {
         if (shiftId in currentShifts) return@newSuspendedTransaction true
         
         val updatedShifts = currentShifts + shiftId
-        CompanySitesTable.update({ CompanySitesTable.id eq companySiteId }) {
+        CompanySitesTable.update({ CompanySitesTable.id eq EntityID(companySiteId, CompanySitesTable) }) {
             it[shiftsIdList] = Json.encodeToString(updatedShifts)
             it[updatedAt] = Instant.now()
         }
@@ -97,7 +97,7 @@ class CompanySiteRepositoryImpl : CompanySiteRepository {
         val currentShifts = companySite.shiftsIdList ?: emptyList()
         
         val updatedShifts = currentShifts - shiftId
-        CompanySitesTable.update({ CompanySitesTable.id eq companySiteId }) {
+        CompanySitesTable.update({ CompanySitesTable.id eq EntityID(companySiteId, CompanySitesTable) }) {
             it[shiftsIdList] = Json.encodeToString(updatedShifts)
             it[updatedAt] = Instant.now()
         }

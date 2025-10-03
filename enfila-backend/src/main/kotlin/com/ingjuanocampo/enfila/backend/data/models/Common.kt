@@ -26,6 +26,20 @@ data class ErrorResponse(
     val timestamp: Long = System.currentTimeMillis()
 )
 
+@Serializable
+data class BadRequestResponse(
+    val error: String,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+@Serializable
+data class MigrationResponse(
+    val success: Boolean,
+    val message: String? = null,
+    val error: String? = null,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
 fun <T> T.toApiResponse(): ApiResponse<T> = ApiResponse(success = true, data = this)
 fun <T> String.toErrorResponse(code: String? = null): ApiResponse<T> = 
     ApiResponse(success = false, error = this)

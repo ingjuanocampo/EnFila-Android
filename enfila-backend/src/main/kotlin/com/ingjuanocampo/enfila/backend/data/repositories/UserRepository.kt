@@ -52,7 +52,7 @@ class UserRepositoryImpl : UserRepository {
     }
     
     override suspend fun getById(id: String): User? = transaction {
-        UsersTable.select { UsersTable.id eq id }
+        UsersTable.select { UsersTable.id eq EntityID(id, UsersTable) }
             .map { it.toUser() }
             .singleOrNull()
     }
@@ -69,10 +69,10 @@ class UserRepositoryImpl : UserRepository {
     }
     
     override suspend fun update(id: String, request: UpdateUserRequest): User? = newSuspendedTransaction {
-        val exists = UsersTable.select { UsersTable.id eq id }.count() > 0
+        val exists = UsersTable.select { UsersTable.id eq EntityID(id, UsersTable) }.count() > 0
         if (!exists) return@newSuspendedTransaction null
         
-        UsersTable.update({ UsersTable.id eq id }) {
+        UsersTable.update({ UsersTable.id eq EntityID(id, UsersTable) }) {
             if (request.name != null) it[name] = request.name
             if (request.companyIds != null) it[companyIds] = Json.encodeToString(request.companyIds)
             it[updatedAt] = Instant.now()
@@ -82,6 +82,6 @@ class UserRepositoryImpl : UserRepository {
     }
     
     override suspend fun delete(id: String): Boolean = transaction {
-        UsersTable.deleteWhere { UsersTable.id eq id } > 0
+        UsersTable.deleteWhere { UsersTable.id eq EntityID(id, UsersTable) } > 0
     }
 }

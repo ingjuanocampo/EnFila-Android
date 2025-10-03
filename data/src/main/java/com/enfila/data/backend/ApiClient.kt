@@ -29,7 +29,7 @@ class ApiClient @Inject constructor() {
     companion object {
         // Configure this based on your environment
         // TODO Create enviroments and understand how to publish this
-        const val BASE_URL = "http://localhost:8080" // Android emulator localhost
+        const val BASE_URL = "http://10.0.2.2:8080" // Android emulator localhost
         // For real device, use your computer's IP: "http://192.168.x.x:8080"
         // For production: "https://your-domain.com"
 

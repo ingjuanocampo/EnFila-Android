@@ -21,13 +21,13 @@ class UserServiceImpl(
             // Check if user already exists
             val existing = userRepository.getByPhone(request.phone)
             if (existing != null) {
-                return "User with phone ${request.phone} already exists".toErrorResponse()
+                return "User with phone ${request.phone} already exists".toErrorResponse<User>()
             }
             
             val user = userRepository.create(request)
             user.toApiResponse()
         } catch (e: Exception) {
-            "Failed to create user: ${e.message}".toErrorResponse()
+            "Failed to create user: ${e.message}".toErrorResponse<User>()
         }
     }
     
@@ -37,10 +37,10 @@ class UserServiceImpl(
             if (user != null) {
                 user.toApiResponse()
             } else {
-                "User not found".toErrorResponse()
+                "User not found".toErrorResponse<User>()
             }
         } catch (e: Exception) {
-            "Failed to get user: ${e.message}".toErrorResponse()
+            "Failed to get user: ${e.message}".toErrorResponse<User>()
         }
     }
     
@@ -50,10 +50,10 @@ class UserServiceImpl(
             if (user != null) {
                 user.toApiResponse()
             } else {
-                "User not found".toErrorResponse()
+                "User not found".toErrorResponse<User>()
             }
         } catch (e: Exception) {
-            "Failed to get user: ${e.message}".toErrorResponse()
+            "Failed to get user: ${e.message}".toErrorResponse<User>()
         }
     }
     
@@ -62,7 +62,7 @@ class UserServiceImpl(
             val users = userRepository.getAll()
             users.toApiResponse()
         } catch (e: Exception) {
-            "Failed to get users: ${e.message}".toErrorResponse()
+            "Failed to get users: ${e.message}".toErrorResponse<List<User>>()
         }
     }
     
@@ -72,10 +72,10 @@ class UserServiceImpl(
             if (user != null) {
                 user.toApiResponse()
             } else {
-                "User not found".toErrorResponse()
+                "User not found".toErrorResponse<User>()
             }
         } catch (e: Exception) {
-            "Failed to update user: ${e.message}".toErrorResponse()
+            "Failed to update user: ${e.message}".toErrorResponse<User>()
         }
     }
     
@@ -85,10 +85,10 @@ class UserServiceImpl(
             if (deleted) {
                 Unit.toApiResponse()
             } else {
-                "User not found".toErrorResponse()
+                "User not found".toErrorResponse<Unit>()
             }
         } catch (e: Exception) {
-            "Failed to delete user: ${e.message}".toErrorResponse()
+            "Failed to delete user: ${e.message}".toErrorResponse<Unit>()
         }
     }
 }

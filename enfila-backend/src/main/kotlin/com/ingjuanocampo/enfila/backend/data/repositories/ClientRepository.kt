@@ -48,7 +48,7 @@ class ClientRepositoryImpl : ClientRepository {
     }
     
     override suspend fun getById(id: String): Client? = transaction {
-        ClientsTable.select { ClientsTable.id eq id }
+        ClientsTable.select { ClientsTable.id eq EntityID(id, ClientsTable) }
             .map { it.toClient() }
             .singleOrNull()
     }
@@ -59,10 +59,10 @@ class ClientRepositoryImpl : ClientRepository {
     }
     
     override suspend fun update(id: String, request: UpdateClientRequest): Client? = newSuspendedTransaction {
-        val exists = ClientsTable.select { ClientsTable.id eq id }.count() > 0
+        val exists = ClientsTable.select { ClientsTable.id eq EntityID(id, ClientsTable) }.count() > 0
         if (!exists) return@newSuspendedTransaction null
         
-        ClientsTable.update({ ClientsTable.id eq id }) {
+        ClientsTable.update({ ClientsTable.id eq EntityID(id, ClientsTable) }) {
             if (request.name != null) it[name] = request.name
             it[updatedAt] = Instant.now()
         }
@@ -71,7 +71,7 @@ class ClientRepositoryImpl : ClientRepository {
     }
     
     override suspend fun delete(id: String): Boolean = transaction {
-        ClientsTable.deleteWhere { ClientsTable.id eq id } > 0
+        ClientsTable.deleteWhere { ClientsTable.id eq EntityID(id, ClientsTable) } > 0
     }
     
     override suspend fun addShiftToClient(clientId: String, shiftId: String): Boolean = newSuspendedTransaction {
@@ -81,7 +81,7 @@ class ClientRepositoryImpl : ClientRepository {
         if (shiftId in currentShifts) return@newSuspendedTransaction true
         
         val updatedShifts = currentShifts + shiftId
-        ClientsTable.update({ ClientsTable.id eq clientId }) {
+        ClientsTable.update({ ClientsTable.id eq EntityID(clientId, ClientsTable) }) {
             it[shifts] = Json.encodeToString(updatedShifts)
             it[updatedAt] = Instant.now()
         }
@@ -94,7 +94,7 @@ class ClientRepositoryImpl : ClientRepository {
         val currentShifts = client.shifts ?: emptyList()
         
         val updatedShifts = currentShifts - shiftId
-        ClientsTable.update({ ClientsTable.id eq clientId }) {
+        ClientsTable.update({ ClientsTable.id eq EntityID(clientId, ClientsTable) }) {
             it[shifts] = Json.encodeToString(updatedShifts)
             it[updatedAt] = Instant.now()
         }

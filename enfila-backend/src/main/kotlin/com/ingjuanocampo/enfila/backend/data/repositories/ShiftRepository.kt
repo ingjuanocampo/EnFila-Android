@@ -61,7 +61,7 @@ class ShiftRepositoryImpl : ShiftRepository {
     }
     
     override suspend fun getById(id: String): Shift? = transaction {
-        ShiftsTable.select { ShiftsTable.id eq id }
+        ShiftsTable.select { ShiftsTable.id eq EntityID(id, ShiftsTable) }
             .map { it.toShift() }
             .singleOrNull()
     }
@@ -85,10 +85,10 @@ class ShiftRepositoryImpl : ShiftRepository {
     }
     
     override suspend fun update(id: String, request: UpdateShiftRequest): Shift? = newSuspendedTransaction {
-        val exists = ShiftsTable.select { ShiftsTable.id eq id }.count() > 0
+        val exists = ShiftsTable.select { ShiftsTable.id eq EntityID(id, ShiftsTable) }.count() > 0
         if (!exists) return@newSuspendedTransaction null
         
-        ShiftsTable.update({ ShiftsTable.id eq id }) {
+        ShiftsTable.update({ ShiftsTable.id eq EntityID(id, ShiftsTable) }) {
             if (request.number != null) it[number] = request.number
             if (request.notes != null) it[notes] = request.notes
             if (request.state != null) it[state] = request.state
@@ -101,7 +101,7 @@ class ShiftRepositoryImpl : ShiftRepository {
     }
     
     override suspend fun delete(id: String): Boolean = transaction {
-        ShiftsTable.deleteWhere { ShiftsTable.id eq id } > 0
+        ShiftsTable.deleteWhere { ShiftsTable.id eq EntityID(id, ShiftsTable) } > 0
     }
     
     override suspend fun getNextNumber(companySiteId: String): Int = transaction {

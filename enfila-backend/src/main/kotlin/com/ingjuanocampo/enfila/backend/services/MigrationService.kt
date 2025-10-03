@@ -12,7 +12,7 @@ import com.ingjuanocampo.enfila.backend.data.repositories.UserRepository
 
 interface MigrationService {
     suspend fun migrateFromFirebase()
-    suspend fun getMigrationStatus(): Map<String, Any>
+    suspend fun getMigrationStatus(): MigrationResponse
 }
 
 class MigrationServiceImpl(
@@ -61,11 +61,10 @@ class MigrationServiceImpl(
         )
     }
     
-    override suspend fun getMigrationStatus(): Map<String, Any> {
-        return mapOf(
-            "status" to "completed",
-            "timestamp" to System.currentTimeMillis(),
-            "message" to "Migration service ready"
+    override suspend fun getMigrationStatus(): MigrationResponse {
+        return MigrationResponse(
+            success = true,
+            message = "Migration service ready"
         )
     }
 }
