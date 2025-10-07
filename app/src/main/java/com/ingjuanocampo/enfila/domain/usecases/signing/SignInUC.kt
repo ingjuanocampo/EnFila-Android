@@ -2,7 +2,6 @@ package com.ingjuanocampo.enfila.domain.usecases.signing
 
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.entity.User
-import com.ingjuanocampo.enfila.domain.entity.getNow
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
@@ -49,20 +48,53 @@ class SignInUC
             }
         }
 
-        suspend fun createUserAndSignIn(
-            user: User,
-            companyName: String,
-        ): AuthState {
-            val company =
-                CompanySite(
-                    id = getNow().toString() + "CompanyId",
-                    name = companyName,
-                )
-            // this should create the profile, instead of updating
-            companySiteRepository.updateData(company)
-            user.companyIds = listOf(company?.id.orEmpty())
-            userRepository.updateData(user).firstOrNull()
+    suspend fun createUserAndSignIn(
+        user: User,
+        companyName: String,
+    ): AuthState {
+        return try {
+            // Create the company first without ID (backend will generate it)
+            val companyToCreate = CompanySite(
+                id = "", // Empty ID for creation - backend will generate
+                name = companyName,
+            )
+
+            // Create company using POST endpoint
+            val createdCompany = companySiteRepository.createCompanySite(companyToCreate)
+
+            if (createdCompany == null) {
+                return AuthState.AuthError(Exception("Failed to create company. Please check your internet connection and try again."))
+            }
+
+            // Update user with company ID and create user using POST endpoint (without ID)
+            val userToCreate = user.copy(
+                companyIds = listOf(createdCompany.id),
+                id = "" // Clear ID for creation - backend will use phone as ID
+            )
+
+            val createdUser = userRepository.createUser(userToCreate)
+
+            if (createdUser == null) {
+                // If user creation fails, we should ideally clean up the created company
+                // but for now, just return error
+                return AuthState.AuthError(Exception("Failed to create user account. Please verify your information and try again."))
+            }
+
+            // Update repository IDs for subsequent operations
+            companySiteRepository.id = createdCompany.id
+            shiftRepository.id = createdCompany.id
+            userRepository.id = createdUser.id
+
+            // Refresh data to ensure everything is in sync
+            companySiteRepository.refresh()
+            clientRepository.refresh()
+            shiftRepository.refresh()
+
             appStateProvider.toLoggedState()
-            return AuthState.Authenticated
+            AuthState.Authenticated
+
+        } catch (e: Exception) {
+            AuthState.AuthError(e)
         }
     }
+}

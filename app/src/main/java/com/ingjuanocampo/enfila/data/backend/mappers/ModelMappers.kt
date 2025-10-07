@@ -62,3 +62,7 @@ fun BackendCompanySite.toDomainCompanySite(): CompanySite = CompanySite(
     name = this.name,
     shiftsIdList = this.shiftsIdList
 )
+
+fun CompanySite.toCreateCompanySiteRequest(): CreateCompanySiteRequest = CreateCompanySiteRequest(
+    name = this.name ?: ""
+)

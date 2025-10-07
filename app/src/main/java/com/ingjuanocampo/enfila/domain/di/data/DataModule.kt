@@ -2,6 +2,7 @@ package com.ingjuanocampo.enfila.domain.di.data
 
 import com.ingjuanocampo.enfila.data.source.client.ClientRemoteSourceBackend
 import com.ingjuanocampo.enfila.data.source.client.ClientRemoteSourceFB
+import com.ingjuanocampo.enfila.data.source.companysite.CompanySiteRemoteSourceBackend
 import com.ingjuanocampo.enfila.data.source.shifts.ShiftsRemoteSourceBackend
 import com.ingjuanocampo.enfila.data.source.user.UserLocalSource
 import com.ingjuanocampo.enfila.data.source.user.UserRemoteSourceBackend
@@ -35,7 +36,7 @@ class DataModule {
         userRemoteBackend: UserRemoteSourceBackend,
         userLocalSource: UserLocalSource,
     ): UserRepository {
-        return UserRepositoryImpl(userRemoteBackend, userLocalSource)
+        return UserRepositoryImpl(userRemoteBackend, userLocalSource, userRemoteBackend)
     }
 
     @Singleton
@@ -43,8 +44,9 @@ class DataModule {
     fun bindsCompanyRepository(
         companySiteRemoteSource: CompanySiteRemoteSource,
         companySiteLocalSource: CompanySiteLocalSource,
+        companySiteRemoteSourceBackend: CompanySiteRemoteSourceBackend,
     ): CompanyRepository {
-        return CompanyRepositoryImpl(companySiteRemoteSource, companySiteLocalSource)
+        return CompanyRepositoryImpl(companySiteRemoteSource, companySiteLocalSource, companySiteRemoteSourceBackend)
     }
 
     @Singleton

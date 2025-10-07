@@ -32,17 +32,20 @@ class ViewModelFragmentProfile
             }
         }
 
-        fun createUserAndLogin(
-            name: String,
-            companyName: String,
-        ) {
-            launchGeneral {
-                val it =
-                    signUc.createUserAndSignIn(
-                        User(id = id!!, phone = phone!!, name = name),
-                        companyName,
-                    )
-                state.postValue(ProfileState.AuthProcess(it))
-            }
+    fun createUserAndLogin(
+        name: String,
+        companyName: String,
+    ) {
+        launchGeneral {
+            // Create user without ID - backend will use phone as ID
+            val userToCreate = User(
+                id = "", // Empty ID - backend will use phone
+                phone = phone!!,
+                name = name
+            )
+            
+            val result = signUc.createUserAndSignIn(userToCreate, companyName)
+            state.postValue(ProfileState.AuthProcess(result))
         }
     }
+}

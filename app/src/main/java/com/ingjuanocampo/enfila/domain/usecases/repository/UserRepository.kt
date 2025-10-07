@@ -9,4 +9,6 @@ interface UserRepository : Repository<User>  {
 
     suspend fun getCurrent(): User?
 
+    suspend fun createUser(user: User): User?
+
 }
