@@ -66,10 +66,10 @@ class SignInUC
                 return AuthState.AuthError(Exception("Failed to create company. Please check your internet connection and try again."))
             }
 
-            // Update user with company ID and create user using POST endpoint (without ID)
+            // Update user with company ID - use the Google ID that was passed in
             val userToCreate = user.copy(
-                companyIds = listOf(createdCompany.id),
-                id = "" // Clear ID for creation - backend will use phone as ID
+                companyIds = listOf(createdCompany.id)
+                // Keep the original ID from Google Auth - don't clear it
             )
 
             val createdUser = userRepository.createUser(userToCreate)

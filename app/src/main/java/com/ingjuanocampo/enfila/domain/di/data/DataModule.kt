@@ -42,11 +42,10 @@ class DataModule {
     @Singleton
     @Provides
     fun bindsCompanyRepository(
-        companySiteRemoteSource: CompanySiteRemoteSource,
         companySiteLocalSource: CompanySiteLocalSource,
         companySiteRemoteSourceBackend: CompanySiteRemoteSourceBackend,
     ): CompanyRepository {
-        return CompanyRepositoryImpl(companySiteRemoteSource, companySiteLocalSource, companySiteRemoteSourceBackend)
+        return CompanyRepositoryImpl(companySiteLocalSource, companySiteRemoteSourceBackend)
     }
 
     @Singleton

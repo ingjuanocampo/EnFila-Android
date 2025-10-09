@@ -22,6 +22,7 @@ data class BackendUser(
 
 @Serializable
 data class CreateUserRequest(
+    val id: String, // Google Auth ID
     val phone: String,
     val name: String? = null,
     val companyIds: List<String>? = null

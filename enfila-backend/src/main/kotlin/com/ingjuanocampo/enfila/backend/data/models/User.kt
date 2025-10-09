@@ -12,6 +12,7 @@ data class User(
 
 @Serializable
 data class CreateUserRequest(
+    val id: String,
     val phone: String,
     val name: String? = "",
     val companyIds: List<String>? = null

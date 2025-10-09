@@ -12,6 +12,7 @@ fun BackendUser.toDomainUser(): User = User(
 )
 
 fun User.toCreateUserRequest(): CreateUserRequest = CreateUserRequest(
+    id = this.id, // Google Auth ID
     phone = this.phone,
     name = this.name,
     companyIds = this.companyIds

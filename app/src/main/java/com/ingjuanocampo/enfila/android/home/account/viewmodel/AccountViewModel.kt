@@ -15,29 +15,27 @@ import kotlin.random.Random
 
 @HiltViewModel
 class AccountViewModel
-    @Inject
-    constructor(
-        private val loadProfileUC: LoadUserProfile,
-        private val logoutUC: LogoutUC,
-        private val calculateWeeklyPerformance: CalculateWeeklyPerformance,
-        private val shiftRepository: ShiftRepository,
-    ) : MviBaseViewModel<AccountCard>(AccountCard()) {
-        fun onLogout() {
-            viewModelScope.launchGeneral {
-                _state.value = state.value.copy(loadingLogout = true)
-                logoutUC.invoke()
-                _event.emit(LogoutOut)
-            }
+@Inject
+constructor(
+    private val loadProfileUC: LoadUserProfile,
+    private val logoutUC: LogoutUC,
+    private val calculateWeeklyPerformance: CalculateWeeklyPerformance,
+    private val shiftRepository: ShiftRepository,
+) : MviBaseViewModel<AccountCard>(AccountCard()) {
+    fun onLogout() {
+        viewModelScope.launchGeneral {
+            _state.value = state.value.copy(loadingLogout = true)
+            logoutUC.invoke()
+            _event.emit(LogoutOut)
         }
+    }
 
-        var clientCounter = 0
+    var clientCounter = 0
 
-        init {
-            loadAccountData()
-        }
 
-        private fun loadAccountData() {
-            viewModelScope.launchGeneral {
+    fun loadAccountData() {
+        viewModelScope.launchGeneral {
+            try {
                 val user = loadProfileUC.invoke()
                 clientCounter = user.totalNumberClients
 
@@ -49,7 +47,7 @@ class AccountViewModel
                     AccountCard(
                         companyName = user.companyName,
                         phone = user.phone,
-                        email = user.companyName,
+                        email = user.email, // Fixed: was using companyName instead of email
                         numberClients = "#$clientCounter",
                         totalShifts = "#${user.totalShiftHistory}",
                         shiftByDay = user.shiftByDay,
@@ -68,18 +66,48 @@ class AccountViewModel
                         weeklyAverage = weeklyData.averagePerDay,
                     )
                 _state.value = accountCard
-            }
-        }
-
-        private fun calculatePeakHours(): String {
-            val hours = listOf("9-11 AM", "2-4 PM", "6-8 PM")
-            return hours.random()
-        }
-
-        fun refreshData() {
-            viewModelScope.launchGeneral {
-                // Reload all data including weekly performance
-                loadAccountData()
+            } catch (e: Exception) {
+                // Handle errors gracefully by providing default empty state
+                val defaultAccountCard = AccountCard(
+                    companyName = "No Company Data",
+                    phone = "",
+                    email = "",
+                    numberClients = "#0",
+                    totalShifts = "#0",
+                    shiftByDay = "0",
+                    clientsByDay = "0",
+                    waitingTime = "0 min",
+                    attentionTime = "0 min",
+                    avgShiftsPerWeek = "0",
+                    peakHours = "N/A",
+                    customerSatisfaction = "N/A",
+                    monthlyGrowth = "0%",
+                    weeklyChartData = listOf(0f, 0f, 0f, 0f, 0f, 0f, 0f),
+                    weeklyLabels = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+                    weeklyTotal = 0,
+                    weeklyAverage = 0f,
+                )
+                _state.value = defaultAccountCard
+                // Optionally log the error
+                println("Error loading account data: ${e.message}")
             }
         }
     }
+
+    private fun calculatePeakHours(): String {
+        val hours = listOf("9-11 AM", "2-4 PM", "6-8 PM")
+        return hours.random()
+    }
+
+    fun refreshData() {
+        viewModelScope.launchGeneral {
+            // Reload all data including weekly performance
+            try {
+                loadAccountData()
+            } catch (e: Exception) {
+                // Handle refresh errors gracefully
+                println("Error refreshing account data: ${e.message}")
+            }
+        }
+    }
+}

@@ -21,11 +21,16 @@ class FragmentAccount : BaseComposableFragment<AccountCard>() {
         fun newInstance() = FragmentAccount()
     }
 
-    override val viewModel: MviBaseViewModel<AccountCard> by viewModels<AccountViewModel>()
+    override val viewModel: AccountViewModel by viewModels<AccountViewModel>()
 
     @Composable
     override fun render(state: AccountCard) {
         AccountScreen()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadAccountData()
     }
 
     override fun onNewViewEffect(viewEffect: ViewEffect) {

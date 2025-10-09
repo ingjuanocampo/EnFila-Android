@@ -15,22 +15,22 @@ interface UserService {
 class UserServiceImpl(
     private val userRepository: UserRepository
 ) : UserService {
-    
+
     override suspend fun createUser(request: CreateUserRequest): ApiResponse<User> {
         return try {
             // Check if user already exists
-            val existing = userRepository.getByPhone(request.phone)
+            val existing = userRepository.getById(request.id)
             if (existing != null) {
                 return "User with phone ${request.phone} already exists".toErrorResponse<User>()
             }
-            
+
             val user = userRepository.create(request)
             user.toApiResponse()
         } catch (e: Exception) {
             "Failed to create user: ${e.message}".toErrorResponse<User>()
         }
     }
-    
+
     override suspend fun getUser(id: String): ApiResponse<User> {
         return try {
             val user = userRepository.getById(id)
@@ -43,7 +43,7 @@ class UserServiceImpl(
             "Failed to get user: ${e.message}".toErrorResponse<User>()
         }
     }
-    
+
     override suspend fun getUserByPhone(phone: String): ApiResponse<User> {
         return try {
             val user = userRepository.getByPhone(phone)
@@ -56,7 +56,7 @@ class UserServiceImpl(
             "Failed to get user: ${e.message}".toErrorResponse<User>()
         }
     }
-    
+
     override suspend fun getAllUsers(): ApiResponse<List<User>> {
         return try {
             val users = userRepository.getAll()
@@ -65,7 +65,7 @@ class UserServiceImpl(
             "Failed to get users: ${e.message}".toErrorResponse<List<User>>()
         }
     }
-    
+
     override suspend fun updateUser(id: String, request: UpdateUserRequest): ApiResponse<User> {
         return try {
             val user = userRepository.update(id, request)
@@ -78,7 +78,7 @@ class UserServiceImpl(
             "Failed to update user: ${e.message}".toErrorResponse<User>()
         }
     }
-    
+
     override suspend fun deleteUser(id: String): ApiResponse<Unit> {
         return try {
             val deleted = userRepository.delete(id)

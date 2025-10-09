@@ -7,11 +7,12 @@ import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 
 class CompanyRepositoryImpl(
-    val remoteSource: CompanySiteRemoteSource, 
     val localSource: CompanySiteLocalSource,
-    private val companySiteRemoteSourceBackend: CompanySiteRemoteSourceBackend? = null, // Optional for backend operations
-) : CompanyRepository, RepositoryImp<CompanySite>(remoteSource, localSource) {
-    
+    private val companySiteRemoteSourceBackend: CompanySiteRemoteSourceBackend
+) : CompanyRepository, RepositoryImp<CompanySite>(
+    remoteSource = companySiteRemoteSourceBackend,
+    localSource = localSource) {
+
     override suspend fun createCompanySite(companySite: CompanySite): CompanySite? {
         return companySiteRemoteSourceBackend?.createCompanySite(companySite)?.also { createdCompanySite ->
             // Cache the created company site locally

@@ -21,35 +21,36 @@ class MigrationServiceImpl(
     private val shiftRepository: ShiftRepository,
     private val companySiteRepository: CompanySiteRepository
 ) : MigrationService {
-    
+
     override suspend fun migrateFromFirebase() {
         // Implementation for Firebase migration
         // This would connect to Firebase Admin SDK and migrate data
-        
+
         // For now, we'll create some sample data
         createSampleData()
     }
-    
+
     private suspend fun createSampleData() {
         // Create sample company site
         val companySite = companySiteRepository.create(
             CreateCompanySiteRequest(name = "Main Restaurant")
         )
-        
+
         // Create sample client
         val client = clientRepository.create(
             CreateClientRequest(id = "+1234567890", name = "John Doe")
         )
-        
+
         // Create sample user
         userRepository.create(
             CreateUserRequest(
+                id = "idAssignedBYGoogle1231231",
                 phone = "+1234567890",
                 name = "Admin User",
                 companyIds = listOf(companySite.id)
             )
         )
-        
+
         // Create sample shift
         shiftRepository.create(
             CreateShiftRequest(
@@ -60,7 +61,7 @@ class MigrationServiceImpl(
             )
         )
     }
-    
+
     override suspend fun getMigrationStatus(): MigrationResponse {
         return MigrationResponse(
             success = true,

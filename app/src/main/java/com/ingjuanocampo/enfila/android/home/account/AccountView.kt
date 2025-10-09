@@ -215,10 +215,18 @@ private fun AccountHeaderCard(
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                     )
                     Text(
-                        text = account.companyName.ifEmpty { "Your Company" },
+                        text = if (account.companyName.isEmpty() || account.companyName == "No Company Data") {
+                            "No Company Data Available"
+                        } else {
+                            account.companyName
+                        },
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = if (account.companyName.isEmpty() || account.companyName == "No Company Data") {
+                            MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
+                        } else {
+                            MaterialTheme.colorScheme.onPrimaryContainer
+                        },
                     )
                 }
 
@@ -380,13 +388,19 @@ private fun DashboardMetricCard(
             }
 
             Text(
-                text = (
+                text = if (metric.value.isEmpty() || metric.value == "0" || metric.value == "N/A") {
+                    "No data"
+                } else {
                     metric.value.toFloatOrNull()?.times(animatedProgress)?.toInt()?.toString()
                         ?: metric.value.take((metric.value.length * animatedProgress).toInt())
-                ),
+                },
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = if (metric.value.isEmpty() || metric.value == "0" || metric.value == "N/A") {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
             )
 
             Text(
@@ -905,10 +919,14 @@ private fun StatisticItem(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = value,
+            text = if (value.isEmpty() || value == "0" || value == "#0") "No data" else value,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = if (value.isEmpty() || value == "0" || value == "#0") {
+                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            } else {
+                MaterialTheme.colorScheme.onSurface
+            },
             textAlign = TextAlign.Center,
         )
 
