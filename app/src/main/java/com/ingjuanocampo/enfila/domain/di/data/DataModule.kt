@@ -50,17 +50,21 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun bindClientRepository(clientRemoteSourceBackend: ClientRemoteSourceBackend): ClientRepository {
-        return ClientRepositoryImpl(clientRemoteSourceBackend, GenericLocalStoreImp())
+    fun bindClientRepository(
+        clientRemoteSourceBackend: ClientRemoteSourceBackend,
+        backendClientSource: com.ingjuanocampo.enfila.data.backend.source.BackendClientSource
+    ): ClientRepository {
+        return ClientRepositoryImpl(clientRemoteSourceBackend, GenericLocalStoreImp(), backendClientSource)
     }
 
     @Singleton
     @Provides
     fun providesShiftRepository(
         shiftsRemoteSourceBackend: ShiftsRemoteSourceBackend,
-        ShiftLocalSourceGenericCache: ShiftLocalSourceGenericCache,
+        shiftLocalSourceGenericCache: ShiftLocalSourceGenericCache,
+        backendShiftSource: com.ingjuanocampo.enfila.data.backend.source.BackendShiftSource
     ): ShiftRepository {
-        return ShiftRepositoryImpl(shiftsRemoteSourceBackend, ShiftLocalSourceGenericCache)
+        return ShiftRepositoryImpl(shiftsRemoteSourceBackend, shiftLocalSourceGenericCache, backendShiftSource)
     }
 }
 

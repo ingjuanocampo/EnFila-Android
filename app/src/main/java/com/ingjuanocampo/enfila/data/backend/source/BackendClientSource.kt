@@ -10,6 +10,7 @@ import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.serialization.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -136,6 +137,9 @@ class BackendClientSource @Inject constructor(
             emit(null)
         } catch (e: ServerResponseException) {
             Log.e(TAG, "uploadData (single) - Server Error (${e.response.status}): ${e.message}")
+            emit(null)
+        } catch (e: JsonConvertException) {
+            Log.e(TAG, "uploadData (single) - JSON parsing error, likely HTML error page: ${e.message}")
             emit(null)
         } catch (e: Exception) {
             Log.e(TAG, "uploadData (single) - Unexpected error: ${e.javaClass.simpleName}: ${e.message}", e)

@@ -6,7 +6,9 @@ import com.ingjuanocampo.enfila.domain.usecases.model.ShiftWithClient
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -71,20 +73,38 @@ class ShiftInteractions
             client: Client,
             note: String?,
         ): Flow<Shift?> {
-            return clientRepository.updateData(client).flatMapLatest {
-                shiftRepository.updateData(
-                    (
-                        ShiftFactory.createWaiting(
-                            tunr,
-                            client.id,
-                            note ?: "",
-                            shiftRepository.id,
-                        )
-                    ),
-                )
-            }.map {
-                messagingRepository.sendMessage("573137550993", "14155238886", "Hola ${client.name} Fuiste anadido al turno $tunr")
-                it
+            return flow {
+                // First, check if client exists locally
+                val existingClient = clientRepository.getById(client.id)
+                
+                val savedClient = if (existingClient != null) {
+                    // Client exists, update it
+                    clientRepository.updateData(client).first()
+                } else {
+                    // Client doesn't exist, create it
+                    clientRepository.createClient(client)
+                }
+                
+                if (savedClient != null) {
+                    // Create the shift
+                    val newShift = ShiftFactory.createWaiting(
+                        tunr,
+                        client.id,
+                        note ?: "",
+                        shiftRepository.id,
+                    )
+                    
+                    // Since the shift is new, always create it
+                    val createdShift = shiftRepository.createShift(newShift)
+                    if (createdShift != null) {
+                        messagingRepository.sendMessage("573137550993", "14155238886", "Hola ${client.name} Fuiste anadido al turno $tunr")
+                        emit(createdShift)
+                    } else {
+                        emit(null)
+                    }
+                } else {
+                    emit(null)
+                }
             }
         }
 
