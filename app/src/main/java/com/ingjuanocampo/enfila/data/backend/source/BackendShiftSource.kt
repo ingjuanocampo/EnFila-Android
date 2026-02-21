@@ -11,8 +11,6 @@ import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -162,11 +160,11 @@ class BackendShiftSource @Inject constructor(
         }
     }
     
-    override fun uploadData(data: Shift): Flow<Shift?> = flow {
+    override suspend fun uploadData(data: Shift): Shift? {
         val url = "${ApiClient.API_V1}/shifts/${data.id}"
         Log.d(TAG, "uploadData (single) - Starting PUT request to: $url for shift: ${data.number}")
         
-        try {
+        return try {
             val response = client.put(url) {
                 contentType(ContentType.Application.Json)
                 setBody(UpdateShiftRequest(
@@ -184,30 +182,30 @@ class BackendShiftSource @Inject constructor(
             if (apiResponse.success) {
                 val shift = apiResponse.data?.toDomainShift()
                 Log.d(TAG, "uploadData (single) - Success: Updated shift ${shift?.id}")
-                emit(shift)
+                shift
             } else {
                 Log.w(TAG, "uploadData (single) - API Error: ${apiResponse.error}")
-                emit(null)
+                null
             }
         } catch (e: ClientRequestException) {
             Log.e(TAG, "uploadData (single) - Client Error (${e.response.status}): ${e.message}")
-            emit(null)
+            null
         } catch (e: ServerResponseException) {
             Log.e(TAG, "uploadData (single) - Server Error (${e.response.status}): ${e.message}")
-            emit(null)
+            null
         } catch (e: JsonConvertException) {
             Log.e(TAG, "uploadData (single) - JSON parsing error, likely HTML error page: ${e.message}")
-            emit(null)
+            null
         } catch (e: Exception) {
             Log.e(TAG, "uploadData (single) - Unexpected error: ${e.javaClass.simpleName}: ${e.message}", e)
-            emit(null)
+            null
         }
     }
     
-    override fun uploadData(data: List<Shift>): Flow<List<Shift>?> = flow {
+    override suspend fun uploadData(data: List<Shift>): List<Shift>? {
         Log.d(TAG, "uploadData (list) - Starting bulk upload for ${data.size} shifts")
         
-        try {
+        return try {
             val results = mutableListOf<Shift>()
             var successCount = 0
             var failureCount = 0
@@ -243,10 +241,10 @@ class BackendShiftSource @Inject constructor(
             }
             
             Log.d(TAG, "uploadData (list) - Completed: $successCount successful, $failureCount failed")
-            emit(results)
+            results
         } catch (e: Exception) {
             Log.e(TAG, "uploadData (list) - Unexpected error: ${e.javaClass.simpleName}: ${e.message}", e)
-            emit(null)
+            null
         }
     }
     

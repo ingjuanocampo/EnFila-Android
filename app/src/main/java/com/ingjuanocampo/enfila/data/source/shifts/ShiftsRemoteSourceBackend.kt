@@ -3,7 +3,6 @@ package com.ingjuanocampo.enfila.data.source.shifts
 import com.ingjuanocampo.enfila.data.backend.source.BackendShiftSource
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.Shift
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,11 +19,11 @@ class ShiftsRemoteSourceBackend @Inject constructor(
         return backendShiftSource.fetchData(id)
     }
     
-    override fun uploadData(data: Shift): Flow<Shift?> {
+    override suspend fun uploadData(data: Shift): Shift? {
         return backendShiftSource.uploadData(data)
     }
     
-    override fun uploadData(data: List<Shift>): Flow<List<Shift>?> {
+    override suspend fun uploadData(data: List<Shift>): List<Shift>? {
         return backendShiftSource.uploadData(data)
     }
     

@@ -10,8 +10,6 @@ import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -106,11 +104,11 @@ class BackendCompanySiteSource @Inject constructor(
         }
     }
 
-    override fun uploadData(data: CompanySite): Flow<CompanySite?> = flow {
+    override suspend fun uploadData(data: CompanySite): CompanySite? {
         val url = "${ApiClient.API_V1}/company-sites/${data.id}"
         Log.d(TAG, "uploadData - Starting PUT request to: $url for company site: ${data.name}")
 
-        try {
+        return try {
             val response = client.put(url) {
                 contentType(ContentType.Application.Json)
                 setBody(UpdateCompanySiteRequest(name = data.name))
@@ -122,27 +120,27 @@ class BackendCompanySiteSource @Inject constructor(
             if (apiResponse.success) {
                 val companySite = apiResponse.data?.toDomainCompanySite()
                 Log.d(TAG, "uploadData - Success: Updated company site ${companySite?.id}")
-                emit(companySite)
+                companySite
             } else {
                 Log.w(TAG, "uploadData - API Error: ${apiResponse.error}")
-                emit(null)
+                null
             }
         } catch (e: ClientRequestException) {
             Log.e(TAG, "uploadData - Client Error (${e.response.status}): ${e.message}")
-            emit(null)
+            null
         } catch (e: ServerResponseException) {
             Log.e(TAG, "uploadData - Server Error (${e.response.status}): ${e.message}")
-            emit(null)
+            null
         } catch (e: Exception) {
             Log.e(TAG, "uploadData - Unexpected error: ${e.javaClass.simpleName}: ${e.message}", e)
-            emit(null)
+            null
         }
     }
 
-    override fun uploadData(data: List<CompanySite>): Flow<List<CompanySite>?> = flow {
+    override suspend fun uploadData(data: List<CompanySite>): List<CompanySite>? {
         Log.d(TAG, "uploadData (list) - Starting bulk upload for ${data.size} company sites")
 
-        try {
+        return try {
             val results = mutableListOf<CompanySite>()
             var successCount = 0
             var failureCount = 0
@@ -172,10 +170,10 @@ class BackendCompanySiteSource @Inject constructor(
             }
 
             Log.d(TAG, "uploadData (list) - Completed: $successCount successful, $failureCount failed")
-            emit(results)
+            results
         } catch (e: Exception) {
             Log.e(TAG, "uploadData (list) - Unexpected error: ${e.javaClass.simpleName}: ${e.message}", e)
-            emit(null)
+            null
         }
     }
 

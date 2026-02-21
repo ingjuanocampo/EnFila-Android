@@ -3,7 +3,6 @@ package com.ingjuanocampo.enfila.data.source.companysite
 import com.ingjuanocampo.enfila.data.backend.source.BackendCompanySiteSource
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.CompanySite
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,11 +19,11 @@ class CompanySiteRemoteSourceBackend @Inject constructor(
         return backendCompanySiteSource.fetchData(id)
     }
     
-    override fun uploadData(data: CompanySite): Flow<CompanySite?> {
+    override suspend fun uploadData(data: CompanySite): CompanySite? {
         return backendCompanySiteSource.uploadData(data)
     }
     
-    override fun uploadData(data: List<CompanySite>): Flow<List<CompanySite>?> {
+    override suspend fun uploadData(data: List<CompanySite>): List<CompanySite>? {
         return backendCompanySiteSource.uploadData(data)
     }
     

@@ -3,7 +3,6 @@ package com.ingjuanocampo.enfila.data.source.user
 import com.ingjuanocampo.enfila.data.backend.source.BackendUserSource
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.User
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,11 +19,11 @@ class UserRemoteSourceBackend @Inject constructor(
         return backendUserSource.fetchData(id)
     }
     
-    override fun uploadData(data: User): Flow<User?> {
+    override suspend fun uploadData(data: User): User? {
         return backendUserSource.uploadData(data)
     }
     
-    override fun uploadData(data: List<User>): Flow<List<User>?> {
+    override suspend fun uploadData(data: List<User>): List<User>? {
         return backendUserSource.uploadData(data)
     }
     

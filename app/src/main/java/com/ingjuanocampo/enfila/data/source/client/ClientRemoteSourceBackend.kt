@@ -3,7 +3,6 @@ package com.ingjuanocampo.enfila.data.source.client
 import com.ingjuanocampo.enfila.data.backend.source.BackendClientSource
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.Client
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,11 +19,11 @@ class ClientRemoteSourceBackend @Inject constructor(
         return backendClientSource.fetchData(id)
     }
     
-    override fun uploadData(data: Client): Flow<Client?> {
+    override suspend fun uploadData(data: Client): Client? {
         return backendClientSource.uploadData(data)
     }
     
-    override fun uploadData(data: List<Client>): Flow<List<Client>?> {
+    override suspend fun uploadData(data: List<Client>): List<Client>? {
         return backendClientSource.uploadData(data)
     }
     
