@@ -1,6 +1,7 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
 import com.enfila.data.messaging.MessageRepository
+import com.ingjuanocampo.enfila.data.backend.source.BackendMessageSource
 import com.ingjuanocampo.enfila.domain.entity.Client
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftFactory
@@ -20,7 +21,7 @@ class ShiftInteractions
 constructor(
     private val shiftRepository: ShiftRepository,
     private val clientRepository: ClientRepository,
-    private val messagingRepository: MessageRepository,
+    private val messagingRepository: BackendMessageSource,
 ) {
     fun active(current: Shift?): Flow<Boolean> {
         return updateShiftTo(
