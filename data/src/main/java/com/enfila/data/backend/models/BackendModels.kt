@@ -145,3 +145,24 @@ data class ErrorResponse(
     val code: String? = null,
     val timestamp: Long = 0L
 )
+
+// Tip models
+@Serializable
+enum class BackendTipMilestone {
+    ON_LOGIN,
+    FIRST_SHIFT_ASSIGNED,
+    FIRST_SHIFT_CALLED,
+    FIRST_SHIFT_COMPLETED,
+    HAS_CLIENTS,
+    PROFILE_COMPLETE,
+}
+
+@Serializable
+data class BackendTipWithStatus(
+    val id: String,
+    val order: Int,
+    val question: String,
+    val answer: String,
+    val milestone: BackendTipMilestone,
+    val isUnlocked: Boolean,
+)

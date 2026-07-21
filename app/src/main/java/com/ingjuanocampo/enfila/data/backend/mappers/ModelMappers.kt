@@ -67,3 +67,21 @@ fun BackendCompanySite.toDomainCompanySite(): CompanySite = CompanySite(
 fun CompanySite.toCreateCompanySiteRequest(): CreateCompanySiteRequest = CreateCompanySiteRequest(
     name = this.name ?: ""
 )
+
+fun BackendTipMilestone.toDomainTipMilestone(): TipMilestone = when (this) {
+    BackendTipMilestone.ON_LOGIN -> TipMilestone.ON_LOGIN
+    BackendTipMilestone.FIRST_SHIFT_ASSIGNED -> TipMilestone.FIRST_SHIFT_ASSIGNED
+    BackendTipMilestone.FIRST_SHIFT_CALLED -> TipMilestone.FIRST_SHIFT_CALLED
+    BackendTipMilestone.FIRST_SHIFT_COMPLETED -> TipMilestone.FIRST_SHIFT_COMPLETED
+    BackendTipMilestone.HAS_CLIENTS -> TipMilestone.HAS_CLIENTS
+    BackendTipMilestone.PROFILE_COMPLETE -> TipMilestone.PROFILE_COMPLETE
+}
+
+fun BackendTipWithStatus.toDomainTip(): Tip = Tip(
+    id = id,
+    order = order,
+    question = question,
+    answer = answer,
+    milestone = milestone.toDomainTipMilestone(),
+    isUnlocked = isUnlocked,
+)
