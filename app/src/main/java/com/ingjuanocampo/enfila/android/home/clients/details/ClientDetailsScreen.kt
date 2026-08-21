@@ -49,6 +49,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ingjuanocampo.common.composable.GenericEmptyState
+import com.ingjuanocampo.enfila.android.home.clients.components.ClientCard
+import com.ingjuanocampo.enfila.android.home.clients.components.ClientCardSize
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.domain.entity.Client
@@ -109,9 +111,12 @@ private fun ClientDetailsContent(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item {
-            ClientHeaderCard(
-                clientDetails = clientDetails,
+            ClientCard(
+                client = clientDetails.client,
+                shiftCount = clientDetails.totalShifts,
+                size = ClientCardSize.FULL,
                 onRefresh = onRefresh,
+                showShiftCount = false,
             )
         }
 
@@ -158,10 +163,10 @@ private fun ClientHeaderCard(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors =
             CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
             ),
     ) {
         Column(
@@ -237,7 +242,7 @@ private fun ClientHeaderCard(
 private fun ClientStatsCard(clientDetails: ClientDetails) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -361,7 +366,7 @@ private fun ShiftCard(
             Modifier
                 .fillMaxWidth()
                 .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Row(
             modifier =

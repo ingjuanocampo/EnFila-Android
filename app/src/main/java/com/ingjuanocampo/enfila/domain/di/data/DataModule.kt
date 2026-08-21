@@ -1,7 +1,11 @@
 package com.ingjuanocampo.enfila.domain.di.data
 
+import com.ingjuanocampo.enfila.data.source.client.ClientRemoteSourceBackend
 import com.ingjuanocampo.enfila.data.source.client.ClientRemoteSourceFB
+import com.ingjuanocampo.enfila.data.source.companysite.CompanySiteRemoteSourceBackend
+import com.ingjuanocampo.enfila.data.source.shifts.ShiftsRemoteSourceBackend
 import com.ingjuanocampo.enfila.data.source.user.UserLocalSource
+import com.ingjuanocampo.enfila.data.source.user.UserRemoteSourceBackend
 import com.ingjuanocampo.enfila.domain.data.*
 import com.ingjuanocampo.enfila.domain.data.source.companysite.CompanySiteLocalSource
 import com.ingjuanocampo.enfila.domain.data.source.companysite.CompanySiteRemoteSource
@@ -29,34 +33,38 @@ class DataModule {
     @Singleton
     @Provides
     fun bindsUserRepository(
-        userRemoteImpl: UserRemoteImpl,
+        userRemoteBackend: UserRemoteSourceBackend,
         userLocalSource: UserLocalSource,
     ): UserRepository {
-        return UserRepositoryImpl(userRemoteImpl, userLocalSource)
+        return UserRepositoryImpl(userRemoteBackend, userLocalSource, userRemoteBackend)
     }
 
     @Singleton
     @Provides
     fun bindsCompanyRepository(
-        companySiteRemoteSource: CompanySiteRemoteSource,
         companySiteLocalSource: CompanySiteLocalSource,
+        companySiteRemoteSourceBackend: CompanySiteRemoteSourceBackend,
     ): CompanyRepository {
-        return CompanyRepositoryImpl(companySiteRemoteSource, companySiteLocalSource)
+        return CompanyRepositoryImpl(companySiteLocalSource, companySiteRemoteSourceBackend)
     }
 
     @Singleton
     @Provides
-    fun bindClientRepository(clientRemoteSourceFB: ClientRemoteSourceFB): ClientRepository {
-        return ClientRepositoryImpl(clientRemoteSourceFB, GenericLocalStoreImp())
+    fun bindClientRepository(
+        clientRemoteSourceBackend: ClientRemoteSourceBackend,
+        backendClientSource: com.ingjuanocampo.enfila.data.backend.source.BackendClientSource
+    ): ClientRepository {
+        return ClientRepositoryImpl(clientRemoteSourceBackend, GenericLocalStoreImp(), backendClientSource)
     }
 
     @Singleton
     @Provides
     fun providesShiftRepository(
-        shiftsRemoteSourceImpl: ShiftsRemoteSourceImpl,
-        ShiftLocalSourceGenericCache: ShiftLocalSourceGenericCache,
+        shiftsRemoteSourceBackend: ShiftsRemoteSourceBackend,
+        shiftLocalSourceGenericCache: ShiftLocalSourceGenericCache,
+        backendShiftSource: com.ingjuanocampo.enfila.data.backend.source.BackendShiftSource
     ): ShiftRepository {
-        return ShiftRepositoryImpl(shiftsRemoteSourceImpl, ShiftLocalSourceGenericCache)
+        return ShiftRepositoryImpl(shiftsRemoteSourceBackend, shiftLocalSourceGenericCache, backendShiftSource)
     }
 }
 
