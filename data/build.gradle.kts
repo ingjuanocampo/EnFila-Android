@@ -18,6 +18,19 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildTypes {
+        getByName("debug") {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080\"")
+        }
+        getByName("release") {
+            buildConfigField("String", "BASE_URL", "\"http://204.168.149.108\"")
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     // For Kotlin projects
     kotlinOptions {
         jvmTarget = "17"
@@ -27,8 +40,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
-
 }
 
 dependencies {

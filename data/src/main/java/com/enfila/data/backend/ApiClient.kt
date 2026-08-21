@@ -1,5 +1,6 @@
 package com.enfila.data.backend
 
+import com.ingjuanocampo.enfila.data.BuildConfig
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -27,12 +28,9 @@ class ApiClient @Inject constructor() {
     }
 
     companion object {
-        // Configure this based on your environment
-        // TODO Create enviroments and understand how to publish this
-        const val BASE_URL = "http://10.0.2.2:8080" // Android emulator localhost
-        // For real device, use your computer's IP: "http://192.168.x.x:8080"
-        // For production: "https://your-domain.com"
 
-        const val API_V1 = "$BASE_URL/api/v1"
+        val BASE_URL: String = BuildConfig.BASE_URL
+
+        val API_V1: String = "$BASE_URL/api/v1"
     }
 }
