@@ -144,6 +144,32 @@ class BackendClientSource @Inject constructor(
             null
         }
     }
+
+    suspend fun updateProfile(data: Client): Client? {
+        val url = "${ApiClient.API_V1}/clients/${data.id}"
+        return try {
+            val response = client.put(url) {
+                contentType(ContentType.Application.Json)
+                setBody(
+                    UpdateClientRequest(
+                        name = data.name.orEmpty(),
+                        email = data.email.orEmpty(),
+                        birthDate = data.birthDate.orEmpty(),
+                        sex = data.sex.orEmpty(),
+                        city = data.city.orEmpty(),
+                        notes = data.notes.orEmpty(),
+                        favoriteOrder = data.favoriteOrder.orEmpty(),
+                        favoriteStoreId = data.favoriteStoreId.orEmpty(),
+                    ),
+                )
+            }
+            val apiResponse: ApiResponse<BackendClient> = response.body()
+            if (apiResponse.success) apiResponse.data?.toDomainClient() else null
+        } catch (e: Exception) {
+            Log.e(TAG, "updateProfile - ${e.javaClass.simpleName}: ${e.message}", e)
+            null
+        }
+    }
     
     override suspend fun uploadData(data: List<Client>): List<Client>? {
         Log.d(TAG, "uploadData (list) - Starting bulk upload for ${data.size} clients")

@@ -1,7 +1,6 @@
 package com.ingjuanocampo.enfila.android.home.clients.details
 
 import android.content.res.Configuration
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,28 +19,32 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material.icons.outlined.Assignment
-import androidx.compose.material.icons.outlined.HourglassEmpty
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
@@ -54,11 +57,14 @@ import com.ingjuanocampo.enfila.android.home.clients.components.ClientCardSize
 import com.ingjuanocampo.enfila.android.ui.theme.AppTheme
 import com.ingjuanocampo.enfila.android.utils.toDurationText
 import com.ingjuanocampo.enfila.domain.entity.Client
+import com.ingjuanocampo.enfila.domain.entity.CompanySite
 import com.ingjuanocampo.enfila.domain.entity.Shift
 import com.ingjuanocampo.enfila.domain.entity.ShiftState
 import com.ingjuanocampo.enfila.domain.entity.getNow
 import com.ingjuanocampo.enfila.domain.usecases.model.ClientDetails
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Period
 import java.util.Date
 import java.util.Locale
 
@@ -67,6 +73,11 @@ fun ClientDetailsScreen(
     state: ClientDetailsViewState,
     onShiftClick: (String) -> Unit,
     onRefresh: () -> Unit,
+    editor: ProfileEditorState = ProfileEditorState(),
+    onStartEdit: () -> Unit = {},
+    onCancelEdit: () -> Unit = {},
+    onSave: () -> Unit = {},
+    onEditorChange: (ProfileEditorState) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     AppTheme {
@@ -78,8 +89,13 @@ fun ClientDetailsScreen(
                 is ClientDetailsViewState.Success -> {
                     ClientDetailsContent(
                         clientDetails = state.clientDetails,
+                        editor = editor,
                         onShiftClick = onShiftClick,
                         onRefresh = onRefresh,
+                        onStartEdit = onStartEdit,
+                        onCancelEdit = onCancelEdit,
+                        onSave = onSave,
+                        onEditorChange = onEditorChange,
                     )
                 }
                 is ClientDetailsViewState.Error -> {
@@ -100,8 +116,13 @@ fun ClientDetailsScreen(
 @Composable
 private fun ClientDetailsContent(
     clientDetails: ClientDetails,
+    editor: ProfileEditorState,
     onShiftClick: (String) -> Unit,
     onRefresh: () -> Unit,
+    onStartEdit: () -> Unit,
+    onCancelEdit: () -> Unit,
+    onSave: () -> Unit,
+    onEditorChange: (ProfileEditorState) -> Unit,
 ) {
     LazyColumn(
         modifier =
@@ -117,11 +138,23 @@ private fun ClientDetailsContent(
                 size = ClientCardSize.FULL,
                 onRefresh = onRefresh,
                 showShiftCount = false,
+                detailLine = clientDetails.client.favoriteOrder?.takeIf { it.isNotBlank() },
             )
         }
 
         item {
-            ClientStatsCard(clientDetails = clientDetails)
+            VisitsCard(clientDetails = clientDetails, companySites = editor.companySites)
+        }
+
+        item {
+            AboutCard(
+                clientDetails = clientDetails,
+                editor = editor,
+                onStartEdit = onStartEdit,
+                onCancelEdit = onCancelEdit,
+                onSave = onSave,
+                onEditorChange = onEditorChange,
+            )
         }
 
         item {
@@ -239,121 +272,225 @@ private fun ClientHeaderCard(
 }
 
 @Composable
-private fun ClientStatsCard(clientDetails: ClientDetails) {
+private fun VisitsCard(
+    clientDetails: ClientDetails,
+    companySites: List<CompanySite>,
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-        ) {
+        Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(
-                text = "Statistics",
+                text = "Visits",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = 16.dp),
             )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                StatItem(
-                    icon = Icons.Outlined.Assignment,
-                    label = "Total Shifts",
-                    value = clientDetails.totalShifts.toString(),
-                )
-
-                StatItem(
-                    icon = Icons.Outlined.HourglassEmpty,
-                    label = "Active",
-                    value = clientDetails.activeShifts.toString(),
-                )
-
-                StatItem(
-                    icon = Icons.Filled.AccessTime,
-                    label = "Avg. Wait",
-                    value = clientDetails.averageWaitTime.toDurationText(),
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Completion Rate Progress
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Text(
-                        text = "Completion Rate",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Text(
-                        text = "${(clientDetails.completionRate * 100).toInt()}%",
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                val animatedProgress by animateFloatAsState(
-                    targetValue = clientDetails.completionRate,
-                    label = "completion_progress",
-                )
-
-                LinearProgressIndicator(
-                    progress = { animatedProgress },
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(8.dp)
-                            .clip(RoundedCornerShape(4.dp)),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                )
+            if (!clientDetails.hasShifts) {
+                Text("No visits yet", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            } else {
+                FactRow("Orders", clientDetails.orders.toString())
+                FactRow("Cancels", clientDetails.cancels.toString())
+                FactRow("Last visit", clientDetails.lastVisit?.let(::formatVisitDate) ?: "—")
+                FactRow("Usual request", clientDetails.usualRequest ?: "—")
+                FactRow("Most visited store", storeName(clientDetails.mostVisitedStoreId, companySites) ?: "—")
+                FactRow("Avg. wait", clientDetails.averageWaitTime.toDurationText())
             }
         }
     }
 }
 
 @Composable
-private fun StatItem(
-    icon: ImageVector,
+private fun AboutCard(
+    clientDetails: ClientDetails,
+    editor: ProfileEditorState,
+    onStartEdit: () -> Unit,
+    onCancelEdit: () -> Unit,
+    onSave: () -> Unit,
+    onEditorChange: (ProfileEditorState) -> Unit,
+) {
+    val client = clientDetails.client
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+    ) {
+        Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "About",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (editor.isEditing) {
+                    Row {
+                        TextButton(onClick = onCancelEdit, enabled = !editor.isSaving) { Text("Cancel") }
+                        Button(onClick = onSave, enabled = !editor.isSaving) {
+                            Text(if (editor.isSaving) "Saving" else "Save")
+                        }
+                    }
+                } else {
+                    TextButton(onClick = onStartEdit) { Text("Edit") }
+                }
+            }
+            if (editor.isEditing) {
+                AboutForm(editor = editor, onEditorChange = onEditorChange)
+            } else {
+                val pinnedOrder = client.favoriteOrder?.takeIf { it.isNotBlank() }
+                val order = pinnedOrder ?: clientDetails.usualRequest
+                val pinnedStore = client.favoriteStoreId?.takeIf { it.isNotBlank() }
+                val storeId = pinnedStore ?: clientDetails.mostVisitedStoreId
+                ProfileRow(
+                    "Favorite order",
+                    order ?: "Add favorite order",
+                    caption = if (pinnedOrder == null && clientDetails.usualRequest != null) "From their visits" else null,
+                    muted = order == null,
+                )
+                ProfileRow(
+                    "Favorite store",
+                    storeName(storeId, editor.companySites) ?: "Add favorite store",
+                    caption = if (pinnedStore == null && clientDetails.mostVisitedStoreId != null) "From their visits" else null,
+                    muted = storeId == null,
+                )
+                ProfileRow("Email", client.email?.takeIf { it.isNotBlank() } ?: "Add email", muted = client.email.isNullOrBlank())
+                val age = ageLabel(client.birthDate)
+                ProfileRow("Age", age ?: "Add age", muted = age == null)
+                ProfileRow("Sex", sexLabel(client.sex) ?: "Add sex", muted = sexLabel(client.sex) == null)
+                ProfileRow("City", client.city?.takeIf { it.isNotBlank() } ?: "Add city", muted = client.city.isNullOrBlank())
+                ProfileRow("Notes", client.notes?.takeIf { it.isNotBlank() } ?: "Add notes", muted = client.notes.isNullOrBlank())
+            }
+            editor.error?.let { message ->
+                Text(message, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            }
+        }
+    }
+}
+
+@Composable
+private fun AboutForm(
+    editor: ProfileEditorState,
+    onEditorChange: (ProfileEditorState) -> Unit,
+) {
+    ProfileField(editor.name, "Name") { onEditorChange(editor.copy(name = it)) }
+    ProfileField(editor.favoriteOrder, "Favorite order") { onEditorChange(editor.copy(favoriteOrder = it.take(120))) }
+    ChoiceField(
+        label = "Favorite store",
+        value = editor.favoriteStoreId,
+        options = listOf("" to "Not set") + editor.companySites.map { site ->
+            site.id to (site.name?.takeIf { it.isNotBlank() } ?: site.id)
+        },
+    ) { onEditorChange(editor.copy(favoriteStoreId = it)) }
+    ProfileField(editor.email, "Email") { onEditorChange(editor.copy(email = it)) }
+    ProfileField(editor.birthDate, "Birth date (yyyy-MM-dd)") { onEditorChange(editor.copy(birthDate = it)) }
+    ChoiceField(
+        label = "Sex",
+        value = editor.sex,
+        options = listOf("" to "Not set", "FEMALE" to "Female", "MALE" to "Male", "OTHER" to "Other"),
+    ) { onEditorChange(editor.copy(sex = it)) }
+    ProfileField(editor.city, "City") { onEditorChange(editor.copy(city = it.take(100))) }
+    ProfileField(editor.notes, "Notes", singleLine = false) { onEditorChange(editor.copy(notes = it.take(500))) }
+}
+
+@Composable
+private fun FactRow(label: String, value: String) {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Text(label, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(value, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+@Composable
+private fun ProfileRow(
     label: String,
     value: String,
+    caption: String? = null,
+    muted: Boolean = false,
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(24.dp),
-        )
-        Spacer(modifier = Modifier.height(4.dp))
+    Column {
+        Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(
-            text = value,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            value,
+            color = if (muted) MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f) else MaterialTheme.colorScheme.onSurface,
         )
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-            textAlign = TextAlign.Center,
-        )
+        if (caption != null) {
+            Text(caption, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+        }
     }
+}
+
+@Composable
+private fun ProfileField(
+    value: String,
+    label: String,
+    singleLine: Boolean = true,
+    onValueChange: (String) -> Unit,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        singleLine = singleLine,
+        minLines = if (singleLine) 1 else 3,
+        modifier = Modifier.fillMaxWidth(),
+    )
+}
+
+@Composable
+private fun ChoiceField(
+    label: String,
+    value: String,
+    options: List<Pair<String, String>>,
+    onValueChange: (String) -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val selected = options.firstOrNull { it.first == value }?.second ?: "Not set"
+    Box {
+        OutlinedButton(onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()) {
+            Text("$label: $selected")
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            options.forEach { (id, name) ->
+                DropdownMenuItem(
+                    text = { Text(name) },
+                    onClick = {
+                        onValueChange(id)
+                        expanded = false
+                    },
+                )
+            }
+        }
+    }
+}
+
+private fun storeName(id: String?, sites: List<CompanySite>): String? {
+    if (id.isNullOrBlank()) return null
+    return sites.firstOrNull { it.id == id }?.name?.takeIf { it.isNotBlank() } ?: "Unknown store"
+}
+
+private fun sexLabel(sex: String?): String? = when (sex?.uppercase()) {
+    "FEMALE" -> "Female"
+    "MALE" -> "Male"
+    "OTHER" -> "Other"
+    else -> null
+}
+
+private fun ageLabel(birthDate: String?): String? {
+    val date = runCatching { LocalDate.parse(birthDate) }.getOrNull() ?: return null
+    val years = Period.between(date, LocalDate.now()).years
+    if (years < 0) return null
+    return if (years == 1) "1 year" else "$years years"
+}
+
+private fun formatVisitDate(timestamp: Long): String {
+    val formatter = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    return formatter.format(Date(timestamp))
 }
 
 @Composable

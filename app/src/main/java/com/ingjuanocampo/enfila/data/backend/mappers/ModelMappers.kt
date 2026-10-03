@@ -22,7 +22,14 @@ fun User.toCreateUserRequest(): CreateUserRequest = CreateUserRequest(
 fun BackendClient.toDomainClient(): Client = Client(
     id = this.id,
     name = this.name,
-    shifts = this.shifts
+    shifts = this.shifts,
+    email = this.email,
+    birthDate = this.birthDate,
+    sex = this.sex,
+    city = this.city,
+    notes = this.notes,
+    favoriteOrder = this.favoriteOrder,
+    favoriteStoreId = this.favoriteStoreId,
 )
 
 fun Client.toCreateClientRequest(): CreateClientRequest = CreateClientRequest(
