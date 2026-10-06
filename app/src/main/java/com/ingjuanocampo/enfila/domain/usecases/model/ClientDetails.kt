@@ -9,6 +9,11 @@ data class ClientDetails(
     val totalShifts: Int,
     val activeShifts: Int,
     val averageWaitTime: Long,
+    val orders: Int = 0,
+    val cancels: Int = 0,
+    val lastVisit: Long? = null,
+    val usualRequest: String? = null,
+    val mostVisitedStoreId: String? = null,
 ) {
     val phoneNumber: String get() = client.id
     val clientName: String get() = client.name ?: "Unknown Client"

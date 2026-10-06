@@ -46,6 +46,7 @@ fun ClientCard(
     onClick: (() -> Unit)? = null,
     onRefresh: (() -> Unit)? = null,
     showShiftCount: Boolean = true,
+    detailLine: String? = null,
     modifier: Modifier = Modifier,
 ) {
     val (
@@ -156,6 +157,15 @@ fun ClientCard(
                             text = client.id,
                             fontSize = subtitleTextSize,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                    if (!detailLine.isNullOrBlank()) {
+                        Text(
+                            text = detailLine,
+                            fontSize = subtitleTextSize,
+                            color = MaterialTheme.colorScheme.primary,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )

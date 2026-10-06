@@ -18,4 +18,10 @@ class ClientRepositoryImpl(
             createOrUpdate(createdClient)
         }
     }
+
+    override suspend fun updateProfile(client: Client): Client? {
+        return backendClientSource?.updateProfile(client)?.also { updated ->
+            createOrUpdate(updated)
+        }
+    }
 }

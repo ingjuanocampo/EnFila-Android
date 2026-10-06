@@ -39,7 +39,14 @@ data class UpdateUserRequest(
 data class BackendClient(
     val id: String,
     val name: String? = null,
-    val shifts: List<String>? = null
+    val shifts: List<String>? = null,
+    val email: String? = null,
+    val birthDate: String? = null,
+    val sex: String? = null,
+    val city: String? = null,
+    val notes: String? = null,
+    val favoriteOrder: String? = null,
+    val favoriteStoreId: String? = null,
 )
 
 @Serializable
@@ -50,7 +57,14 @@ data class CreateClientRequest(
 
 @Serializable
 data class UpdateClientRequest(
-    val name: String? = null
+    val name: String? = null,
+    val email: String? = null,
+    val birthDate: String? = null,
+    val sex: String? = null,
+    val city: String? = null,
+    val notes: String? = null,
+    val favoriteOrder: String? = null,
+    val favoriteStoreId: String? = null,
 )
 
 // Shift models

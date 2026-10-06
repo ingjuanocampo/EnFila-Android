@@ -5,4 +5,6 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.base.Repository
 
 interface ClientRepository : Repository<Client> {
     suspend fun createClient(client: Client): Client?
+
+    suspend fun updateProfile(client: Client): Client?
 }
