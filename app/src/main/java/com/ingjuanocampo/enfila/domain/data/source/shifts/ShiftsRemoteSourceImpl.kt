@@ -18,11 +18,11 @@ class ShiftsRemoteSourceImpl
             return shiftsRemoteSourceFirebase.fetchByShiftId(ids.firstOrNull()!!, ids.lastOrNull()!!).firstOrNull()
         }
 
-        override fun uploadData(data: List<Shift>): Flow<List<Shift>?> {
-            return shiftsRemoteSourceFirebase.updateData(data)
+        override suspend fun uploadData(data: List<Shift>): List<Shift>? {
+            return shiftsRemoteSourceFirebase.updateData(data).firstOrNull()
         }
 
-        override fun uploadData(data: Shift): Flow<Shift?> {
-            return shiftsRemoteSourceFirebase.updateData(data)
+        override suspend fun uploadData(data: Shift): Shift? {
+            return shiftsRemoteSourceFirebase.updateData(data).firstOrNull()
         }
     }

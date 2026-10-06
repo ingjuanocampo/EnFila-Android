@@ -9,4 +9,6 @@ interface ShiftRepository : Repository<Shift> {
     suspend fun getLastShift(): Shift?
 
     suspend fun getCallingShift(): Shift?
+    
+    suspend fun createShift(shift: Shift): Shift?
 }

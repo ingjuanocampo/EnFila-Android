@@ -1,32 +1,29 @@
 package com.ingjuanocampo.enfila.android.home.tips
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
-import com.ingjuanocampo.enfila.android.R
+import com.ingjuanocampo.common.composable.BaseComposableFragment
+import com.ingjuanocampo.common.composable.MviBaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentTips : Fragment() {
+class FragmentTips : BaseComposableFragment<TipsViewState>() {
     companion object {
         fun newInstance() = FragmentTips()
     }
 
-    private val viewModel: ViewModelTips by viewModels()
+    override val viewModel: MviBaseViewModel<TipsViewState> by viewModels<ViewModelTips>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_tips, container, false)
+    @Composable
+    override fun render(state: TipsViewState) {
+        TipsScreen(
+            state = state,
+            onRetry = { (viewModel as ViewModelTips).loadTips() },
+        )
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+    override fun onResume() {
+        super.onResume()
+        (viewModel as ViewModelTips).loadTips()
     }
 }
