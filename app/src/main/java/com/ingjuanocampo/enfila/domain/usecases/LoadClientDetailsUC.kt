@@ -1,6 +1,7 @@
 package com.ingjuanocampo.enfila.domain.usecases
 
 import com.ingjuanocampo.enfila.domain.entity.Shift
+import com.ingjuanocampo.enfila.domain.entity.ShiftState
 import com.ingjuanocampo.enfila.domain.usecases.model.ClientDetails
 import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
@@ -27,15 +28,35 @@ class LoadClientDetailsUC
                     allShifts.filter { shift ->
                         shift.contactId == client.id
                     }.sortedByDescending { it.date }
+                val finished = clientShifts.filter { it.state == ShiftState.FINISHED }
 
                 ClientDetails(
                     client = client,
                     shifts = clientShifts,
                     totalShifts = clientShifts.size,
-                    activeShifts = clientShifts.count { it.state.name != "FINISHED" },
+                    activeShifts = clientShifts.count { it.state == ShiftState.WAITING || it.state == ShiftState.CALLING },
                     averageWaitTime = calculateAverageWaitTime(clientShifts),
+                    orders = finished.size,
+                    cancels = clientShifts.count { it.state == ShiftState.CANCELLED },
+                    lastVisit = finished.maxOfOrNull { it.date },
+                    usualRequest = mostCommon(
+                        finished.mapNotNull { shift ->
+                            shift.notes?.trim()?.takeIf { it.isNotEmpty() }?.let { note -> note to shift.date }
+                        },
+                    ),
+                    mostVisitedStoreId = mostCommon(finished.map { it.parentCompanySite to it.date }),
                 )
             }
+        }
+
+        private fun <T> mostCommon(items: List<Pair<T, Long>>): T? {
+            if (items.isEmpty()) return null
+            val grouped = items.groupBy { it.first }
+            val maxCount = grouped.values.maxOf { it.size }
+            return grouped
+                .filter { it.value.size == maxCount }
+                .maxBy { group -> group.value.maxOf { it.second } }
+                .key
         }
 
         private fun calculateAverageWaitTime(shifts: List<Shift>): Long {

@@ -77,7 +77,11 @@ class FragmentNewCompany : Fragment() {
     private fun handleAuthProcess(authState: AuthState) {
         when (authState) {
             AuthState.Authenticated -> stateProvider.provideCurrentState().navigateLaunchScreen(requireActivity())
-            is AuthState.AuthError -> showToast("Error, something when wrong")
+            is AuthState.AuthError -> {
+                // Show specific error message from the exception
+                val errorMessage = authState.e.message ?: "An unexpected error occurred while creating your account. Please try again."
+                showToast(errorMessage)
+            }
             else -> {}
         }
     }

@@ -10,8 +10,8 @@ import javax.inject.Inject
 class CompanySiteRemoteSource
     @Inject
     constructor(private val companySiteLocalSource: CompanyInfoRemoteSource) : RemoteSource<CompanySite> {
-        override fun uploadData(data: CompanySite): Flow<CompanySite?> {
-            return companySiteLocalSource.updateData(data = data)
+        override suspend fun uploadData(data: CompanySite): CompanySite? {
+            return companySiteLocalSource.updateData(data = data).firstOrNull()
         }
 
         override suspend fun fetchDataAll(id: String): List<CompanySite>? {
@@ -20,7 +20,7 @@ class CompanySiteRemoteSource
             }
         }
 
-        override fun uploadData(data: List<CompanySite>): Flow<List<CompanySite>?> {
+        override suspend fun uploadData(data: List<CompanySite>): List<CompanySite>? {
             TODO("Not yet implemented")
         }
 
