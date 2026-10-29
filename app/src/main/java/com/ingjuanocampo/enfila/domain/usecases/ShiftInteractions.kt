@@ -30,7 +30,6 @@ constructor(
             },
             ShiftState.CALLING,
         ).map {
-            messagingRepository.sendMessage("573137550993", "14155238886", "Es tu turno ahora, acercate por favor")
             true
         }
     }
