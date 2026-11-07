@@ -8,7 +8,9 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.CompanyRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.ShiftRepository
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SignInUC
@@ -44,57 +46,58 @@ class SignInUC
                         AuthState.NewAccount(id)
                     }
                 }
-
             }
         }
 
-    suspend fun createUserAndSignIn(
-        user: User,
-        companyName: String,
-    ): AuthState {
-        return try {
-            // Create the company first without ID (backend will generate it)
-            val companyToCreate = CompanySite(
-                id = "", // Empty ID for creation - backend will generate
-                name = companyName,
-            )
+        suspend fun createUserAndSignIn(
+            user: User,
+            companyName: String,
+        ): AuthState {
+            return try {
+                // Create the company first without ID (backend will generate it)
+                val companyToCreate =
+                    CompanySite(
+                        // Empty ID for creation - backend will generate
+                        id = "",
+                        name = companyName,
+                    )
 
-            // Create company using POST endpoint
-            val createdCompany = companySiteRepository.createCompanySite(companyToCreate)
+                // Create company using POST endpoint
+                val createdCompany = companySiteRepository.createCompanySite(companyToCreate)
 
-            if (createdCompany == null) {
-                return AuthState.AuthError(Exception("Failed to create company. Please check your internet connection and try again."))
+                if (createdCompany == null) {
+                    return AuthState.AuthError(Exception("Failed to create company. Please check your internet connection and try again."))
+                }
+
+                // Update user with company ID - use the Google ID that was passed in
+                val userToCreate =
+                    user.copy(
+                        companyIds = listOf(createdCompany.id),
+                        // Keep the original ID from Google Auth - don't clear it
+                    )
+
+                val createdUser = userRepository.createUser(userToCreate)
+
+                if (createdUser == null) {
+                    // If user creation fails, we should ideally clean up the created company
+                    // but for now, just return error
+                    return AuthState.AuthError(Exception("Failed to create user account. Please verify your information and try again."))
+                }
+
+                // Update repository IDs for subsequent operations
+                companySiteRepository.id = createdCompany.id
+                shiftRepository.id = createdCompany.id
+                userRepository.id = createdUser.id
+
+                // Refresh data to ensure everything is in sync
+                companySiteRepository.refresh()
+                clientRepository.refresh()
+                shiftRepository.refresh()
+
+                appStateProvider.toLoggedState()
+                AuthState.Authenticated
+            } catch (e: Exception) {
+                AuthState.AuthError(e)
             }
-
-            // Update user with company ID - use the Google ID that was passed in
-            val userToCreate = user.copy(
-                companyIds = listOf(createdCompany.id)
-                // Keep the original ID from Google Auth - don't clear it
-            )
-
-            val createdUser = userRepository.createUser(userToCreate)
-
-            if (createdUser == null) {
-                // If user creation fails, we should ideally clean up the created company
-                // but for now, just return error
-                return AuthState.AuthError(Exception("Failed to create user account. Please verify your information and try again."))
-            }
-
-            // Update repository IDs for subsequent operations
-            companySiteRepository.id = createdCompany.id
-            shiftRepository.id = createdCompany.id
-            userRepository.id = createdUser.id
-
-            // Refresh data to ensure everything is in sync
-            companySiteRepository.refresh()
-            clientRepository.refresh()
-            shiftRepository.refresh()
-
-            appStateProvider.toLoggedState()
-            AuthState.Authenticated
-
-        } catch (e: Exception) {
-            AuthState.AuthError(e)
         }
     }
-}

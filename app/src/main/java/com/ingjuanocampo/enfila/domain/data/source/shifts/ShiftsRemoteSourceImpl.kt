@@ -2,7 +2,6 @@ package com.ingjuanocampo.enfila.domain.data.source.shifts
 
 import com.ingjuanocampo.enfila.data.source.shifts.ShiftsRemoteSourceFirebase
 import com.ingjuanocampo.enfila.domain.entity.Shift
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 

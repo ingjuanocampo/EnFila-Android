@@ -215,18 +215,20 @@ private fun AccountHeaderCard(
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
                     )
                     Text(
-                        text = if (account.companyName.isEmpty() || account.companyName == "No Company Data") {
-                            "No Company Data Available"
-                        } else {
-                            account.companyName
-                        },
+                        text =
+                            if (account.companyName.isEmpty() || account.companyName == "No Company Data") {
+                                "No Company Data Available"
+                            } else {
+                                account.companyName
+                            },
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
-                        color = if (account.companyName.isEmpty() || account.companyName == "No Company Data") {
-                            MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
-                        } else {
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        },
+                        color =
+                            if (account.companyName.isEmpty() || account.companyName == "No Company Data") {
+                                MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
+                            } else {
+                                MaterialTheme.colorScheme.onPrimaryContainer
+                            },
                     )
                 }
 
@@ -388,19 +390,21 @@ private fun DashboardMetricCard(
             }
 
             Text(
-                text = if (metric.value.isEmpty() || metric.value == "0" || metric.value == "N/A") {
-                    "No data"
-                } else {
-                    metric.value.toFloatOrNull()?.times(animatedProgress)?.toInt()?.toString()
-                        ?: metric.value.take((metric.value.length * animatedProgress).toInt())
-                },
+                text =
+                    if (metric.value.isEmpty() || metric.value == "0" || metric.value == "N/A") {
+                        "No data"
+                    } else {
+                        metric.value.toFloatOrNull()?.times(animatedProgress)?.toInt()?.toString()
+                            ?: metric.value.take((metric.value.length * animatedProgress).toInt())
+                    },
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = if (metric.value.isEmpty() || metric.value == "0" || metric.value == "N/A") {
-                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                } else {
-                    MaterialTheme.colorScheme.onSurface
-                },
+                color =
+                    if (metric.value.isEmpty() || metric.value == "0" || metric.value == "N/A") {
+                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    } else {
+                        MaterialTheme.colorScheme.onSurface
+                    },
             )
 
             Text(
@@ -922,11 +926,12 @@ private fun StatisticItem(
             text = if (value.isEmpty() || value == "0" || value == "#0") "No data" else value,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = if (value.isEmpty() || value == "0" || value == "#0") {
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            },
+            color =
+                if (value.isEmpty() || value == "0" || value == "#0") {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
             textAlign = TextAlign.Center,
         )
 
@@ -1100,8 +1105,8 @@ fun AccountScreenPreview() {
                     peakHours = "Wed (25)",
                     customerSatisfaction = "4.8⭐",
                     monthlyGrowth = "+15%",
-                    // Real weekly chart data sample
-                    weeklyChartData = listOf(5f, 12f, 8f, 25f, 18f, 22f, 15f), // Sun-Sat
+                    // Real weekly chart data sample, Sunday through Saturday
+                    weeklyChartData = listOf(5f, 12f, 8f, 25f, 18f, 22f, 15f),
                     weeklyLabels = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
                     weeklyTotal = 105,
                     weeklyAverage = 15f,

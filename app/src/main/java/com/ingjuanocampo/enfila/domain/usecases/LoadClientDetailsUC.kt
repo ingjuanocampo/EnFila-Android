@@ -39,11 +39,12 @@ class LoadClientDetailsUC
                     orders = finished.size,
                     cancels = clientShifts.count { it.state == ShiftState.CANCELLED },
                     lastVisit = finished.maxOfOrNull { it.date },
-                    usualRequest = mostCommon(
-                        finished.mapNotNull { shift ->
-                            shift.notes?.trim()?.takeIf { it.isNotEmpty() }?.let { note -> note to shift.date }
-                        },
-                    ),
+                    usualRequest =
+                        mostCommon(
+                            finished.mapNotNull { shift ->
+                                shift.notes?.trim()?.takeIf { it.isNotEmpty() }?.let { note -> note to shift.date }
+                            },
+                        ),
                     mostVisitedStoreId = mostCommon(finished.map { it.parentCompanySite to it.date }),
                 )
             }

@@ -32,21 +32,23 @@ class ViewModelFragmentProfile
             }
         }
 
-    // Verify the login and sign up flow, there was some issues with the id 
-    fun createUserAndLogin(
-        name: String,
-        companyName: String,
-    ) {
-        launchGeneral {
-            // Use the Google Auth ID that was passed from authentication
-            val userToCreate = User(
-                id = id!!, // Use the Google Auth ID
-                phone = phone!!,
-                name = name
-            )
+        // Verify the login and sign up flow, there was some issues with the id
+        fun createUserAndLogin(
+            name: String,
+            companyName: String,
+        ) {
+            launchGeneral {
+                // Use the Google Auth ID that was passed from authentication
+                val userToCreate =
+                    User(
+                        // Use the Google Auth ID
+                        id = id!!,
+                        phone = phone!!,
+                        name = name,
+                    )
 
-            val result = signUc.createUserAndSignIn(userToCreate, companyName)
-            state.postValue(ProfileState.AuthProcess(result))
+                val result = signUc.createUserAndSignIn(userToCreate, companyName)
+                state.postValue(ProfileState.AuthProcess(result))
+            }
         }
     }
-}

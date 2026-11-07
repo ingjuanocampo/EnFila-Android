@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import com.ingjuanocampo.common.composable.BaseComposableFragment
 import com.ingjuanocampo.common.composable.LogoutOut
-import com.ingjuanocampo.common.composable.MviBaseViewModel
 import com.ingjuanocampo.common.composable.ViewEffect
 import com.ingjuanocampo.enfila.android.home.account.model.AccountCard
 import com.ingjuanocampo.enfila.android.home.account.viewmodel.AccountViewModel

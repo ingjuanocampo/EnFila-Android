@@ -1,7 +1,12 @@
 package com.ingjuanocampo.enfila.android.home.home
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddHome
@@ -16,7 +21,12 @@ import com.ingjuanocampo.common.composable.GenericEmptyState
 import com.ingjuanocampo.enfila.android.R
 import com.ingjuanocampo.enfila.android.assignation.BottomSheetAssignationComposable
 import com.ingjuanocampo.enfila.android.databinding.FragmentHomeBinding
-import com.ingjuanocampo.enfila.android.home.home.delegate.*
+import com.ingjuanocampo.enfila.android.home.home.delegate.DelegateActiveShift
+import com.ingjuanocampo.enfila.android.home.home.delegate.DelegateEmpty
+import com.ingjuanocampo.enfila.android.home.home.delegate.DelegateHeaderLink
+import com.ingjuanocampo.enfila.android.home.home.delegate.DelegateNextShift
+import com.ingjuanocampo.enfila.android.home.home.delegate.DelegateResume
+import com.ingjuanocampo.enfila.android.home.home.delegate.NextShiftActions
 import com.ingjuanocampo.enfila.android.home.home.viewmodel.ViewModelHome
 import com.ingjuanocampo.enfila.android.utils.ViewTypes
 import com.ingjuanocampo.enfila.domain.state.home.HomeState

@@ -7,35 +7,36 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRemoteSourceBackend @Inject constructor(
-    private val backendUserSource: BackendUserSource
-) : RemoteSource<User> {
-    
-    override suspend fun fetchDataAll(id: String): List<User>? {
-        return backendUserSource.fetchDataAll(id)
+class UserRemoteSourceBackend
+    @Inject
+    constructor(
+        private val backendUserSource: BackendUserSource,
+    ) : RemoteSource<User> {
+        override suspend fun fetchDataAll(id: String): List<User>? {
+            return backendUserSource.fetchDataAll(id)
+        }
+
+        override suspend fun fetchData(id: String): User? {
+            return backendUserSource.fetchData(id)
+        }
+
+        override suspend fun uploadData(data: User): User? {
+            return backendUserSource.uploadData(data)
+        }
+
+        override suspend fun uploadData(data: List<User>): List<User>? {
+            return backendUserSource.uploadData(data)
+        }
+
+        suspend fun fetchUserByPhone(phone: String): User? {
+            return backendUserSource.fetchUserByPhone(phone)
+        }
+
+        suspend fun createUser(user: User): User? {
+            return backendUserSource.createUser(user)
+        }
+
+        suspend fun deleteUser(id: String): Boolean {
+            return backendUserSource.deleteUser(id)
+        }
     }
-    
-    override suspend fun fetchData(id: String): User? {
-        return backendUserSource.fetchData(id)
-    }
-    
-    override suspend fun uploadData(data: User): User? {
-        return backendUserSource.uploadData(data)
-    }
-    
-    override suspend fun uploadData(data: List<User>): List<User>? {
-        return backendUserSource.uploadData(data)
-    }
-    
-    suspend fun fetchUserByPhone(phone: String): User? {
-        return backendUserSource.fetchUserByPhone(phone)
-    }
-    
-    suspend fun createUser(user: User): User? {
-        return backendUserSource.createUser(user)
-    }
-    
-    suspend fun deleteUser(id: String): Boolean {
-        return backendUserSource.deleteUser(id)
-    }
-}

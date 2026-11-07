@@ -383,9 +383,11 @@ private fun AboutForm(
     ChoiceField(
         label = "Favorite store",
         value = editor.favoriteStoreId,
-        options = listOf("" to "Not set") + editor.companySites.map { site ->
-            site.id to (site.name?.takeIf { it.isNotBlank() } ?: site.id)
-        },
+        options =
+            listOf("" to "Not set") +
+                editor.companySites.map { site ->
+                    site.id to (site.name?.takeIf { it.isNotBlank() } ?: site.id)
+                },
     ) { onEditorChange(editor.copy(favoriteStoreId = it)) }
     ProfileField(editor.email, "Email") { onEditorChange(editor.copy(email = it)) }
     ProfileField(editor.birthDate, "Birth date (yyyy-MM-dd)") { onEditorChange(editor.copy(birthDate = it)) }
@@ -399,7 +401,10 @@ private fun AboutForm(
 }
 
 @Composable
-private fun FactRow(label: String, value: String) {
+private fun FactRow(
+    label: String,
+    value: String,
+) {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         Text(label, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(value, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -469,17 +474,21 @@ private fun ChoiceField(
     }
 }
 
-private fun storeName(id: String?, sites: List<CompanySite>): String? {
+private fun storeName(
+    id: String?,
+    sites: List<CompanySite>,
+): String? {
     if (id.isNullOrBlank()) return null
     return sites.firstOrNull { it.id == id }?.name?.takeIf { it.isNotBlank() } ?: "Unknown store"
 }
 
-private fun sexLabel(sex: String?): String? = when (sex?.uppercase()) {
-    "FEMALE" -> "Female"
-    "MALE" -> "Male"
-    "OTHER" -> "Other"
-    else -> null
-}
+private fun sexLabel(sex: String?): String? =
+    when (sex?.uppercase()) {
+        "FEMALE" -> "Female"
+        "MALE" -> "Male"
+        "OTHER" -> "Other"
+        else -> null
+    }
 
 private fun ageLabel(birthDate: String?): String? {
     val date = runCatching { LocalDate.parse(birthDate) }.getOrNull() ?: return null

@@ -7,13 +7,12 @@ import com.ingjuanocampo.enfila.domain.entity.User
 import com.ingjuanocampo.enfila.domain.usecases.repository.UserRepository
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
 
-
 class UserRepositoryImpl(
     private val remote: RemoteSource<User>,
     private val localSource: LocalSource<User>,
-    private val userRemoteSourceBackend: UserRemoteSourceBackend? = null, // Optional for backend operations
+    // Optional for backend operations
+    private val userRemoteSourceBackend: UserRemoteSourceBackend? = null,
 ) : UserRepository, RepositoryImp<User>(remote, localSource) {
-
     override suspend fun refresh() {
         val response = remote.fetchData(id)
         response?.let {
@@ -40,5 +39,4 @@ class UserRepositoryImpl(
             localSource.createOrUpdate(createdUser)
         }
     }
-
 }

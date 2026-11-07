@@ -18,11 +18,12 @@ data class Tip(
     val isUnlocked: Boolean,
 )
 
-fun TipMilestone.unlockHint(): String = when (this) {
-    TipMilestone.ON_LOGIN -> "Sign in to unlock this tip."
-    TipMilestone.FIRST_SHIFT_ASSIGNED -> "Assign your first turn to unlock this tip."
-    TipMilestone.FIRST_SHIFT_CALLED -> "Call a turn to unlock this tip."
-    TipMilestone.FIRST_SHIFT_COMPLETED -> "Finish or cancel a turn to unlock this tip."
-    TipMilestone.HAS_CLIENTS -> "Add a client to unlock this tip."
-    TipMilestone.PROFILE_COMPLETE -> "Complete your profile and company info to unlock this tip."
-}
+fun TipMilestone.unlockHint(): String =
+    when (this) {
+        TipMilestone.ON_LOGIN -> "Sign in to unlock this tip."
+        TipMilestone.FIRST_SHIFT_ASSIGNED -> "Assign your first turn to unlock this tip."
+        TipMilestone.FIRST_SHIFT_CALLED -> "Call a turn to unlock this tip."
+        TipMilestone.FIRST_SHIFT_COMPLETED -> "Finish or cancel a turn to unlock this tip."
+        TipMilestone.HAS_CLIENTS -> "Add a client to unlock this tip."
+        TipMilestone.PROFILE_COMPLETE -> "Complete your profile and company info to unlock this tip."
+    }

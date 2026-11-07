@@ -8,7 +8,8 @@ class CalculateWeeklyPerformance
     @Inject
     constructor() {
         data class WeeklyData(
-            val dailyShifts: List<Float>, // 7 days, Sunday to Saturday
+            // 7 days, Sunday to Saturday
+            val dailyShifts: List<Float>,
             val dayLabels: List<String>,
             val totalWeekShifts: Int,
             val averagePerDay: Float,

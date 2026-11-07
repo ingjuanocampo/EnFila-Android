@@ -49,20 +49,24 @@ class LoadUserProfile
             // Calculate safe averages to prevent division by zero
             val avgShiftsByDay = if (totalDays > 0) counterOfShiftsByDay / totalDays else 0
             val avgClientsByDay = if (totalDays > 0) counterOfClientsByDay / totalDays else 0
-            
+
             // TODO review how to get the attentionTime
 
             return UserProfile(
-                companyName = currentCompany?.name ?: "No Company", // Handle null company
-                userName = user.name ?: "Unknown User", // Handle null user name
+                // Handle null company
+                companyName = currentCompany?.name ?: "No Company",
+                // Handle null user name
+                userName = user.name ?: "Unknown User",
                 email = user.id,
-                phone = user.phone ?: "", // Handle null phone
+                // Handle null phone
+                phone = user.phone ?: "",
                 totalNumberClients = totalClients,
                 totalShiftHistory = totalShifts,
                 shiftByDay = avgShiftsByDay.toString(),
                 clientsByDay = avgClientsByDay.toString(),
                 waitingTime = waitingTimeAverage,
-                attentionTime = attentionTimeAverage, // Not ready yet
+                // Not ready yet
+                attentionTime = attentionTimeAverage,
             )
         }
     }

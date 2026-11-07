@@ -9,9 +9,9 @@ import com.ingjuanocampo.enfila.domain.usecases.repository.ClientRepository
 class ClientRepositoryImpl(
     private val remoteSource: RemoteSource<Client>,
     localSource: LocalSource<Client>,
-    private val backendClientSource: BackendClientSource? = null, // Optional for backend operations
+    // Optional for backend operations
+    private val backendClientSource: BackendClientSource? = null,
 ) : RepositoryImp<Client>(remoteSource, localSource), ClientRepository {
-    
     override suspend fun createClient(client: Client): Client? {
         return backendClientSource?.createClient(client)?.also { createdClient ->
             // Cache the created client locally
