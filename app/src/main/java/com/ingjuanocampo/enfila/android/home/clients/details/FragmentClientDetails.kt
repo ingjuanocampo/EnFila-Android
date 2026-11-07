@@ -30,10 +30,16 @@ class FragmentClientDetails : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val state by viewModel.state.collectAsState()
+                val editor by viewModel.editor.collectAsState()
                 ClientDetailsScreen(
                     state = state,
+                    editor = editor,
                     onShiftClick = viewModel::onShiftClicked,
                     onRefresh = viewModel::onRefresh,
+                    onStartEdit = viewModel::startEdit,
+                    onCancelEdit = viewModel::cancelEdit,
+                    onSave = viewModel::saveProfile,
+                    onEditorChange = viewModel::onEditorChange,
                 )
             }
         }

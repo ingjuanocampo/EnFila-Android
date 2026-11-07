@@ -7,4 +7,6 @@ interface UserRepository : Repository<User> {
     fun isUserLogged(): Boolean
 
     suspend fun getCurrent(): User?
+
+    suspend fun createUser(user: User): User?
 }

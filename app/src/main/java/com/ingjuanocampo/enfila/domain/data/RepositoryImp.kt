@@ -32,8 +32,8 @@ open class RepositoryImp<Data>(
                     )
             }
 
-            override suspend fun createCall(): List<Data> {
-                return remoteSource.fetchDataAll(id)!!
+            override suspend fun createCall(): List<Data>? {
+                return remoteSource.fetchDataAll(id)
             }
 
             override fun mapCallResult(result: List<Data>): List<Data> {
@@ -82,8 +82,8 @@ open class RepositoryImp<Data>(
         localSource.deleteAll()
     }
 
-    override fun updateData(data: Data): Flow<Data?> {
-        return remoteSource.uploadData(data).map {
+    override suspend fun updateData(data: Data): Data? {
+        return remoteSource.uploadData(data).let {
             localSource.createOrUpdate(data)
             it
         }

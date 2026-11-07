@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.ktlint)
 }
@@ -23,16 +24,35 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("${System.getProperty("user.home")}/.android/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
     buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "EnfilaDev")
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080\"")
+            signingConfig = signingConfigs.getByName("debug")
+        }
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            resValue("string", "app_name", "Enfila")
+            buildConfigField("String", "BASE_URL", "\"http://204.168.149.108\"")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
     buildFeatures {
         viewBinding = true
         compose = true
+        buildConfig = true
     }
 
     // For Kotlin projects
@@ -99,6 +119,13 @@ dependencies {
     // Navigation
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    // Ktor Client for backend communication
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
     // Dependency Injection
     implementation(libs.hilt.android)

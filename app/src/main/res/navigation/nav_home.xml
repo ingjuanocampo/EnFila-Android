@@ -35,8 +35,8 @@
         </action>
     </fragment>
     <fragment
-        android:id="@+id/fragmentProfile"
-        android:name="com.ingjuanocampo.enfila.android.home.profile.FragmentProfile"
+        android:id="@+id/fragmentAccount"
+        android:name="com.ingjuanocampo.enfila.android.home.account.FragmentAccount"
         android:label="Cuenta" />
 
     <navigation android:id="@+id/navigation"

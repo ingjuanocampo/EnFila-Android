@@ -1,5 +1,6 @@
 package com.ingjuanocampo.enfila.domain.data
 
+import com.ingjuanocampo.enfila.data.backend.source.BackendShiftSource
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.data.source.shifts.ShiftLocalSource
 import com.ingjuanocampo.enfila.domain.entity.Shift
@@ -10,6 +11,8 @@ import kotlinx.coroutines.flow.map
 class ShiftRepositoryImpl(
     private val remoteSource: RemoteSource<Shift>,
     private val localSource: ShiftLocalSource,
+    // Optional for backend operations
+    private val backendShiftSource: BackendShiftSource? = null,
 ) : ShiftRepository, RepositoryImp<Shift>(remoteSource, localSource) {
     override fun getAllObserveData(): Flow<List<Shift>?> {
         return super.getAllObserveData().map { it?.sortedBy { shift -> shift.number } }
@@ -29,5 +32,12 @@ class ShiftRepositoryImpl(
 
     override suspend fun getCallingShift(): Shift? {
         return localSource.getCallingShift()
+    }
+
+    override suspend fun createShift(shift: Shift): Shift? {
+        return backendShiftSource?.createShift(shift)?.also { createdShift ->
+            // Cache the created shift locally
+            createOrUpdate(createdShift)
+        }
     }
 }

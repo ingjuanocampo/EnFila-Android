@@ -26,7 +26,7 @@ class CompanySiteLocalSource
         }
 
         override suspend fun getAllData(): List<CompanySite>? {
-            return (companySite.let { listOf(it) } ?: listOf<CompanySite>()) as List<CompanySite>?
+            return companySite?.let { listOf(it) }
         }
 
         override suspend fun deleteAll() {

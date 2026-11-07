@@ -1,31 +1,35 @@
-package com.ingjuanocampo.enfila.android.home.profile
+package com.ingjuanocampo.enfila.android.home.account
 
 import androidx.compose.runtime.Composable
 import androidx.fragment.app.viewModels
 import com.ingjuanocampo.common.composable.BaseComposableFragment
 import com.ingjuanocampo.common.composable.LogoutOut
-import com.ingjuanocampo.common.composable.MviBaseViewModel
 import com.ingjuanocampo.common.composable.ViewEffect
-import com.ingjuanocampo.enfila.android.home.profile.model.ProfileCard
-import com.ingjuanocampo.enfila.android.home.profile.viewmodel.ProfileViewModel
+import com.ingjuanocampo.enfila.android.home.account.model.AccountCard
+import com.ingjuanocampo.enfila.android.home.account.viewmodel.AccountViewModel
 import com.ingjuanocampo.enfila.domain.state.AppStateProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FragmentProfile : BaseComposableFragment<ProfileCard>() {
+class FragmentAccount : BaseComposableFragment<AccountCard>() {
     @Inject
     lateinit var stateProvider: AppStateProvider
 
     companion object {
-        fun newInstance() = FragmentProfile()
+        fun newInstance() = FragmentAccount()
     }
 
-    override val viewModel: MviBaseViewModel<ProfileCard> by viewModels<ProfileViewModel>()
+    override val viewModel: AccountViewModel by viewModels<AccountViewModel>()
 
     @Composable
-    override fun render(state: ProfileCard) {
-        ProfileScreen()
+    override fun render(state: AccountCard) {
+        AccountScreen()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadAccountData()
     }
 
     override fun onNewViewEffect(viewEffect: ViewEffect) {

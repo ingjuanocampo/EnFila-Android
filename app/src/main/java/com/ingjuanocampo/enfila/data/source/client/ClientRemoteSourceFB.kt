@@ -10,7 +10,6 @@ import com.ingjuanocampo.enfila.data.util.uploadProcessMultiples
 import com.ingjuanocampo.enfila.domain.data.source.RemoteSource
 import com.ingjuanocampo.enfila.domain.entity.Client
 import com.ingjuanocampo.enfila.domain.util.EMPTY_STRING
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
@@ -34,10 +33,14 @@ class ClientRemoteSourceFB
                 shifts = it["shifts"] as List<String>?,
             )
 
-        override fun uploadData(data: List<Client>): Flow<List<Client>?> {
-            return remote.uploadProcessMultiples({
-                return@uploadProcessMultiples mapToRemote(it)
-            }, data, clientPath)
+        override suspend fun uploadData(data: List<Client>): List<Client>? {
+            return remote.uploadProcessMultiples<Client>(
+                {
+                    return@uploadProcessMultiples mapToRemote(it)
+                },
+                data,
+                clientPath,
+            ).firstOrNull()
         }
 
         private fun mapToRemote(it: Client) =
@@ -47,10 +50,10 @@ class ClientRemoteSourceFB
                 "shifts" to it.shifts,
             )
 
-        override fun uploadData(data: Client): Flow<Client?> {
+        override suspend fun uploadData(data: Client): Client? {
             return remote.uploadProcess({
                 return@uploadProcess mapToRemote(it)
-            }, data, clientPath, data.id)
+            }, data, clientPath, data.id).firstOrNull()
         }
 
         override suspend fun fetchData(id: String): Client? {

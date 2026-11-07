@@ -50,7 +50,8 @@ object ShiftFactory {
         val instantNow = getNow()
         return Shift(
             date = instantNow,
-            id = number.toString() + currentCompanySiteId,
+            // Use proper UUID instead of concatenation
+            id = UUID.randomUUID().toString(),
             parentCompanySite = currentCompanySiteId,
             number = number,
             contactId = contactId,
